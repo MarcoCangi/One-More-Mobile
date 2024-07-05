@@ -1,0 +1,42 @@
+<!-- <form class="form">
+  <div class="txtDesc">
+    <h3>Descrizione dell'offerta</h3>
+    <mat-form-field class="txtDesc">
+      <textarea matInput [formControl]="descFormControl" #desc maxlength="150" class="txtDesc" name="desc"></textarea>
+      <mat-hint align="end">{{desc.value.length}}/150</mat-hint>
+      <mat-error *ngIf="descFormControl.hasError('minlength')">
+        Lunghezza minima 5 caratteri
+      </mat-error>
+      <mat-error *ngIf="descFormControl.hasError('maxlength')">
+        Lunghezza massima 150 caratteri
+      </mat-error>
+      <mat-error *ngIf="descFormControl.hasError('required')">
+        Inserisci una descrizione della tua promozione
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form> -->
+
+<form [formGroup]="exampleForm">
+  <ion-item>
+    <ion-textarea
+      label="Descrizione dell'offerta*" 
+      labelPlacement="stacked"
+      type="text"
+      formControlName="descFormControl"
+      value={{descrizione}}
+      [counter]="true"
+      maxlength="150"
+      [autoGrow]="true">
+    </ion-textarea>
+  </ion-item>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
+    Inserisci una descrizione
+  </ion-note>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
+    Lunghezza minima 5 caratteri
+  </ion-note>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
+    Lunghezza massima 150 caratteri
+  </ion-note>
+</form>

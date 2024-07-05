@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gallery</ion-title>
+    <ion-icon slot="end" name="close-outline" class="close" (click)="closeDialog()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="image-grid">
+    <ion-card *ngFor="let immagine of immagini; let i = index" class="single-image" (click)="apriDialogIngrandimentoImmagine(i)">
+      <ion-img class="uniform-image" [src]="immagine.upload" alt="Immagine dell'attività"></ion-img>
+    </ion-card>
+  </div>
+</ion-content>

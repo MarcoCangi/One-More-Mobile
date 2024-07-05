@@ -1,0 +1,35 @@
+.full-width-container {
+    width: 100%;
+  }
+  
+  .full-width-item {
+    min-width: 350px;
+    width: 100%;
+  }
+  
+  ion-accordion {
+    width: 100%;
+    max-width: 430px;
+  }
+  
+  ion-accordion-group {
+    width: 100%;
+  }
+  
+  ion-item {
+    width: 100%;
+  }
+
+  ion-spinner {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  ion-item-divider{
+    margin-top: -6%;
+    margin-bottom: 2%;
+  }

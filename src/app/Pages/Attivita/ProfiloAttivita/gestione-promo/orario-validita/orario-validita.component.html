@@ -1,0 +1,30 @@
+<form class="form">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-label>Indica il periodo della giornata</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-checkbox labelPlacement="end" class="chkGiorno" [formControl]="isAllDayValiditaFormControl" color="primary">Tutto il giorno</ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="lbl-col">
+        <ion-label class="centered-label">Dalle</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="time" type="time" formControlName="orarioValiditaDaFormControl" value={{orarioValiditaDa}}></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="lbl-col">
+        <ion-label class="centered-label">Alle</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="time" type="time" formControlName="orarioValiditaAlFormControl" value={{orarioValiditaAl}}></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>

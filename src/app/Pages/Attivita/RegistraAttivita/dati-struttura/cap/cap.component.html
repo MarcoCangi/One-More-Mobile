@@ -1,0 +1,14 @@
+<form [formGroup]="exampleForm">
+  <ion-item>
+    <ion-input
+      label="CAP*" 
+      labelPlacement="stacked"
+      type="text"
+      formControlName="capFormControl"
+      value={{cap}}>
+    </ion-input>
+  </ion-item>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
+    CAP obbligatorio
+  </ion-note>
+</form>

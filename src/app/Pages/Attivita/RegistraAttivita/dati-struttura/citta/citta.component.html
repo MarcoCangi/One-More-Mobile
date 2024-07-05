@@ -1,0 +1,18 @@
+<ion-item>
+  <ion-input
+    label="Comune*" 
+    labelPlacement="stacked"
+    type="text"
+    [formControl]="comuniControl"
+    (ionInput)="onSearchChange($event)"
+    [value]="citta">
+  </ion-input>
+</ion-item>
+<ion-list *ngIf="showSuggestions">
+  <ion-item *ngFor="let comune of comuniFiltrati" (click)="selectComune(comune)">
+    {{ comune }}
+  </ion-item>
+</ion-list>
+<ion-note style="margin-left: 5%;" lines="none" *ngIf="comuniControl.hasError('required') && (comuniControl.dirty || comuniControl.touched)" color="danger">
+  Inserire Città o comune
+</ion-note>

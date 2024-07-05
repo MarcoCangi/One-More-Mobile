@@ -1,0 +1,79 @@
+<div class="contenitore">
+  <ion-accordion-group class="headers-align" multiple="true">
+    <ion-accordion *ngFor="let promo of listaPromo" style="margin-bottom: 10px;">
+      <ion-item slot="header" color="success" style="border-radius: 50px;">
+        <ion-label>{{ promo.titoloPromo }}</ion-label>
+      </ion-item>
+      
+      <div class="ion-padding" slot="content" *ngIf="promo.isAbilitataForUser">
+        <ion-card>
+          <ion-card-content>
+            <ion-note slot="end" style="color: black;">Termina il {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-note>
+            <br>
+            <br>
+          <ion-label>{{ promo.descPromo }}</ion-label>
+        <br>
+        <br>
+        <ion-chip *ngFor="let tipologia of promo.listaTipologie">
+          <ion-label>{{ tipologia.descrizione }}</ion-label>
+        </ion-chip>
+        <br>
+        <br>
+          <ion-label >Giorni</ion-label>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-col>
+                    <ion-label *ngIf="promo.days?.includes(0)" class="lbl">Tutti i giorni</ion-label>
+                    <ion-label *ngIf="promo.days?.includes(1)">LUN</ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label *ngIf="promo.days?.includes(2)">MAR</ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label *ngIf="promo.days?.includes(3)">MER</ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label *ngIf="promo.days?.includes(4)">GIO</ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label *ngIf="promo.days?.includes(5)">VEN</ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label *ngIf="promo.days?.includes(6)">SAB</ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label *ngIf="promo.days?.includes(7)">DOM</ion-label>
+                  </ion-col>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-label class="lbl">Orario</ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label *ngIf="promo.isAllDayValidita">Tutto il giorno</ion-label>
+                  <ion-label *ngIf="promo.orarioValiditaDa">Dalle {{ promo.orarioValiditaDa }} - </ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label style="margin-left: 0.5%;" *ngIf="promo.orarioValiditaAl">alle {{ promo.orarioValiditaAl }}</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+        <div>
+          <ion-button expand="block" (click)="Prenota(promo)">Prenota</ion-button>
+        </div>
+      </ion-card-content>
+        </ion-card>
+      </div>
+      <div class="ion-padding" slot="content" *ngIf="promo.motivazioneDisabilitata" class="lbl-info">
+          <p>{{ promo.motivazioneDisabilitata }}</p>
+      </div>
+      <ion-item-divider></ion-item-divider>
+    </ion-accordion>
+    
+  </ion-accordion-group>
+</div> 

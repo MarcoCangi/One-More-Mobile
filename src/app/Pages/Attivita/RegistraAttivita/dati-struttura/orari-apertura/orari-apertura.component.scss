@@ -1,0 +1,36 @@
+.divContainer {
+    display: flex;
+    margin-top: 5%;
+  }
+  
+  .time{
+    --color:black;
+    --padding-bottom: 5px;
+    --padding-top: 5px;
+    background-color: rgb(221, 216, 216);
+    border-radius: 15%;
+    width: 75px;
+    align-content: center;
+  }
+
+  .divInput{
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+
+  .lbl{
+    color:black;
+  }
+
+  .divLbl{
+    align-items: center;
+    align-content: center;
+    min-width:50px;
+    max-width:50px;
+  }
+  
+  
+  
+  
+  
+  

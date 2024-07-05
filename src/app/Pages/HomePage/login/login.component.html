@@ -1,0 +1,53 @@
+<ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+<ion-grid *ngIf="!isLoading">
+  <ion-row>
+    <ion-col size-l="6" offset-l="3" class="ion-text-center">
+      <ion-card>
+        <ion-card-header>
+          <ion-toolbar>
+            <ion-card-title>Esegui l'accesso</ion-card-title>
+            <ion-icon slot="end"  name="close-outline" class="close" (click)="closeLogin()"></ion-icon>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content  class="scroll-content">
+          <ion-card-subtitle class="error" [style.visibility]="errore !== '' ? 'visible' : 'hidden'">{{errore}}</ion-card-subtitle>
+          <ion-card-subtitle class="notification" [style.visibility]="notificaInvio ? 'visible' : 'hidden'">{{notificaInvio}}</ion-card-subtitle>
+            <form class="login-container" [formGroup]="homeForm" (ngSubmit)="Login()" style="text-align: center;">
+
+                <ion-item>
+                  <ion-input labelPlacement="floating" type="email" formControlName="emailLogin" type="email" value={{email}}>
+                    <div slot="label">Email</div>
+                  </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-input labelPlacement="floating" type="password" formControlName="passwordLogin" name="passwordLogin"[clearInput]="true" value="Default value">
+                    <div slot="label">Password</div>
+                  </ion-input>
+                </ion-item>
+            
+                <br>
+                <ion-button shape="round" type="input" [disabled]="!homeForm.valid">Accedi</ion-button>
+                <ion-button fill="clear" (click)="openRegister()">Registrati</ion-button>
+                <br>
+                <br>
+                <label>oppure accedi tramite</label>
+                <br>
+                <br>
+                <div class="divIcon">
+                  <img class="card-img-google" (click)="signInWithGoogle()" style="cursor: pointer;" src="assets/Img/google.png">
+            
+                  <img class="card-img-facebook" (click)="signInWithFacebook()" style="cursor: pointer;" src="assets/Img/facebook.png">
+                </div>
+                <br>
+                <div>
+            
+                  <button mat-button color="primary" (click)="resetPassword()">Password dimenticata?</button>
+            
+                </div>
+            </form>
+          </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,17 @@
+.limited-width {
+    width: 100%; /* oppure specifica una larghezza fissa come max-width: 300px; */
+    max-width: 430px;
+    overflow: hidden; /* nasconde il contenuto in eccesso */
+    white-space: nowrap; /* previene che il testo vada a capo */
+    text-overflow: ellipsis; /* aggiunge i tre puntini per il testo in eccesso */
+  }
+  
+  .limited-width ion-select {
+    max-width: 100%; /* assicura che l'ion-select non superi la larghezza del contenitore */
+  }
+  
+  .limited-width ion-item {
+    display: block; /* fa in modo che l'ion-item occupi tutta la larghezza disponibile */
+    white-space: normal; /* permette al testo di andare a capo all'interno dell'ion-item */
+    overflow-wrap: break-word; /* gestisce il testo lungo */
+  }

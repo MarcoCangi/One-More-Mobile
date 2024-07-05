@@ -1,0 +1,9 @@
+<ion-list class="limited-width">
+  <ion-item>
+    <ion-select [formControl]="listaTipoAttivita" placeholder="Tipo Attivita*" multiple="true" >
+      <ion-select-option *ngFor="let decAttivita of listaAttivitaDDL" [value]="decAttivita.codTipoAttivita">
+        {{ decAttivita.descrizione }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>

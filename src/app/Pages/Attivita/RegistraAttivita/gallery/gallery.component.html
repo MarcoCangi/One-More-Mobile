@@ -1,0 +1,25 @@
+<h3 style="color: black; margin-left: 5%; margin-top: 10%;">Crea la tua gallery</h3>
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="4" *ngFor="let url of urls">
+      <ion-img [src]="url" class="photo" (click)="openDialog(url)"></ion-img>
+    </ion-col>
+    <ion-col size="4">
+      <input type="file" class="file-input"
+            [accept]="requiredFileType"
+            (change)="onFileSelected($event)"
+            #fileUpload
+            multiple hidden>
+      <ion-button style="margin-left: 10%;" class="icon" shape="round" (click)="selectImage(CameraSource.Photos)">
+        <ion-icon slot="icon-only" name="image-outline"></ion-icon>
+      </ion-button>
+      <ion-button class="icon" shape="round" (click)="selectImage(CameraSource.Camera)">
+        <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<app-dialog-gallery *ngIf="selectedImageUrl" [img]="selectedImageUrl" (delete)="deletePhoto()"></app-dialog-gallery>
+

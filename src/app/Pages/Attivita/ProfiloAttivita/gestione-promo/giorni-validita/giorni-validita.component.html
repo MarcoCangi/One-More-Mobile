@@ -1,0 +1,29 @@
+<form class="form">
+  <ion-label>Indica per quali giorni della settimana è disponibile l'offerta</ion-label>
+  <div class="container">
+    <div class="check">
+        <ion-checkbox labelPlacement="end" [formControl]="allSettimanaFormControl" [checked]=isAllSettimanaFormControl>Tutti i giorni</ion-checkbox>
+      </div>
+      <div class="check">
+        <ion-checkbox labelPlacement="end" [formControl]="lunediFormControl" [checked]= isLunediFormControl>Lunedì</ion-checkbox>
+      </div>
+      <div class="check">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="martediFormControl" [checked]=isMartediFormControl>Martedì</ion-checkbox>
+      </div>
+      <div class="check">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="mercolediFormControl" [checked]=isMercolediFormControl>Mercoledì</ion-checkbox>
+      </div>
+      <div class="check">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="giovediFormControl" [checked]=isGiovediFormControl>Giovedì</ion-checkbox>
+      </div>
+      <div class="check">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="venerdiFormControl" [checked]=isVenerdiFormControl>Venerdì</ion-checkbox>
+      </div>
+      <div class="check">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="sabatoFormControl" [checked]=isSabatoFormControl>Sabato</ion-checkbox>
+      </div>
+      <div class="check">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="domenicaFormControl" [checked]=isDomenicaFormControl>Domenica</ion-checkbox>
+      </div>
+  </div>
+</form>

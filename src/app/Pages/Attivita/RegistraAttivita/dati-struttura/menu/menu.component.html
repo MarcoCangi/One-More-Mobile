@@ -1,0 +1,39 @@
+<form [formGroup]="exampleForm" style="margin-top: 15%;">
+  <ion-item>
+    <ion-textarea
+      label="Descrizione del locale*" 
+      labelPlacement="stacked"
+      type="text"
+      formControlName="descFormControl"
+      value={{descrizioneOfferta}}
+      [counter]="true"
+      maxlength="2000"
+      [autoGrow]="true">
+    </ion-textarea>
+  </ion-item>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
+    Inserisci una descrizione della tua attività
+  </ion-note>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
+    Lunghezza minima 100 caratteri
+  </ion-note>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
+    Lunghezza massima 2000 caratteri
+  </ion-note>
+</form>
+
+<form [formGroup]="exampleFormDesc" style="margin-top: 15%;">
+  <ion-item>
+    <ion-textarea
+      label="Cosa offri" 
+      labelPlacement="stacked"
+      type="text"
+      formControlName="descOffertaFormControl"
+      value={{descrizioneOfferta}}
+      [counter]="true"
+      maxlength="2000"
+      [autoGrow]="true">
+    </ion-textarea>
+  </ion-item>
+</form>
+

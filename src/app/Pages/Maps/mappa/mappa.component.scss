@@ -1,0 +1,57 @@
+.map {
+  height: 90vh; /* 90% dell'altezza della viewport */
+  width: 100vw; /* 100% della larghezza della viewport */
+}
+
+ion-button.floating-button {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+ion-searchbar {
+  position: absolute;
+  top: 7%;
+  --border-radius:40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+ion-spinner {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.imgAtt{
+  width: 100%;
+  max-height: 50vw;
+}
+
+
+
+ion-item-divider{
+  margin-top: -5%;
+  margin-bottom: 5%;
+}
+
+.imgAttDetail{
+  width: 100%;
+  max-height: 55vw;
+}
+
+.btnDettaglio {
+  right: 0;
+}
+
+.btnContent{
+  display: flex; 
+  justify-content: center; 
+  margin-top: 10px;
+}

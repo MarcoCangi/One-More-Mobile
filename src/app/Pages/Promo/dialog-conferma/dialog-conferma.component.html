@@ -1,0 +1,59 @@
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!isLoading">
+  <div class="container">
+      <h2 *ngIf="this.isError" class="lbl-info" style="color: red;">{{descErrore}}</h2>
+  </div>
+  
+  <div>
+      <mat-card-header>
+        <mat-card-title>{{ riepilogoPromo?.titoloPromo }}</mat-card-title>
+        <mat-card-subtitle>{{ riepilogoPromo?.descPromo }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+  
+          <mat-divider class="orizontal-divider"></mat-divider>
+  
+          <label class="lbl">Valido fino al {{ riepilogoPromo?.dataAl | date:'dd-MM-yyyy' }}</label>
+  
+          <mat-divider class="orizontal-divider"></mat-divider>
+  
+          <div class="row">
+              <div class="col-12 col-sm-6">
+                  <div class="container">
+                      <p class="lbl"> Giorni validità </p>
+                  </div>
+                <ul>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(0)" class="lbl">Tutti i giorni</li>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(1)">Lunedi</li>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(2)">Martedi</li>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(3)">Mercoledi</li>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(4)">Giovedi</li>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(5)">Venerdi</li>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(6)">Sabato</li>
+                  <li *ngIf="riepilogoPromo !== undefined && riepilogoPromo.days !== undefined && riepilogoPromo.days.includes(7)">Domenica</li>
+
+                </ul>
+              </div>
+  
+              <div class="col-12 col-sm-5">
+                <p class="lbl"> Orario </p>
+                <label *ngIf="riepilogoPromo?.isAllDayValidita">Tutto il giorno</label>
+                <label *ngIf="riepilogoPromo?.orarioValiditaDa">Dalle {{riepilogoPromo?.orarioValiditaDa}} - </label>
+                <label style="margin-left: 0,5%;" *ngIf="riepilogoPromo?.orarioValiditaAl">alle {{riepilogoPromo?.orarioValiditaAl}}</label>
+              </div>
+            </div>
+
+            <mat-divider class="orizontal-divider"></mat-divider>
+  
+      </mat-card-content>
+      <div class="container-button">
+          <div class="container" >
+              <mat-card-subtitle class="txt-info">*Cliccando su conferma dichiari di essere a conoscenza delle condizioni della promozione e delle politiche di utilizzo ed eventuale annullamento. Per maggiori informazioni in merito vai alle Info</mat-card-subtitle>
+          </div>
+          <!-- <button type="button" class="btn container-button" (click)="Prenota(this.coupon)">CONFERMA</button> -->
+      </div>
+  </div>
+</div>

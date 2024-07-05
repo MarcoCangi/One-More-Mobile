@@ -1,0 +1,24 @@
+<ion-card class="card">
+    <div class="divClose">
+      <ion-icon name="close-outline" class="close" (click)="Annulla()"></ion-icon>
+    </div>
+
+  <ion-content>
+  <div class="content">
+
+    <h2 class="title">Sicuro di voler uscire?</h2>
+
+    <div class="button">
+      <ion-button shape="round" color="danger" (click)="LogOut()">
+        <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
+        <ion-label>Esci</ion-label>
+      </ion-button>
+  
+      <ion-button shape="round" color="success" (click)="Annulla()">
+        <ion-label>Annulla</ion-label>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+</ion-card>
+

@@ -1,0 +1,50 @@
+.card-container {
+  display: flex;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  flex: 1;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 5px;
+  padding: 5px;
+  width: fit-content; /* Adatta la larghezza del wrapper al contenuto */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card-consigli {
+  flex: 0 0 auto;
+  width: 90%;
+  max-width: 260px;
+  flex-wrap: nowrap; /* Impedisce il wrapping del contenuto nella card */
+}
+
+.card-consigli img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.mat-card-actions {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mat-card-content {
+  max-height: 50px; /* Imposta un'altezza massima per il contenuto della card */
+  overflow: hidden; /* Nasconde il contenuto che supera l'altezza massima */
+}
+
+
+

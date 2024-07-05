@@ -1,0 +1,17 @@
+<form [formGroup]="exampleForm">
+  <ion-item>
+    <ion-input
+      label="Indirizzo*" 
+      labelPlacement="stacked"
+      type="text"
+      formControlName="indirizzoFormControl"
+      value={{indirizzo}}>
+    </ion-input>
+  </ion-item>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
+    Indirizzo attività obbligatorio
+  </ion-note>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
+    Lunghezza minima 3 caratteri
+  </ion-note>
+</form>

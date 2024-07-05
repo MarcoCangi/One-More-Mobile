@@ -1,0 +1,26 @@
+.custom-modal {
+    --width: auto;
+    --height: auto;
+    --max-width: 90%;
+    --max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 50%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+  }
+
+  .date{
+    background: white;
+  }
+
+  .title{
+    margin-left: 5%;
+  }

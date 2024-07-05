@@ -1,0 +1,27 @@
+<div class="spinner-container" *ngIf="this.isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!this.isLoading">
+    <div class="divClose" *ngIf="!isDisattivata">
+      <button mat-dialog-close style="background-color: transparent; border-color: transparent;">
+        <mat-icon style="background-color: transparent;">close</mat-icon>
+      </button>
+    </div>
+  
+    <div  style="text-align: center;" *ngIf="!isDisattivata">
+      <h2 class="title">Sicuro di voler disattivale la promozione?</h2>
+      <label class="title"> dal momento in cui la promo verrà disattivata, non saranno più disponibili i coupon, ma potranno ancora essere utilizzati i coupon richiesti non ancora utilizzati</label>
+      <div style="margin-top: 15%;">
+        <button mat-raised-button color="warn" (click)="Disattiva()">Disattiva</button>
+        <button mat-button style="margin-left: 5%;" (click)="Annulla()">Annulla</button>
+      </div>
+    </div>
+
+    <div class="divConfirmed" *ngIf="isDisattivata">
+      <h2 class="title">La promozione è stata disattivata</h2>
+        <button mat-raised-button color="primary" style="margin-top: 15%;" (click)="Continua()">Continua</button>
+    </div>
+  </div>
+
+  
