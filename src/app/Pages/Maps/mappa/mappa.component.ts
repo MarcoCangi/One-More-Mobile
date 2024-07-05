@@ -204,7 +204,8 @@ export class MappaComponent implements OnInit {
   dismissFilterModal() {
     this.isFilterModalOpen = false;
   }
-
+ 
+  
   async VisualizzaAttivita(idAttivita: number | undefined, idModal:number): Promise<void> {
 
     if(idModal == 1)
