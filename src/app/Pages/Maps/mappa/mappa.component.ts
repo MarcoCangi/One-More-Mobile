@@ -199,7 +199,7 @@ export class MappaComponent implements OnInit {
     }
    }
    this.isFilterModalOpen = true;
-  }
+  } 
 
   dismissFilterModal() {
     this.isFilterModalOpen = false;
