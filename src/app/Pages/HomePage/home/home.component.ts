@@ -27,6 +27,7 @@ export class HomeComponent  implements OnInit {
   attivitaRicercate: Attivita [] | undefined;
   @Output() openPageEventNav = new EventEmitter<number>();
   @Output() updateIdFooter = new EventEmitter<number>();
+  @Output() isModalLoginOpenEvent = new EventEmitter<boolean>();
 
   constructor(
     private attivitaService: GetApiAttivitaService,
@@ -187,27 +188,40 @@ export class HomeComponent  implements OnInit {
   async loadData() {
     if (this.idPage == 1 || this.idPage == undefined) {
       this.isLoading = true;
-  
-      try {
-        const data: AttivitaHomePageResponse = await firstValueFrom(
-          this.attivitaService.apiGetListaAttivitaHomePage().pipe(
-            retry(2), // Riprova la chiamata fino a 3 volte in caso di errore
-            catchError((error) => {
-              // Gestione errore
-              console.error('Errore durante la chiamata all\'API', error);
-              this.isLoading = false;
-              throw error; // Propaga l'errore
-            })
-          )
-        );
-        this.listaElencoConsigli = data.listUltimeAttReg;
-        this.listaElencoPromo = data.listAttivitaWithPromo;
-      } catch (error) {
-        // Gestisci l'errore in caso di fallimento anche dopo i retry
-        console.error('Errore irreversibile', error);
-      } finally {
-        this.isLoading = false;
+
+      this.listaElencoConsigli = this.attivitaService.getListAttivitaNearHomeSession();
+      this.listaElencoPromo = this.attivitaService.getListAttivitaPromoHomeSession();
+      if(!this.listaElencoConsigli || !this.listaElencoPromo){
+        try {
+          const data: AttivitaHomePageResponse = await firstValueFrom(
+            this.attivitaService.apiGetListaAttivitaHomePage().pipe(
+              retry(2), // Riprova la chiamata fino a 3 volte in caso di errore
+              catchError((error) => {
+                // Gestione errore
+                console.error('Errore durante la chiamata all\'API', error);
+                this.isLoading = false;
+                throw error; // Propaga l'errore
+              })
+            )
+          );
+          this.listaElencoConsigli = data.listUltimeAttReg;
+          if(this.listaElencoConsigli)
+            this.attivitaService.createListAttivitaNearHomeSession(this.listaElencoConsigli);
+          this.listaElencoPromo = data.listAttivitaWithPromo;
+          if(this.listaElencoPromo)
+            this.attivitaService.createListAttivitaPromoHomeSession(this.listaElencoPromo);
+        } catch (error) {
+          // Gestisci l'errore in caso di fallimento anche dopo i retry
+          console.error('Errore irreversibile', error);
+        } finally {
+          this.isLoading = false;
+        }
       }
     }
+    this.isLoading = false;
+  }
+
+  isOpenPageLoginEvent(isOpen:boolean){
+    this.isModalLoginOpenEvent.emit(isOpen);
   }
 }

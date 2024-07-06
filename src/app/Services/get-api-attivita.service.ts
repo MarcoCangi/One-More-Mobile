@@ -16,6 +16,8 @@ export class GetApiAttivitaService {
   filtroAttivita : FiltriAttivita | undefined;
   listaAttivitaPerRicerca!: AttivitaRicerca[];
   listaTipoAttivita : TipoAttivita [] | undefined;
+  listaAttivitaNearHome : Attivita[] | undefined;
+  listaAttivitaPromoHome : Attivita[] | undefined;
   comuni : Comuni[] | undefined;
   CAP : Comuni_CAP | undefined;
   private attivitaSubject = new BehaviorSubject<Attivita | null>(null);
@@ -147,6 +149,22 @@ export class GetApiAttivitaService {
 
   createAttivitaSession(attivita:Attivita){
     this.sessioneAttivita = new AttivitaSession(attivita.idAttivita, attivita.idSoggetto, attivita.nome, attivita.indirizzo, attivita.citta, attivita.provincia, attivita.civico, attivita.cap, attivita.latitudine, attivita.longitudine, attivita.telefono, attivita.cellulare, attivita.isCellPubblico, attivita.email, attivita.descrizione, attivita.descrizioneOfferta, attivita.isPromoPresente, attivita.isOffertaVegetariana, attivita.isOffertaVegana, attivita.isOffertaNoGlutine, attivita.listaTipoAttivita, attivita.orari, attivita.immagini);
+  }
+
+  createListAttivitaNearHomeSession(list:Attivita []){
+    this.listaAttivitaNearHome = list;
+  }
+
+  getListAttivitaNearHomeSession(){
+    return this.listaAttivitaNearHome;
+  }
+
+  createListAttivitaPromoHomeSession(list:Attivita []){
+    this.listaAttivitaPromoHome = list;
+  }
+
+  getListAttivitaPromoHomeSession(){
+    return this.listaAttivitaPromoHome;
   }
 
   createListaAttivitaPerRicercaSession(listaAttRicerca:AttivitaRicerca[]){

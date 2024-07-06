@@ -30,9 +30,15 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.checkAndRefreshToken();
 
-    setTimeout(() => {
+    const splashShown = localStorage.getItem('splashShown');
+    if (!splashShown) {
+      setTimeout(() => {
+        this.showSplash = false;
+        localStorage.setItem('splashShown', 'true');
+      }, 3000);
+    } else {
       this.showSplash = false;
-    }, 3000); // Nasconde la schermata di splash dopo 3 secondi
+    }
 
     //GET LISTA DEC TIPO ATTIVITA
     this.attivitaService.getlistaAttivitaDDL().subscribe((listaAttivitaDDL) => {

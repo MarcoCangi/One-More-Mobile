@@ -55,7 +55,8 @@
             [idPage]="this.idPage"
             [listaTipoAttivita]="this.listaTipoAttivita"
             (openPageEventNav)="openPageEventNav($event)"
-            (updateIdFooter)="updateIdFooter($event)"></app-home>
+            (updateIdFooter)="updateIdFooter($event)"
+            (isModalLoginOpenEvent)="isOpenPageLoginEvent($event)"></app-home>
 
   <app-login *ngIf="isModalLoginOpen" class="scroll" (closeLoginEvent)="closeLogin()" (openRegisterEvent)="ShowRegister()"></app-login>
   <app-registrazione *ngIf="isModalRegisterOpen" class="scroll" (closeRegisterEvent)="closeRegister()"></app-registrazione>

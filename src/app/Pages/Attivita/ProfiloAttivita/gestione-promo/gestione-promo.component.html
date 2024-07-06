@@ -7,7 +7,7 @@
     <h4 *ngIf="this.msgErr" class="msgErr">{{msgErr}}</h4>
   </div>
   <ion-title style="margin-top: 8%; margin-bottom: 3%;">Inserisci la tua promozione</ion-title>
-  <form [formGroup]="formGroup">
+  <form>
     <div class="row">
       <div class="formInput">
         <app-titolo [titolo]="this.modificaPromo.titoloPromo" (titoloChange)="handleTitoloChange($event)"></app-titolo>

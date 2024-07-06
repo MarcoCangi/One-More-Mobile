@@ -15,7 +15,6 @@ import { UserSession } from 'src/app/EntityInterface/Utente';
 })
 export class GestionePromoComponent  implements OnInit {
 
-    formGroup!: FormGroup;
     id: number | undefined;
     idAttivita:number | undefined;
     attivita: Attivita | undefined;
@@ -39,20 +38,7 @@ export class GestionePromoComponent  implements OnInit {
       private router: Router,
       private fb: FormBuilder,
       private authService : AuthService
-    ) {
-      this.formGroup = this.fb.group({
-        titoloPromo: ['', Validators.required],
-        dataDal: ['', Validators.required],
-        dataAl: ['', Validators.required],
-        descPromo: ['', Validators.required],
-        isAllDayValidita: [''],
-        orarioValiditaDa: [''],
-        orarioValiditaAl: [''],
-        numCouponMax: [null],
-        numUtilizziPerPersonaMax: [null],
-        listaTipologie: [[], Validators.required]
-      });
-    }
+    ) {}
 
     ngOnInit(): void {
       this.isLoading = true;
@@ -80,20 +66,6 @@ export class GestionePromoComponent  implements OnInit {
         {
           this.listaTipologie = this.modificaPromo.listaTipologie;
         }
-        
-        // Setta i valori del form
-        this.formGroup.patchValue({
-          titoloPromo: this.modificaPromo.titoloPromo,
-          dataDal: this.modificaPromo.dataDal,
-          dataAl: this.modificaPromo.dataAl,
-          descPromo: this.modificaPromo.descPromo,
-          isAllDayValidita: this.modificaPromo.isAllDayValidita,
-          orarioValiditaDa: this.modificaPromo.orarioValiditaDa,
-          orarioValiditaAl: this.modificaPromo.orarioValiditaAl,
-          numCouponMax: this.modificaPromo.numCouponMax,
-          numUtilizziPerPersonaMax: this.modificaPromo.numUtilizziPerPersonaMax,
-          listaTipologie: this.modificaPromo.listaTipologie
-        });
       }
     
       this.sessioneString = this.authService.getUserSessionFromCookie();

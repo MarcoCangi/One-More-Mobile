@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Attivita, Immagini, Orari } from 'src/app/EntityInterface/Attivita';
 import { Promo } from 'src/app/EntityInterface/Promo';
 import { GetApiPromoService } from '../../../../Services/get-api-promo.service';
@@ -22,8 +22,10 @@ export class DettaglioComponent  implements OnInit {
   id:number | undefined;
   immagini : Immagini[] | undefined;
   isLoading : boolean | undefined;
+  isModalLoginOpen : boolean | undefined;
   idSoggetto!: number;
   @Input() attivitaSelezionata : Attivita | undefined;
+  @Output() isModalLoginOpenEvent = new EventEmitter<boolean>();
   isFavorite: boolean | undefined;
   isOk: boolean | undefined;
 
@@ -126,5 +128,9 @@ export class DettaglioComponent  implements OnInit {
       }
     }
     return days;
+  }
+
+  isOpenPageLoginEvent(isOpen:boolean){
+    this.isModalLoginOpenEvent.emit(isOpen);
   }
 }

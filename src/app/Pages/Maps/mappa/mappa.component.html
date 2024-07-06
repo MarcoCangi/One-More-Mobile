@@ -99,7 +99,7 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-
+  
   <!-- Modal for filter -->
   <ion-modal [isOpen]="isFilterModalOpen">
     <ng-template>
@@ -114,7 +114,13 @@
       <ion-content>
         <ion-card>
           <ion-card-content>
-            <app-tipo-attivita [listaAttivitaDDL]="listaAttivitaDDL"></app-tipo-attivita>
+            <app-tipo-attivita [listaAttivitaDDL]="listaAttivitaDDL"></app-tipo-attivita> <br /><br />
+            <ion-toggle style="margin-left: 5%;" [(ngModel)]="isLimitEnabled" [ngModelOptions]="{standalone: true}" >Promozioni presenti</ion-toggle>
+            <ion-list *ngIf="isLimitEnabled">
+              <ion-item >
+                
+              </ion-item>
+            </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-content>

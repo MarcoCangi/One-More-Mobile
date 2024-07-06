@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
-import { AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'src/app/EntityInterface/Attivita';
+import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'src/app/EntityInterface/Attivita';
 import { debounceTime, distinctUntilChanged, filter, map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
@@ -41,6 +41,9 @@ export class NavComponent implements OnInit {
   isModalLoginOpen = false;
   isModalRegisterOpen = false;
   isHomeOpen = true;
+  isReload = false;
+  listaElencoConsigli: Attivita[] | undefined;
+  listaElencoPromo: Attivita[] | undefined;
   @ViewChild(IonModal) modal: IonModal | undefined;
   @Output() openMappaEvent = new EventEmitter<void>();
   @Output() openPageEvent = new EventEmitter<number>();
@@ -52,6 +55,7 @@ export class NavComponent implements OnInit {
 
 
   constructor(private authService: AuthService,
+              private attivitaService: GetApiAttivitaService,
               private formBuilder: FormBuilder, ) {}
 
     ngOnInit(): void { 
@@ -142,6 +146,11 @@ export class NavComponent implements OnInit {
   }
 
   closeLogin() {
+    this.listaElencoConsigli = this.attivitaService.getListAttivitaNearHomeSession();
+    this.listaElencoPromo = this.attivitaService.getListAttivitaPromoHomeSession();
+    if(!this.listaElencoConsigli || this.listaElencoPromo)
+      window.location.reload();
+    
     this.isModalLoginOpen = false;
     this.isHomeOpen = true;
   }
@@ -182,5 +191,11 @@ export class NavComponent implements OnInit {
   
   updateIdFooter(id:number | undefined){
     this.updateIdFooterEvent.emit(id);
+  }
+
+  isOpenPageLoginEvent(isOpen:boolean){
+    if(isOpen){
+      this.ShowLogin();
+    }
   }
 }

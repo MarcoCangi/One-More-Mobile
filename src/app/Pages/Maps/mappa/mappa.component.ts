@@ -34,6 +34,7 @@ export class MappaComponent implements OnInit {
   isListModalOpen = false;
   isFilterModalOpen = false;
   listaAttivitaDDL: TipoAttivita[] | undefined;
+  isLimitEnabled: boolean = false;
 
   constructor(private service: GetApiAttivitaService) {}
 
@@ -177,29 +178,31 @@ export class MappaComponent implements OnInit {
     this.isListModalOpen = false;
   }
 
-  openFilerModal() {
-   //GET LISTA DEC TIPO ATTIVITA
-   console.log("log 1 ",this.listaAttivitaDDL);
-   if(!this.listaAttivitaDDL)
-   {
-    this.listaAttivitaDDL = this.service.GetListaTipoAttivitaSession();
-    console.log("log 2 ",this.listaAttivitaDDL);
-    if(this.listaAttivitaDDL == undefined || this.listaAttivitaDDL.length == 0){
-     this.service.apiGetListaDecAttivita().subscribe((data: TipoAttivita[]) => {
-       if(this.listaAttivitaDDL){
-        this.service.createListaTipoAttivitaSession(this.listaAttivitaDDL);
-        this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
-           return {
-             codTipoAttivita: item.codTipoAttivita,
-             descrizione: item.descrizione
-           };
-         });
+  async openFilerModal() {
+    //GET LISTA DEC TIPO ATTIVITA
+    this.isLoading = true;
+    if (!this.listaAttivitaDDL) {
+      this.listaAttivitaDDL = this.service.GetListaTipoAttivitaSession();
+      if (this.listaAttivitaDDL == undefined || this.listaAttivitaDDL.length == 0) {
+        try {
+          const data = await this.service.apiGetListaDecAttivita().toPromise();
+          if (data) {
+            this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
+              return {
+                codTipoAttivita: item.codTipoAttivita,
+                descrizione: item.descrizione
+              };
+            });
+            this.service.createListaTipoAttivitaSession(this.listaAttivitaDDL);
+          }
+        } catch (error) {
+          console.error('Errore nel recupero della lista di attività:', error);
         }
-     });
+      }
     }
-   }
-   this.isFilterModalOpen = true;
-  } 
+    this.isLoading = false;
+    this.isFilterModalOpen = true;
+  }
 
   dismissFilterModal() {
     this.isFilterModalOpen = false;
