@@ -18,7 +18,7 @@ export class CouponService {
     return this.http.post<Coupon>('http://192.168.8.130:7253/Coupon/Add', coupon);
   }
   
-  ListCoupon(idSogetto: number): Observable<any>{
-    return this.http.get<CouponListDto[]>('http://192.168.8.130:7253/Coupon/List?idSoggetto='+idSogetto);
+  ListCoupon(idSoggetto: number): Observable<CouponListDto[]> {
+    return this.http.get<CouponListDto[]>(`http://192.168.8.130:7253/Coupon/List?idSoggetto=${idSoggetto}`);
   }
 }

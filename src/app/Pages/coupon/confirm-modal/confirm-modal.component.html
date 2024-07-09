@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="CloseModalConfirm()"><ion-icon name="close-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  <ion-card>
+    <ion-card-content *ngIf="this.isAdd" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
+      <ion-card-title> Vuoi utilizzare il coupon?</ion-card-title>
+    <ion-grid style="margin-top:15px;">
+      <ion-row>
+        <ion-col size="6" class="column ion-text-center ion-align-items-center">
+          <ion-button shape="round" color="light">ANNULLA</ion-button>
+        </ion-col>
+        <ion-col size="6" class="column ion-text-center ion-align-items-center">
+          <ion-button shape="round" color="success">CONFERMA</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    </ion-card-content>
+    
+    <ion-card-content *ngIf="!this.isAdd" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
+      <ion-card-title> Sicuro di voler eliminare il coupon?</ion-card-title>
+    <ion-grid>
+      <ion-row style="margin-top:15px;">
+        <ion-col size="6" class="column ion-text-center ion-align-items-center">
+          <ion-button shape="round" color="light">ANNULLA</ion-button>
+        </ion-col>
+        <ion-col size="6" class="column ion-text-center ion-align-items-center">
+          <ion-button shape="round" color="danger">ELIMINA</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    </ion-card-content>
+  </ion-card>

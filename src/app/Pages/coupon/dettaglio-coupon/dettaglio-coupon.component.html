@@ -1,0 +1,84 @@
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>DETTAGLIO</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="CloseModalDetail()"><ion-icon name="close-outline"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+    <ion-card>
+        <div class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
+          <ion-title>{{coupon?.nome}}</ion-title>
+        </div>
+      <img [src]="coupon?.imgPrincipale?.upload" class="imgAtt" alt="Immagine dell'attività"/>
+      <ion-card-content>
+        <div style="margin-bottom: 5%;">
+          <ion-label>{{coupon?.indirizzo}}, {{coupon?.civico}}, {{coupon?.cap}}, {{coupon?.citta}}</ion-label>
+        </div>
+        <ion-label style="font-weight: bold; font-size: large; margin-top: 5%; text-transform: uppercase;">
+          {{coupon?.titoloPromo}}
+      </ion-label>
+      <br><br>
+      <ion-chip [outline]="true" *ngFor="let tipo of coupon?.tipologieOfferta">{{tipo.descrizione}}</ion-chip>
+      <ion-item-divider style="margin-bottom: 5%; margin-top: -2%;"></ion-item-divider>
+      <ion-label>{{coupon?.descPromo}}</ion-label>
+      <ion-item-divider style="margin-top: -2%;"></ion-item-divider>
+      </ion-card-content>
+      <ion-grid>
+        <ion-row style="margin-bottom: 3%;">
+          <ion-col size="5" >
+            <ion-label style="font-weight: bold;">SCADENZA:</ion-label>
+          </ion-col>
+          <ion-col size="7" >
+            {{ coupon?.dataAl| date:'dd/MM/yyyy' }}
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-bottom: 3%;">
+          <ion-col size="5" >
+            <ion-label style="font-weight: bold;">ORARIO VALIDITÀ:</ion-label>
+          </ion-col>
+          <ion-col size="7">
+            <ion-label *ngIf="!coupon?.isAllDayValidita">Dalle {{coupon?.orarioValiditaDa}}, alle {{coupon?.orarioValiditaAl}}</ion-label>
+            <ion-label *ngIf="coupon?.isAllDayValidita">Tutto il giorno</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-bottom: 3%;">
+          <ion-col size="5" >
+            <ion-label style="font-weight: bold;">ACQUISIZIONE:</ion-label>
+          </ion-col>
+          <ion-col size="7" >
+            {{ coupon?.timestamp| date:'dd/MM/yyyy' }}
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-bottom: 3%;">
+          <ion-col size="5" >
+            <ion-label style="font-weight: bold;">GIORNI:</ion-label>
+          </ion-col>
+          <ion-col size="7" >
+            <ion-label *ngIf="coupon?.days?.includes(0)" class="lbl">Tutti i giorni</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(1)">Lunedì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(1) && coupon?.days?.includes(2)">-</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(2)">Martedì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(2) && coupon?.days?.includes(3)">-</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(3)">Mercoledì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(3) && coupon?.days?.includes(4)">-</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(4)">Giovedì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(4) && coupon?.days?.includes(5)">-</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(5)">Venerdì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(5) && coupon?.days?.includes(6)">-</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(6)">Sabato</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(6) && coupon?.days?.includes(7)">-</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(7)">Domenica</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div *ngIf="this.isUtilizzabile" style="margin-bottom: 5%;" class="column ion-text-center ion-align-items-center">
+        <ion-button shape="round" color="success">UTILIZZA COUPON</ion-button>
+      </div>
+      <div *ngIf="!this.isUtilizzabile && this.coupon?.idStatus === 1" style="margin-bottom: 5%;" class="column ion-text-center ion-align-items-center">
+        <ion-button disabled="true" shape="round" color="medium">Coupon non utilizzabile ora</ion-button>
+      </div>
+    </ion-card>
+

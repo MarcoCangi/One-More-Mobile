@@ -116,11 +116,8 @@
           <ion-card-content>
             <app-tipo-attivita [listaAttivitaDDL]="listaAttivitaDDL"></app-tipo-attivita> <br /><br />
             <ion-toggle style="margin-left: 5%;" [(ngModel)]="isLimitEnabled" [ngModelOptions]="{standalone: true}" >Promozioni presenti</ion-toggle>
-            <ion-list *ngIf="isLimitEnabled">
-              <ion-item >
-                
-              </ion-item>
-            </ion-list>
+            <app-tipo-offerte *ngIf="isLimitEnabled"></app-tipo-offerte>
+            <app-distanza></app-distanza>
           </ion-card-content>
         </ion-card>
       </ion-content>
