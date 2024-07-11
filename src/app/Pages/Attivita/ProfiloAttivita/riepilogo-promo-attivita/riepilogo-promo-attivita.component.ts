@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Attivita } from 'src/app/EntityInterface/Attivita';
-import { Promo } from 'src/app/EntityInterface/Promo';
-import { GetApiAttivitaService } from 'src/app/Services/get-api-attivita.service';
-import { GetApiPromoService } from 'src/app/Services/get-api-promo.service';
-import { AuthService } from './../../../../Services/Auth/auth.service';
 import { ConfermaEliminazionePromoComponent } from './conferma-eliminazione-promo/conferma-eliminazione-promo.component';
-import { UserSession } from 'src/app/EntityInterface/Utente';
-
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
+import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
+import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-riepilogo-promo-attivita',
@@ -31,7 +28,6 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   panelOpenState = false;
 
   constructor(
-    private attivitaService: GetApiAttivitaService,
     private promoService : GetApiPromoService,
     private router: Router,
     private dialog: MatDialog,
@@ -41,7 +37,6 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   ngOnInit(): void {
     
     this.isLoading = true;
-    this.attivita = new Attivita();
     this.idAttivita = 0;
     this.idSoggetto = 0;
 

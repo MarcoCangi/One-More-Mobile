@@ -1,17 +1,13 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
-import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'src/app/EntityInterface/Attivita';
-import { debounceTime, distinctUntilChanged, filter, map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { GetApiAttivitaService } from 'src/app/Services/get-api-attivita.service';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-nav',

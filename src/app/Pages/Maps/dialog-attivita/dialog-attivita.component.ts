@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Attivita, Immagini } from 'src/app/EntityInterface/Attivita';
 import { Router } from '@angular/router';
+import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-dialog-attivita',

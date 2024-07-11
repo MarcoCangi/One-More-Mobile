@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AttivitaFiltrate, FiltriAttivita } from 'src/app/EntityInterface/Attivita';
+import { AttivitaFiltrate, FiltriAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-icon-promo',

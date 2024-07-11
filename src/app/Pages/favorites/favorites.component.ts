@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Attivita, AttivitaRicerca } from 'src/app/EntityInterface/Attivita';
-import { Promo } from 'src/app/EntityInterface/Promo';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { GetApiAttivitaService } from 'src/app/Services/get-api-attivita.service';
-import { GetApiPromoService } from 'src/app/Services/get-api-promo.service';
-import { UserService } from 'src/app/Services/user-service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { Attivita, AttivitaRicerca } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
+import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 
 @Component({
   selector: 'app-favorites',
@@ -68,7 +68,6 @@ export class FavoritesComponent  implements OnInit {
     this.isLoading = true;
 
     if (idAttivita) {
-        this.attivita = new Attivita();
         try {
             const data = await this.attivitaService.apiGetAttivitaByIdAttivita(idAttivita).toPromise();
             this.attivita = data;

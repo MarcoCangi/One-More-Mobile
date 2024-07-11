@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Attivita, AttivitaFiltrate, AttivitaHomePageResponse, AttivitaRicerca, FiltriAttivita, Immagini, Orari, TipoAttivita } from 'src/app/EntityInterface/Attivita';
-import { GetApiAttivitaService } from 'src/app/Services/get-api-attivita.service';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { Attivita, AttivitaFiltrate, AttivitaHomePageResponse, FiltriAttivita, Immagini, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { catchError, firstValueFrom, retry } from 'rxjs';
 
 @Component({
@@ -72,6 +72,7 @@ export class HomeComponent  implements OnInit {
     this.idPage = 2;
     this.openPageEvent(this.idPage)
   }
+  
 
   openPageEvent(idPage:number) {
     this.idPage = idPage;
@@ -118,7 +119,9 @@ export class HomeComponent  implements OnInit {
           console.error("Errore durante la chiamata API:", error);
         },
         () => {
-          this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+
+          if(this.listaAttivitaRicerca)
+            this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
           this.isLoading = false;
           this.openPageEvent(2);
         }
@@ -162,7 +165,8 @@ export class HomeComponent  implements OnInit {
           console.error("Errore durante la chiamata API:", error);
         },
         () => {
-          this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+          if(this.listaAttivitaRicerca)
+            this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
           this.isLoading = false;
           this.openPageEvent(2);
         }

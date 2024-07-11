@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 import { debounceTime, tap } from 'rxjs/operators';
-import { Comuni } from 'src/app/EntityInterface/Comuni_CAP';
 
 @Component({
   selector: 'app-citta',

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TipoAttivita } from 'src/app/EntityInterface/Attivita';
-import { TipologiaOfferta } from 'src/app/EntityInterface/Promo';
+import { TipologiaOfferta } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 
 @Component({
   selector: 'app-tipologia-offerta',

@@ -1,12 +1,12 @@
-import { Attivita, Orari } from './../../../../EntityInterface/Attivita';
-import { GiorniSettimanaPromo, InsertPromoReqDto, Promo, TipologiaOfferta } from './../../../../EntityInterface/Promo';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { catchError, of, tap } from 'rxjs';
-import { AuthService } from './../../../../Services/Auth/auth.service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Router } from '@angular/router';
-import { GetApiPromoService } from 'src/app/Services/get-api-promo.service';
-import { UserSession } from 'src/app/EntityInterface/Utente';
+import { Attivita, Orari } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { GiorniSettimanaPromo, InsertPromoReqDto, Promo, TipologiaOfferta } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
+import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 
 @Component({
   selector: 'app-gestione-promo',
@@ -42,16 +42,12 @@ export class GestionePromoComponent  implements OnInit {
 
     ngOnInit(): void {
       this.isLoading = true;
-      this.attivita = new Attivita();
       this.requestPromo = new InsertPromoReqDto();
       this.requestPromo.days = [];
       this.idAttivita = 0;
       this.giorni = new GiorniSettimanaPromo();
-      this.promo = new Promo();
-    
-      if(this.modificaPromo == undefined)
-        this.modificaPromo = new Promo();
-      else if(this.modificaPromo != undefined && this.modificaPromo != null)
+
+      if(this.modificaPromo != undefined && this.modificaPromo != null)
       {
         this.requestPromo.idPromo = this.modificaPromo.idPromo;
         if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0)

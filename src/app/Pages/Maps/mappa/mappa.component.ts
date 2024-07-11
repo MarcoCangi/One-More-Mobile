@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'src/app/EntityInterface/Attivita';
-import { GetApiAttivitaService } from './../../../Services/get-api-attivita.service';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
+import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-mappa',
@@ -220,7 +219,6 @@ export class MappaComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (idAttivita) {
-        this.dettaglioAttivita = new Attivita();
         try {
             const data = await this.service.apiGetAttivitaByIdAttivita(idAttivita).toPromise();
             this.dettaglioAttivita = data;

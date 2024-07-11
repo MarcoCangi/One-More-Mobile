@@ -1,19 +1,11 @@
-import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { RegistrazioneComponent } from './../registrazione/registrazione.component';
-import { Component, Input, Output, OnInit, ViewChild, inject, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { Utente, UserSession} from '../../../EntityInterface/Utente'
-import { catchError, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { getFireBaseErrorMessage } from '../../../Utilities/auth-error'
-import { FirebaseError } from 'firebase/app';
 import { firstValueFrom, of } from 'rxjs';
+import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 
 @Component({
   selector: 'app-login',
@@ -69,7 +61,7 @@ export class LoginComponent {
           };
           const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
           if (!response.utente.errore) {
-            this.authService.createUserSession(this.utente.email?? '', this.utente.uid, token, response.idAttivita, response.userId, docData?.photoURL ? docData.photoURL : '', 1, docData?.displayName ? docData.displayName : '', docData?.nome ? docData.nome : '', docData?.cognome ? docData.cognome : '');
+            this.authService.createUserSession(this.utente.email?? '', this.utente.uid?? '', token, response.idAttivita, response.userId, docData?.photoURL ? docData.photoURL : '', 1, docData?.displayName ? docData.displayName : '', docData?.nome ? docData.nome : '', docData?.cognome ? docData.cognome : '');
             
             this.isLoading = false;
             this.closeLoginEvent.emit();

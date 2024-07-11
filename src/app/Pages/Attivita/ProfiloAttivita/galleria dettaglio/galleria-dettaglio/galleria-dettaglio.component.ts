@@ -1,8 +1,8 @@
 import { Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
-import { Immagini } from 'src/app/EntityInterface/Attivita';
-import { GetApiAttivitaService } from 'src/app/Services/get-api-attivita.service';
 import { IngrandimentoImmagineDialogComponent } from '../ingrandimento-immagine-dialog/ingrandimento-immagine-dialog.component';
 import { ModalController } from '@ionic/angular';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { Immagini } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-galleria-dettaglio',
@@ -19,6 +19,7 @@ export class GalleriaDettaglioComponent implements OnInit {
               private modalController: ModalController) { }
 
   ngOnInit(): void {
+    if(this.IdAttivita)
     this.attivitaService.apiGetListaImmaginiById(this.IdAttivita).subscribe((data: Immagini[]) => {
       this.immagini = data;
     });

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Attivita } from 'src/app/EntityInterface/Attivita';
+import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-elenco-consigli',

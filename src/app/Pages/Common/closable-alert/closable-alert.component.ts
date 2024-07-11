@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AlertInterface } from 'src/app/EntityInterface/AlertInterface';
-import { AlertService } from 'src/app/Services/alert-service';
+import { AlertService } from 'one-more-frontend-common/projects/one-more-fe-service/src/alert-service';
+import { AlertInterface } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/AlertInternace';
 
 
 @Component({

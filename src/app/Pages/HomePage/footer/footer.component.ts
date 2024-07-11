@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 
 @Component({
   selector: 'app-footer',

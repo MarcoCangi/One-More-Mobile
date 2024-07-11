@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'src/app/EntityInterface/Attivita';
-import { GetApiAttivitaService } from 'src/app/Services/get-api-attivita.service';
 import { lastValueFrom } from 'rxjs';
+import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-ricerca',
@@ -134,7 +134,6 @@ export class RicercaComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (idAttivita) {
-        this.attivita = new Attivita();
         try {
             const data = await this.attivitaService.apiGetAttivitaByIdAttivita(idAttivita).toPromise();
             this.attivita = data;

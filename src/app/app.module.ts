@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { getApp, initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
 import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { firebaseConfig } from '../environments/environment';
 import { Auth, GoogleAuthProvider, provideAuth } from '@angular/fire/auth';
@@ -47,12 +46,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
-import { GetApiAttivitaService } from './Services/get-api-attivita.service';
-import { GetApiPromoService } from './Services/get-api-promo.service';
-import { UserService } from './Services/user-service';
-import { GetApiComuniService } from './Services/get-api-comuni.service';
-import { FileUploadService } from './Services/file-upload-service';
-import { AuthService } from './Services/Auth/auth.service';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { CookieService } from 'ngx-cookie-service';
 import { NavComponent } from './Pages/HomePage/nav/nav.component';
@@ -118,6 +111,12 @@ import { DettaglioCouponComponent } from './Pages/coupon/dettaglio-coupon/dettag
 import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-modal.component';
 
 import { Capacitor } from '@capacitor/core';
+import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
+import { FileUploadService } from 'one-more-frontend-common/projects/one-more-fe-service/src/file-upload-service.service';
+import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },

@@ -2,8 +2,8 @@ import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { UserSession } from 'src/app/EntityInterface/Utente';
-import { GetApiPromoService } from 'src/app/Services/get-api-promo.service';
+import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
+import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 
 @Component({
   selector: 'app-conferma-eliminazione-promo',

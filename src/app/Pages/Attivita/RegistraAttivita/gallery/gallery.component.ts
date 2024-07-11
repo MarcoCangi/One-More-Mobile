@@ -1,8 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogGalleryComponent } from './dialog-gallery/dialog-gallery.component';
-import { Immagini } from 'src/app/EntityInterface/Attivita';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Immagini } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-gallery',

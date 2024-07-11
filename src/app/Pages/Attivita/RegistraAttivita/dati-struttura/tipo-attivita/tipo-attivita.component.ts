@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TipoAttivita } from 'src/app/EntityInterface/Attivita';
+import { TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-tipo-attivita',

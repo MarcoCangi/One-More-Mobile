@@ -1,11 +1,10 @@
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
-import { Attivita, AttivitaRicerca, Orari, TipoAttivita } from './EntityInterface/Attivita';
-import { AuthService } from './Services/Auth/auth.service';
-import { GetApiAttivitaService } from './Services/get-api-attivita.service';
-import { UserSession } from './EntityInterface/Utente';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { Attivita, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-root',

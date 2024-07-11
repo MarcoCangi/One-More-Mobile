@@ -1,14 +1,6 @@
-import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { RegistrazioneComponent } from './../registrazione/registrazione.component';
-import { Component, Input, Output, OnInit, ViewChild, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { Utente, UserSession } from '../../../EntityInterface/Utente';
-import { catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { Router } from '@angular/router';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 
 @Component({
   selector: 'app-logout',

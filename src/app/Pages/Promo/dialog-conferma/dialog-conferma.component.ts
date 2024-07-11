@@ -1,13 +1,12 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
-import { InsertPromoUserAttiva, Promo } from 'src/app/EntityInterface/Promo';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { catchError, of, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { Coupon } from 'src/app/EntityInterface/Coupon';
-import { CouponService } from 'src/app/Services/coupon-service';
-import { AlertService } from 'src/app/Services/alert-service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { CouponService } from 'one-more-frontend-common/projects/one-more-fe-service/src/coupon-service';
+import { Coupon } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Coupon';
+import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { AlertService } from 'one-more-frontend-common/projects/one-more-fe-service/src/alert-service';
 
 @Component({
   selector: 'app-dialog-conferma',

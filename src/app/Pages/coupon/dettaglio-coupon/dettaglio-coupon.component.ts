@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
-import { CouponListDto } from 'src/app/EntityInterface/CouponListDto';
+import { CouponListDto } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/CouponListDto.cjs';
 
 @Component({
   selector: 'app-dettaglio-coupon',
@@ -16,7 +16,7 @@ export class DettaglioCouponComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit() {
-    if(this.coupon){
+    if(this.coupon && this.coupon.validDays){
       this.coupon.days = this.getDaysArray(this.coupon.validDays)
     }
   }

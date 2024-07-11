@@ -1,14 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Attivita, Immagini, Orari } from 'src/app/EntityInterface/Attivita';
-import { Promo } from 'src/app/EntityInterface/Promo';
-import { GetApiPromoService } from '../../../../Services/get-api-promo.service';
-import { MatDialog } from '@angular/material/dialog';
 import { GalleriaDettaglioComponent } from '../galleria dettaglio/galleria-dettaglio/galleria-dettaglio.component';
-import { IngrandimentoImmagineDialogComponent } from '../galleria dettaglio/ingrandimento-immagine-dialog/ingrandimento-immagine-dialog.component';
-import { GetApiAttivitaService } from 'src/app/Services/get-api-attivita.service';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { UserService } from 'src/app/Services/user-service';
+import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { ModalController } from '@ionic/angular';
+import { Attivita, Immagini } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 
 @Component({
   selector: 'app-dettaglio',
@@ -67,14 +65,14 @@ export class DettaglioComponent  implements OnInit {
         }
 
           const immaginiData = await this.attivitaService.apiGetListaTop3ImmaginiById(this.attivita.idAttivita).toPromise();
-          if (this.attivita) {
+          if (this.attivita && immaginiData) {
               this.attivita.immagini = immaginiData;
           }
           
           if(!this.attivita.orari)
           {
             const orariData = await this.attivitaService.apiGetOrariById(this.attivita.idAttivita).toPromise();
-              if(this.attivita)
+              if(this.attivita && orariData)
                 this.attivita.orari = orariData;
           }
         }  
