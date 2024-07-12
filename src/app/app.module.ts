@@ -117,6 +117,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { FileUploadService } from 'one-more-frontend-common/projects/one-more-fe-service/src/file-upload-service.service';
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
+import { Constants } from 'one-more-frontend-common/projects/one-more-fe-service/src/Constants';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -233,6 +234,7 @@ const appRoute: Routes = [
             AuthService,
             UserService,
             GoogleAuthProvider,
+            Constants,
             provideAnimations(),
             importProvidersFrom([
               provideFirebaseApp(() => initializeApp(firebaseConfig)),
