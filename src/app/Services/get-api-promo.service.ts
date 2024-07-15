@@ -44,10 +44,6 @@ export class GetApiPromoService {
     return this.http.post<InsertPromoReqDto>(`http://192.168.8.130:7253/Promo/insert-promo`, promo);
   }
 
-  apiInsertPromoAttiva(promo: InsertPromoUserAttiva): Observable<any> {
-    return this.http.post<InsertPromoUserAttiva>(`http://192.168.8.130:7253/Promo/insert-promo-user-attiva`, promo);
-  }
-
   apiUpdatePromo(promo: InsertPromoReqDto): Observable<any> {
     return this.http.post<InsertPromoReqDto>(`http://192.168.8.130:7253/Promo/update-promo`, promo);
   }

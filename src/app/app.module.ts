@@ -14,30 +14,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore'
 import { getStorage, provideStorage } from '@angular/fire/storage'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatListModule } from '@angular/material/list';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HammerModule } from '@angular/platform-browser';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -196,33 +173,11 @@ const appRoute: Routes = [
             RouterModule.forRoot(appRoute),
             IonicModule.forRoot(), 
             BrowserAnimationsModule,
-            MatSlideToggleModule,
-            MatStepperModule,
-            MatIconModule,
-            MatCardModule,
-            MatButtonModule,
             HttpClientModule,
-            MatInputModule,
-            MatCheckboxModule,
-            MatSelectModule,
-            MatGridListModule,
-            MatChipsModule,
-            MatExpansionModule,
-            MatAutocompleteModule,
             FormsModule,
             ReactiveFormsModule,
             GoogleMapsModule,
-            MatToolbarModule,
-            MatFormFieldModule,
-            MatProgressBarModule,
-            MatListModule,
-            MatDialogModule,
-            MatMenuModule,
             HammerModule,
-            MatNativeDateModule,
-            MatDatepickerModule,
-            MatProgressSpinnerModule,
-            MatSidenavModule,
             ToastrModule.forRoot(),
           ],
           providers: [
@@ -250,11 +205,6 @@ const appRoute: Routes = [
               provideFirestore(() => getFirestore()),
               provideStorage(() => getStorage())
             ]),
-            {
-              provide: MatDialogRef,
-              useValue: {}
-            },
-            MatDialog,
             {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
             {
               provide: DateAdapter,
