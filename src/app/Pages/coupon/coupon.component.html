@@ -200,7 +200,7 @@
 
 <ion-modal [isOpen]="isModalDetailOpen">
   <ng-template>
-    <app-dettaglio-coupon (CloseModalDetailEvent)="dismissDetailModal()"  
+    <app-dettaglio-coupon style="height: 100%; overflow-y: auto;" (CloseModalDetailEvent)="dismissDetailModal()"  
     [coupon]="this.couponSelezionato"
     [isUtilizzabile]="this.isUtilizzabile">
   </app-dettaglio-coupon>

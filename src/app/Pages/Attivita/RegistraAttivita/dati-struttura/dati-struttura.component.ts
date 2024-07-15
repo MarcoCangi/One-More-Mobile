@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup} from '@angular/forms';
-import { catchError, of, tap } from 'rxjs';
-import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
-import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
-import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
-import { Attivita, AttivitaSession, Immagini, InsertAttivitaReqDto, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
-import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
+import { AppComponent } from './../../../../app.component';
+import { Attivita, AttivitaSession, Immagini, InsertAttivitaReqDto, Orari, TipoAttivita } from './../../../../EntityInterface/Attivita';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { Comuni } from 'src/app/EntityInterface/Comuni_CAP';
+import { Observable, catchError, map, of, startWith, tap } from 'rxjs';
+import { GetApiComuniService } from 'src/app/Services/get-api-comuni.service';
+import { GetApiAttivitaService } from './../../../../Services/get-api-attivita.service';
+import { Router } from '@angular/router';
+import { DialogEsitoRegistrazioneComponent } from '../dialog-esito-registrazione/dialog-esito-registrazione.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { UserSession } from 'src/app/EntityInterface/Utente';
 
 @Component({
   selector: 'app-dati-struttura',
@@ -53,7 +57,11 @@ export class DatiStrutturaComponent  implements OnInit {
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.isLoading = true;
+    this.attivita = new Attivita();
+    this.requestAttivita = new InsertAttivitaReqDto();
+    this.attivita.orari = new Orari();
     this.orari = new Orari();
     this.idAttivita = 0;
 
@@ -66,9 +74,7 @@ export class DatiStrutturaComponent  implements OnInit {
           this.idAttivita = this.sessioneString.idAttivita;
           this.id = this.sessioneString.idSoggetto;
         }
-    }
-
-    
+      }
       if(this.id != null && this.id > 0)
       {
         //GET ATTIVITA BY ID
@@ -77,7 +83,7 @@ export class DatiStrutturaComponent  implements OnInit {
           this.attivita = data;
           if(this.attivita && this.attivita.idAttivita && this.attivita.idSoggetto)
           {
-            this.attivitaService.createAttivitaSession(this.attivita.idAttivita, this.attivita.idSoggetto, this.attivita.nome, this.attivita.indirizzo, this.attivita.citta, this.attivita.provincia, this.attivita.civico, this.attivita.cap, this.attivita.latitudine, this.attivita.longitudine, this.attivita.telefono, this.attivita.cellulare, this.attivita.isCellPubblico, this.attivita.email, this.attivita.descrizione, this.attivita.descrizioneOfferta, this.attivita.isPromoPresente, this.attivita.isOffertaVegetariana, this.attivita.isOffertaVegana, this.attivita.isOffertaNoGlutine, this.attivita.listaTipoAttivita, this.attivita.orari, this.attivita.immagini);
+            this.attivitaService.createAttivitaSession(this.attivita);
           if(this.attivita.orari != undefined){
           this.orari = this.attivita.orari;
           }
@@ -104,17 +110,21 @@ export class DatiStrutturaComponent  implements OnInit {
    //GET LISTA DEC TIPO ATTIVITA
    this.listaAttivitaDDL = this.attivitaService.GetListaTipoAttivitaSession();
    if(this.listaAttivitaDDL == undefined || this.listaAttivitaDDL.length == 0){
-    this.attivitaService.apiGetListaDecAttivita().subscribe((data: TipoAttivita[]) => {
-      if(this.listaAttivitaDDL){
-       this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
+    try {
+      const data: TipoAttivita[] | undefined = await this.attivitaService.apiGetListaDecAttivita().toPromise();
+      if (data) {
+        this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
           return {
             codTipoAttivita: item.codTipoAttivita,
             descrizione: item.descrizione
           };
         });
-       }
-    });
+      }
+    } catch (error) {
+      console.error('Errore nel recupero dei dati:', error);
+    }
    }
+   this.isLoading = false;
   }
   
   prosegui() {
@@ -135,7 +145,7 @@ export class DatiStrutturaComponent  implements OnInit {
         this.attivita.idSoggetto = sessioneString.idSoggetto;
         this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
       }
-      if(this.requestAttivita && this.orari)
+      if(this.requestAttivita)
         this.requestAttivita.orari = this.orari;
       if(this.requestAttivita && this.requestAttivita.immagini != undefined && this.requestAttivita.immagini.length > 0)
       {
