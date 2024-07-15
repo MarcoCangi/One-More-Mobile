@@ -56,10 +56,12 @@ export class CouponComponent  implements OnInit {
     this.subSegmentValue = event.detail.value;
   }
 
-  openDetailModal(coupon:CouponListDto) {
+  async openDetailModal(coupon: CouponListDto) {
     this.couponSelezionato = coupon;
-    this.checkCouponValidity();
-    console.log(this.couponSelezionato);
+    if(this.couponSelezionato){
+      this.couponSelezionato.days = this.getDaysArray(this.couponSelezionato.validDays)
+    }
+    await this.checkCouponValidity();
     this.isModalDetailOpen = true;
     this.isModalConfirmOpen = false;
   }
@@ -78,28 +80,58 @@ export class CouponComponent  implements OnInit {
     this.isModalConfirmOpen = false;
   }
 
-  private checkCouponValidity() {
+  private async checkCouponValidity() {
     const currentDate = new Date();
     const currentDay = currentDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
     const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // current time in minutes since midnight
+    console.log(this.couponSelezionato)
     if (this.couponSelezionato) {
+      console.log(this.couponSelezionato.days)
       if (this.couponSelezionato.days && this.couponSelezionato.days.length > 0 && !this.couponSelezionato.days.includes(0)) {
         if (!this.couponSelezionato.days.includes(currentDay)) {
           this.isUtilizzabile = false;
+          console.log("log 1", this.isUtilizzabile)
           return;
         }
       }
-
+  
       if (!this.couponSelezionato.isAllDayValidita && this.couponSelezionato.orarioValiditaDa && this.couponSelezionato.orarioValiditaAl) {
         const [startHour, startMinute] = this.couponSelezionato.orarioValiditaDa.split(':').map(Number);
         const [endHour, endMinute] = this.couponSelezionato.orarioValiditaAl.split(':').map(Number);
         const startTime = startHour * 60 + startMinute;
         const endTime = endHour * 60 + endMinute;
-
+  
         if (currentTime < startTime || currentTime > endTime) {
           this.isUtilizzabile = false;
+          console.log("log 2", this.isUtilizzabile)
+          return;
         }
       }
     }
+    console.log("log 3", this.isUtilizzabile)
+  }
+
+  private getDaysArray(validDays: string | undefined): number[] {
+    const days: number[] = [];
+    if (validDays) {
+      if (validDays.includes('-')) {
+        const range = validDays.split('-').map(Number);
+        const start = range[0];
+        const end = range[1];
+        if (!isNaN(start) && !isNaN(end) && start <= end) {
+          for (let i = start; i <= end; i++) {
+            days.push(i);
+          }
+        }
+      } else {
+        const day = parseInt(validDays, 10);
+        if (!isNaN(day)) {
+          days.push(day);
+        }
+      }
+    }
+    return days;
   }
 }
+
+

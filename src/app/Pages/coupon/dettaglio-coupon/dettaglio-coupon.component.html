@@ -1,33 +1,30 @@
 
   <ion-header>
     <ion-toolbar>
-      <ion-title>DETTAGLIO</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="CloseModalDetail()"><ion-icon name="close-outline"></ion-icon></ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-
     <ion-card>
         <div class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
           <ion-title>{{coupon?.nome}}</ion-title>
         </div>
       <img [src]="coupon?.imgPrincipale?.upload" class="imgAtt" alt="Immagine dell'attività"/>
       <ion-card-content>
-        <div style="margin-bottom: 5%;">
+        <div style="margin-bottom: 4%;">
           <ion-label>{{coupon?.indirizzo}}, {{coupon?.civico}}, {{coupon?.cap}}, {{coupon?.citta}}</ion-label>
         </div>
-        <ion-label style="font-weight: bold; font-size: large; margin-top: 5%; text-transform: uppercase;">
+        <ion-label style="font-weight: bold; font-size: medium; margin-top: 4%; text-transform: uppercase;">
           {{coupon?.titoloPromo}}
       </ion-label>
       <br><br>
       <ion-chip [outline]="true" *ngFor="let tipo of coupon?.tipologieOfferta">{{tipo.descrizione}}</ion-chip>
-      <ion-item-divider style="margin-bottom: 5%; margin-top: -2%;"></ion-item-divider>
+      <ion-item-divider style="margin-bottom: 4%; margin-top: -3%;"></ion-item-divider>
       <ion-label>{{coupon?.descPromo}}</ion-label>
-      <ion-item-divider style="margin-top: -2%;"></ion-item-divider>
       </ion-card-content>
       <ion-grid>
-        <ion-row style="margin-bottom: 3%;">
+        <ion-row style="margin-bottom: 2%;">
           <ion-col size="5" >
             <ion-label style="font-weight: bold;">SCADENZA:</ion-label>
           </ion-col>
@@ -35,7 +32,7 @@
             {{ coupon?.dataAl| date:'dd/MM/yyyy' }}
           </ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 3%;">
+        <ion-row style="margin-bottom: 2%;">
           <ion-col size="5" >
             <ion-label style="font-weight: bold;">ORARIO VALIDITÀ:</ion-label>
           </ion-col>
@@ -44,7 +41,7 @@
             <ion-label *ngIf="coupon?.isAllDayValidita">Tutto il giorno</ion-label>
           </ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 3%;">
+        <ion-row style="margin-bottom: 2%;">
           <ion-col size="5" >
             <ion-label style="font-weight: bold;">ACQUISIZIONE:</ion-label>
           </ion-col>
@@ -52,7 +49,7 @@
             {{ coupon?.timestamp| date:'dd/MM/yyyy' }}
           </ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 3%;">
+        <ion-row style="margin-bottom: 2%;">
           <ion-col size="5" >
             <ion-label style="font-weight: bold;">GIORNI:</ion-label>
           </ion-col>
@@ -81,4 +78,5 @@
         <ion-button disabled="true" shape="round" color="medium">Coupon non utilizzabile ora</ion-button>
       </div>
     </ion-card>
+  
 

@@ -57,8 +57,8 @@ export class DatiStrutturaComponent  implements OnInit {
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
+    this.isLoading = true;
     this.attivita = new Attivita();
     this.requestAttivita = new InsertAttivitaReqDto();
     this.attivita.orari = new Orari();
@@ -74,9 +74,7 @@ export class DatiStrutturaComponent  implements OnInit {
           this.idAttivita = this.sessioneString.idAttivita;
           this.id = this.sessioneString.idSoggetto;
         }
-    }
-
-    
+      }
       if(this.id != null && this.id > 0)
       {
         //GET ATTIVITA BY ID
@@ -112,17 +110,21 @@ export class DatiStrutturaComponent  implements OnInit {
    //GET LISTA DEC TIPO ATTIVITA
    this.listaAttivitaDDL = this.attivitaService.GetListaTipoAttivitaSession();
    if(this.listaAttivitaDDL == undefined || this.listaAttivitaDDL.length == 0){
-    this.attivitaService.apiGetListaDecAttivita().subscribe((data: TipoAttivita[]) => {
-      if(this.listaAttivitaDDL){
-       this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
+    try {
+      const data: TipoAttivita[] | undefined = await this.attivitaService.apiGetListaDecAttivita().toPromise();
+      if (data) {
+        this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
           return {
             codTipoAttivita: item.codTipoAttivita,
             descrizione: item.descrizione
           };
         });
-       }
-    });
+      }
+    } catch (error) {
+      console.error('Errore nel recupero dei dati:', error);
+    }
    }
+   this.isLoading = false;
   }
   
   prosegui() {
