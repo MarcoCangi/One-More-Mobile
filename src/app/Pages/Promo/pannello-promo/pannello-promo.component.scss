@@ -1,0 +1,74 @@
+h2{
+    margin-left: 3%;
+  }
+
+  .contenitore{
+    margin-top: 5%;
+  }
+  
+  .headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+    margin-left: 8px;
+  }
+  
+  .chip{
+    font-size: 12px; 
+    height: 24px; 
+  }
+  
+  .btnCerca {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: #fc6114; /* Sostituisci le due righe con una singola riga */
+    border-color: #fc6114;
+    color: white;
+    padding: 5px 10px; /* Aggiungi spazio intorno al contenuto del pulsante */
+    margin-right: 5px; /* Sposta il pulsante a destra */
+    margin-top: 10px;
+    width: 90%;
+  }
+
+  .orizontal-divider{
+    margin-top: 2%;
+    margin-bottom: 3%;
+  }
+
+  .lbl{
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 1%;
+  }
+
+  .lbl-info{
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 1%;
+    color: #e9540a;
+  }
+
+  ion-spinner {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .img{
+    width: 150px;
+    height: 150px;
+    margin-top: 5%;
+  }
+
+  
+  
+  

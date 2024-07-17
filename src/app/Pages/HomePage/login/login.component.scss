@@ -1,0 +1,50 @@
+.error{
+    text-align: center;
+    color: red;
+  }
+  
+  .notification{
+    text-align: center;
+    color: rgb(50, 193, 47);
+  }
+
+  .card-img-google{
+    width: 30px;
+    height: 30px;
+    margin-right: 2%;
+  }
+
+  .card-img-facebook{
+    width: 30px;
+    height: 30px;
+    margin-left: 2%;
+  }
+
+  .divIcon{
+    align-items: center;
+  }
+
+  .close{
+    width: 30px;
+    height: 30px;
+    margin-top: -2%;
+  }
+
+  .header {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .scroll-content {
+    overflow-y: auto;
+    max-height: 60vh; /* Altezza massima consentita, regola a tuo piacimento */
+  }
+
+  ion-spinner {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

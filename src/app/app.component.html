@@ -1,0 +1,16 @@
+<ion-app>
+    <div *ngIf="showSplash" class="splash-screen">
+      <img src="/assets/Img/LogoSchermo.jpeg" alt="Splash Image">
+    </div>
+  
+    <app-nav class="scroll" [listaTipoAttivita]="this.listaAttivitaDDL"
+             [ngClass]="{'sticky-search': isSearchSticky}"
+             (openPageEvent)="openPageEvent($event)"
+             (updateIdFooterEvent)="updateIdFooterEvent($event)"
+             [idPage]="this.idPage"></app-nav>  
+  
+    <app-footer class="footer" style="margin-top: 100px;"
+                (openPageEvent)="openPageEvent($event)"
+                [idPage]="this.idPage"
+                [idSoggetto]="this.idSoggetto"></app-footer>
+  </ion-app>

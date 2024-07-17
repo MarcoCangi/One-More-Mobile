@@ -1,0 +1,50 @@
+<ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+<ion-grid *ngIf="!isLoading">
+  <ion-row>
+    <ion-col size-l="6" offset-l="3" class="ion-text-center">
+      <ion-card>
+        <ion-card-header>
+          <ion-toolbar>
+            <ion-card-title>Registrati</ion-card-title>
+            <ion-icon slot="end"  name="close-outline" class="close" (click)="closeRegister()"></ion-icon>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="scroll-content">
+          <ion-card-subtitle class="error" [style.visibility]="errore !== '' ? 'visible' : 'hidden'">{{errore}}</ion-card-subtitle>
+  
+          <form class="login-container" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="text-align: center;">
+                <ion-item>
+                  <ion-input labelPlacement="floating" formControlName="nomeRegistrazione" type="text">
+                    <div slot="label">Nome</div>
+                  </ion-input>
+                </ion-item>
+              <ion-item>
+                <ion-input labelPlacement="floating" formControlName="cognomeRegistrazione" type="text">
+                  <div slot="label">Cognome</div>
+                </ion-input>
+              </ion-item>
+            <ion-item>
+              <ion-input labelPlacement="floating" formControlName="emailRegistrazione" type="email">
+                <div slot="label">Email</div>
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input labelPlacement="floating" formControlName="passwordRegistrazione" type="password" (input)="onPasswordInput()">
+                <div slot="label">Password</div>
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input labelPlacement="floating" formControlName="ConfermaPasswordRegistrazione" type="password" (input)="onPasswordInput()">
+                <div slot="label">Conferma Password</div>
+              </ion-input>
+            </ion-item>
+              <br>
+              <ion-button shape="round" type="input" [disabled]="!formRegistrazione.valid">Registrati</ion-button>
+              
+              <div class="divIcon">
+                <label>oppure registrati tramite</label>
+                <br>
+                <img class="card-img-google" src="assets/Img/google.png">
+                <img class="card-img-facebook" src="assets/Img/facebook.png">
+              </div>
+          </form>

@@ -1,0 +1,20 @@
+<form [formGroup]="exampleForm">
+  <ion-item>
+    <ion-input
+      label="Titolo*" 
+      labelPlacement="stacked"
+      type="text"
+      formControlName="titoloFormControl"
+      value={{titolo}}>
+    </ion-input>
+  </ion-item>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
+    Lunghezza minima 5 caratteri
+  </ion-note>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
+    Lunghezza massima 50 caratteri
+  </ion-note>
+  <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
+    Titolo della promo obbligatoria
+  </ion-note>
+</form>

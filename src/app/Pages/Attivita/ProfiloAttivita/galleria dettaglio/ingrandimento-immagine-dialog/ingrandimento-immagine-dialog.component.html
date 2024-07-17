@@ -1,0 +1,22 @@
+
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Immagine Ingrandita</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeDialog()">
+          <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <div class="image-container">
+    <div #swiperContainer class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let img of images">
+          <img [src]="img.upload" alt="Immagine Ingrandita" class="image">
+        </div>
+      </div>
+    </div>
+  </div>
+  

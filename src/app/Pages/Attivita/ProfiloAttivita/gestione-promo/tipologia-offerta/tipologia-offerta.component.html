@@ -1,0 +1,42 @@
+<form class="form">
+
+    <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-label>Indica una o più tipologie di offerta</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="is2X1FormControl" [checked]=is2X1>2X1</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="is3X2FormControl" [checked]=is3x2>3X2</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isOmaggioFormControl" [checked]=isOmaggio>Omaggio</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isPacchettoFormControl" [checked]=isPacchetto>Pacchetto/Bundle</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isScontoFormControl" [checked]=isSconto>Sconto</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isBambiniFormControl" [checked]=isBambini>Per Bambini</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isFamiglieFormControl" [checked]=isFamiglie>Per Famiglie</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isCoppieFormControl" [checked]=isCoppie>Per Coppie</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isVeganiFormControl" [checked]=isVegani>Per Vegani</ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <ion-checkbox labelPlacement="end" [formControl]="isVegetarianiFormControl" [checked]=isVegetariani>Per Vegetariani</ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</form>

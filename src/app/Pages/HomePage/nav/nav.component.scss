@@ -1,0 +1,47 @@
+
+  .btnLoginIcon{
+    color: white;
+    display: flex;
+    position: fixed;
+    right: 0;
+  }
+
+  .scroll {
+    height: 100%;
+}
+
+.postcard-container {
+  display: table;
+  position: absolute;
+  background-color: yellow;
+  height: 100%;
+  width: 100%;
+}
+
+.postcard {
+  display: table-cell;
+  vertical-align: middle;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 90%;
+}
+
+.fixed-tab-bar{
+  position: fixed;
+  bottom: 0;
+}
+
+ion-toolbar {
+  --background: #e9540a;
+  --color: #FFFFFF;
+  --z-index: 10000;
+}
+
+ion-icon {
+  margin-right: 2%;
+}
+
+ion-content {
+  height: 100%;
+}

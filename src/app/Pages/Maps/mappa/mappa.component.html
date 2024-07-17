@@ -1,0 +1,125 @@
+<ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+
+
+<ion-card style="min-width: 400px; height: 90vh; width: 100vw;" *ngIf="!isLoading">
+  
+  <ion-grid style="background-color: #e9540a;">
+    <ion-row>
+      <ion-col size="10">
+        <ion-searchbar style="top:0" (click)="openSearch()" placeholder="Città"></ion-searchbar>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button color="light" style="height: 40px;" (click)="openFilerModal()">
+          <ion-icon name="filter-outline" size="auto"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid> 
+  
+  <div id="mapElement" class="map">
+    <google-map #googleMap height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="move($event)">
+      <map-marker *ngFor="let markerPosition of markerPositions" 
+                  [position]="markerPosition" 
+                  [options]="markerOptions"
+                  (mapClick)="markerClicked(markerPosition)">
+      </map-marker>
+    </google-map>
+  </div>
+    <ion-button shape="round" expand="block" (click)="openListModal()" class="floating-button">Lista completa</ion-button>
+</ion-card>
+  
+  
+
+  <!-- Modal for activity detail -->
+  <ion-modal [isOpen]="isDetailModalOpen" [componentProps]="{ attivita: selectedAttivita }" trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ selectedAttivita?.nome }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismissDetailModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div style="position: -webkit-sticky; position: sticky; top: 0; z-index: 1; background: white;">
+          <ion-card style="border-color: #e9540a; border-style: solid;">
+            <img [src]="getImmaginePrincipale(selectedAttivita)" class="imgAttDetail" alt="Immagine dell'attività" />
+            <ion-card-header>
+              <ion-card-title>{{ selectedAttivita?.nome }}</ion-card-title>
+              <ion-card-subtitle>{{ selectedAttivita?.indirizzo }}, {{ selectedAttivita?.civico }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="chip-container">
+                <ion-chip [outline]="true" *ngFor="let tipo of selectedAttivita?.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
+              </div>
+              <ion-item-divider></ion-item-divider>
+              <div class="btnContent" style="display: flex; justify-content: center; margin-top: 10px;">
+                <ion-button class="btnDettaglio" shape="round" (click)="VisualizzaAttivita(selectedAttivita?.idAttivita, 1)">Dettaglio</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <ion-card *ngFor="let attivita of attivitas" (click)="selectNewAtt(attivita.idAttivita)" style="--min-height: 120px;">
+          <ion-card-content style="padding: 0;">
+            <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
+              <ion-thumbnail slot="start" style="--size: 120px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
+                <img class="imgAttThumbnail" [src]="getImmaginePrincipale(attivita)" style="--width: 120px; --height: 120px; object-fit: cover;" />
+              </ion-thumbnail>
+              <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
+                <ion-card-title>{{ attivita.nome }}</ion-card-title>
+                <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
+              </div>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Modal for activity list -->
+  <ion-modal [isOpen]="isListModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Lista delle Attività</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismissListModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-card *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
+          <img class="imgAtt" [src]="getImmaginePrincipale(attivita)" />
+          <ion-card-header>
+            <ion-card-title>{{ attivita.nome }}</ion-card-title>
+            <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
+  <!-- Modal for filter -->
+  <ion-modal [isOpen]="isFilterModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Filtri</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismissFilterModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-card>
+          <ion-card-content>
+            <app-tipo-attivita [listaAttivitaDDL]="listaAttivitaDDL"></app-tipo-attivita> <br /><br />
+            <ion-toggle style="margin-left: 5%;" [(ngModel)]="isLimitEnabled" [ngModelOptions]="{standalone: true}" >Promozioni presenti</ion-toggle>
+            <app-tipo-offerte *ngIf="isLimitEnabled"></app-tipo-offerte>
+            <app-distanza></app-distanza>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>

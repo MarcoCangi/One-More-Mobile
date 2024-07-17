@@ -1,0 +1,44 @@
+.horizontal-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch; // Abilita il momentum scrolling su iOS
+  height: 120px;
+}
+
+ion-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+ion-col {
+  display: inline-block;
+  flex: 0 0 auto;
+  padding: 15px;
+  position: relative; // Permette il posizionamento assoluto degli elementi interni
+  text-align: center; // Centra sia le immagini che le didascalie
+}
+
+.icon-container {
+  position: relative; // Assicura che il contenitore dell'icona abbia una posizione relativa
+  width: 60px; // Larghezza dell'icona
+  height: 60px; // Altezza dell'icona
+  border-radius: 70%; // Rende l'immagine circolare
+  background-color: #e9540a; // Imposta il colore di sfondo 
+  padding: 5px; // Spazio tra il bordo dell'immagine e il bordo del cerchio
+  box-sizing: border-box; // Include padding e border nella larghezza e altezza dell'elemento
+}
+
+.icon-container img {
+  width: 100%; // Riempie completamente il contenitore dell'icona
+  height: auto; // Altezza automatica per mantenere l'aspect ratio
+  filter: brightness(0) invert(1); // Rende l'icona bianca
+}
+
+.icon-caption {
+  position: absolute; // Posizionamento assoluto rispetto al contenitore dell'icona
+  left: 0; // Allinea il testo al centro
+  width: 100%; // Occupa l'intera larghezza del contenitore
+  font-size: 14px; // Dimensione del font per l'intestazione
+  color: #000000; // Colore del testo, cambialo a tuo piacimento
+  bottom: -5px; // Sposta il testo verso il basso per renderlo visibile
+}

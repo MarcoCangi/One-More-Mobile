@@ -1,0 +1,219 @@
+<div class="segment">
+  <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)">
+    <ion-segment-button value="default">
+      <ion-label>COUPON ATTIVI</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="segment">
+      <ion-label>COUPON NON ATTIVI</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+
+<!--ATTIVE -->
+<div *ngIf="!isLoading">
+  <div *ngIf="segmentValue === 'default'">
+  <ion-card *ngIf="!isLoading" class="card-container">
+      <div class="content" style="height: 100%; width: 100%;">
+        <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+          <ion-toolbar>
+              <ion-label style="margin-left: 5%;" slot="start">SCADENZA {{ coupon.dataAl | date:'dd/MM/yyyy' }}</ion-label>
+              <ion-icon slot="end" name="close-circle-outline"(click)="openConfirmModal(false)" slot="end" style="color:red; width: 25px; height: 25px; margin-right: 5%;"></ion-icon>
+          </ion-toolbar>
+          <ion-card-content style="padding: 0;">
+            <ion-item lines="none">
+              <ion-thumbnail slot="start" style="--size: 110px; margin-bottom: -5%; margin-top: -5%;">
+                <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
+              </ion-thumbnail>
+              <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
+                <ion-card-title>{{ coupon.nome }}</ion-card-title>
+                <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
+              </div>
+            </ion-item>
+          </ion-card-content>
+          <ion-card-content>
+            <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
+              <ion-row>
+                <ion-col size="5" class="column ion-text-center ion-align-items-center" (click)="openDetailModal(coupon)">
+                  <ion-label style="color: #0275d8; font-weight: bold;">DETTAGLIO</ion-label>
+                </ion-col>
+                <ion-col size="2" class="column ion-text-center ion-align-items-center">
+                    <ion-label>|</ion-label>
+                </ion-col>
+                <ion-col size="5" class="column ion-text-center ion-align-items-center" (click)="openConfirmModal(true)">
+                   <ion-label style="color: #5cb85c; font-weight: bold;">UTILIZZA</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </div>
+  </ion-card>
+  </div>
+</div>
+
+<!-- NON ATTIVE -->
+<div *ngIf="!isLoading">
+  <div *ngIf="segmentValue === 'segment'">
+    <div>
+      <ion-segment class="segment" [(ngModel)]="subSegmentValue" (ionChange)="onSubSegmentChange($event)">
+        <ion-segment-button value="utilizzati">
+          <ion-label>UTILIZZATI</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="scaduti">
+          <ion-label>SCADUTI</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="annullati">
+          <ion-label>ANNULLATI</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <!-- UTILIZZATI -->
+    <div *ngIf="subSegmentValue === 'utilizzati'">
+      <ion-card *ngIf="!isLoading" class="card-container">
+        <div class="content" style="height: 100%; width: 100%;">
+          <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+            <ion-card-content style="padding: 0;">
+              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
+                <ion-thumbnail slot="start" style="--size: 110px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
+                  <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
+                </ion-thumbnail>
+                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
+                  <ion-card-title>{{ coupon.nome }}</ion-card-title>
+                  <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
+                </div>
+              </ion-item>
+            </ion-card-content>
+            <ion-card-content>
+              <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
+                <ion-row>
+                  <ion-col size="3" class="column ion-text-center ion-align-items-center">
+                    <ion-label style="font-weight: bold; font-size: small;">
+                      SCADENZA
+                    </ion-label>
+                    <br>
+                    <ion-label>
+                      {{ coupon.dataAl | date:'dd/MM/yyyy' }}
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="5" class="column ion-text-center ion-align-items-center">
+                    <ion-button shape="round" style="font-size: small;">DETTAGLIO</ion-button>
+                    </ion-col>
+                  <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                    <ion-button shape="round" color="success" style="font-size: small;">UTILIZZA</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+    </ion-card>
+    </div>
+
+    <!-- SCADUTI -->
+    <div *ngIf="subSegmentValue === 'scaduti'">
+      <ion-card *ngIf="!isLoading" class="card-container">
+        <div class="content" style="height: 100%; width: 100%;">
+          <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+            <ion-card-content style="padding: 0;">
+              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
+                <ion-thumbnail slot="start" style="--size: 110px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
+                  <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
+                </ion-thumbnail>
+                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
+                  <ion-card-title>{{ coupon.nome }}</ion-card-title>
+                  <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
+                </div>
+              </ion-item>
+            </ion-card-content>
+            <ion-card-content>
+              <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
+                <ion-row>
+                  <ion-col size="3" class="column ion-text-center ion-align-items-center">
+                    <ion-label style="font-weight: bold; font-size: small;">
+                      SCADENZA
+                    </ion-label>
+                    <br>
+                    <ion-label>
+                      {{ coupon.dataAl | date:'dd/MM/yyyy' }}
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="5" class="column ion-text-center ion-align-items-center">
+                    <ion-button shape="round" style="font-size: small;">DETTAGLIO</ion-button>
+                    </ion-col>
+                  <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                    <ion-button shape="round" color="success" style="font-size: small;">UTILIZZA</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+    </ion-card>
+    </div>
+
+    <!-- ANNULLATI -->
+    <div *ngIf="subSegmentValue === 'annullati'">
+      <ion-card *ngIf="!isLoading" class="card-container">
+        <div class="content" style="height: 100%; width: 100%;">
+          <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+            <ion-card-content style="padding: 0;">
+              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
+                <ion-thumbnail slot="start" style="--size: 110px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
+                  <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
+                </ion-thumbnail>
+                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
+                  <ion-card-title>{{ coupon.nome }}</ion-card-title>
+                  <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
+                </div>
+              </ion-item>
+            </ion-card-content>
+            <ion-card-content>
+              <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
+                <ion-row>
+                  <ion-col size="3" class="column ion-text-center ion-align-items-center">
+                    <ion-label style="font-weight: bold; font-size: small;">
+                      SCADENZA
+                    </ion-label>
+                    <br>
+                    <ion-label>
+                      {{ coupon.dataAl | date:'dd/MM/yyyy' }}
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="5" class="column ion-text-center ion-align-items-center">
+                    <ion-button shape="round" style="font-size: small;">DETTAGLIO</ion-button>
+                    </ion-col>
+                  <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                    <ion-button shape="round" color="success" style="font-size: small;">UTILIZZA</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+    </ion-card>
+    </div>
+  </div>
+</div>
+
+<ion-modal [isOpen]="isModalDetailOpen">
+  <ng-template>
+    <app-dettaglio-coupon (CloseModalDetailEvent)="dismissDetailModal()"  
+    [coupon]="this.couponSelezionato"
+    [isUtilizzabile]="this.isUtilizzabile">
+  </app-dettaglio-coupon>
+  </ng-template>
+</ion-modal>
+
+
+<ion-modal [isOpen]="isModalConfirmOpen">
+  <ng-template>
+    <app-confirm-modal (CloseModalConfirmEvent)="dismissConfirmlModal()"  
+    [coupon]="this.couponSelezionato"
+    [isUtilizzabile]="this.isUtilizzabile"
+    [isAdd]="this.isAdd">
+  </app-confirm-modal>
+  </ng-template>
+</ion-modal>

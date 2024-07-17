@@ -1,0 +1,59 @@
+
+<div class="container content">
+        <ion-spinner *ngIf="isLoading && (idPage === 1 || idPage === undefined)" name="crescent" color="primary"></ion-spinner>
+        
+    <div class="contentList" *ngIf="!isLoading && (idPage === 1 || idPage === undefined)">
+        
+        <app-icon-promo (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-icon-promo>
+
+        <app-elenco-promo [elencoPromo]="listaElencoPromo" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
+
+        <app-card-tipo-attivita (openPageRicercaTipoAttEvent)="openPageRicercaTipoAttEvent($event)" style="margin-bottom: 100px;"></app-card-tipo-attivita>
+
+        <app-elenco-consigli [elencoConsigli]="listaElencoConsigli " (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
+
+    </div>
+
+    <div *ngIf="idPage === 2">
+        <app-mappa (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
+                   (openSearchEvent)="openPageEvent($event)"></app-mappa>
+    </div>
+
+    <div id="dettaglio" *ngIf="idPage === 3 && this.attivita">
+        <app-dettaglio (isModalLoginOpenEvent)="isOpenPageLoginEvent($event)" [attivitaSelezionata]="this.attivita"></app-dettaglio>
+    </div>
+
+    <div id="logOut" *ngIf="idPage === 4">
+        <app-logout (openPageEvent)="openPageEvent($event)"
+                    (setIdFooterEvent)="setiIdSogggetto($event)"></app-logout>
+    </div>
+
+    <div id="datiStruttura" *ngIf="idPage === 5">
+        <app-dati-struttura></app-dati-struttura>
+    </div>
+
+    <div id="gestionePromo" *ngIf="idPage === 6">
+        <app-gestione-promo (openPageEvent)="openPageEvent($event)"></app-gestione-promo>
+    </div>
+
+    <div id="listaGestionePromo" *ngIf="idPage === 7">
+        <app-riepilogo-promo-attivita></app-riepilogo-promo-attivita>
+    </div>
+
+    <div id="ricerca" *ngIf="idPage === 8">
+        <app-ricerca [listaTipoAttivita]="this.listaTipoAttivita"
+                     (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
+                     (openPageEvent)="openPageEvent($event)"></app-ricerca>
+    </div>
+
+    <div id="favorite" *ngIf="idPage === 9" style="height: 100%">
+        <app-favorites (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"></app-favorites>
+    </div>
+
+    <div id="coupon" *ngIf="idPage === 11" style="height: 100%">
+        <app-coupon [idSoggetto]="this.idSoggetto"></app-coupon>
+    </div>
+</div>
+
+  
+

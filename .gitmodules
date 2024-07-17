@@ -1,0 +1,3 @@
+[submodule "one-more-frontend-common"]
+	path = one-more-frontend-common
+	url = https://github.com/dariobellini/one-more-frontend-common.git

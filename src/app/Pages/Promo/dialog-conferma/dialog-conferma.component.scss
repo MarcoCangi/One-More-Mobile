@@ -1,0 +1,46 @@
+.orizontal-divider{
+    margin-top: 2%;
+    margin-bottom: 3%;
+  }
+
+  .lbl{
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 1%;
+  }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 70%;
+  }
+
+  .btn {
+    font-size: 15px; /* Riduci le dimensioni del font per il pulsante */
+    width: 30%;
+    position: absolute; /* Fissa il pulsante nella finestra del browser */
+    bottom: 10px; /* Posiziona il pulsante in basso */
+    left: 35%;
+    background-color: #3c833e;
+    border-color: #3c833e;
+    color: white;
+  }
+
+  .container-button{
+    align-items: center;
+    justify-content: center;
+  }
+
+  .txt-info{
+    font-size: 10px;
+  }
+
+  .lbl-info{
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 1%;
+    color: #fc6114;
+  }

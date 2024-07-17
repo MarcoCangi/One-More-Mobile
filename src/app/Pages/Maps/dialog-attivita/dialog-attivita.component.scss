@@ -1,0 +1,33 @@
+.uniform-image{
+    width: 100%;
+    max-height: 30vw;
+   }
+   
+   .container {
+       position: relative; /* Imposta la posizione relativa sul container */
+   }
+   
+   .nome{
+       margin-bottom: 0px;
+   }
+   
+   .indirizzo {
+       margin-top: 0; /* Rimuovi il margin-top predefinito */
+       padding-top: 0; /* Rimuovi il padding-top predefinito */
+       font-size: 12px; /* Riduci le dimensioni del font per l'indirizzo */
+   }
+   
+   .tipo-chip {
+       font-size: 12px; /* Riduci le dimensioni del font per le chip */
+       height: 15px;
+   }
+   
+   .btn {
+       font-size: 14px; /* Riduci le dimensioni del font per il pulsante */
+       position: absolute; /* Fissa il pulsante nella finestra del browser */
+       bottom: 5px; /* Posiziona il pulsante in basso */
+       right: 5px; /* Posiziona il pulsante a destra */
+       background-color: #e9540a;
+       border-color: #e9540a;
+       color: white;
+   }

@@ -1,0 +1,22 @@
+.footer{
+    width: 100%;
+    white-space: nowrap; /* Impedisce il wrap dei contenuti */
+    background-color: #e9540a;
+}
+
+.footer ion-toolbar {
+    display: flex;
+    justify-content: space-around; /* Distribuisce uniformemente gli elementi */
+    padding: 0; /* Rimuove il padding predefinito */
+    background-color: #e9540a;
+  }
+
+  .footer ion-icon {
+    color: white;
+    background-color: #e9540a;
+  }
+
+  ion-toolbar {
+    --background: #e9540a;
+    --color: #FFFFFF;
+  }

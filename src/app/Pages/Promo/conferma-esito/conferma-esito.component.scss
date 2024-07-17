@@ -1,0 +1,44 @@
+.container {
+    position: relative; /* Imposta il contenitore come relativo per posizionare l'immagine al suo interno */
+    height: 100vh; /* Imposta l'altezza del contenitore al 100% dell'altezza della finestra del browser */
+}
+
+.img {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 10px;
+    left: 50%; /* Posiziona l'immagine al centro rispetto al bordo sinistro del contenitore */
+    transform: translateX(-50%); /* Trasla l'immagine a sinistra del 50% della sua larghezza per centrarla */
+}
+
+.lbl{
+    position: relative;
+    left: 50%; /* Posiziona l'immagine al centro rispetto al bordo sinistro del contenitore */
+    transform: translateX(-50%); /* Trasla l'immagine a sinistra del 50% della sua larghezza per centrarla */
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    font-size: 40px;
+    margin-top: 4%;
+  }
+
+  .lbl-info{
+    position: absolute;
+    left: 50%; /* Posiziona l'immagine al centro rispetto al bordo sinistro del contenitore */
+    top: 30%;
+    transform: translateX(-50%); /* Trasla l'immagine a sinistra del 50% della sua larghezza per centrarla */
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+  }
+
+  .container-btn{
+    position: absolute;
+    left: 39%; /* Posiziona l'immagine al centro rispetto al bordo sinistro del contenitore */
+    top: 45%
+  }
+
+  .divider{
+    font-size: large;
+    margin-top: 2%;
+  }

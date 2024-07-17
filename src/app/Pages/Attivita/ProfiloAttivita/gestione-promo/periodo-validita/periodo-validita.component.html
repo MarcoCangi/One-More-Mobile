@@ -1,0 +1,46 @@
+<form class="data-form">
+  <ion-label class="title">Periodo*</ion-label>
+  <ion-item class="form">
+    <ion-input
+      [value]="dataDalFormControl.value ? (dataDalFormControl.value | date: 'dd/MM/yyyy') : ''"
+      placeholder="A partire da"
+      readonly>
+    </ion-input>
+    <ion-button fill="clear" slot="end" (click)="openDataDalPicker()">Seleziona</ion-button>
+  </ion-item>
+
+  <ion-item class="form">
+    <ion-input
+      [value]="dataAlFormControl.value ? (dataAlFormControl.value | date: 'dd/MM/yyyy') : ''"
+      placeholder="Fino a"
+      readonly>
+    </ion-input>
+    <ion-button fill="clear" slot="end" (click)="openDataAlPicker()">Seleziona</ion-button>
+  </ion-item>
+
+  <ion-modal [isOpen]="isDataDalPickerOpen">
+    <ng-template class="modal-content">
+      <div class="modal-content">
+        <ion-datetime class="date"
+          [value]="dataDalFormControl.value"
+          (ionChange)="onDataDalSelected($event)"
+          presentation="date">
+        </ion-datetime>
+      </div>
+      <ion-button (click)="closeDataDalPicker()">Chiudi</ion-button>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="isDataAlPickerOpen">
+    <ng-template class="custom-modal">
+      <div class="modal-content">
+        <ion-datetime class="date"
+          [value]="dataAlFormControl.value"
+          (ionChange)="onDataAlSelected($event)"
+          presentation="date">
+        </ion-datetime>
+      </div>
+      <ion-button (click)="closeDataAlPicker()">Chiudi</ion-button>
+    </ng-template>
+  </ion-modal>
+</form>

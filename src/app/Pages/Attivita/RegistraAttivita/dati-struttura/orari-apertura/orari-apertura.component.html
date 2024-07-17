@@ -1,0 +1,140 @@
+ <div style="margin-left: 4%; margin-top: 5%;">
+    <h4 class="lbl">Orari</h4>
+    <ion-label style="margin-left: 18%; color:black">Mattina</ion-label>
+    <ion-label style="margin-left: 40%; color:black">Sera</ion-label>
+  </div>
+  
+  <form class="formContainer" [formGroup]="orariForm" >
+    <!-- LUNEDI -->
+
+    <div class="divContainer">
+      <div class="divLbl">
+        <ion-label class="lbl">LUN.</ion-label>
+      </div>  
+      <div class="divInput">
+        <ion-input class="time" type="time" formControlName="lunediMatDa"  name="lunediMatDa" value={{orari?.lunediMatDa}}></ion-input>
+      </div>
+      <div class="divInput">
+          <ion-input class="time" type="time" formControlName="lunediMatAl" name="lunediMatAl" value={{orari?.lunediMatAl}}></ion-input>
+      </div>
+      <div class="divInput">
+          <ion-input class="time" type="time" formControlName="lunediPomDa" name="lunediPomDa" value={{orari?.lunediPomDa}}></ion-input>
+      </div>
+      <div class="divInput">
+          <ion-input class="time" type="time" formControlName="lunediPomAl" name="lunediPomAl" value={{orari?.lunediPomAl}}></ion-input>
+      </div>
+    </div>
+    <!-- MARTEDI -->
+    <div class="divContainer">
+      <div class="divLbl">
+        <label class="lbl">MAR.</label>
+      </div>
+      <div class="divInput">
+         <ion-input class="time" type="time" formControlName="martediMatDa" name="martediMatDa" value={{orari?.martediMatDa}}></ion-input>
+      </div>
+      <div class="divInput">
+        <ion-input class="time" type="time" formControlName="martediMatAl" name="martediMatAl" value={{orari?.martediMatAl}}></ion-input>
+      </div>
+      <div class="divInput">
+        <ion-input class="time" type="time" formControlName="martediPomDa" name="martediPomDa" value={{orari?.martediPomDa}}></ion-input>
+      </div>
+      <div class="divInput">
+        <ion-input class="time" type="time" formControlName="martediPomAl" name="martediPomAl" value={{orari?.martediPomAl}}></ion-input>
+      </div>
+    </div>
+      <!-- MERCOLEDI -->
+      <div class="divContainer">
+        <div class="divLbl">
+          <label class="lbl">MER.</label>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="mercolediMatDa" name="mercolediMatDa" value={{orari?.mercolediMatDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="mercolediMatAl" name="mercolediMatAl" value={{orari?.mercolediMatAl}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="mercolediPomDa" name="mercolediPomDa" value={{orari?.mercolediPomDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="mercolediPomAl" name="mercolediPomAl" value={{orari?.mercolediPomAl}}></ion-input>
+        </div>
+      </div>
+  
+      <!-- GIOVEDI -->
+      <div class="divContainer">
+        <div class="divLbl">
+          <label class="lbl">GIO.</label>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="giovediMatDa" name="giovediMatDa" value={{orari?.giovediMatDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="giovediMatAl" name="giovediMatAl" value={{orari?.giovediMatAl}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="giovediPomDa" name="giovediPomDa" value={{orari?.giovediPomDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="giovediPomAl" name="giovediPomAl" value={{orari?.giovediPomAl}}></ion-input>
+        </div>
+      </div>
+  
+      <!-- VENERDI -->
+      <div class="divContainer">
+        <div class="divLbl">
+          <label class="lbl">VEN.</label>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="venerdiMatDa" name="venerdiMatDa" value={{orari?.venerdiMatDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="venerdiMatAl" name="venerdiMatAl" value={{orari?.venerdiMatAl}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="venerdiPomDa" name="venerdiPomDa" value={{orari?.venerdiPomDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="venerdiPomAl" name="venerdiPomAl" value={{orari?.venerdiPomAl}}></ion-input>
+        </div>
+      </div>
+  
+      <!-- SABATO -->
+      <div class="divContainer">
+        <div class="divLbl">
+          <label class="lbl">SAB.</label>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="sabatoMatDa" name="sabatoMatDa" value={{orari?.sabatoMatDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="sabatoMatAl" name="sabatoMatAl" value={{orari?.sabatoMatAl}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="sabatoPomDa" name="sabatoPomDa" value={{orari?.sabatoPomDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="sabatoPomAl" name="sabatoPomAl" value={{orari?.sabatoPomAl}}></ion-input>
+        </div>
+      </div>
+  
+      <!-- DOMENICA -->
+      <div class="divContainer">
+        <div class="divLbl">
+          <label class="lbl">DOM.</label>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="domenicaMatDa" name="domenicaMatDa" value={{orari?.domenicaMatDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="domenicaMatAl" name="domenicaMatAl" value={{orari?.domenicaMatAl}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="domenicaPomDa" name="domenicaPomDa" value={{orari?.domenicaPomDa}}></ion-input>
+        </div>
+        <div class="divInput">
+          <ion-input class="time" type="time" formControlName="domenicaPomAl" name="domenicaPomAl" value={{orari?.domenicaPomAl}}></ion-input>
+        </div>
+      </div>
+  </form>
+  

@@ -1,0 +1,223 @@
+<ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+
+<div *ngIf="!isLoading && this.attivita.immagini">
+  <div class="card-container" #widgetsContent>
+    <div class="card-wrapper" *ngIf="attivita.immagini && attivita.immagini.length > 0">
+      <ion-card class="card-img" *ngFor="let immagine of attivita.immagini.slice(0, 3)" (click)="openDialogImg(attivita.idAttivita)">
+        <img class="uniform-image" mat-card-image [src]="immagine.upload" alt="Immagine dell'attività">
+      </ion-card>
+    </div>
+  </div>
+  
+  <div style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
+    <ion-button shape="round" (click)="openDialogImg(attivita.idAttivita)"><ion-icon name="images-outline"></ion-icon>Gallery</ion-button>
+    <ion-icon *ngIf="this.idSoggetto && !this.isFavorite" class="preferiti" name="star-outline" style="--border-color: #e9540a;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
+    <ion-icon *ngIf="this.idSoggetto && this.isFavorite" class="preferiti" name="star" style="color: #e9540a;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
+  </div>
+  
+  <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo">
+    <ion-card-title>
+      <ion-title style="margin-top: 5%;">Le nostre Promozioni</ion-title>
+    </ion-card-title>
+    <ion-card-content>
+      <app-pannello-promo (openPageLogin)="isOpenPageLoginEvent($event)" [listaPromo]="this.listaPromo"></app-pannello-promo>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{attivita.nome}}</ion-card-title>
+      <ion-card-subtitle>
+        <ion-icon name="location-outline"></ion-icon>{{attivita.indirizzo}}, {{attivita.civico}}, {{attivita.cap}}, {{attivita.citta}}
+      </ion-card-subtitle>
+      <div class="chip-container">
+        <ion-chip [outline]="true" *ngFor="let tipo of attivita.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
+      </div>
+      <ion-item-divider></ion-item-divider>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <h3 class="lbl-title">Chi siamo</h3>
+      <ion-label>{{attivita.descrizione}}</ion-label>
+  
+      <ion-item-divider></ion-item-divider>
+  
+      <div class="descOfferta">
+        <ion-accordion-group expand="inset">
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <h3 class="lbl-title">Le nostre offerte</h3>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-label>{{attivita.descrizioneOfferta}}</ion-label>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+  
+      <ion-card class="card-orari" style="margin-top: 5%;">
+        <ion-grid style="margin-top: 3%;">
+          <ion-row>
+            <ion-col>
+              <ion-card-title style="margin-left: 10%;">Orari</ion-card-title>
+            </ion-col>
+            <ion-col>
+              <ion-card-subtitle>Mattina</ion-card-subtitle>
+            </ion-col>
+            <ion-col>
+              <ion-card-subtitle>Sera</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col><p>Lunedì</p></ion-col>
+              <ion-col>
+                  <p *ngIf="attivita.orari !== undefined && attivita.orari.lunediMatDa !== undefined && attivita.orari.lunediMatDa.trim() !== '' && attivita.orari.lunediMatAl !== undefined && attivita.orari.lunediMatAl.trim() !== '' ; else chiusoTemplate">
+                      {{ attivita.orari.lunediMatDa }} - {{ attivita.orari.lunediMatAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <p *ngIf="attivita.orari && attivita.orari.lunediPomDa !== undefined && attivita.orari.lunediPomDa.trim() !== '' && attivita.orari.lunediPomAl !== undefined && attivita.orari.lunediPomAl.trim() !== '' ; else chiusoTemplate">
+                      {{ attivita.orari.lunediPomDa }} - {{ attivita.orari.lunediPomAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col><p>Martedì</p></ion-col>
+              <ion-col>
+                <p *ngIf="attivita.orari && attivita.orari.martediMatDa !== undefined && attivita.orari.martediMatDa.trim() !== '' && attivita.orari.martediMatAl !== undefined && attivita.orari.martediMatAl.trim() !== '' ; else chiusoTemplate">
+                  {{ attivita.orari.martediMatDa }} - {{ attivita.orari.martediMatAl }}
+                </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <p *ngIf="attivita.orari && attivita.orari.martediPomDa !== undefined && attivita.orari.martediPomDa.trim() !== '' && attivita.orari.martediPomAl !== undefined && attivita.orari.martediPomAl.trim() !== '' ; else chiusoTemplate">
+                    {{ attivita.orari.martediPomDa }} - {{ attivita.orari.martediPomAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col><p>Mercoledì</p></ion-col>
+              <ion-col>
+                <p *ngIf="attivita.orari && attivita.orari.mercolediMatDa !== undefined && attivita.orari.mercolediMatDa.trim() !== '' && attivita.orari.mercolediMatAl !== undefined && attivita.orari.mercolediMatAl.trim() !== '' ; else chiusoTemplate">
+                  {{ attivita.orari.mercolediMatDa }} - {{ attivita.orari.mercolediMatAl }}
+                </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <p *ngIf="attivita.orari && attivita.orari.mercolediPomDa !== undefined && attivita.orari.mercolediPomDa.trim() !== '' && attivita.orari.mercolediPomAl !== undefined && attivita.orari.mercolediPomAl.trim() !== '' ; else chiusoTemplate">
+                    {{ attivita.orari.mercolediPomDa }} - {{ attivita.orari.mercolediPomAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col><p>Giovedì</p></ion-col>
+              <ion-col>
+                <p *ngIf="attivita.orari && attivita.orari.giovediMatDa !== undefined && attivita.orari.giovediMatDa.trim() !== '' && attivita.orari.giovediMatAl !== undefined && attivita.orari.giovediMatAl.trim() !== '' ; else chiusoTemplate">
+                  {{ attivita.orari.giovediMatDa }} - {{ attivita.orari.giovediMatAl }}
+                </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <p *ngIf="attivita.orari && attivita.orari.giovediPomDa !== undefined && attivita.orari.giovediPomDa.trim() !== '' && attivita.orari.giovediPomAl !== undefined && attivita.orari.giovediPomAl.trim() !== '' ; else chiusoTemplate">
+                    {{ attivita.orari.giovediPomDa }} - {{ attivita.orari.giovediPomAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col><p>Venerdì</p></ion-col>
+              <ion-col>
+                <p *ngIf="attivita.orari && attivita.orari.venerdiMatDa !== undefined && attivita.orari.venerdiMatDa.trim() !== '' && attivita.orari.venerdiMatAl !== undefined && attivita.orari.venerdiMatAl.trim() !== '' ; else chiusoTemplate">
+                  {{ attivita.orari.venerdiMatDa }} - {{ attivita.orari.venerdiMatAl }}
+                </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <p *ngIf="attivita.orari && attivita.orari.venerdiPomDa !== undefined && attivita.orari.venerdiPomDa.trim() !== '' && attivita.orari.venerdiPomAl !== undefined && attivita.orari.venerdiPomAl.trim() !== '' ; else chiusoTemplate">
+                    {{ attivita.orari.venerdiPomDa }} - {{ attivita.orari.venerdiPomAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col><p>Sabato</p></ion-col>
+              <ion-col>
+                <p *ngIf="attivita.orari && attivita.orari.sabatoMatDa !== undefined && attivita.orari.sabatoMatDa.trim() !== '' && attivita.orari.sabatoMatAl !== undefined && attivita.orari.sabatoMatAl.trim() !== '' ; else chiusoTemplate">
+                  {{ attivita.orari.sabatoMatDa }} - {{ attivita.orari.sabatoMatAl }}
+                </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <p *ngIf="attivita.orari && attivita.orari.sabatoPomDa !== undefined && attivita.orari.sabatoPomDa.trim() !== '' && attivita.orari.sabatoPomAl !== undefined && attivita.orari.sabatoPomAl.trim() !== '' ; else chiusoTemplate">
+                    {{ attivita.orari.sabatoPomDa }} - {{ attivita.orari.sabatoPomAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col><p>Domenica</p></ion-col>
+              <ion-col>
+                <p *ngIf="attivita.orari && attivita.orari.domenicaMatDa !== undefined && attivita.orari.domenicaMatDa.trim() !== '' && attivita.orari.domenicaMatAl !== undefined && attivita.orari.domenicaMatAl.trim() !== '' ; else chiusoTemplate">
+                  {{ attivita.orari.domenicaMatDa }} - {{ attivita.orari.domenicaMatAl }}
+                </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <p *ngIf="attivita.orari && attivita.orari.domenicaPomDa !== undefined && attivita.orari.domenicaPomDa.trim() !== '' && attivita.orari.domenicaPomAl !== undefined && attivita.orari.domenicaPomAl.trim() !== '' ; else chiusoTemplate">
+                    {{ attivita.orari.domenicaPomDa }} - {{ attivita.orari.domenicaPomAl }}
+                  </p>
+                  <ng-template #chiusoTemplate>
+                      Chiuso
+                  </ng-template>
+              </ion-col>
+            </ion-row>
+  
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+  
+    </ion-card-content>
+  </ion-card>
+</div>
+
+
+
