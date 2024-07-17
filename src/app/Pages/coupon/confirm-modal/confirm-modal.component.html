@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button (click)="CloseModalConfirm()"><ion-icon name="close-outline"></ion-icon></ion-button>
+      <ion-button *ngIf="!this.isEsito" (click)="CloseModalConfirm()"><ion-icon name="close-outline"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
   <ion-card>
-    <ion-card-content *ngIf="this.isAdd" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
+    <ion-card-content *ngIf="this.isAdd && !this.isEsito" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
       <ion-card-title> Vuoi utilizzare il coupon?</ion-card-title>
     <ion-grid style="margin-top:15px;">
       <ion-row>
@@ -14,23 +14,54 @@
           <ion-button shape="round" color="light" (click)="CloseModalConfirm()">ANNULLA</ion-button>
         </ion-col>
         <ion-col size="6" class="column ion-text-center ion-align-items-center">
-          <ion-button shape="round" color="success">CONFERMA</ion-button>
+          <ion-button shape="round" color="success" (click)="Confirm(2)">CONFERMA</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
     </ion-card-content>
     
-    <ion-card-content *ngIf="!this.isAdd" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
+    <ion-card-content *ngIf="!this.isAdd && !this.isEsito" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
       <ion-card-title> Sicuro di voler eliminare il coupon?</ion-card-title>
     <ion-grid>
       <ion-row style="margin-top:15px;">
         <ion-col size="6" class="column ion-text-center ion-align-items-center">
-          <ion-button shape="round" color="light">ANNULLA</ion-button>
+          <ion-button shape="round" color="light" (click)="CloseModalConfirm()">ANNULLA</ion-button>
         </ion-col>
         <ion-col size="6" class="column ion-text-center ion-align-items-center">
-          <ion-button shape="round" color="danger">ELIMINA</ion-button>
+          <ion-button shape="round" color="danger" (click)="Confirm(3)">ELIMINA</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
+  </ion-card-content>
+
+    <ion-card-content *ngIf="this.isEsito" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px; height: 400px;">
+      <ion-card-title *ngIf="this.isConfirmed">COUPON UTILIZZATO</ion-card-title>
+      <ion-card-title *ngIf="!this.isConfirmed">ATTENZIONE</ion-card-title>
+
+      <ion-grid>
+        <ion-row class="column ion-text-center ion-align-items-center">
+          <ion-col>
+            <ion-icon *ngIf="this.isConfirmed" color="success" class="img" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon *ngIf="!this.isConfirmed" color="danger" class="img" name="close-circle-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label *ngIf="this.isConfirmed" class="lbl"> Il coupon è stato utilizzato con successo </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button *ngIf="this.isConfirmed" shape="round" color="success" (click)="Chiudi()">CHIUDI</ion-button>
+      <ion-grid *ngIf="!this.isConfirmed">
+        <ion-row style="margin-top:15px;">
+          <ion-col size="6" class="column ion-text-center ion-align-items-center">
+            <ion-button shape="round" color="light" (click)="Chiudi()">CHIUDI</ion-button>
+          </ion-col>
+          <ion-col size="6" class="column ion-text-center ion-align-items-center">
+            <ion-button shape="round" color="light" (click)="Retry()">RIPROVA</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
