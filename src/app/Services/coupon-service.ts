@@ -1,4 +1,4 @@
-import { Coupon } from '../EntityInterface/Coupon';
+import { Coupon, StatusCoupon } from '../EntityInterface/Coupon';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -20,5 +20,9 @@ export class CouponService {
   
   ListCoupon(idSoggetto: number): Observable<CouponListDto[]> {
     return this.http.get<CouponListDto[]>(`http://192.168.8.130:7253/Coupon/List?idSoggetto=${idSoggetto}`);
+  }
+
+  UpdateCoupon(coupon : StatusCoupon): Observable<any>{
+    return this.http.put<StatusCoupon>('http://192.168.8.130:7253/Coupon/update', coupon);
   }
 }

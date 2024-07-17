@@ -38,7 +38,6 @@ export class CouponComponent  implements OnInit {
             this.couponUtilizzati = this.listCoupon
             this.couponAnnullati = this.listCoupon
             this.couponScaduti = this.listCoupon
-            console.log(this.couponAttivi);
           }
         }
       } catch (error) {
@@ -70,7 +69,8 @@ export class CouponComponent  implements OnInit {
     this.isModalDetailOpen = false;
   }
 
-  openConfirmModal(isAdd: boolean) {
+  openConfirmModal(isAdd: boolean, coupon: CouponListDto) {
+    this.couponSelezionato = coupon;
     this.isAdd = isAdd;
     this.isModalDetailOpen = false;
     this.isModalConfirmOpen = true;
@@ -84,13 +84,11 @@ export class CouponComponent  implements OnInit {
     const currentDate = new Date();
     const currentDay = currentDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
     const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // current time in minutes since midnight
-    console.log(this.couponSelezionato)
     if (this.couponSelezionato) {
       console.log(this.couponSelezionato.days)
       if (this.couponSelezionato.days && this.couponSelezionato.days.length > 0 && !this.couponSelezionato.days.includes(0)) {
         if (!this.couponSelezionato.days.includes(currentDay)) {
           this.isUtilizzabile = false;
-          console.log("log 1", this.isUtilizzabile)
           return;
         }
       }
@@ -103,12 +101,10 @@ export class CouponComponent  implements OnInit {
   
         if (currentTime < startTime || currentTime > endTime) {
           this.isUtilizzabile = false;
-          console.log("log 2", this.isUtilizzabile)
           return;
         }
       }
     }
-    console.log("log 3", this.isUtilizzabile)
   }
 
   private getDaysArray(validDays: string | undefined): number[] {

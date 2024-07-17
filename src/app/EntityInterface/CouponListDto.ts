@@ -2,7 +2,7 @@ import { Immagini } from "./Attivita";
 import { TipologiaOfferta } from "./Promo";
 
 export class CouponListDto {
-    id : number | undefined;
+    idCoupon : number | undefined;
     idPromo : number | undefined;
     idSoggetto : number | undefined;
     idAttivita: number | undefined;
