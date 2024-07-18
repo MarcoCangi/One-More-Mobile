@@ -28,23 +28,28 @@ export class CouponComponent  implements OnInit {
 
   async ngOnInit() {
     this.isLoading = true;
-    if (this.idSoggetto) {
+    await this.getCoupon();
+    this.isLoading = false;
+  }
+
+  async getCoupon(){
+    if(this.idSoggetto)
+    {
       try {
         const listaCoupon = await this.couponService.ListCoupon(this.idSoggetto).toPromise();
         if (listaCoupon) {
           this.listCoupon = listaCoupon;
           if(this.listCoupon){
             this.couponAttivi = this.listCoupon.filter(coupon => coupon.idStatus === 1);
-            this.couponUtilizzati = this.listCoupon
-            this.couponAnnullati = this.listCoupon
-            this.couponScaduti = this.listCoupon
+            this.couponUtilizzati = this.listCoupon.filter(coupon => coupon.idStatus === 2);
+            this.couponAnnullati = this.listCoupon.filter(coupon => coupon.idStatus === 3 || coupon.idStatus === 4);
+            this.couponScaduti = this.listCoupon.filter(coupon => coupon.idStatus === 5);
           }
         }
       } catch (error) {
         console.error('Error fetching coupons', error);
       }
     }
-    this.isLoading = false;
   }
 
   onSegmentChange(event: any) {
@@ -78,6 +83,13 @@ export class CouponComponent  implements OnInit {
 
   dismissConfirmlModal() {
     this.isModalConfirmOpen = false;
+  }
+
+  dismissConfirmlModalWithEsito() {
+    this.isLoading = true;
+    this.isModalConfirmOpen = false;
+    this.getCoupon();
+    this.isLoading = false;
   }
 
   private async checkCouponValidity() {

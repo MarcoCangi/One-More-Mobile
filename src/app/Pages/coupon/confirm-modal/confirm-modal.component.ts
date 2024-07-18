@@ -15,7 +15,8 @@ export class ConfirmModalComponent  implements OnInit {
   @Input() isUtilizzabile: boolean | undefined;
   @Input() isAdd: boolean | undefined;
   @Output() CloseModalConfirmEvent = new EventEmitter<void>();
-  updateStatus: StatusCoupon | undefined;
+  @Output() CloseModalConfirmWithEsitoEvent = new EventEmitter<void>();
+  updateStatus!: StatusCoupon;
   isConfirmed = false;
   isLoading = false;
   isEsito = false;
@@ -32,18 +33,15 @@ export class ConfirmModalComponent  implements OnInit {
     this.CloseModalConfirmEvent.emit();
   }
 
+  CloseModalConfirmWithEsito(){
+    this.CloseModalConfirmWithEsitoEvent.emit();
+  }
+
   async Confirm(idSatus: number){
     this.isLoading == true;
     this.typeUtilizzo = idSatus;
-
-    if(this.coupon && this.updateStatus) {
-      if(this.coupon.id )
-        this.updateStatus.idCoupon = this.coupon.id;
-      if(this.idSoggetto)
-        this.updateStatus.idSoggetto = this.idSoggetto;
-
-        this.updateStatus.idStatus = idSatus;
-    } 
+    if(this.coupon && this.idSoggetto)
+      this.updateStatus = new StatusCoupon(this.coupon.idCoupon, idSatus, this.idSoggetto);
     else {
       this.isLoading = false;
       this.isConfirmed = false;
@@ -52,12 +50,15 @@ export class ConfirmModalComponent  implements OnInit {
     try {
       if(this.updateStatus) {
         await this.couponService.UpdateCoupon(this.updateStatus).toPromise();
+        this.isEsito = true;
         this.isConfirmed = true;
       }
       else {
+        this.isEsito = true;
         this.isConfirmed = false;
       }
     } catch (error) {
+      this.isEsito = true;
       this.isConfirmed = false;
     }
     this.isLoading = false;
@@ -67,7 +68,7 @@ export class ConfirmModalComponent  implements OnInit {
     this.isLoading == true;
 
     if(this.coupon && this.typeUtilizzo && this.idSoggetto) {
-      this.updateStatus = new StatusCoupon(this.coupon.id,this.typeUtilizzo, this.idSoggetto)
+      this.updateStatus = new StatusCoupon(this.coupon.idCoupon,this.typeUtilizzo, this.idSoggetto)
       console.log(this.updateStatus);
     } 
     else {
@@ -91,5 +92,9 @@ export class ConfirmModalComponent  implements OnInit {
 
   Chiudi(){
     this.CloseModalConfirm();
+  }
+
+  ChiudiWithEsito(){
+    this.CloseModalConfirmWithEsito();
   }
 }

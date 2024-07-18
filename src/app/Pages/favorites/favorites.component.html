@@ -22,13 +22,13 @@
           <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
             <ion-row>
               <ion-col col="4" class="column ion-text-center ion-align-items-center">
-                  <ion-icon (click)="openPromoModal(attivita.idAttivita)" *ngIf="attivita.isPromoPresente" class="btn" name="ticket-outline"></ion-icon>
+                  <ion-icon (click)="openPromoModal(attivita.idAttivita)" class="btn" name="ticket-outline"></ion-icon>
               </ion-col>
               <ion-col col="4" class="column ion-text-center ion-align-items-center">
                   <ion-icon (click)="openConfirmModal(attivita.idAttivita)" class="btn" name="star" style="color: #f1976a;"></ion-icon>
                 </ion-col>
-              <ion-col col="4" class="column ion-text-center ion-align-items-center" style="background-color: rgb(66, 66, 232);">
-                  <ion-icon (click)="VisualizzaAttivita(attivita.idAttivita)"  class="btn" name="arrow-forward-circle-outline"></ion-icon>
+              <ion-col col="4" class="column ion-text-center ion-align-items-center">
+                  <ion-icon (click)="VisualizzaAttivita(attivita.idAttivita)"  class="btn" name="business-outline"></ion-icon>
               </ion-col>
             </ion-row>
           </ion-grid>

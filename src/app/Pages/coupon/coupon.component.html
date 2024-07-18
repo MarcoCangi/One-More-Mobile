@@ -74,38 +74,25 @@
     <div *ngIf="subSegmentValue === 'utilizzati'">
       <ion-card *ngIf="!isLoading" class="card-container">
         <div class="content" style="height: 100%; width: 100%;">
-          <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+          <ion-card *ngFor="let coupon of couponUtilizzati" style="--min-height: 140px; --min-width: 400px;">
+            <ion-toolbar>
+              <ion-label style="margin-left: 5%;" slot="start">UTILIZZO {{ coupon.timestamp | date:'dd/MM/yyyy' }}</ion-label>
+              <ion-icon slot="end" name="information-circle-outline" color="primary" style=" width: 25px; height: 25px; margin-right: 5%;"></ion-icon>
+            </ion-toolbar>
             <ion-card-content style="padding: 0;">
-              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
-                <ion-thumbnail slot="start" style="--size: 110px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
-                  <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
-                </ion-thumbnail>
-                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
-                  <ion-card-title>{{ coupon.nome }}</ion-card-title>
-                  <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
-                </div>
-              </ion-item>
-            </ion-card-content>
-            <ion-card-content>
-              <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
-                <ion-row>
-                  <ion-col size="3" class="column ion-text-center ion-align-items-center">
-                    <ion-label style="font-weight: bold; font-size: small;">
-                      SCADENZA
-                    </ion-label>
-                    <br>
-                    <ion-label>
-                      {{ coupon.dataAl | date:'dd/MM/yyyy' }}
-                    </ion-label>
-                  </ion-col>
-                  <ion-col size="5" class="column ion-text-center ion-align-items-center">
-                    <ion-button shape="round" style="font-size: small;">DETTAGLIO</ion-button>
+              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0; margin-top: -1%;">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="2" class="column ion-text-center ion-align-items-center" >
+                      <ion-icon color="success"style="margin-top:5px; width: 35px; height: 35px; object-fit: cover;" name="checkmark-circle-outline"></ion-icon>
                     </ion-col>
-                  <ion-col size="4" class="column ion-text-center ion-align-items-center">
-                    <ion-button shape="round" color="success" style="font-size: small;">UTILIZZA</ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                    <ion-col size="10">
+                        <ion-card-title>{{ coupon.nome }}</ion-card-title>
+                        <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
             </ion-card-content>
           </ion-card>
         </div>
@@ -116,80 +103,54 @@
     <div *ngIf="subSegmentValue === 'scaduti'">
       <ion-card *ngIf="!isLoading" class="card-container">
         <div class="content" style="height: 100%; width: 100%;">
-          <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+          <ion-card *ngFor="let coupon of couponScaduti" style="--min-height: 140px; --min-width: 400px;">
+            <ion-toolbar>
+              <ion-label style="margin-left: 5%;" slot="start">SCADUTO IL {{ coupon.timestamp | date:'dd/MM/yyyy' }}</ion-label>
+              <ion-icon slot="end" name="information-circle-outline" color="primary" style=" width: 25px; height: 25px; margin-right: 5%;"></ion-icon>
+            </ion-toolbar>
             <ion-card-content style="padding: 0;">
-              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
-                <ion-thumbnail slot="start" style="--size: 110px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
-                  <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
-                </ion-thumbnail>
-                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
-                  <ion-card-title>{{ coupon.nome }}</ion-card-title>
-                  <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
-                </div>
-              </ion-item>
-            </ion-card-content>
-            <ion-card-content>
-              <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
-                <ion-row>
-                  <ion-col size="3" class="column ion-text-center ion-align-items-center">
-                    <ion-label style="font-weight: bold; font-size: small;">
-                      SCADENZA
-                    </ion-label>
-                    <br>
-                    <ion-label>
-                      {{ coupon.dataAl | date:'dd/MM/yyyy' }}
-                    </ion-label>
-                  </ion-col>
-                  <ion-col size="5" class="column ion-text-center ion-align-items-center">
-                    <ion-button shape="round" style="font-size: small;">DETTAGLIO</ion-button>
+              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0; margin-top: -1%;">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="2" class="column ion-text-center ion-align-items-center" >
+                      <ion-icon color="danger"style="margin-top:5px; width: 35px; height: 35px; object-fit: cover;" name="alert-circle-outline"></ion-icon>
                     </ion-col>
-                  <ion-col size="4" class="column ion-text-center ion-align-items-center">
-                    <ion-button shape="round" color="success" style="font-size: small;">UTILIZZA</ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                    <ion-col size="10">
+                        <ion-card-title>{{ coupon.nome }}</ion-card-title>
+                        <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
             </ion-card-content>
           </ion-card>
         </div>
     </ion-card>
     </div>
-
+    
     <!-- ANNULLATI -->
     <div *ngIf="subSegmentValue === 'annullati'">
       <ion-card *ngIf="!isLoading" class="card-container">
         <div class="content" style="height: 100%; width: 100%;">
-          <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+          <ion-card *ngFor="let coupon of couponAnnullati" style="--min-height: 140px; --min-width: 400px;">
+            <ion-toolbar>
+              <ion-label style="margin-left: 5%;" slot="start">ANNULLATO IL {{ coupon.timestamp | date:'dd/MM/yyyy' }}</ion-label>
+              <ion-icon slot="end" name="information-circle-outline" color="primary" style=" width: 25px; height: 25px; margin-right: 5%;"></ion-icon>
+            </ion-toolbar>
             <ion-card-content style="padding: 0;">
-              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
-                <ion-thumbnail slot="start" style="--size: 110px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
-                  <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
-                </ion-thumbnail>
-                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
-                  <ion-card-title>{{ coupon.nome }}</ion-card-title>
-                  <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
-                </div>
-              </ion-item>
-            </ion-card-content>
-            <ion-card-content>
-              <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
-                <ion-row>
-                  <ion-col size="3" class="column ion-text-center ion-align-items-center">
-                    <ion-label style="font-weight: bold; font-size: small;">
-                      SCADENZA
-                    </ion-label>
-                    <br>
-                    <ion-label>
-                      {{ coupon.dataAl | date:'dd/MM/yyyy' }}
-                    </ion-label>
-                  </ion-col>
-                  <ion-col size="5" class="column ion-text-center ion-align-items-center">
-                    <ion-button shape="round" style="font-size: small;">DETTAGLIO</ion-button>
+              <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0; margin-top: -1%;">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="2" class="column ion-text-center ion-align-items-center" >
+                      <ion-icon color="danger"style="margin-top:5px; width: 35px; height: 35px; object-fit: cover;" name="close-circle-outline"></ion-icon>
                     </ion-col>
-                  <ion-col size="4" class="column ion-text-center ion-align-items-center">
-                    <ion-button shape="round" color="success" style="font-size: small;">UTILIZZA</ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                    <ion-col size="10">
+                        <ion-card-title>{{ coupon.nome }}</ion-card-title>
+                        <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
             </ion-card-content>
           </ion-card>
         </div>
@@ -210,7 +171,8 @@
 
 <ion-modal [isOpen]="isModalConfirmOpen">
   <ng-template>
-    <app-confirm-modal (CloseModalConfirmEvent)="dismissConfirmlModal()"  
+    <app-confirm-modal (CloseModalConfirmEvent)="dismissConfirmlModal()" 
+    (CloseModalConfirmWithEsitoEvent)="dismissConfirmlModalWithEsito()"  
     [coupon]="this.couponSelezionato"
     [isUtilizzabile]="this.isUtilizzabile"
     [idSoggetto]="this.idSoggetto"
