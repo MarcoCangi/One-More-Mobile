@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
-import { CouponListDto } from 'src/app/EntityInterface/CouponListDto';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CouponListDto } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/CouponListDto.cjs';
 
 @Component({
   selector: 'app-dettaglio-coupon',

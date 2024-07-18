@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { StatusCoupon } from 'src/app/EntityInterface/Coupon';
-import { CouponListDto } from 'src/app/EntityInterface/CouponListDto';
-import { CouponService } from 'src/app/Services/coupon-service';
+import { CouponService } from 'one-more-frontend-common/projects/one-more-fe-service/src/coupon-service';
+import { StatusCoupon } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Coupon';
+import { CouponListDto } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/CouponListDto.cjs';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -36,10 +36,9 @@ export class ConfirmModalComponent  implements OnInit {
     this.isLoading == true;
     this.typeUtilizzo = idSatus;
 
-    if(this.coupon) {
-      this.updateStatus = new StatusCoupon();
-      if(this.coupon.idCoupon)
-        this.updateStatus.idCoupon = this.coupon.idCoupon;
+    if(this.coupon && this.updateStatus) {
+      if(this.coupon.id )
+        this.updateStatus.idCoupon = this.coupon.id;
       if(this.idSoggetto)
         this.updateStatus.idSoggetto = this.idSoggetto;
 
@@ -67,14 +66,8 @@ export class ConfirmModalComponent  implements OnInit {
   async Retry(){
     this.isLoading == true;
 
-    if(this.coupon) {
-      this.updateStatus = new StatusCoupon();
-      if(this.coupon.idCoupon)
-        this.updateStatus.idCoupon = this.coupon.idCoupon;
-      if(this.idSoggetto)
-        this.updateStatus.idSoggetto = this.idSoggetto;
-      
-        this.updateStatus.idStatus = this.typeUtilizzo;
+    if(this.coupon && this.typeUtilizzo && this.idSoggetto) {
+      this.updateStatus = new StatusCoupon(this.coupon.id,this.typeUtilizzo, this.idSoggetto)
       console.log(this.updateStatus);
     } 
     else {
