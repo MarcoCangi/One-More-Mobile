@@ -228,4 +228,8 @@ export class HomeComponent  implements OnInit {
   isOpenPageLoginEvent(isOpen:boolean){
     this.isModalLoginOpenEvent.emit(isOpen);
   }
+
+  async redirectEsitoEvent(typeRedirect:boolean){
+    this.openPageEventNav.emit(typeRedirect? 11 : 1);
+  }
 }

@@ -20,7 +20,9 @@
     </div>
 
     <div id="dettaglio" *ngIf="idPage === 3 && this.attivita">
-        <app-dettaglio (isModalLoginOpenEvent)="isOpenPageLoginEvent($event)" [attivitaSelezionata]="this.attivita"></app-dettaglio>
+        <app-dettaglio (isModalLoginOpenEvent)="isOpenPageLoginEvent($event)" 
+                       (redirectEsitoEvent)="redirectEsitoEvent($event)"
+                       [attivitaSelezionata]="this.attivita"></app-dettaglio>
     </div>
 
     <div id="logOut" *ngIf="idPage === 4">

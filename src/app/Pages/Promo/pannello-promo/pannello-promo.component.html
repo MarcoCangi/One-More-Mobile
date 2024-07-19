@@ -85,9 +85,9 @@
     </ion-header>
     <ion-header *ngIf="!isLoading">
       <ion-toolbar>
-        <ion-title>Rimuovi dai Preferiti</ion-title>
+        <ion-title>Esito</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="dismissConfirmModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          <ion-button (click)="dismissConfirmModal(false, false)"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -100,12 +100,12 @@
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
           <ion-button shape="round" color="success" (click)="Prenota()">CONFERMA</ion-button>
-          <ion-button shape="round" color="light" (click)="dismissConfirmModal()">ANNULLA</ion-button>
+          <ion-button shape="round" color="light" (click)="dismissConfirmModal(false, false)">ANNULLA</ion-button>
         </ion-card-content>
         <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && isError">
           <ion-label>Ops, qualcosa è andato storto</ion-label>
           <br>
-          <ion-button shape="round" color="light" style="margin-left: 10px;" (click)="dismissConfirmModal()">CHIUDI</ion-button>
+          <ion-button shape="round" color="light" style="margin-left: 10px;" (click)="dismissConfirmModal(false, false)">CHIUDI</ion-button>
         </ion-card-content>
       </ion-card>
       <ion-card *ngIf="!isLoading && isConfirmed">
@@ -123,10 +123,10 @@
         <ion-grid>
           <ion-row>
             <ion-col size="6">
-              <ion-button shape="round"> <ion-icon name="ticket-outline"></ion-icon> Coupon</ion-button>
+              <ion-button shape="round" (click)="dismissConfirmModal(true, true)"> <ion-icon name="ticket-outline" ></ion-icon> Coupon</ion-button>
             </ion-col>
             <ion-col size="6">
-              <ion-button shape="round"> <ion-icon name="home-outline"></ion-icon> Home</ion-button>
+              <ion-button shape="round" (click)="dismissConfirmModal(true, false)"> <ion-icon name="home-outline" ></ion-icon> Home</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

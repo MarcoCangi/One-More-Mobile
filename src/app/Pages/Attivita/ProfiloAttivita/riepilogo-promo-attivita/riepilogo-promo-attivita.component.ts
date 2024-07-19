@@ -24,7 +24,7 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   isLoading! : boolean;
   isModifica! : boolean;
   promoSelezionata! : Promo;
-  
+  segmentValue: string = 'default';
   panelOpenState = false;
 
   constructor(
@@ -103,5 +103,9 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
       days.push(parseInt(validDays));
     }
     return days;
+  }
+
+  onSegmentChange(event: any) {
+    this.segmentValue = event.detail.value;
   }
 }

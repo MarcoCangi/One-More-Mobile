@@ -24,6 +24,7 @@ export class DettaglioComponent  implements OnInit {
   idSoggetto!: number;
   @Input() attivitaSelezionata : Attivita | undefined;
   @Output() isModalLoginOpenEvent = new EventEmitter<boolean>();
+  @Output() redirectEsitoEvent = new EventEmitter<boolean>();
   isFavorite: boolean | undefined;
   isOk: boolean | undefined;
 
@@ -130,5 +131,13 @@ export class DettaglioComponent  implements OnInit {
 
   isOpenPageLoginEvent(isOpen:boolean){
     this.isModalLoginOpenEvent.emit(isOpen);
+  }
+
+  redirecEsitoEvent(typeRedirect:boolean){
+    this.isLoading = true;
+    setTimeout(() => {
+      this.redirectEsitoEvent.emit(typeRedirect);
+    }, 100); // 2000 millisecondi = 2 secondi
+    this.isLoading = false;
   }
 }

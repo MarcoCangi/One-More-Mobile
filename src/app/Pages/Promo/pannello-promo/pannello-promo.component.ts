@@ -13,6 +13,7 @@ export class PannelloPromoComponent implements OnInit {
   
   @Input() listaPromo!: Promo[];
   @Output() openPageLogin = new EventEmitter<boolean>();
+  @Output() redirecEsitoEvent = new EventEmitter<boolean>();
   id!: number;
   requestPromo!: InsertPromoUserAttiva;
   Coupon!: Coupon;
@@ -56,11 +57,14 @@ export class PannelloPromoComponent implements OnInit {
     this.isLoading = false;
   }
   
-  dismissConfirmModal(): void {
+  dismissConfirmModal(isEsito:boolean, isCoupon:boolean): void {
     this.isError = false;
     this.isConfirmed = false;
     this.riepilogoPromo = undefined;
     this.isModalConfirmOpen = false;
+    if(isEsito){
+      this.redirecEsitoEvent.emit(isCoupon);
+    }
   }
 
   openConfirmModal(promo: Promo): void {

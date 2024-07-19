@@ -20,7 +20,9 @@
       <ion-title style="margin-top: 5%;">Le nostre Promozioni</ion-title>
     </ion-card-title>
     <ion-card-content>
-      <app-pannello-promo (openPageLogin)="isOpenPageLoginEvent($event)" [listaPromo]="this.listaPromo"></app-pannello-promo>
+      <app-pannello-promo (openPageLogin)="isOpenPageLoginEvent($event)"
+                          (redirecEsitoEvent)="redirecEsitoEvent($event)"
+                          [listaPromo]="this.listaPromo"></app-pannello-promo>
     </ion-card-content>
   </ion-card>
   

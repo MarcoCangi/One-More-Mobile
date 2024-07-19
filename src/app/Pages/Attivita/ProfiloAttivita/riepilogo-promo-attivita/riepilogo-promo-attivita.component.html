@@ -2,9 +2,27 @@
 
 <div *ngIf="!this.isLoading && !this.isModifica" class="full-width-container">
 
+  <div class="segment">
+    <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)">
+      <ion-segment-button value="default">
+        <ion-label>COUPON ATTIVI</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="segment">
+        <ion-label>COUPON NON ATTIVI</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
   
-      <ion-title style="margin-top: 10%;">Promo Attive</ion-title>
-      <ion-accordion-group class="full-width-container" style="margin-top: 5%;">
+ <div *ngIf="segmentValue === 'default'">
+
+  <div *ngIf="listaPromoAttive?.length === 0" class="lblAdd">
+    <div class="column ion-text-center ion-align-items-center" style="margin-top: 50%;">
+      <ion-label>Attualmente non hai promo attive per la tua attività</ion-label>
+      <ion-button style="margin-top: 5%;" mat-raised-button color="primary" (click)="RedirectGestionePromo()">Aggiungi promo</ion-button>
+    </div>
+  </div>
+   
+ <ion-accordion-group class="full-width-container" style="margin-top: 5%;">
         <ion-accordion *ngFor="let promo of listaPromoAttive" class="full-width-container">
           <ion-item slot="header" color="light" class="full-width-item">
             <ion-grid>
@@ -133,18 +151,11 @@
             <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDialogDisattivaPromo(promo.idPromo)">Disattiva</ion-button>
           </div>
         </ion-accordion>
-      </ion-accordion-group>
-
-
-
- <div *ngIf="listaPromoAttive?.length === 0" class="row lblAdd">
-  <div class="col-md-2">
-    <button mat-raised-button color="primary" (click)="RedirectGestionePromo()">Aggiungi promo</button>
-  </div>
+ </ion-accordion-group>
  </div>
-  
 
-  <ion-title style="margin-top: 10%;">Promo Non Attive</ion-title>
+  
+ <div *ngIf="segmentValue === 'segment'">
       <ion-accordion-group class="full-width-container" style="margin-top: 5%;">
         <ion-accordion *ngFor="let promo of listaPromoNonAttive" class="full-width-container">
           <ion-item slot="header" color="light" class="full-width-item">
@@ -275,6 +286,7 @@
           </div>
         </ion-accordion>
       </ion-accordion-group>
+</div>
 </div>
 
 <div *ngIf="!this.isLoading && this.isModifica">
