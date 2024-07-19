@@ -85,7 +85,8 @@ import { TipoOfferteComponent } from './Pages/Maps/mappa/tipo-offerte/tipo-offer
 import { DistanzaComponent } from './Pages/Maps/mappa/distanza/distanza.component';
 import { CouponComponent } from './Pages/coupon/coupon.component';
 import { DettaglioCouponComponent } from './Pages/coupon/dettaglio-coupon/dettaglio-coupon.component';
-import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-modal.component'
+import { DettaglioCouponNonAttComponent } from './Pages/coupon/dettaglio-coupon-non-att/dettaglio-coupon-non-att.component';
 
 import { Capacitor } from '@capacitor/core';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
@@ -163,7 +164,8 @@ const appRoute: Routes = [
                  DistanzaComponent,
                  CouponComponent,
                  DettaglioCouponComponent,
-                 ConfirmModalComponent
+                 ConfirmModalComponent,
+                 DettaglioCouponNonAttComponent
   ],
   imports: [BrowserModule, 
             AngularFireModule.initializeApp(firebaseConfig),

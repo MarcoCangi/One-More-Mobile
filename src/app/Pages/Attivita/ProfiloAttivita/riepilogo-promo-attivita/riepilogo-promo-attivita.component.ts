@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfermaEliminazionePromoComponent } from './conferma-eliminazione-promo/conferma-eliminazione-promo.component';
@@ -15,6 +15,7 @@ import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/
 })
 export class RiepilogoPromoAttivitaComponent implements OnInit{
 
+  @Output() openPageEvent = new EventEmitter<number>();
   sessioneString!:UserSession | null;
   listaPromoAttive: Promo[] | undefined;
   listaPromoNonAttive: Promo[] | undefined;
@@ -79,10 +80,8 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     });
   }
 
-  RedirectGestionePromo(): void {
-    this.router.navigateByUrl('/dummy', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/GestionePromo']);
-    });
+  openPage(){
+    this.openPageEvent.emit(6);
   }
 
   ModificaPromo(promo: Promo): void {

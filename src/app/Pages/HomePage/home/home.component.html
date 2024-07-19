@@ -39,7 +39,7 @@
     </div>
 
     <div id="listaGestionePromo" *ngIf="idPage === 7">
-        <app-riepilogo-promo-attivita></app-riepilogo-promo-attivita>
+        <app-riepilogo-promo-attivita (openPageEvent)="openPageEvent($event)"></app-riepilogo-promo-attivita>
     </div>
 
     <div id="ricerca" *ngIf="idPage === 8">

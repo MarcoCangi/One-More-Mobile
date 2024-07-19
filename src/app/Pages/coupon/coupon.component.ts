@@ -17,6 +17,7 @@ export class CouponComponent  implements OnInit {
   couponUtilizzati: CouponListDto [] | undefined;
   couponSelezionato: CouponListDto | undefined;
   isModalDetailOpen = false;
+  isModalDetailNonAttOpen = false;
   isModalConfirmOpen = false;
   isUtilizzabile = true;
   isAdd: boolean | undefined;
@@ -40,10 +41,30 @@ export class CouponComponent  implements OnInit {
         if (listaCoupon) {
           this.listCoupon = listaCoupon;
           if(this.listCoupon){
-            this.couponAttivi = this.listCoupon.filter(coupon => coupon.idStatus === 1);
-            this.couponUtilizzati = this.listCoupon.filter(coupon => coupon.idStatus === 2);
-            this.couponAnnullati = this.listCoupon.filter(coupon => coupon.idStatus === 3 || coupon.idStatus === 4);
-            this.couponScaduti = this.listCoupon.filter(coupon => coupon.idStatus === 5);
+            this.couponAttivi = this.listCoupon.filter(coupon => coupon.idStatus === 1).sort((a, b) => {
+              const dateA = new Date(a.dataAl);
+              dateA.setHours(0, 0, 0, 0); // Impost
+              const dateB = new Date(b.dataAl);
+              return dateA.getTime() - dateB.getTime();
+          });
+            this.couponUtilizzati = this.listCoupon.filter(coupon => coupon.idStatus === 2).sort((a, b) => {
+              const dateA = new Date(a.timestamp);
+              dateA.setHours(0, 0, 0, 0); // Impost
+              const dateB = new Date(b.timestamp);
+              return dateA.getTime() - dateB.getTime();
+          });
+            this.couponAnnullati = this.listCoupon.filter(coupon => coupon.idStatus === 3 || coupon.idStatus === 4).sort((a, b) => {
+              const dateA = new Date(a.timestamp);
+              dateA.setHours(0, 0, 0, 0); // Impost
+              const dateB = new Date(b.timestamp);
+              return dateA.getTime() - dateB.getTime();
+          });
+            this.couponScaduti = this.listCoupon.filter(coupon => coupon.idStatus === 5).sort((a, b) => {
+              const dateA = new Date(a.timestamp);
+              dateA.setHours(0, 0, 0, 0); // Impost
+              const dateB = new Date(b.timestamp);
+              return dateA.getTime() - dateB.getTime();
+          });
           }
         }
       } catch (error) {
@@ -83,6 +104,19 @@ export class CouponComponent  implements OnInit {
 
   dismissConfirmlModal() {
     this.isModalConfirmOpen = false;
+  }
+
+  async openDetailNonAttModal(coupon: CouponListDto) {
+    this.couponSelezionato = coupon;
+    if(this.couponSelezionato){
+       this.couponSelezionato.days = this.getDaysArray(this.couponSelezionato.validDays)
+    }
+    this.isModalDetailNonAttOpen = true;
+  }
+
+  dismissDetailNonAttModal() {
+    console.log("prova");
+    this.isModalDetailNonAttOpen = false;
   }
 
   dismissConfirmlModalWithEsito() {
