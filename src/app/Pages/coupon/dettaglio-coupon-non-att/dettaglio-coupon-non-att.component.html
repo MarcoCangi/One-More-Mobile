@@ -3,15 +3,15 @@
   <ion-toolbar>
     <ion-buttons slot="start" *ngIf="coupon?.idStatus === 2">
       <ion-icon color="success" name="checkmark-circle-outline" style="width: 45px; height: 45px;"></ion-icon>
-      <ion-label style="margin-left: 10px;">UTILIZZATO IL {{ coupon?.dataAl| date:'dd/MM/yyyy' }}</ion-label>
+      <ion-label style="margin-left: 10px;">UTILIZZATO IL {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
     </ion-buttons>
     <ion-buttons slot="start" *ngIf="coupon?.idStatus === 3 || coupon?.idStatus === 4">
       <ion-icon color="danger" name="close-circle-outline" style="width: 45px; height: 45px;"></ion-icon>
-      <ion-label style="margin-left: 10px;">ANNULLATO IL {{ coupon?.dataAl| date:'dd/MM/yyyy' }}</ion-label>
+      <ion-label style="margin-left: 10px;">ANNULLATO IL {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
     </ion-buttons>
     <ion-buttons slot="start" *ngIf="coupon?.idStatus === 5">
       <ion-icon color="danger" name="alert-circle-outline" style="width: 45px; height: 45px;"></ion-icon>
-      <ion-label style="margin-left: 10px;">SCADUTO IL {{ coupon?.dataAl| date:'dd/MM/yyyy' }}</ion-label>
+      <ion-label style="margin-left: 10px;">SCADUTO IL {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="CloseModalNonAttDetail()"><ion-icon name="close-outline"></ion-icon></ion-button>

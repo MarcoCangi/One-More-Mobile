@@ -95,11 +95,21 @@ export class CouponComponent  implements OnInit {
     this.isModalDetailOpen = false;
   }
 
-  openConfirmModal(isAdd: boolean, coupon: CouponListDto) {
+  async openConfirmModal(isAdd: boolean, coupon: CouponListDto) {
+    this.isLoading = true;
     this.couponSelezionato = coupon;
+    if(this.couponSelezionato){
+      this.couponSelezionato.days = this.getDaysArray(this.couponSelezionato.validDays)
+    }
+    await this.checkCouponValidity();
+    
     this.isAdd = isAdd;
+    this.isLoading = false;
     this.isModalDetailOpen = false;
-    this.isModalConfirmOpen = true;
+    setTimeout(() => {
+      this.isModalConfirmOpen = true;
+    }, 100);
+    
   }
 
   dismissConfirmlModal() {
@@ -115,7 +125,6 @@ export class CouponComponent  implements OnInit {
   }
 
   dismissDetailNonAttModal() {
-    console.log("prova");
     this.isModalDetailNonAttOpen = false;
   }
 
@@ -127,11 +136,11 @@ export class CouponComponent  implements OnInit {
   }
 
   private async checkCouponValidity() {
+    this.isUtilizzabile = true;
     const currentDate = new Date();
     const currentDay = currentDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
     const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // current time in minutes since midnight
     if (this.couponSelezionato) {
-      console.log(this.couponSelezionato.days)
       if (this.couponSelezionato.days && this.couponSelezionato.days.length > 0 && !this.couponSelezionato.days.includes(0)) {
         if (!this.couponSelezionato.days.includes(currentDay)) {
           this.isUtilizzabile = false;

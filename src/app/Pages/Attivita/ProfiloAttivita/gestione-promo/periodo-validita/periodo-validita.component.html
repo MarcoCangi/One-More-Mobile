@@ -18,29 +18,31 @@
     <ion-button fill="clear" slot="end" (click)="openDataAlPicker()">Seleziona</ion-button>
   </ion-item>
 
-  <ion-modal [isOpen]="isDataDalPickerOpen">
-    <ng-template class="modal-content">
+  <!-- Modal per la selezione della data iniziale -->
+  <ion-modal [isOpen]="isDataDalPickerOpen" (didDismiss)="closeDataDalPicker()">
+    <ng-template>
       <div class="modal-content">
         <ion-datetime class="date"
           [value]="dataDalFormControl.value"
           (ionChange)="onDataDalSelected($event)"
           presentation="date">
         </ion-datetime>
+        <ion-button (click)="closeDataDalPicker()">Chiudi</ion-button>
       </div>
-      <ion-button (click)="closeDataDalPicker()">Chiudi</ion-button>
     </ng-template>
   </ion-modal>
 
-  <ion-modal [isOpen]="isDataAlPickerOpen">
-    <ng-template class="custom-modal">
+  <!-- Modal per la selezione della data finale -->
+  <ion-modal [isOpen]="isDataAlPickerOpen" (didDismiss)="closeDataAlPicker()">
+    <ng-template>
       <div class="modal-content">
         <ion-datetime class="date"
           [value]="dataAlFormControl.value"
           (ionChange)="onDataAlSelected($event)"
           presentation="date">
         </ion-datetime>
+        <ion-button (click)="closeDataAlPicker()">Chiudi</ion-button>
       </div>
-      <ion-button (click)="closeDataAlPicker()">Chiudi</ion-button>
     </ng-template>
   </ion-modal>
 </form>
