@@ -50,33 +50,27 @@ export class PeriodoValiditaComponent implements OnInit {
   }
 
   openDataDalPicker() {
-    console.log("Apri data picker Dal");
     this.isDataDalPickerOpen = true;
   }
 
   closeDataDalPicker() {
-    console.log("Chiudi data picker Dal");
     this.isDataDalPickerOpen = false;
   }
 
   openDataAlPicker() {
-    console.log("Apri data picker Al");
     this.isDataAlPickerOpen = true;
   }
 
   closeDataAlPicker() {
-    console.log("Chiudi data picker Al");
     this.isDataAlPickerOpen = false;
   }
 
   onDataDalSelected(event: any) {
-    console.log("Data Dal selezionata:", event.detail.value);
     const value = event.detail.value;
     this.dataDalFormControl.setValue(value);
   }
 
   onDataAlSelected(event: any) {
-    console.log("Data Al selezionata:", event.detail.value);
     const value = event.detail.value;
     this.dataAlFormControl.setValue(value);
   }

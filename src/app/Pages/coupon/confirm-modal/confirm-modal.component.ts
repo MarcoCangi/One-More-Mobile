@@ -69,7 +69,6 @@ export class ConfirmModalComponent  implements OnInit {
 
     if(this.coupon && this.typeUtilizzo && this.idSoggetto) {
       this.updateStatus = new StatusCoupon(this.coupon.idCoupon,this.typeUtilizzo, this.idSoggetto)
-      console.log(this.updateStatus);
     } 
     else {
       this.isLoading = false;

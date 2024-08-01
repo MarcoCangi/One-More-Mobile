@@ -49,6 +49,7 @@ export class GestionePromoComponent  implements OnInit {
 
       if(this.modificaPromo != undefined && this.modificaPromo != null)
       {
+        console.log(this.modificaPromo);
         this.requestPromo.idPromo = this.modificaPromo.idPromo;
         if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0)
           this.isLimitEnabled = true;
@@ -363,7 +364,10 @@ export class GestionePromoComponent  implements OnInit {
         this.msgErr = "Indicare per quali giorni della settimana è disponibile l'offerta";
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
-     }
+    }
+    // if(promo.days != undefined && promo.days.length > 1 && promo.days.includes(0))
+    // {
+    // }
      if((promo.isAllDayValidita == undefined || promo.isAllDayValidita == false) && 
         (promo.orarioValiditaDa == undefined || promo.orarioValiditaDa == null) &&
         (promo.orarioValiditaAl == undefined || promo.orarioValiditaAl == null)){

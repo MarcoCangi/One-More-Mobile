@@ -42,7 +42,7 @@ export class GiorniValiditaComponent  implements OnInit {
   }
 
   ngOnInit(): void {
-
+    console.log(this.giorni?.days);
     this.allSettimanaFormControl = new FormControl();
     this.lunediFormControl = new FormControl();
     this.martediFormControl = new FormControl();
@@ -71,6 +71,8 @@ export class GiorniValiditaComponent  implements OnInit {
       this.venerdiFormControl.setValue(this.giorni.days.includes(0) ? true : false);
       this.sabatoFormControl.setValue(this.giorni.days.includes(0) ? true : false);
       this.domenicaFormControl.setValue(this.giorni.days.includes(0) ? true : false);
+
+      console.log(this.isMartediFormControl)
     }
     
 

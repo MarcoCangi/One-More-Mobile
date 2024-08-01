@@ -41,7 +41,6 @@ export class PannelloPromoComponent implements OnInit {
     if (userSession && userSession.idSoggetto) {
       this.requestPromo.idSoggetto = userSession.idSoggetto;
       this.requestPromo.idPromo = this.riepilogoPromo?.idPromo;
-      console.log(this.requestPromo);
       if(this.riepilogoPromo?.idPromo)
         this.Coupon = new Coupon(this.riepilogoPromo.idPromo, userSession.idSoggetto);  
       try {

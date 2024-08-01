@@ -2,28 +2,28 @@
   <ion-label>Indica per quali giorni della settimana è disponibile l'offerta</ion-label>
   <div class="container">
     <div class="check">
-        <ion-checkbox labelPlacement="end" [formControl]="allSettimanaFormControl" [checked]=isAllSettimanaFormControl>Tutti i giorni</ion-checkbox>
+        <ion-checkbox labelPlacement="end" [formControl]="allSettimanaFormControl" [checked]="isAllSettimanaFormControl === true">Tutti i giorni</ion-checkbox>
       </div>
       <div class="check">
-        <ion-checkbox labelPlacement="end" [formControl]="lunediFormControl" [checked]= isLunediFormControl>Lunedì</ion-checkbox>
+        <ion-checkbox labelPlacement="end" [formControl]="lunediFormControl" [checked]="isLunediFormControl === true">Lunedì</ion-checkbox>
       </div>
       <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="martediFormControl" [checked]=isMartediFormControl>Martedì</ion-checkbox>
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="martediFormControl" [checked]="isMartediFormControl === true">Martedì</ion-checkbox>
       </div>
       <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="mercolediFormControl" [checked]=isMercolediFormControl>Mercoledì</ion-checkbox>
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="mercolediFormControl" [checked]="isMercolediFormControl === true">Mercoledì</ion-checkbox>
       </div>
       <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="giovediFormControl" [checked]=isGiovediFormControl>Giovedì</ion-checkbox>
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="giovediFormControl" [checked]="isGiovediFormControl === true">Giovedì</ion-checkbox>
       </div>
       <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="venerdiFormControl" [checked]=isVenerdiFormControl>Venerdì</ion-checkbox>
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="venerdiFormControl" [checked]="isVenerdiFormControl === true">Venerdì</ion-checkbox>
       </div>
       <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="sabatoFormControl" [checked]=isSabatoFormControl>Sabato</ion-checkbox>
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="sabatoFormControl" [checked]="isSabatoFormControl === true">Sabato</ion-checkbox>
       </div>
       <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="domenicaFormControl" [checked]=isDomenicaFormControl>Domenica</ion-checkbox>
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="domenicaFormControl" [checked]="isDomenicaFormControl === true">Domenica</ion-checkbox>
       </div>
   </div>
 </form>

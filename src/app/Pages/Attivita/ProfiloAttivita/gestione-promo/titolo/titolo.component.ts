@@ -16,9 +16,8 @@ export class TitoloComponent implements OnInit {
   exampleForm!: FormGroup;
 
   ngOnInit(): void {
-
     this.exampleForm = this.fb.group({
-      titoloFormControl: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])]
+      titoloFormControl: [this.titolo, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])]
     });
 
     // Aggiungi un listener per il cambio di valore nel form control

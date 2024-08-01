@@ -23,7 +23,7 @@ export class OrarioValiditaComponent  implements OnInit {
   ngOnInit(): void {
 
     this.exampleForm = this.fb.group({
-      isAllDayValiditaFormControl: [''],
+      isAllDayValiditaFormControl: [],
       orarioValiditaDaFormControl: [''],
       orarioValiditaAlFormControl: ['']
     });

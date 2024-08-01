@@ -5,7 +5,7 @@
       labelPlacement="stacked"
       type="text"
       formControlName="titoloFormControl"
-      value={{titolo}}>
+      [value]='titolo'>
     </ion-input>
   </ion-item>
   <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">

@@ -17,7 +17,7 @@ export class DescrizioneComponent  implements OnInit {
 
    ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      descFormControl: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(150)]]
+      descFormControl: [this.descrizione, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]]
     });
      
     this.exampleForm.get('descFormControl')!.valueChanges.subscribe((value: string) => {
