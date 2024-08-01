@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';;
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';;
 
 @Component({
   selector: 'app-orario-validita',
@@ -16,41 +16,27 @@ export class OrarioValiditaComponent  implements OnInit {
   @Output() orarioValiditaDaChange: EventEmitter<string> = new EventEmitter<string>();
   @Output() orarioValiditaAlChange: EventEmitter<string> = new EventEmitter<string>();
 
-  isAllDayValiditaFormControl!:FormControl;
-  orarioValiditaDaFormControl!:FormControl;
-  orarioValiditaAlFormControl!:FormControl;
+  constructor(private fb: FormBuilder) {}
+
+  exampleForm!:FormGroup;
 
   ngOnInit(): void {
-    this.isAllDayValiditaFormControl = new FormControl({ value: false, disabled: false });
-    this.orarioValiditaDaFormControl = new FormControl({ value: '', disabled: false });
-    this.orarioValiditaAlFormControl = new FormControl({ value: '', disabled: false });
 
-    this.isAllDayValiditaFormControl.setValue(this.isAllDayValidita);
-    this.orarioValiditaDaFormControl.setValue(this.orarioValiditaDa);
-    this.orarioValiditaAlFormControl.setValue(this.orarioValiditaAl);
-
-    // Aggiungi un listener per il cambio di valore nel form control
-    this.isAllDayValiditaFormControl.valueChanges.subscribe((value: boolean) => {
-      this.emitIsAllDayValiditaChange(value);
-
-      if (value) {
-        // Se 'Tutto il giorno' è selezionato, svuota i valori dei FormControl e disabilita
-        this.orarioValiditaDaFormControl.setValue('');
-        this.orarioValiditaAlFormControl.setValue('');
-        this.orarioValiditaDaFormControl.disable();
-        this.orarioValiditaAlFormControl.disable();
-      } else {
-        // Altrimenti, abilita i FormControl
-        this.orarioValiditaDaFormControl.enable();
-        this.orarioValiditaAlFormControl.enable();
-      }
+    this.exampleForm = this.fb.group({
+      isAllDayValiditaFormControl: [''],
+      orarioValiditaDaFormControl: [''],
+      orarioValiditaAlFormControl: ['']
     });
 
-    this.orarioValiditaDaFormControl.valueChanges.subscribe((value: string) => {
+    this.exampleForm.get('isAllDayValiditaFormControl')!.valueChanges.subscribe((value: boolean) => {
+      this.emitIsAllDayValiditaChange(value);
+    });
+
+    this.exampleForm.get('orarioValiditaDaFormControl')!.valueChanges.subscribe((value: string) => {
       this.emitOrarioValiditaDaChange(value);
     });
 
-    this.orarioValiditaAlFormControl.valueChanges.subscribe((value: string) => {
+    this.exampleForm.get('orarioValiditaAlFormControl')!.valueChanges.subscribe((value: string) => {
       this.emitOrarioValiditaAlChange(value);
     });
   }
@@ -65,5 +51,17 @@ export class OrarioValiditaComponent  implements OnInit {
 
   emitOrarioValiditaAlChange(value: string) {
     this.orarioValiditaAlChange.emit(value);
+  }
+
+  get isAllDayValiditaFormControl() {
+    return this.exampleForm.get('isAllDayValiditaFormControl');
+  }
+
+  get orarioValiditaDaFormControl() {
+    return this.exampleForm.get('orarioValiditaDaFormControl');
+  }
+
+  get orarioValiditaAlFormControl() {
+    return this.exampleForm.get('orarioValiditaAlFormControl');
   }
 }

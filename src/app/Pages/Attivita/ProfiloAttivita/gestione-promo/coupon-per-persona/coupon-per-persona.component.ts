@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-coupon-per-persona',
@@ -11,24 +11,24 @@ export class CouponPerPersonaComponent implements OnInit {
   isLimitEnabled: boolean = false;
 
   @Input() numMaxPerPersona: number | undefined;
-
   @Output() numMaxPerPersonaChange: EventEmitter<number> = new EventEmitter<number>();
 
-  numMaxPerPersonaFormControl!: FormControl;
+  constructor(private fb: FormBuilder) {}
+
+  exampleForm!:FormGroup;
 
   ngOnInit(): void {
-    if ((this.numMaxPerPersona != undefined && this.numMaxPerPersona > 0)) {
-      this.isLimitEnabled = true;
-    }
-
-    this.numMaxPerPersonaFormControl = new FormControl();
-
-    this.numMaxPerPersonaFormControl.setValue(this.numMaxPerPersona);
-
-    // Aggiungi un listener per il cambio di valore nel form control
-    this.numMaxPerPersonaFormControl.valueChanges.subscribe((value: number) => {
+    this.exampleForm = this.fb.group({
+      nMax: ['']
+    });
+     
+    this.exampleForm.get('nMax')!.valueChanges.subscribe((value: number) => {
       this.emitNumMaxPerPersonaChange(value);
     });
+   }
+
+   get nMax() {
+    return this.exampleForm.get('nMax');
   }
 
   // Funzione per emettere l'evento di output

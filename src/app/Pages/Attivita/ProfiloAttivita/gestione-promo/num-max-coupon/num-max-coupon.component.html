@@ -1,4 +1,7 @@
-<ion-label class="lblH3">Numero massimo dei coupon a disposizione</ion-label>
-<form class="example-form">
-      <ion-input matInput type="number" placeholder="N° max" [formControl]="numMaxFormControl" name="numMax" value={{numMax}}></ion-input>
+<form [formGroup]="exampleForm">
+      <ion-label class="lblH3">Numero massimo dei coupon a disposizione</ion-label>
+      <ion-input matInput type="number" 
+                 placeholder="N° max" 
+                 formControlName="nMax"
+                 value={{numMax}}></ion-input>
 </form>

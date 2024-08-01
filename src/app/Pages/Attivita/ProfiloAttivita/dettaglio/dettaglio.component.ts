@@ -51,7 +51,8 @@ export class DettaglioComponent  implements OnInit {
         {
           if (this.attivita.idAttivita && this.attivita.idAttivita > 0 && this.attivita.isPromoPresente) {
             const promoData = await this.promoService.apiGetListaPromoByIdAttivitaAndUser(this.attivita.idAttivita, this.idSoggetto).toPromise();
-              if (promoData) {
+             console.log(promoData);
+            if (promoData) {
                 this.listaPromo = promoData.filter(item => item.isAttiva === true);
                 if (this.listaPromo) {
                   this.listaPromo.forEach(item => {

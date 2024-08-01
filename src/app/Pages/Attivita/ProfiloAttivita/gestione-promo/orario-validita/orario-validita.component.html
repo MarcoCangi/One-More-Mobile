@@ -1,4 +1,4 @@
-<form class="form">
+<form [formGroup]="exampleForm">
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -7,7 +7,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-checkbox labelPlacement="end" class="chkGiorno" [formControl]="isAllDayValiditaFormControl" color="primary">Tutto il giorno</ion-checkbox>
+        <ion-checkbox labelPlacement="end" class="chkGiorno" formControlName="isAllDayValiditaFormControl" color="primary" value={{isAllDayValidita}}>Tutto il giorno</ion-checkbox>
       </ion-col>
     </ion-row>
     <ion-row>

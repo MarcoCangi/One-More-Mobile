@@ -105,7 +105,7 @@
         <div class="content" style="height: 100%; width: 100%;">
           <ion-card *ngFor="let coupon of couponScaduti" style="--min-height: 140px; --min-width: 400px;">
             <ion-toolbar>
-              <ion-label style="margin-left: 5%;" slot="start">SCADUTO IL {{ coupon.timestamp | date:'dd/MM/yyyy' }}</ion-label>
+              <ion-label style="margin-left: 5%;" slot="start">SCADUTO IL {{ coupon.dataAl | date:'dd/MM/yyyy' }}</ion-label>
               <ion-icon (click)="openDetailNonAttModal(coupon)" slot="end" name="information-circle-outline" color="primary" style=" width: 25px; height: 25px; margin-right: 5%;"></ion-icon>
             </ion-toolbar>
             <ion-card-content style="padding: 0;">

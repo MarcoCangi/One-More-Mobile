@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-num-max-coupon',
@@ -11,19 +11,26 @@ export class NumMaxCouponComponent  implements OnInit {
   @Input() numMax : number | undefined
   @Output() numMaxChange: EventEmitter<number> = new EventEmitter<number>();
   
-  numMaxFormControl!:FormControl;
+  constructor(private fb: FormBuilder) {}
+
+  exampleForm!:FormGroup;
 
   ngOnInit(): void {
-    this.numMaxFormControl = new FormControl();
-    this.numMaxFormControl.setValue(this.numMax);
-    // Aggiungi un listener per il cambio di valore nel form control
-    this.numMaxFormControl.valueChanges.subscribe((value: number) => {
-      this.emitNumMaxChange(value);
+    this.exampleForm = this.fb.group({
+      nMax: ['']
     });
+     
+    this.exampleForm.get('nMax')!.valueChanges.subscribe((value: number) => {
+      this.emitNumMaxPerPersonaChange(value);
+    });
+   }
+
+   get nMax() {
+    return this.exampleForm.get('nMax');
   }
 
   // Funzione per emettere l'evento di output
-  emitNumMaxChange(value: number) {
+  emitNumMaxPerPersonaChange(value: number) {
     this.numMaxChange.emit(value);
   }
 }

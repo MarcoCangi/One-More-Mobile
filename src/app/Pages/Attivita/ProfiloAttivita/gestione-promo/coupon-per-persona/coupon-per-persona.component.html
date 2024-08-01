@@ -1,10 +1,12 @@
-<form class="form">
+<form [formGroup]="exampleForm" class="form">
   <ion-label>Una singola persona può richiedere più di un coupon?</ion-label>
   <ion-toggle style="margin-left: 5%;" [(ngModel)]="isLimitEnabled" [ngModelOptions]="{standalone: true}" color="primary"></ion-toggle>
-</form>
 <div *ngIf="isLimitEnabled" style="margin-top: 5%;">
   <ion-label>Quanti coupon può utilizzare una singola persona?</ion-label>
   <ion-item>
-    <ion-input type="number" [formControl]="numMaxPerPersonaFormControl" placeholder="N° max"></ion-input>
+    <ion-input type="number" 
+               formControlName="nMax"
+               placeholder="N° max"></ion-input>
   </ion-item>
 </div>
+</form>

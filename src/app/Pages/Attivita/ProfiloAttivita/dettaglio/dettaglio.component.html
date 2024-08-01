@@ -15,7 +15,7 @@
     <ion-icon *ngIf="this.idSoggetto && this.isFavorite" class="preferiti" name="star" style="color: #e9540a;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
   </div>
   
-  <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo">
+  <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0">
     <ion-card-title>
       <ion-title style="margin-top: 5%;">Le nostre Promozioni</ion-title>
     </ion-card-title>

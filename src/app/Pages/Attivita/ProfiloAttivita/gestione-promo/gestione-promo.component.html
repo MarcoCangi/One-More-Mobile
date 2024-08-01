@@ -8,22 +8,22 @@
   <form>
     <div class="row">
       <div class="formInput">
-        <app-titolo [titolo]="this.modificaPromo.titoloPromo" (titoloChange)="handleTitoloChange($event)"></app-titolo>
+        <app-titolo [titolo]="this.modificaPromo && this.modificaPromo.titoloPromo ? this.modificaPromo.titoloPromo : ''" (titoloChange)="handleTitoloChange($event)"></app-titolo>
       </div>
       <div class="formInput">
-        <app-periodo-validita [dataDalValue]="this.modificaPromo.dataDal"
-                              [dataAlValue]="this.modificaPromo.dataAl"
+        <app-periodo-validita [dataDalValue]="this.modificaPromo && this.modificaPromo.dataDal ? this.modificaPromo.dataDal : undefined"
+                              [dataAlValue]="this.modificaPromo && this.modificaPromo.dataAl ? this.modificaPromo.dataAl : undefined"
                               (dataDalChange)="handleDataDalChange($event)" 
                               (dataAlChange)="handleDataAlChange($event)"></app-periodo-validita>
       </div>
     </div>
     <div class="row">
       <div class="formInput">
-        <app-descrizione [descrizione]="this.modificaPromo.descPromo" 
+        <app-descrizione [descrizione]="this.modificaPromo && this.modificaPromo.descPromo ? this.modificaPromo.descPromo : ''" 
                          (descrizioneChange)="handleDescChange($event)"></app-descrizione>
       </div>
       <div class="formInput">
-        <app-giorni-validita [giorni]="this.giorni" 
+        <app-giorni-validita [giorni]="this.giorni ? this.giorni : undefined" 
                              (isAllSettimanaChange)="handleAllSettimanaChange($event)"
                              (isLunediChange)="handleLunediChange($event)"
                              (isMartediChange)="handleMartediChange($event)"
@@ -35,15 +35,15 @@
       </div>
       <div class="row">
       <div class="formInput">
-        <app-orario-validita [isAllDayValidita]="this.modificaPromo.isAllDayValidita"
-                             [orarioValiditaDa]="this.modificaPromo.orarioValiditaDa"
-                             [orarioValiditaAl]="this.modificaPromo.orarioValiditaAl"
+        <app-orario-validita [isAllDayValidita]="this.modificaPromo && this.modificaPromo.isAllDayValidita ? this.modificaPromo.isAllDayValidita : undefined"
+                             [orarioValiditaDa]="this.modificaPromo && this.modificaPromo.orarioValiditaDa ? this.modificaPromo.orarioValiditaDa : undefined"
+                             [orarioValiditaAl]="this.modificaPromo && this.modificaPromo.orarioValiditaAl ? this.modificaPromo.orarioValiditaAl : undefined"
                              (isAllDayValiditaChange)="handleIsAllDayValiditaChange($event)"
                              (orarioValiditaDaChange)="handleOrarioValiditaDaChange($event)"
                              (orarioValiditaAlChange)="handleorarioValiditaAlChange($event)"></app-orario-validita>
       </div>
       <div class="formInput">
-      <app-tipologia-offerta [listaTipologieSelezionate]="this.listaTipologie"
+      <app-tipologia-offerta [listaTipologieSelezionate]="this.listaTipologie ? this.listaTipologie : undefined"
                              (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipologia-offerta>
       </div>
       </div>
@@ -56,24 +56,24 @@
   </div>
   <div class="formInput divNumMaxCoupon" *ngIf="isLimitEnabled" >
     <div>
-      <app-num-max-coupon [numMax]="this.modificaPromo.numCouponMax" (numMaxChange)="handleNumMaxChange($event)"></app-num-max-coupon>
+      <app-num-max-coupon [numMax]="this.modificaPromo && this.modificaPromo.numCouponMax ? this.modificaPromo.numCouponMax : undefined" (numMaxChange)="handleNumMaxChange($event)"></app-num-max-coupon>
     </div>
   </div>
   <div class="formInput divCouponPerPersona" *ngIf="isLimitEnabled">
     <div>
-      <app-coupon-per-persona [numMaxPerPersona]="this.modificaPromo.numUtilizziPerPersonaMax" 
+      <app-coupon-per-persona [numMaxPerPersona]="this.modificaPromo && this.modificaPromo.numUtilizziPerPersonaMax ? this.modificaPromo.numUtilizziPerPersonaMax : undefined" 
                               (numMaxPerPersonaChange)="handleNumMaxPerPersonaChange($event)"></app-coupon-per-persona>
     </div>
   </div>
   </form>
   
   <div class="container" style="margin-bottom: 10%;">
-    <div class="row" *ngIf="!this.modificaPromo.idPromo">
+    <div class="row" *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo">
         <div class="col-5"></div>
         <div class="col-3"><ion-button shape="round" (click)="salva()">Salva</ion-button></div>
         <div class="col-4"></div>
     </div>
-    <div class="row" *ngIf="this.modificaPromo.idPromo">
+    <div class="row" *ngIf="this.modificaPromo && modificaPromo.idPromo">
       <div class="col-5"></div>
       <div class="col-3"><ion-button shape="round" (click)="modifica()">Modifica</ion-button></div>
       <div class="col-4"></div>
