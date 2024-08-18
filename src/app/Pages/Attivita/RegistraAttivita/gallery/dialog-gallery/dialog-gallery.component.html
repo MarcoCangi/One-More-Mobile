@@ -1,9 +1,10 @@
-<div>
-  <img class="dialog-photo" [src]="data.img" alt="Immagine">
-
+<ion-toolbar>
+</ion-toolbar>
+<div style="margin-top: 5%;">
+  <img class="dialog-photo" [src]="img" alt="Immagine">
 </div>
-<div >
-  <button mat-button (click)="onNoClick()">Annulla</button>
-  <button mat-button color="warn" (click)="onDeleteClick()">Elimina</button>
+<div style="display: flex; justify-content: center; align-items: center; margin-top: 5%;">
+  <ion-button (click)="onBackClick()">INDIETRO</ion-button>
+  <ion-button color="danger" (click)="onDeleteClick()">ELIMINA</ion-button>
 </div>
 

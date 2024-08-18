@@ -16,19 +16,28 @@ export class GalleryComponent implements OnInit {
   @Output() immaginiChange: EventEmitter<Immagini[]> = new EventEmitter<Immagini[]>();
 
   selectedImageUrl: string = '';
+  urlPrincipale: string = '';
   urls: string[] = [];
+  isModalOpen: boolean = false;
   CameraSource = CameraSource;  // Definisci CameraSource come proprietà
 
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
     if (this.immagini && this.immagini.length > 0) {
-      this.urls = this.immagini.map(img => img.upload);
+      const immaginePrincipale = this.immagini.find(img => img.isImmaginePrincipale === true);
+      if (immaginePrincipale) {
+        this.urlPrincipale = immaginePrincipale.upload;
+      }
+      this.urls = this.immagini
+      .filter(img => img.isImmaginePrincipale === false)
+      .map(img => img.upload);
+
       this.immaginiArray = this.immagini;
     }
   }
 
-  async selectImage(source: CameraSource) {
+  async selectImage(source: CameraSource, isProfile: boolean) {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
@@ -38,14 +47,17 @@ export class GalleryComponent implements OnInit {
 
     const url = image.dataUrl;
     if (url) {
-      this.urls.push(url);
+      if(isProfile)
+        this.urlPrincipale = url;
+      else
+        this.urls.push(url);
 
       const nuovaImmagine: Immagini = {
         idImmagine: 0,
         idAttivita: 0,
         nomeUpload: 'camera_image',
         upload: url,
-        isImmaginePrincipale: false,
+        isImmaginePrincipale: isProfile,
         ordinamento: 0
       };
       this.immaginiArray.push(nuovaImmagine);
@@ -81,15 +93,30 @@ export class GalleryComponent implements OnInit {
 
   openDialog(url: string): void {
     this.selectedImageUrl = url;
+    this.isModalOpen = true;
     // Apri il dialog per visualizzare l'immagine
   }
 
+  closeModal(isClose: boolean){
+    this.isModalOpen = isClose;
+  }
+
   deletePhoto() {
-    const index = this.urls.indexOf(this.selectedImageUrl);
-    if (index !== -1) {
-      this.urls.splice(index, 1);
-      this.immaginiArray.splice(index, 1);
+    if(this.selectedImageUrl == this.urlPrincipale)
+    {
+      this.urlPrincipale = "";
+      const newImgArray = this.immaginiArray.filter(i => i.isImmaginePrincipale != true);
+      this.immaginiArray = newImgArray;
       this.immaginiChange.emit(this.immaginiArray);
+    }
+    else{
+      const index = this.urls.indexOf(this.selectedImageUrl);
+      if (index !== -1) {
+        this.urls.splice(index, 1);
+        this.immaginiArray.splice(index, 1);
+        console.log(this.immaginiArray);
+        this.immaginiChange.emit(this.immaginiArray);
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { lastValueFrom } from 'rxjs';
 import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { TipologiaOfferta } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 
 @Component({
   selector: 'app-ricerca',
@@ -20,6 +21,7 @@ export class RicercaComponent implements OnInit {
 
   selectedOption: TipoAttivita | null = null;
   selectedOptionAttivita: AttivitaRicerca | null = null;
+  tipoOfferte : number[] | undefined;
 
   filteredOptions: Observable<TipoAttivita[]> | null = null;
   filteredOptionAtt: Observable<AttivitaRicerca[]> | undefined;
@@ -34,7 +36,7 @@ export class RicercaComponent implements OnInit {
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   filtro!: FiltriAttivita;
   listaAttivitaRicerca!: AttivitaFiltrate;
-  
+  isModalOpen: boolean = false;
   showSuggestions: boolean = true;
   attivita: Attivita | undefined;
   isLoading : boolean = false;
@@ -146,6 +148,9 @@ export class RicercaComponent implements OnInit {
     this.isLoading = false; // Set to false after the loading process is complete
   }
 
+  handleListaTipologieChange(tipologie: number[]) {
+    this.tipoOfferte = tipologie;
+  }
 
   async Ricerca(): Promise<void> {
     this.isLoading = true; // Set to true at the start of the loading process
@@ -170,6 +175,13 @@ export class RicercaComponent implements OnInit {
       this.filtro.codTipoAttivita = codTipoAttivita;
       if (this.filtro.tipoRicerca == 0)
         this.filtro.tipoRicerca = 3
+    }
+
+    if(this.tipoOfferte && this.tipoOfferte.length > 0)
+    {
+      this.filtro.codTipoPromo = this.tipoOfferte;
+      if (this.filtro.tipoRicerca == 0)
+        this.filtro.tipoRicerca = 4
     }
 
     (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(

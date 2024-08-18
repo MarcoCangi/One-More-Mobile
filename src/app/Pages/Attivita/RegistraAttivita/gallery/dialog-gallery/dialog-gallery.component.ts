@@ -1,5 +1,4 @@
-import { Component, Input, Output, OnInit, Inject  } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
+import { Component, Input, Output, OnInit, Inject, EventEmitter  } from '@angular/core';
 
 
 @Component({
@@ -8,17 +7,19 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dia
   styleUrls: ['./dialog-gallery.component.scss'],
 })
 export class DialogGalleryComponent {
+
   @Input() img: string | undefined;
+  @Output() closeModalEvent = new EventEmitter<boolean>()
+  @Output() deleteEvent = new EventEmitter<void>()
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogGalleryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { img: string }) {}
+  constructor(){}
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  onBackClick(): void {
+    this.closeModalEvent.emit(false);
   }
 
   onDeleteClick(): void {
-    this.dialogRef.close('delete');
+    this.deleteEvent.emit();
+    this.closeModalEvent.emit(false);
   }
 }

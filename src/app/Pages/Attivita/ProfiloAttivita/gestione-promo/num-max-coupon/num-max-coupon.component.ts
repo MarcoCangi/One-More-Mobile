@@ -17,7 +17,7 @@ export class NumMaxCouponComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      nMax: ['']
+      nMax: [this.numMax]
     });
      
     this.exampleForm.get('nMax')!.valueChanges.subscribe((value: number) => {

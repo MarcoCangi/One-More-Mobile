@@ -20,6 +20,12 @@
         </ion-item>
       </ion-list>
       <br>
+      <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}" >Ricerca per tipologia di promo</ion-toggle>
+      <div class="formInput divNumMaxCoupon" *ngIf="isModalOpen" >
+        <app-tipo-offerte (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipo-offerte>
+      </div>
+      <br>
+      <br>
       <div style="text-align: center; margin-top: -5%;">
         <ion-button shape="round" (click)="Ricerca()">
           <ion-label>CERCA</ion-label>

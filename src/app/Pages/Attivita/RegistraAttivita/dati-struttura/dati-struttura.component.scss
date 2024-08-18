@@ -74,3 +74,12 @@
   align-items: center;
   width: 100%;
 }
+
+ion-spinner {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

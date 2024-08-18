@@ -42,7 +42,6 @@ export class GiorniValiditaComponent  implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.giorni?.days);
     this.allSettimanaFormControl = new FormControl();
     this.lunediFormControl = new FormControl();
     this.martediFormControl = new FormControl();
@@ -64,13 +63,13 @@ export class GiorniValiditaComponent  implements OnInit {
       this.isDomenicaFormControl = this.giorni.days.includes(7);
 
       this.allSettimanaFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.lunediFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.martediFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.mercolediFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.giovediFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.venerdiFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.sabatoFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.domenicaFormControl.setValue(this.giorni.days.includes(0) ? true : false);
+      this.lunediFormControl.setValue(this.giorni.days.includes(1) ? true : false);
+      this.martediFormControl.setValue(this.giorni.days.includes(2) ? true : false);
+      this.mercolediFormControl.setValue(this.giorni.days.includes(3) ? true : false);
+      this.giovediFormControl.setValue(this.giorni.days.includes(4) ? true : false);
+      this.venerdiFormControl.setValue(this.giorni.days.includes(5) ? true : false);
+      this.sabatoFormControl.setValue(this.giorni.days.includes(6) ? true : false);
+      this.domenicaFormControl.setValue(this.giorni.days.includes(7) ? true : false);
 
       console.log(this.isMartediFormControl)
     }

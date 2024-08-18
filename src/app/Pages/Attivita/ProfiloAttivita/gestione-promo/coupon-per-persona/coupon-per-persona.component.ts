@@ -18,8 +18,10 @@ export class CouponPerPersonaComponent implements OnInit {
   exampleForm!:FormGroup;
 
   ngOnInit(): void {
+    if(this.numMaxPerPersona)
+      this.isLimitEnabled = true;
     this.exampleForm = this.fb.group({
-      nMax: ['']
+      nMax: [this.numMaxPerPersona]
     });
      
     this.exampleForm.get('nMax')!.valueChanges.subscribe((value: number) => {

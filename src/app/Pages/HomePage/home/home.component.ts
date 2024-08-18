@@ -109,8 +109,11 @@ export class HomeComponent  implements OnInit {
 
     if(id)
     {
+      this.filtro.codTipoPromo = [];
+      console.log(id);
       this.isLoading = true;
-      this.filtro.codTipoPromo = id;
+      this.filtro.codTipoPromo?.push(id);
+      console.log(this.filtro);
       (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
         (data: AttivitaFiltrate) => {
           this.listaAttivitaRicerca = data;

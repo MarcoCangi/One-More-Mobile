@@ -13,7 +13,7 @@ export class DistanzaComponent  implements OnInit {
   ngOnInit() {}
 
   pinFormatter(value: number) {
-    return `${value}%`;
+    return `${value}`;
   }
 
 }

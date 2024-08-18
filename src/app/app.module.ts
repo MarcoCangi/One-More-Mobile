@@ -81,7 +81,7 @@ import { DialogConfermaComponent } from './Pages/Promo/dialog-conferma/dialog-co
 import { PannelloPromoComponent } from './Pages/Promo/pannello-promo/pannello-promo.component';
 import { RicercaComponent } from './Pages/HomePage/ricerca/ricerca.component';
 import { FavoritesComponent } from './Pages/favorites/favorites.component';
-import { TipoOfferteComponent } from './Pages/Maps/mappa/tipo-offerte/tipo-offerte.component';
+import { TipoOfferteComponent } from './Pages/HomePage/ricerca/tipo-offerte/tipo-offerte.component';
 import { DistanzaComponent } from './Pages/Maps/mappa/distanza/distanza.component';
 import { CouponComponent } from './Pages/coupon/coupon.component';
 import { DettaglioCouponComponent } from './Pages/coupon/dettaglio-coupon/dettaglio-coupon.component';

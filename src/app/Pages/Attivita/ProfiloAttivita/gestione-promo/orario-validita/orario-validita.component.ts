@@ -21,11 +21,11 @@ export class OrarioValiditaComponent  implements OnInit {
   exampleForm!:FormGroup;
 
   ngOnInit(): void {
-
+    console.log("is valido tutto il giorno?", this.isAllDayValidita, "/ is valido dalle", this.orarioValiditaDa, "/ is orario validita alle", this.orarioValiditaAl)
     this.exampleForm = this.fb.group({
-      isAllDayValiditaFormControl: [],
-      orarioValiditaDaFormControl: [''],
-      orarioValiditaAlFormControl: ['']
+      isAllDayValiditaFormControl: [this.isAllDayValidita],
+      orarioValiditaDaFormControl: [this.orarioValiditaDa],
+      orarioValiditaAlFormControl: [this.orarioValiditaAl]
     });
 
     this.exampleForm.get('isAllDayValiditaFormControl')!.valueChanges.subscribe((value: boolean) => {

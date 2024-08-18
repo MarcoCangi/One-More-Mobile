@@ -3,10 +3,10 @@
 
 <ion-card style="min-width: 400px; height: 90vh; width: 100vw;" *ngIf="!isLoading">
   
-  <ion-grid style="background-color: #e9540a;">
+  <!-- <ion-grid style="background-color: #e9540a;">
     <ion-row>
       <ion-col size="10">
-        <ion-searchbar style="top:0" (click)="openSearch()" placeholder="Città"></ion-searchbar>
+        <ion-searchbar style="top:0" (click)="openSearch()" placeholder="Cerca"></ion-searchbar>
       </ion-col>
       <ion-col size="2">
         <ion-button color="light" style="height: 40px;" (click)="openFilerModal()">
@@ -14,7 +14,7 @@
         </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid> 
+  </ion-grid>  -->
   
   <div id="mapElement" class="map">
     <google-map #googleMap height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="move($event)">
@@ -101,7 +101,7 @@
   </ion-modal>
   
   <!-- Modal for filter -->
-  <ion-modal [isOpen]="isFilterModalOpen">
+  <!--<ion-modal [isOpen]="isFilterModalOpen">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -122,4 +122,4 @@
         </ion-card>
       </ion-content>
     </ng-template>
-  </ion-modal>
+  </ion-modal> -->

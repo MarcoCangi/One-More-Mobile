@@ -31,6 +31,7 @@ export class DatiStrutturaComponent  implements OnInit {
   provincia:string | undefined;
   isLoading : boolean | undefined;
   isDetailModalOpen = false;
+  isConfirmOpen = false;
   isSalvataggioOK = false;
   isError:boolean | undefined;
   errorNome:string | undefined;
@@ -77,6 +78,7 @@ export class DatiStrutturaComponent  implements OnInit {
           if(this.attivita && this.attivita.idAttivita && this.attivita.idSoggetto)
           {
             this.attivitaService.createAttivitaSession(this.attivita.idAttivita, this.attivita.idSoggetto, this.attivita.nome, this.attivita.indirizzo, this.attivita.citta, this.attivita.provincia, this.attivita.civico, this.attivita.cap, this.attivita.latitudine, this.attivita.longitudine, this.attivita.telefono, this.attivita.cellulare, this.attivita.isCellPubblico, this.attivita.email, this.attivita.descrizione, this.attivita.descrizioneOfferta, this.attivita.isPromoPresente, this.attivita.isOffertaVegetariana, this.attivita.isOffertaVegana, this.attivita.isOffertaNoGlutine, this.attivita.listaTipoAttivita, this.attivita.orari, this.attivita.immagini);
+            this.InitRequestAtt();
           if(this.attivita.orari != undefined){
           this.orari = this.attivita.orari;
           }
@@ -118,6 +120,14 @@ export class DatiStrutturaComponent  implements OnInit {
     }
    }
    this.isLoading = false;
+  }
+
+  conferma(){
+    this.isConfirmOpen = true;
+  }
+
+  dismissConferma(){
+    this.isConfirmOpen = false;
   }
   
   prosegui() {
@@ -177,8 +187,56 @@ export class DatiStrutturaComponent  implements OnInit {
     {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    this.dismissConferma()
     this.isLoading = false;
   }
+
+  modifica() {
+    this.isLoading = true;
+    this.controlValidator(this.requestAttivita);
+
+    if(!this.isError)
+    {
+      const sessioneString = this.authService.getUserSessionFromCookie();
+  
+      if (sessioneString) {
+        
+      if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
+        this.attivita.idAttivita = sessioneString.idAttivita;
+      }
+      if(sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined && this.requestAttivita != undefined){
+        this.attivita.idSoggetto = sessioneString.idSoggetto;
+        this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
+      }
+      if(this.requestAttivita && this.orari)
+        this.requestAttivita.orari = this.orari;
+      if(this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0)
+      {
+        this.requestAttivita.listaTipoAttivita.forEach(att => {
+          if(att.codTipoAttivita)
+            att.codTipoAttivita = att.codTipoAttivita.toString().padStart(4, '0');
+        });
+      }
+      if(this.requestAttivita){
+        this.attivitaService.apiUpdateAttivita(this.requestAttivita).pipe(
+          tap((response) => {
+            this.authService.setIdAttivitaUserSession(response.idAttivita);
+            this.isSalvataggioOK = true;
+            this.isDetailModalOpen = true;
+          }),
+          catchError((error) => {
+            console.error(error.error);
+            this.isSalvataggioOK = false;
+            this.isDetailModalOpen = true;
+            return of(null);
+          })
+        ).subscribe();
+      }
+    }
+  }
+  this.dismissConferma()
+  this.isLoading = false;
+}
 
   controlValidator(request: InsertAttivitaReqDto | undefined){
 
@@ -294,6 +352,10 @@ export class DatiStrutturaComponent  implements OnInit {
       this.errorImg = "Inserire una o più immagini";
       this.isError = true;
     }
+    else if(!request.immagini.find(i => i.isImmaginePrincipale)){
+      this.errorImg = "Inserire una immagine profilo";
+      this.isError = true;
+    }
 
     if(this.isError)
     {
@@ -302,6 +364,19 @@ export class DatiStrutturaComponent  implements OnInit {
     }
   }
   
+  getImmaginePrincipale(): string {
+    const immaginePrincipale = this.requestAttivita?.immagini?.find(i => i.isImmaginePrincipale);
+    return immaginePrincipale ? immaginePrincipale.upload : 'default-image.jpg';
+  }
+
+  getGallery(): any[] {
+    if (!this.requestAttivita?.immagini) {
+        return [];
+    }
+    const immaginePrincipale = this.requestAttivita.immagini.find(i => i.isImmaginePrincipale);
+    return this.requestAttivita.immagini.filter(i => i !== immaginePrincipale);
+}
+
   handleNomeChange(newNome: string) {
   this.errorNome = "";
   if(this.requestAttivita)
@@ -466,5 +541,30 @@ export class DatiStrutturaComponent  implements OnInit {
 
   dismissDetailModal() {
     this.isDetailModalOpen = false;
+  }
+
+  InitRequestAtt() {
+    this.requestAttivita = new InsertAttivitaReqDto(
+      this.attivita?.idAttivita? this.attivita.idAttivita : 0,
+      this.attivita?.idSoggetto? this.attivita.idSoggetto : 0,
+      this.attivita?.nome? this.attivita.nome : "",
+      this.attivita?.indirizzo? this.attivita.indirizzo : "",
+      this.attivita?.citta? this.attivita.citta : "",
+      this.attivita?.provincia? this.attivita.provincia : "",
+      this.attivita?.civico? this.attivita.civico : "",
+      this.attivita?.cap? this.attivita.cap : "",
+      this.attivita?.telefono? this.attivita.telefono : "",
+      this.attivita?.cellulare? this.attivita.cellulare : "",
+      this.attivita?.isCellPubblico? this.attivita.isCellPubblico : false,
+      this.attivita?.email? this.attivita.email : "",
+      this.attivita?.descrizione? this.attivita.descrizione : "",
+      this.attivita?.descrizioneOfferta? this.attivita.descrizioneOfferta : "",
+      this.attivita?.isPromoPresente? this.attivita.isPromoPresente : false,
+      this.attivita?.isOffertaVegetariana? this.attivita.isOffertaVegetariana : false,
+      this.attivita?.isOffertaVegana? this.attivita.isOffertaVegana : false,
+      this.attivita?.isOffertaNoGlutine? this.attivita.isOffertaNoGlutine : false,
+      this.attivita?.listaTipoAttivita? this.attivita.listaTipoAttivita : [],
+      this.attivita?.orari? this.attivita.orari : new Orari(),
+      this.attivita?.immagini? this.attivita.immagini : [])
   }
 }
