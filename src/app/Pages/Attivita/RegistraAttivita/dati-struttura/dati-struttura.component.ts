@@ -58,7 +58,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isLoading = true;
     this.orari = new Orari();
     this.idAttivita = 0;
-
+    this.InitRequestAtt();
     this.sessioneString = this.authService.getUserSessionFromCookie();
 
     if (this.sessioneString !== null) {
@@ -123,7 +123,11 @@ export class DatiStrutturaComponent  implements OnInit {
   }
 
   conferma(){
-    this.isConfirmOpen = true;
+    console.log(this.requestAttivita);
+    this.controlValidator(this.requestAttivita);
+    if(!this.isError){
+      this.isConfirmOpen = true;
+      }
   }
 
   dismissConferma(){
@@ -141,12 +145,17 @@ export class DatiStrutturaComponent  implements OnInit {
   
       if (sessioneString) {
         
+      if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.requestAttivita != undefined) {
+        this.requestAttivita.idAttivita = sessioneString.idAttivita;
+      }
       if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
         this.attivita.idAttivita = sessioneString.idAttivita;
       }
-      if(sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined && this.requestAttivita != undefined){
-        this.attivita.idSoggetto = sessioneString.idSoggetto;
+      if(sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.requestAttivita != undefined){ 
         this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
+      }
+      if(sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined){ 
+        this.attivita.idSoggetto = sessioneString.idSoggetto;
       }
       if(this.requestAttivita && this.orari)
         this.requestAttivita.orari = this.orari;
@@ -512,6 +521,9 @@ export class DatiStrutturaComponent  implements OnInit {
       this.orari.domenicaMatAl = JSON.parse(JSON.stringify(newOrari.domenicaMatAl));
       this.orari.domenicaPomDa = JSON.parse(JSON.stringify(newOrari.domenicaPomDa));
       this.orari.domenicaPomAl = JSON.parse(JSON.stringify(newOrari.domenicaPomAl));
+      
+      if(this.requestAttivita && this.requestAttivita.orari)
+        this.requestAttivita.orari = this.orari;
     }
   }
   

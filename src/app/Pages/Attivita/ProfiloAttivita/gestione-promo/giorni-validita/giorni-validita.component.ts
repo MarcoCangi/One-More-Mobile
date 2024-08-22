@@ -71,7 +71,6 @@ export class GiorniValiditaComponent  implements OnInit {
       this.sabatoFormControl.setValue(this.giorni.days.includes(6) ? true : false);
       this.domenicaFormControl.setValue(this.giorni.days.includes(7) ? true : false);
 
-      console.log(this.isMartediFormControl)
     }
     
 

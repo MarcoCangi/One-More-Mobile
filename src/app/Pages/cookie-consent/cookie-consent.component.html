@@ -1,0 +1,13 @@
+<div class="cookie-consent" *ngIf="!cookieAccepted">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle style="font-size: medium;">
+        Questo sito utilizza i cookie per migliorare l'esperienza di navigazione. Accetti di utilizzare i cookie?
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button (click)="acceptCookies()">Accetta</ion-button>
+      <ion-button (click)="declineCookies()">Rifiuta</ion-button>
+    </ion-card-content>
+  </ion-card>
+</div>

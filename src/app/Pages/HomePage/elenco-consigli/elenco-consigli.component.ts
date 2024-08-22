@@ -47,7 +47,6 @@ export class ElencoConsigliComponent {
   }
 
   VisualizzaAttivita(attivita: Attivita): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     // Emetti l'evento con l'attività selezionata
     this.attivitaSelezionata = attivita;
     if(this.attivitaSelezionata)

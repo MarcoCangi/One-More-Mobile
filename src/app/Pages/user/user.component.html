@@ -1,3 +1,122 @@
-<p>
-  user works!
-</p>
+<ion-grid style="margin-top: 10%; width: 350px;">
+  <ion-row>
+    <ion-col size="12" class="column ion-text-center ion-align-items-center">
+      <ion-title>
+        Il mio profilo
+      </ion-title>
+      <ion-item-divider style="margin-bottom: 5%;"></ion-item-divider>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="4" >
+      <ion-icon name="person-outline" class="icon"></ion-icon>
+    </ion-col>
+    <ion-col size="8">
+      <ion-label style="font-size: medium;">{{this.user?.displayName}}</ion-label>
+      <br>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="this.user?.typeLog === 1" style="margin-top: 10%;">
+    <ion-col size="4">
+      <ion-label style="font-size: large;">Email</ion-label>
+    </ion-col>
+    <ion-col size="8">
+      <ion-label style="font-size: medium;">{{this.user?.email}}</ion-label>
+    </ion-col>
+    <ion-item-divider style="margin-bottom: 5%;"></ion-item-divider>
+  </ion-row>
+  <ion-row style="margin-top: 5%;">
+    <ion-col size="12" style="margin-left: -5%;">
+      <ion-button fill="clear" (click)="OpenModalModificaPassword()">Modifica Password</ion-button>
+      <br>
+      <br>
+      <ion-button fill="clear" color="danger" (click)="OpenModalEliminaAccount()">Elimina Account</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<ion-modal [isOpen]="isModificaPassword">
+  <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modifica Password</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="DimsissModalModificaPassword()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+     <ion-content>
+      <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+      <ion-card *ngIf="!isLoading">
+        <ion-card-header>
+          <ion-card-subtitle>Per cambiare la password, inserire la vecchia ed impostare la propria, oppure richiederne una nuova</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label style="font-size: large;" *ngIf="this.errore && (!this.notificaInvio || this.notificaInvio === '')" color="danger">{{this.errore}}</ion-label>
+          <ion-label style="font-size: large;" *ngIf="(!this.errore || this.errore === '') && this.notificaInvio" color="success">{{this.notificaInvio}}</ion-label>
+
+          <br>
+          <form style="margin-top: 5%;" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="text-align: center;">
+            <ion-item style="margin-bottom: 5%;">
+              <ion-input labelPlacement="floating" formControlName="vecchiaPassword" type="text">
+                <div slot="label">Vecchia Password</div>
+              </ion-input>
+            </ion-item>
+            <ion-item style="margin-bottom: 5%;">
+              <ion-input labelPlacement="floating" formControlName="newPasswordRegistrazione" type="text">
+                <div slot="label">Nuova Password</div>
+              </ion-input>
+            </ion-item>
+            <ion-item style="margin-bottom: 5%;">
+              <ion-input labelPlacement="floating" formControlName="ConfermaNewPasswordRegistrazione" type="text">
+                <div slot="label">Conferma nuova Password</div>
+              </ion-input>
+            </ion-item>
+            <br>
+            <ion-button shape="round" type="input" [disabled]="!formRegistrazione.valid">Modifica Password</ion-button>
+          </form>
+          <br>
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <ion-button fill="clear" (click)="resetPassword()">Password dimenticata?</ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+     </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="isEliminaAccount">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Elimina Account</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline"></ion-icon></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+   <ion-content>
+    <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+    <ion-card *ngIf="!isLoading">
+      <ion-card-header>
+        <ion-card-subtitle style="font-weight: bold;">Sicuro di voler eliminare il tuo account?</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label style="margin-top: 5%; margin-bottom: 3%; font-weight: bold;">Puoi dirci perchè al fine di poter migliorare il nostro servizio? </ion-label>
+        <ion-radio-group [(ngModel)]="selectedReason">
+          <ion-radio value="expectations" labelPlacement="end">L'app non ha soddisfatto le mie aspettative</ion-radio>
+          <ion-radio value="promotions" labelPlacement="end">Le promozioni non erano coerenti</ion-radio>
+          <ion-radio value="services" labelPlacement="end">Le attività non hanno fornito il servizio offerto</ion-radio>
+          <ion-radio value="no-answer" labelPlacement="end">Preferisco non rispondere</ion-radio>
+        </ion-radio-group>
+        
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%;">
+          <ion-button shape="round" color="success" (click)="DimsissModalEliminaAccount()">Annulla</ion-button>
+          <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason">Elimina Account</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+   </ion-content>
+</ng-template>
+</ion-modal>

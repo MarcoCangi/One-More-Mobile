@@ -49,7 +49,6 @@ export class GestionePromoComponent  implements OnInit {
 
       if(this.modificaPromo != undefined && this.modificaPromo != null)
       {
-        console.log(this.modificaPromo);
         this.requestPromo.idPromo = this.modificaPromo.idPromo;
         if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0)
           this.isLimitEnabled = true;

@@ -114,7 +114,6 @@ export class GalleryComponent implements OnInit {
       if (index !== -1) {
         this.urls.splice(index, 1);
         this.immaginiArray.splice(index, 1);
-        console.log(this.immaginiArray);
         this.immaginiChange.emit(this.immaginiArray);
       }
     }

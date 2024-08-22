@@ -87,6 +87,8 @@ import { CouponComponent } from './Pages/coupon/coupon.component';
 import { DettaglioCouponComponent } from './Pages/coupon/dettaglio-coupon/dettaglio-coupon.component';
 import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-modal.component'
 import { DettaglioCouponNonAttComponent } from './Pages/coupon/dettaglio-coupon-non-att/dettaglio-coupon-non-att.component';
+import { UserComponent } from './Pages/user/user.component';
+import { CookieConsentComponent } from './Pages/cookie-consent/cookie-consent.component';
 
 import { Capacitor } from '@capacitor/core';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
@@ -96,6 +98,7 @@ import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-f
 import { FileUploadService } from 'one-more-frontend-common/projects/one-more-fe-service/src/file-upload-service.service';
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 import { Constants } from 'one-more-frontend-common/projects/one-more-fe-service/src/Constants';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -165,7 +168,9 @@ const appRoute: Routes = [
                  CouponComponent,
                  DettaglioCouponComponent,
                  ConfirmModalComponent,
-                 DettaglioCouponNonAttComponent
+                 DettaglioCouponNonAttComponent,
+                 UserComponent,
+                 CookieConsentComponent
   ],
   imports: [BrowserModule, 
             AngularFireModule.initializeApp(firebaseConfig),
@@ -181,6 +186,8 @@ const appRoute: Routes = [
             GoogleMapsModule,
             HammerModule,
             ToastrModule.forRoot(),
+            RecaptchaModule,
+            RecaptchaFormsModule
           ],
           providers: [
             { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

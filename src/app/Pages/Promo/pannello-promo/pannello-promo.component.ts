@@ -10,7 +10,6 @@ import { InsertPromoUserAttiva, Promo } from 'one-more-frontend-common/projects/
   styleUrls: ['./pannello-promo.component.scss'],
 })
 export class PannelloPromoComponent implements OnInit {
-  
   @Input() listaPromo!: Promo[];
   @Output() openPageLogin = new EventEmitter<boolean>();
   @Output() redirecEsitoEvent = new EventEmitter<boolean>();
@@ -24,7 +23,7 @@ export class PannelloPromoComponent implements OnInit {
   isLoading: boolean | undefined;
   isConfirmed: boolean | undefined;
   isError: boolean | undefined;
-  
+
   constructor( 
     private authService: AuthService,
     private couponService: CouponService
@@ -33,18 +32,19 @@ export class PannelloPromoComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
   }
+
   
-  async Prenota(){
+  async Prenota() {
     this.isLoading = true;
     this.requestPromo = new InsertPromoUserAttiva();
     const userSession = this.authService.getUserSessionFromCookie();
     if (userSession && userSession.idSoggetto) {
       this.requestPromo.idSoggetto = userSession.idSoggetto;
       this.requestPromo.idPromo = this.riepilogoPromo?.idPromo;
-      if(this.riepilogoPromo?.idPromo)
+      if (this.riepilogoPromo?.idPromo)
         this.Coupon = new Coupon(this.riepilogoPromo.idPromo, userSession.idSoggetto);  
       try {
-        if(this.Coupon){
+        if (this.Coupon) {
           await this.couponService.AddCoupon(this.Coupon).toPromise();
           this.isConfirmed = true;
         }
@@ -55,13 +55,13 @@ export class PannelloPromoComponent implements OnInit {
     }
     this.isLoading = false;
   }
-  
+
   dismissConfirmModal(isEsito:boolean, isCoupon:boolean): void {
     this.isError = false;
     this.isConfirmed = false;
     this.riepilogoPromo = undefined;
     this.isModalConfirmOpen = false;
-    if(isEsito){
+    if (isEsito) {
       this.redirecEsitoEvent.emit(isCoupon);
     }
   }
@@ -71,8 +71,7 @@ export class PannelloPromoComponent implements OnInit {
     if (userSession && userSession.idSoggetto){
       this.riepilogoPromo = promo;
       this.isModalConfirmOpen = true;
-    }
-    else {
+    } else {
       this.openPageLogin.emit(true);
     }
   }

@@ -103,7 +103,6 @@ export class TipoOfferteComponent  implements OnInit {
       // Aggiungi 'tipo' a 'tipologie' se non è già presente
       if (this.tipologie && !this.tipologie.includes(tipo)) {
         this.tipologie.push(tipo);
-        console.log(this.tipologie);
       }
     } else {
       // Rimuovi 'tipo' da 'tipologie' se è presente

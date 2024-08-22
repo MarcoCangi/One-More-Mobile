@@ -83,6 +83,13 @@ export class NavComponent implements OnInit {
       this.cancel();
     }
 
+    openProfile(){
+      this.idPage = 12;
+      this.openPageEventNav(this.idPage);
+      this.openPage(this.idPage);
+      this.cancel();
+    }
+
     openRegistraAttivita(){
       this.idPage = 5;
       this.openPageEventNav(this.idPage);

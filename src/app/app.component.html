@@ -8,6 +8,8 @@
              (openPageEvent)="openPageEvent($event)"
              (updateIdFooterEvent)="updateIdFooterEvent($event)"
              [idPage]="this.idPage"></app-nav>  
+
+    <app-cookie-consent *ngIf="showCookiePanel" (closeCookiePanelEvent)="dismissCookiePanel()" style="margin-bottom: 50px;"></app-cookie-consent>
   
     <app-footer class="footer" style="margin-top: 100px;"
                 (openPageEvent)="openPageEvent($event)"

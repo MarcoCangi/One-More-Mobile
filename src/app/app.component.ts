@@ -5,6 +5,7 @@ import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { Attivita, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -23,11 +24,20 @@ export class AppComponent implements OnInit {
   idSoggetto: number | undefined;
   idPage!: number;
   showSplash = true;
+  showCookiePanel = true;
 
-  constructor(private authService: AuthService, private attivitaService: GetApiAttivitaService) { }
+  constructor(private authService: AuthService, 
+              private attivitaService: GetApiAttivitaService,
+              private cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.checkAndRefreshToken();
+
+    const cookieConsent = this.cookieService.get('cookieConsent');
+    if (cookieConsent === 'true') {
+      this.enableTrackingServices();
+      //this.showCookiePanel = false;
+    }
 
     const splashShown = localStorage.getItem('splashShown');
     if (!splashShown) {
@@ -94,5 +104,12 @@ export class AppComponent implements OnInit {
   updateIdFooterEvent(id: number | undefined) {
     this.idSoggetto = id;
   }
+  
+  enableTrackingServices() {
+    // Abilita qui eventuali servizi che dipendono dal consenso dei cookie
+  }
 
+  dismissCookiePanel(){
+    this.showCookiePanel = false;
+  }
 }

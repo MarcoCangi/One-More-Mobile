@@ -6,6 +6,7 @@ import { getFireBaseErrorMessage } from '../../../Utilities/auth-error';
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
+import { sendEmailVerification } from 'firebase/auth';
 
 @Component({
   selector: 'app-registrazione',
@@ -89,8 +90,12 @@ export class RegistrazioneComponent {
         const displayName = nome + ' ' + cognome;
         const currentDate = new Date();
         const id = 0;
+
         const { userCredential, token } = await this.authService.signUp(this.formRegistrazione.value.emailRegistrazione, this.formRegistrazione.value.passwordRegistrazione);
         const { user: { uid } } = userCredential;
+
+        await sendEmailVerification(userCredential.user);
+
         await this.authService.addUser({uid, displayName, email, nome, cognome});
 
         this.utente = {
@@ -126,6 +131,10 @@ export class RegistrazioneComponent {
             return of(null);
           })
         ).subscribe();
+
+        // Notifica l'utente che deve verificare la sua email
+        this.errore = "Registrazione completata. Controlla la tua email per verificare l'account.";
+        this.updateLabelVisibility();
       }
       catch(error: any)
       {

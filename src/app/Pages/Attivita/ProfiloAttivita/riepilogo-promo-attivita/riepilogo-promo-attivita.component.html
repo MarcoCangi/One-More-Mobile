@@ -147,6 +147,34 @@
               </ion-row>
             </ion-grid>
             <ion-item-divider></ion-item-divider>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-label style="font-weight: bold;"> Coupon Richiesti </ion-label>
+                </ion-col>
+                <ion-col> 
+                  <ion-label>{{promo.numCouponRichiesti}}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label style="font-weight: bold;"> Coupon Utilizzati </ion-label>
+                </ion-col>
+                <ion-col> 
+                  <ion-label>{{promo.numCouponUtilizzati}}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label style="font-weight: bold;"> Coupon Rimanenti </ion-label>
+                </ion-col>
+                <ion-col> 
+                  <ion-label *ngIf="promo.numCouponMax">{{promo.numCouponRimanenti}}</ion-label>
+                  <ion-label *ngIf="!promo.numCouponMax">Illimitati</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <ion-item-divider></ion-item-divider>
             <ion-button shape="round" (click)="ModificaPromo(promo)">Modifica</ion-button>
             <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDialogDisattivaPromo(promo.idPromo)">Disattiva</ion-button>
           </div>
