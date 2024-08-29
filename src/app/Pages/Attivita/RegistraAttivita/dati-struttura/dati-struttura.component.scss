@@ -60,6 +60,12 @@
   color:black;
 }
 
+.ion-alert{
+  margin-left: 8%;
+  margin-top: 8%;
+  margin-bottom: 4%;
+}
+
 .formInput{
   max-width: 70%;
   margin-left: 5%;
@@ -68,7 +74,16 @@
 
 .prosegui{
   margin-top: 10%;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.elimina{
+  margin-top: 5%;
+  margin-bottom: 5%;
   display: flex;
   justify-content: center;
   align-items: center;

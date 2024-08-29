@@ -57,7 +57,7 @@
     </div>
 
     <div id="profile" *ngIf="idPage === 12" style="height: 100%">
-        <app-user></app-user>
+        <app-user (openPageEvent)="openPageEvent($event)"></app-user>
     </div>
 </div>
 

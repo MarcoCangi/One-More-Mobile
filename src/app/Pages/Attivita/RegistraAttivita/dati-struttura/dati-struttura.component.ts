@@ -7,6 +7,7 @@ import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
 import { catchError, of, tap } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-dati-struttura',
@@ -30,8 +31,12 @@ export class DatiStrutturaComponent  implements OnInit {
   sessioneString:UserSession | null | undefined;
   provincia:string | undefined;
   isLoading : boolean | undefined;
+  isLoadingDelete : boolean | undefined;
+  isLoadingSalvataggio : boolean = false;
   isDetailModalOpen = false;
   isConfirmOpen = false;
+  isEliminaModalOpen: boolean = false;
+  isEliminazioneOK: boolean = false;
   isSalvataggioOK = false;
   isError:boolean | undefined;
   errorNome:string | undefined;
@@ -58,68 +63,24 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isLoading = true;
     this.orari = new Orari();
     this.idAttivita = 0;
-    this.InitRequestAtt();
+    await this.InitRequestAtt();
     this.sessioneString = this.authService.getUserSessionFromCookie();
-
+  
     if (this.sessioneString !== null) {
-
-        if(this.sessioneString.idAttivita !== null && this.sessioneString.idAttivita !== undefined && this.sessioneString.idAttivita > 0)
-        {
-          this.idAttivita = this.sessioneString.idAttivita;
-          this.id = this.sessioneString.idSoggetto;
-        }
+      if (this.sessioneString.idAttivita !== null && this.sessioneString.idAttivita !== undefined && this.sessioneString.idAttivita > 0) {
+        this.idAttivita = this.sessioneString.idAttivita;
+        this.id = this.sessioneString.idSoggetto;
       }
-      if(this.id != null && this.id > 0)
-      {
-        //GET ATTIVITA BY ID
-        this.attivitaService.apiGetAttivitaByIdSoggetto(this.id).subscribe(data=>{
-        if(data != undefined ){
-          this.attivita = data;
-          if(this.attivita && this.attivita.idAttivita && this.attivita.idSoggetto)
-          {
-            this.attivitaService.createAttivitaSession(this.attivita.idAttivita, this.attivita.idSoggetto, this.attivita.nome, this.attivita.indirizzo, this.attivita.citta, this.attivita.provincia, this.attivita.civico, this.attivita.cap, this.attivita.latitudine, this.attivita.longitudine, this.attivita.telefono, this.attivita.cellulare, this.attivita.isCellPubblico, this.attivita.email, this.attivita.descrizione, this.attivita.descrizioneOfferta, this.attivita.isPromoPresente, this.attivita.isOffertaVegetariana, this.attivita.isOffertaVegana, this.attivita.isOffertaNoGlutine, this.attivita.listaTipoAttivita, this.attivita.orari, this.attivita.immagini);
-            this.InitRequestAtt();
-          if(this.attivita.orari != undefined){
-          this.orari = this.attivita.orari;
-          }
-          if(this.attivita.listaTipoAttivita != undefined)
-            this.listaTipoAttivita = this.attivita.listaTipoAttivita;
-        
-          if(this.attivita.provincia != undefined && this.attivita.provincia != null)
-            this.provincia = this.attivita.provincia;
-          }
-          }
-        })
-      }
-
-   //GET LISTA COMUNI
-   this.comuniService.apiGetListaComuni().subscribe((data: any) => {
-    this.listaComuni =  data.map((item: Comuni) => {
-       return {
-        descComune : item['descComune'],
-        provincia : item['provincia']
-       }
-    })
-   })
-
-   //GET LISTA DEC TIPO ATTIVITA
-   this.listaAttivitaDDL = this.attivitaService.GetListaTipoAttivitaSession();
-   if(this.listaAttivitaDDL == undefined || this.listaAttivitaDDL.length == 0){
-    try {
-      const data: TipoAttivita[] | undefined = await this.attivitaService.apiGetListaDecAttivita().toPromise();
-      if (data) {
-        this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
-          return {
-            codTipoAttivita: item.codTipoAttivita,
-            descrizione: item.descrizione
-          };
-        });
-      }
-    } catch (error) {
-      console.error('Errore nel recupero dei dati:', error);
     }
-   }
-   this.isLoading = false;
+  
+    if (this.id) {
+      await this.getAttivita(this.id);
+    }
+  
+    await this.getListaComuni();
+    await this.GetListaTipoAttivita();
+  
+    this.isLoading = false;
   }
 
   conferma(){
@@ -133,121 +94,104 @@ export class DatiStrutturaComponent  implements OnInit {
   dismissConferma(){
     this.isConfirmOpen = false;
   }
+
+  openEliminaModal(){
+    this.isEliminaModalOpen = true;
+  }
+
+  dismissEliminaModal(){
+    this.isEliminaModalOpen = false;
+  }
   
-  prosegui() {
-
-    this.isLoading = true;
-    this.controlValidator(this.requestAttivita);
-
-    if(!this.isError)
-    {
+  async prosegui() {
+    this.isLoadingSalvataggio = true;
+    await this.controlValidator(this.requestAttivita);
+    
+    if (!this.isError) {
       const sessioneString = this.authService.getUserSessionFromCookie();
   
       if (sessioneString) {
-        
-      if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.requestAttivita != undefined) {
-        this.requestAttivita.idAttivita = sessioneString.idAttivita;
-      }
-      if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
-        this.attivita.idAttivita = sessioneString.idAttivita;
-      }
-      if(sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.requestAttivita != undefined){ 
-        this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
-      }
-      if(sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined){ 
-        this.attivita.idSoggetto = sessioneString.idSoggetto;
-      }
-      if(this.requestAttivita && this.orari)
-        this.requestAttivita.orari = this.orari;
-      if(this.requestAttivita && this.requestAttivita.immagini != undefined && this.requestAttivita.immagini.length > 0)
-      {
-        this.requestAttivita.immagini.forEach(immagine => {
-          if(this.isPrincipale == false){
-            immagine.isImmaginePrincipale = true;
-            this.isPrincipale = true;
+        if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.requestAttivita != undefined) {
+          this.requestAttivita.idAttivita = sessioneString.idAttivita;
+        }
+        if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
+          this.attivita.idAttivita = sessioneString.idAttivita;
+        }
+        if (sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.requestAttivita != undefined) { 
+          this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
+        }
+        if (sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined) { 
+          this.attivita.idSoggetto = sessioneString.idSoggetto;
+        }
+        if (this.requestAttivita && this.orari) {
+          this.requestAttivita.orari = this.orari;
+        }
+        if (this.requestAttivita && this.requestAttivita.immagini != undefined && this.requestAttivita.immagini.length > 0) {
+          this.requestAttivita.immagini.forEach(immagine => {
+            if (!this.isPrincipale) {
+              immagine.isImmaginePrincipale = true;
+              this.isPrincipale = true;
+            }
+            immagine.ordinamento = this.countImg;
+            this.countImg = this.countImg + 1;
+          });
+  
+          if (this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0) {
+            this.requestAttivita.listaTipoAttivita.forEach(att => {
+              if (att.codTipoAttivita) {
+                att.codTipoAttivita = att.codTipoAttivita.toString().padStart(4, '0');
+              }
+            });
           }
-          immagine.ordinamento = this.countImg;
-          this.countImg = this.countImg+ 1;
-        });
-      if(this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0)
-      {
-        this.requestAttivita.listaTipoAttivita.forEach(att => {
-          if(att.codTipoAttivita)
-            att.codTipoAttivita = att.codTipoAttivita.toString().padStart(4, '0');
-        });
+        }
+        if (this.requestAttivita) {
+          await this.insertAttivita();
+        }
       }
-      this.attivitaService.apiInsertAttivita(this.requestAttivita).pipe(
-        tap((response) => {
-          this.authService.setIdAttivitaUserSession(response.idAttivita);
-          this.isSalvataggioOK = true;
-          this.isDetailModalOpen = true;
-        }),
-        catchError((error) => {
-          console.error(error.error);
-          this.isSalvataggioOK = false;
-          this.isDetailModalOpen = true;
-          return of(null);
-        })
-      ).subscribe();
-      }
-    }
-    }
-    else
-    {
+    } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    this.dismissConferma()
+    
+    this.isLoadingSalvataggio = false;
+    this.dismissConferma();
+  }
+
+  async modifica() {
+    this.isLoading = true;
+    await this.controlValidator(this.requestAttivita);
+  
+    if (!this.isError) {
+      const sessioneString = this.authService.getUserSessionFromCookie();
+  
+      if (sessioneString) {
+        if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
+          this.attivita.idAttivita = sessioneString.idAttivita;
+        }
+        if (sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined && this.requestAttivita != undefined) {
+          this.attivita.idSoggetto = sessioneString.idSoggetto;
+          this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
+        }
+        if (this.requestAttivita && this.orari) {
+          this.requestAttivita.orari = this.orari;
+        }
+        if (this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0) {
+          this.requestAttivita.listaTipoAttivita.forEach(att => {
+            if (att.codTipoAttivita) {
+              att.codTipoAttivita = att.codTipoAttivita.toString().padStart(4, '0');
+            }
+          });
+        }
+        if (this.requestAttivita) {
+          await this.updateAttivita();
+        }
+      }
+    }
+  
+    this.dismissConferma();
     this.isLoading = false;
   }
 
-  modifica() {
-    this.isLoading = true;
-    this.controlValidator(this.requestAttivita);
-
-    if(!this.isError)
-    {
-      const sessioneString = this.authService.getUserSessionFromCookie();
-  
-      if (sessioneString) {
-        
-      if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
-        this.attivita.idAttivita = sessioneString.idAttivita;
-      }
-      if(sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined && this.requestAttivita != undefined){
-        this.attivita.idSoggetto = sessioneString.idSoggetto;
-        this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
-      }
-      if(this.requestAttivita && this.orari)
-        this.requestAttivita.orari = this.orari;
-      if(this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0)
-      {
-        this.requestAttivita.listaTipoAttivita.forEach(att => {
-          if(att.codTipoAttivita)
-            att.codTipoAttivita = att.codTipoAttivita.toString().padStart(4, '0');
-        });
-      }
-      if(this.requestAttivita){
-        this.attivitaService.apiUpdateAttivita(this.requestAttivita).pipe(
-          tap((response) => {
-            this.authService.setIdAttivitaUserSession(response.idAttivita);
-            this.isSalvataggioOK = true;
-            this.isDetailModalOpen = true;
-          }),
-          catchError((error) => {
-            console.error(error.error);
-            this.isSalvataggioOK = false;
-            this.isDetailModalOpen = true;
-            return of(null);
-          })
-        ).subscribe();
-      }
-    }
-  }
-  this.dismissConferma()
-  this.isLoading = false;
-}
-
-  controlValidator(request: InsertAttivitaReqDto | undefined){
+  async controlValidator(request: InsertAttivitaReqDto | undefined){
 
     this.isError = false;
     const telefonoPattern = /^[0-9()+ -]*$/;
@@ -352,6 +296,7 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
 
+    if(!request.isVerificata)
     //CONTROLLO IMMAGINI//
     if(request.immagini == undefined){
       this.errorImg = "Inserire una o più immagini";
@@ -370,6 +315,171 @@ export class DatiStrutturaComponent  implements OnInit {
     {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    }
+  }
+
+  async eliminaAttivita() {
+    this.isLoadingDelete = true;
+    try {
+
+      const utente = this.authService.getUser(); // Ottieni l'utente attuale
+
+      await this.attivitaService.deleteSession();
+      
+      // Chiama l'API per eliminare l'account
+      if(this.attivita && this.attivita.idAttivita && utente?.idSoggetto)
+      {
+        await this.attivitaService.apiDeleteAttivita(this.attivita?.idAttivita, utente?.idSoggetto).toPromise();
+
+        const sessioneString = this.authService.getUserSessionFromCookie();
+
+        if(sessioneString && sessioneString.idAttivita)
+        {
+          sessioneString.idAttivita = 0;
+          this.authService.saveUserSessionToCookie(sessioneString);
+        }
+          
+      }
+
+      this.isLoadingDelete = false;
+
+    } catch (error) {
+      console.error('Errore durante l\'eliminazione dell\'attivita:', error);
+      this.isLoadingDelete = false;
+    }
+  }
+
+  async getAttivita(id: number) {
+    try {
+      const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(id));
+      if (data) {
+        this.attivita = data;
+        if (this.attivita && this.attivita.idAttivita && this.attivita.idSoggetto) {
+          this.attivitaService.createAttivitaSession(
+            this.attivita.idAttivita,
+            this.attivita.idSoggetto,
+            this.attivita.nome,
+            this.attivita.indirizzo,
+            this.attivita.citta,
+            this.attivita.provincia,
+            this.attivita.civico,
+            this.attivita.cap,
+            this.attivita.latitudine,
+            this.attivita.longitudine,
+            this.attivita.telefono,
+            this.attivita.cellulare,
+            this.attivita.isCellPubblico,
+            this.attivita.email,
+            this.attivita.descrizione,
+            this.attivita.descrizioneOfferta,
+            this.attivita.isPromoPresente,
+            this.attivita.isOffertaVegetariana,
+            this.attivita.isOffertaVegana,
+            this.attivita.isOffertaNoGlutine,
+            this.attivita.listaTipoAttivita,
+            this.attivita.orari,
+            this.attivita.isVerificata,
+            this.attivita.esitoVerifica,
+            this.attivita.immagini,
+            this.attivita.motivo
+          );
+  
+          await this.InitRequestAtt();
+          if (this.attivita.orari) {
+            this.orari = this.attivita.orari;
+          }
+          if (this.attivita.listaTipoAttivita) {
+            this.listaTipoAttivita = this.attivita.listaTipoAttivita;
+          }
+          if (this.attivita.provincia) {
+            this.provincia = this.attivita.provincia;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'attività:', error);
+    }
+  }
+
+  async insertAttivita() {
+    if (this.requestAttivita) {
+      try {
+        const response = await lastValueFrom(
+          this.attivitaService.apiInsertAttivita(this.requestAttivita).pipe(
+            tap((response) => {
+              this.authService.setIdAttivitaUserSession(response.idAttivita);
+              this.isSalvataggioOK = true;
+              this.isDetailModalOpen = true;
+            }),
+            catchError((error) => {
+              console.error(error.error);
+              this.isSalvataggioOK = false;
+              this.isDetailModalOpen = true;
+              return of(null);
+            })
+          )
+        );
+      } catch (error) {
+        console.error('Errore durante l\'inserimento dell\'attività:', error);
+      }
+    }
+  }
+
+  async updateAttivita() {
+    if (this.requestAttivita) {
+      try {
+        const response = await lastValueFrom(
+          this.attivitaService.apiUpdateAttivita(this.requestAttivita).pipe(
+            tap(() => {
+              this.isSalvataggioOK = true;
+              this.isDetailModalOpen = true;
+            }),
+            catchError((error) => {
+              console.error(error.error);
+              this.isSalvataggioOK = false;
+              this.isDetailModalOpen = true;
+              return of(null);
+            })
+          )
+        );
+      } catch (error) {
+        console.error('Errore durante la modifica dell\'attività:', error);
+      }
+    }
+  }
+
+  async getListaComuni() {
+    try {
+      const data = await lastValueFrom(this.comuniService.apiGetListaComuni());
+      this.listaComuni = data.map((item: Comuni) => {
+        return {
+          descComune: item.descComune,
+          provincia: item.provincia,
+          isinseribile: item.isinseribile, // Aggiungi tutte le proprietà necessarie qui
+          CodCatastale: item.CodCatastale  // Aggiungi tutte le proprietà necessarie qui
+        };
+      });
+    } catch (error) {
+      console.error('Errore durante il recupero della lista comuni:', error);
+    }
+  }
+
+  async GetListaTipoAttivita() {
+    this.listaAttivitaDDL = await this.attivitaService.GetListaTipoAttivitaSession();
+    if (!this.listaAttivitaDDL || this.listaAttivitaDDL.length === 0) {
+      try {
+        const data = await lastValueFrom(this.attivitaService.apiGetListaDecAttivita());
+        if (data) {
+          this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
+            return {
+              codTipoAttivita: item.codTipoAttivita,
+              descrizione: item.descrizione
+            };
+          });
+        }
+      } catch (error) {
+        console.error('Errore nel recupero dei dati:', error);
+      }
     }
   }
   
@@ -552,10 +662,11 @@ export class DatiStrutturaComponent  implements OnInit {
   }
 
   dismissDetailModal() {
+    location.reload();
     this.isDetailModalOpen = false;
   }
 
-  InitRequestAtt() {
+  async InitRequestAtt() {
     this.requestAttivita = new InsertAttivitaReqDto(
       this.attivita?.idAttivita? this.attivita.idAttivita : 0,
       this.attivita?.idSoggetto? this.attivita.idSoggetto : 0,
@@ -577,6 +688,8 @@ export class DatiStrutturaComponent  implements OnInit {
       this.attivita?.isOffertaNoGlutine? this.attivita.isOffertaNoGlutine : false,
       this.attivita?.listaTipoAttivita? this.attivita.listaTipoAttivita : [],
       this.attivita?.orari? this.attivita.orari : new Orari(),
-      this.attivita?.immagini? this.attivita.immagini : [])
+      this.attivita?.immagini? this.attivita.immagini : [],
+      this.attivita?.isVerificata? this.attivita.isVerificata : false,
+      this.attivita?.esitoVerifica? this.attivita.esitoVerifica : false)
   }
 }

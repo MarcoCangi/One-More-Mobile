@@ -142,3 +142,28 @@
     </ion-content>
   </ng-template>
 </ion-modal>
+
+<ion-modal [isOpen]="isModalVerifiedOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Attenzione</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="dismissisModalVerified()"><ion-icon name="close-outline"></ion-icon></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="column ion-text-center ion-align-items-center">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Per poter richiedere un coupon, completa la verifica controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="column ion-text-center ion-align-items-center">
+          <ion-button (click)="dismissisModalVerified()">CONFERMA</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -58,7 +58,8 @@ export class GalleryComponent implements OnInit {
         nomeUpload: 'camera_image',
         upload: url,
         isImmaginePrincipale: isProfile,
-        ordinamento: 0
+        ordinamento: 0,
+        isVerificata: false
       };
       this.immaginiArray.push(nuovaImmagine);
       this.immaginiChange.emit(this.immaginiArray);
@@ -82,7 +83,8 @@ export class GalleryComponent implements OnInit {
             nomeUpload: fileName,
             upload: url,
             isImmaginePrincipale: false,
-            ordinamento: 0
+            ordinamento: 0,
+            isVerificata: false
           };
           this.immaginiArray.push(nuovaImmagine);
           this.immaginiChange.emit(this.immaginiArray);

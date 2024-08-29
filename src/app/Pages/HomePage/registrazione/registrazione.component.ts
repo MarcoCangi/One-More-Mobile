@@ -23,6 +23,7 @@ export class RegistrazioneComponent {
   correntDate = new Date();
   errore = '';
   minPw = 8;
+  isRegistered : boolean = false;
   @Output() closeRegisterEvent = new EventEmitter<void>();
 
   constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef) {
@@ -118,7 +119,7 @@ export class RegistrazioneComponent {
             {
               this.authService.createUserSession(email? email : '', uid, token, response.idAttivita, response.id, '', 1, displayName, nome, cognome);
               this.isLoading = false;
-              this.closeRegisterEvent.emit();
+              this.isRegistered = true;
             }
             else{
               console.log(response.utente.errore)

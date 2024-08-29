@@ -12,7 +12,7 @@
         <ion-card-content class="scroll-content">
           <ion-card-subtitle class="error" [style.visibility]="errore !== '' ? 'visible' : 'hidden'">{{errore}}</ion-card-subtitle>
   
-          <form class="login-container" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="text-align: center;">
+          <form *ngIf="!isRegistered" class="login-container" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="text-align: center;">
                 <ion-item>
                   <ion-input labelPlacement="floating" formControlName="nomeRegistrazione" type="text">
                     <div slot="label">Nome</div>
@@ -48,3 +48,8 @@
                 <img class="card-img-facebook" src="assets/Img/facebook.png">
               </div>
           </form>
+
+          <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center; margin-top: 10%;">
+            <ion-button shape="round" color="success" (click)="closeRegister()">Chiudi</ion-button>
+          </div>
+        </ion-card-content>

@@ -1,10 +1,43 @@
 <div class="container content">
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
-
+</div>
 <div *ngIf="!isLoading">
 
-  <h4 class="ion-title">Inserisci i dati della tua attività</h4>
+  <div *ngIf="this.attivita && attivita?.isVerificata" class="ion-alert">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1" class="column ion-text-center ion-align-items-center">
+          <ion-icon *ngIf="attivita?.esitoVerifica" style="color: green; margin-right: 5%; width: 30px; height: 30px; margin-top: 1%;" name="checkmark-outline"></ion-icon>
+          <ion-icon *ngIf="!attivita?.esitoVerifica" style="color: red; margin-right: 5%; width: 30px; height: 30px; margin-top: 1%;" name="close-circle-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="11" class="column ion-text-center ion-align-items-center">
+          <ion-label *ngIf="attivita?.esitoVerifica" style="color: #008000; font-weight: bold; font-size: large;">Attivita verificata</ion-label>
+          <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">Verifica non andata a buon fine</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf="!attivita?.esitoVerifica">
+          <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">{{this.attivita?.motivo}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+ </div>
 
+  <div *ngIf="this.attivita && !attivita?.isVerificata" class="ion-alert">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1" class="column ion-text-center ion-align-items-center">
+          <ion-icon style="color: hsl(34, 77%, 46%); margin-right: 5%; width: 30px; height: 30px; margin-top: 1%;" name="information-circle-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="11" class="column ion-text-center ion-align-items-center">
+          <ion-label style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">Stiamo verificando i dati della tua attivita</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div> 
+
+  <h4 class="ion-title" *ngIf="!this.attivita">Inserisci i dati della tua attività</h4>
+  
   <form>
     <div class="row">
       <div class="col-md-6 formInput">
@@ -102,6 +135,9 @@
         <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="conferma()">Prosegui</ion-button>
         <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="conferma()">Modifica</ion-button>
   </div>
+  <div class="elimina" style="display: flex; justify-content: center; align-items: center;">
+    <ion-button fill="clear" color="danger" *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="openEliminaModal()">ELIMINA ATTIVITA</ion-button>
+</div>
 </div>
 
   <ion-modal [isOpen]="isDetailModalOpen">
@@ -114,6 +150,7 @@
       <ion-content>
         <ion-card>
           <ion-card-header>
+            <ion-card-title *ngIf="this.isEliminazioneOK"> Attivita eliminata </ion-card-title>
             <ion-card-title *ngIf="this.isSalvataggioOK"> Salvataggio eseguito correttamente </ion-card-title>
             <ion-card-title *ngIf="!this.isSalvataggioOK"> OPS qualcosa è andato storto </ion-card-title>
           </ion-card-header>
@@ -137,7 +174,14 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-grid style="margin-top: 10px;">
+
+        <div class="container content">
+          <ion-spinner *ngIf="isLoadingSalvataggio" name="crescent" color="primary"></ion-spinner>
+        </div>
+        <div *ngIf="!isLoadingSalvataggio">
+
+        
+        <ion-grid style="margin-top: 10px;"  >
           <ion-row>
             <ion-col class="column ion-text-center ion-align-items-center">
               <ion-title>Riepilogo</ion-title>
@@ -364,6 +408,11 @@
               <ion-img [src]="img.upload" class="photo"></ion-img>
           </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-label style="margin-top: 2%; margin-bottom: 2%; font-size: large; font-weight: bold;">
+              Una volta salvata l'attività, questa verrà sottoposta a verifica. Finchè non verrà validata l'attività non sarà visibile agli utenti.
+            </ion-label>
+          </ion-row>
         </ion-grid>
         
 
@@ -371,6 +420,34 @@
           <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="prosegui()">Salva</ion-button>
           <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="modifica()">Modifica</ion-button>
         </div>
+      </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="isEliminaModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Elimina</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="container content">
+          <ion-spinner *ngIf="isLoadingDelete" name="crescent" color="primary"></ion-spinner>
+        </div>
+        <ion-card *ngIf="!isLoadingDelete">
+          <ion-card-header>
+            <ion-card-title *ngIf="!this.isEliminazioneOK"> Sicuro di voler eliminare l'attivita? </ion-card-title>
+            <ion-card-subtitle *ngIf="!this.isEliminazioneOK"> L'eliminazione comporterà anche la rimozione di eventuali promo legate all'attività </ion-card-subtitle>
+            <ion-card-title *ngIf="this.isEliminazioneOK"> Attivita eliminata</ion-card-title>
+          </ion-card-header>
+          <ion-card-content style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
+            <ion-button shape="round" color="danger" *ngIf="!this.isEliminazioneOK" (click)="eliminaAttivita()">ELIMINA</ion-button>
+            <ion-button shape="round" *ngIf="!this.isEliminazioneOK" (click)="dismissEliminaModal()">ANNULLA</ion-button>
+            <ion-button shape="round" *ngIf="this.isEliminazioneOK" (click)="dismissEliminaModal()">CHIUDI</ion-button>
+          </ion-card-content>
+        </ion-card>
       </ion-content>
     </ng-template>
   </ion-modal>

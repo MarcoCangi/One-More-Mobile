@@ -35,6 +35,8 @@ export class UserComponent  implements OnInit {
   notificaInvio = '';
   errore = '';
   selectedReason: string | null = null;
+  isDeleted : boolean = false;
+  @Output() openPageEvent = new EventEmitter<number>();
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('newPasswordRegistrazione')?.value;
@@ -109,29 +111,24 @@ export class UserComponent  implements OnInit {
 
   async eliminaAccount() {
     this.isLoading = true;
-    console.log('log 1')
     try {
 
       const utente = this.authService.getUser(); // Ottieni l'utente attuale
-      console.log(utente)
       // Elimina l'account da Firebase
       await this.authService.deleteUserAccount(); // Assicurati che questo metodo elimini l'account da Firebase
       
       this.authService.deleteUserSession();
-      console.log('log 3')
       // Chiama l'API per eliminare l'account
       await this.authService.apiDeleteUtente(utente, this.selectedReason).toPromise();
 
       this.isLoading = false;
-      this.DimsissModalEliminaAccount();
+      this.isDeleted = true;
 
     } catch (error) {
       console.error('Errore durante l\'eliminazione dell\'account:', error);
       this.isLoading = false;
     }
   }
-
-
 
   async onSubmit(){
     this.isLoading = true;
@@ -203,4 +200,13 @@ export class UserComponent  implements OnInit {
       }
     }
   };
+
+  async openPage(idPage:number){
+    setTimeout(() => {
+      this.DimsissModalEliminaAccount()
+    }, 100);
+    setTimeout(() => {
+      this.openPageEvent.emit(1);
+    }, 100);
+  }
 }

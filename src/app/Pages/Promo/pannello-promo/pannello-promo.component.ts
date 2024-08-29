@@ -23,6 +23,8 @@ export class PannelloPromoComponent implements OnInit {
   isLoading: boolean | undefined;
   isConfirmed: boolean | undefined;
   isError: boolean | undefined;
+  isVerificato: boolean = false;
+  isModalVerifiedOpen: boolean = false;
 
   constructor( 
     private authService: AuthService,
@@ -31,11 +33,18 @@ export class PannelloPromoComponent implements OnInit {
   
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
+    const user = this.authService.getCurrentUserFromAuth();
+    const usersession = this.authService.getUserSessionFromCookie();
+    console.log(user);
+    console.log(usersession);
+    if((user && user?.emailVerified == true && usersession?.typeLog == 1) || (usersession?.typeLog == 2 || usersession?.typeLog == 3))
+       this.isVerificato = true;
   }
 
   
   async Prenota() {
     this.isLoading = true;
+
     this.requestPromo = new InsertPromoUserAttiva();
     const userSession = this.authService.getUserSessionFromCookie();
     if (userSession && userSession.idSoggetto) {
@@ -56,17 +65,25 @@ export class PannelloPromoComponent implements OnInit {
     this.isLoading = false;
   }
 
+  dismissisModalVerified(): void {
+    this.isError = false;
+    this.isModalVerifiedOpen = false;
+  }
+
   dismissConfirmModal(isEsito:boolean, isCoupon:boolean): void {
     this.isError = false;
     this.isConfirmed = false;
     this.riepilogoPromo = undefined;
     this.isModalConfirmOpen = false;
-    if (isEsito) {
-      this.redirecEsitoEvent.emit(isCoupon);
-    }
   }
 
   openConfirmModal(promo: Promo): void {
+
+    if(this.isVerificato == false){
+      this.isModalVerifiedOpen = true;
+      return;
+    }
+    
     const userSession = this.authService.getUserSessionFromCookie();
     if (userSession && userSession.idSoggetto){
       this.riepilogoPromo = promo;

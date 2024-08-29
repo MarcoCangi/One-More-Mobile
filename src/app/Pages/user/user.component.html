@@ -92,7 +92,8 @@
       <ion-toolbar>
         <ion-title>Elimina Account</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          <ion-button *ngIf="this.isDeleted" (click)="openPage(1)"><ion-icon name="close-outline"></ion-icon></ion-button>
+          <ion-button *ngIf="!this.isDeleted" (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -100,20 +101,30 @@
     <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
     <ion-card *ngIf="!isLoading">
       <ion-card-header>
-        <ion-card-subtitle style="font-weight: bold;">Sicuro di voler eliminare il tuo account?</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="!this.isDeleted" style="font-weight: bold;">Sicuro di voler eliminare il tuo account?</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <ion-label style="margin-top: 5%; margin-bottom: 3%; font-weight: bold;">Puoi dirci perchè al fine di poter migliorare il nostro servizio? </ion-label>
-        <ion-radio-group [(ngModel)]="selectedReason">
-          <ion-radio value="expectations" labelPlacement="end">L'app non ha soddisfatto le mie aspettative</ion-radio>
-          <ion-radio value="promotions" labelPlacement="end">Le promozioni non erano coerenti</ion-radio>
-          <ion-radio value="services" labelPlacement="end">Le attività non hanno fornito il servizio offerto</ion-radio>
-          <ion-radio value="no-answer" labelPlacement="end">Preferisco non rispondere</ion-radio>
-        </ion-radio-group>
-        
-        <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%;">
-          <ion-button shape="round" color="success" (click)="DimsissModalEliminaAccount()">Annulla</ion-button>
-          <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason">Elimina Account</ion-button>
+        <div *ngIf="!this.isDeleted">
+          <ion-label style="margin-top: 5%; margin-bottom: 3%; font-weight: bold;">Puoi dirci perchè al fine di poter migliorare il nostro servizio? </ion-label>
+          <ion-radio-group [(ngModel)]="selectedReason">
+            <ion-radio value="L'app non ha soddisfatto le mie aspettative" labelPlacement="end">L'app non ha soddisfatto le mie aspettative</ion-radio>
+            <ion-radio value="Le promozioni non erano coerenti" labelPlacement="end">Le promozioni non erano coerenti</ion-radio>
+            <ion-radio value="Le attività non hanno fornito il servizio offerto" labelPlacement="end">Le attività non hanno fornito il servizio offerto</ion-radio>
+            <ion-radio value="no-answer" labelPlacement="end">Preferisco non rispondere</ion-radio>
+          </ion-radio-group>
+          
+          <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%;">
+            <ion-button shape="round" color="success" (click)="DimsissModalEliminaAccount()">Annulla</ion-button>
+            <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason">Elimina Account</ion-button>
+          </div>
+        </div>
+        <div *ngIf="this.isDeleted">
+          <div style="margin-top: 5%; margin-bottom: 3%; font-weight: bold;">
+            <ion-label style="font-weight: bold;">Eliminazione eseguita correttamente</ion-label>
+         </div>
+          <div style="display: flex; justify-content: center; align-items: center; margin-top: 10%;">
+            <ion-button shape="round" color="success" (click)="openPage(1)">Chiudi</ion-button>
+          </div>
         </div>
       </ion-card-content>
     </ion-card>
