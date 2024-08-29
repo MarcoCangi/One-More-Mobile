@@ -24,3 +24,8 @@
   .title{
     margin-left: 5%;
   }
+
+  .full-modal::part(content) {
+    height: 100%;
+    width: 100%;
+  }

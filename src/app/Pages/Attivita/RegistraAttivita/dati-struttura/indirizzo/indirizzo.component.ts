@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-indirizzo',
@@ -17,7 +18,7 @@ export class IndirizzoComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      indirizzoFormControl: ['', [Validators.required, Validators.minLength(3)]]
+      indirizzoFormControl: [this.indirizzo || '', [Validators.required, Validators.minLength(3)], [asyncValidator]]
     });
 
     // Aggiungi un listener per il cambio di valore nel form control

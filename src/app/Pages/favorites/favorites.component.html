@@ -37,7 +37,7 @@
     </div>
 </ion-card>
 
-<ion-modal [isOpen]="isModalPromoOpen">
+<ion-modal [isOpen]="isModalPromoOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -57,7 +57,7 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal [isOpen]="isModalConfirmOpen">
+<ion-modal [isOpen]="isModalConfirmOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
   <ng-template>
     <ion-header>
       <ion-toolbar>

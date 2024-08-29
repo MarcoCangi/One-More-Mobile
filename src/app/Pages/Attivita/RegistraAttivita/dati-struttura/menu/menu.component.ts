@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-menu',
@@ -20,11 +21,11 @@ export class MenuComponent  implements OnInit {
 
    ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      descFormControl: ['', [Validators.required, Validators.minLength(100), Validators.maxLength(2000)]]
+      descFormControl: [this.descrizione || '', [Validators.required, Validators.minLength(100), Validators.maxLength(2000)], [asyncValidator]]
     });
 
     this.exampleFormDesc = this.fb.group({
-      descOffertaFormControl: []
+      descOffertaFormControl: [this.descrizioneOfferta || '', [asyncValidator]]
     });
 
     this.exampleForm.get('descFormControl')!.valueChanges.subscribe((value: string) => {

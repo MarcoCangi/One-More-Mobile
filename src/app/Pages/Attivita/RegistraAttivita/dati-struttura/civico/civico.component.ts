@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-civico',
@@ -17,7 +18,7 @@ export class CivicoComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      civicoFormControl: ['', [Validators.required]]
+      civicoFormControl: [this.civico || '', [Validators.required], [asyncValidator]]
     });
 
     // Aggiungi un listener per il cambio di valore nel form control

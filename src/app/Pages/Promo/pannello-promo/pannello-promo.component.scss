@@ -69,6 +69,11 @@ h2{
     margin-top: 5%;
   }
 
+  .full-modal::part(content) {
+    height: 100%;
+    width: 100%;
+  }
+
   
   
   

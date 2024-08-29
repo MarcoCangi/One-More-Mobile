@@ -85,7 +85,7 @@
   </ion-accordion-group>
 </div> 
 
-<ion-modal [isOpen]="isModalConfirmOpen">
+<ion-modal [isOpen]="isModalConfirmOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
   <ng-template>
     <ion-header *ngIf="isLoading">
       <ion-spinner  name="crescent" color="primary"></ion-spinner>
@@ -143,7 +143,7 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal [isOpen]="isModalVerifiedOpen">
+<ion-modal [isOpen]="isModalVerifiedOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -161,7 +161,7 @@
           </ion-card-title>
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center">
-          <ion-button (click)="dismissisModalVerified()">CONFERMA</ion-button>
+          <ion-button (click)="dismissisModalVerified()">CHIUDI</ion-button>
         </ion-card-content>
       </ion-card>
     </ion-content>

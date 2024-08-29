@@ -6,7 +6,7 @@ import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/sr
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -38,6 +38,7 @@ export class DatiStrutturaComponent  implements OnInit {
   isEliminaModalOpen: boolean = false;
   isEliminazioneOK: boolean = false;
   isSalvataggioOK = false;
+  isVerificato: boolean = false;
   isError:boolean | undefined;
   errorNome:string | undefined;
   errorTel:string | undefined;
@@ -63,32 +64,37 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isLoading = true;
     this.orari = new Orari();
     this.idAttivita = 0;
-    await this.InitRequestAtt();
+
+    const user = this.authService.getCurrentUserFromAuth();
     this.sessioneString = this.authService.getUserSessionFromCookie();
+    if((user && user?.emailVerified == true && this.sessioneString?.typeLog == 1) || (this.sessioneString?.typeLog == 2 || this.sessioneString?.typeLog == 3))
+       this.isVerificato = true;
+
+    if(this.isVerificato)
+    {
+      await this.getListaComuni();
+      await this.GetListaTipoAttivita();
+      await this.InitRequestAtt();
+      
+      if (this.sessioneString !== null) {
+        if (this.sessioneString.idAttivita !== null && this.sessioneString.idAttivita !== undefined && this.sessioneString.idAttivita > 0) {
+          this.idAttivita = this.sessioneString.idAttivita;
+          this.id = this.sessioneString.idSoggetto;
+        }
+      }
   
-    if (this.sessioneString !== null) {
-      if (this.sessioneString.idAttivita !== null && this.sessioneString.idAttivita !== undefined && this.sessioneString.idAttivita > 0) {
-        this.idAttivita = this.sessioneString.idAttivita;
-        this.id = this.sessioneString.idSoggetto;
+      if (this.id) {
+        await this.getAttivita(this.id);
       }
     }
-  
-    if (this.id) {
-      await this.getAttivita(this.id);
-    }
-  
-    await this.getListaComuni();
-    await this.GetListaTipoAttivita();
-  
     this.isLoading = false;
   }
 
   conferma(){
-    console.log(this.requestAttivita);
     this.controlValidator(this.requestAttivita);
     if(!this.isError){
       this.isConfirmOpen = true;
-      }
+    }
   }
 
   dismissConferma(){
@@ -157,7 +163,7 @@ export class DatiStrutturaComponent  implements OnInit {
   }
 
   async modifica() {
-    this.isLoading = true;
+    this.isLoadingSalvataggio = true;
     await this.controlValidator(this.requestAttivita);
   
     if (!this.isError) {
@@ -188,7 +194,7 @@ export class DatiStrutturaComponent  implements OnInit {
     }
   
     this.dismissConferma();
-    this.isLoading = false;
+    this.isLoadingSalvataggio = false;
   }
 
   async controlValidator(request: InsertAttivitaReqDto | undefined){
@@ -338,7 +344,7 @@ export class DatiStrutturaComponent  implements OnInit {
           sessioneString.idAttivita = 0;
           this.authService.saveUserSessionToCookie(sessioneString);
         }
-          
+        this.isEliminazioneOK = true;
       }
 
       this.isLoadingDelete = false;
@@ -450,38 +456,30 @@ export class DatiStrutturaComponent  implements OnInit {
 
   async getListaComuni() {
     try {
-      const data = await lastValueFrom(this.comuniService.apiGetListaComuni());
-      this.listaComuni = data.map((item: Comuni) => {
-        return {
-          descComune: item.descComune,
-          provincia: item.provincia,
-          isinseribile: item.isinseribile, // Aggiungi tutte le proprietà necessarie qui
-          CodCatastale: item.CodCatastale  // Aggiungi tutte le proprietà necessarie qui
-        };
-      });
+        this.listaComuni = await firstValueFrom(this.comuniService.apiGetListaComuni());
     } catch (error) {
-      console.error('Errore durante il recupero della lista comuni:', error);
+        console.error('Errore durante il recupero della lista comuni:', error);
     }
   }
 
   async GetListaTipoAttivita() {
-    this.listaAttivitaDDL = await this.attivitaService.GetListaTipoAttivitaSession();
+    this.listaAttivitaDDL = this.attivitaService.GetListaTipoAttivitaSession();
     if (!this.listaAttivitaDDL || this.listaAttivitaDDL.length === 0) {
-      try {
-        const data = await lastValueFrom(this.attivitaService.apiGetListaDecAttivita());
-        if (data) {
-          this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
-            return {
-              codTipoAttivita: item.codTipoAttivita,
-              descrizione: item.descrizione
-            };
-          });
+        try {
+            const data = await firstValueFrom(this.attivitaService.apiGetListaDecAttivita());
+            if (data) {
+                this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
+                    return {
+                        codTipoAttivita: item.codTipoAttivita,
+                        descrizione: item.descrizione
+                    };
+                });
+            }
+        } catch (error) {
+            console.error('Errore nel recupero dei dati:', error);
         }
-      } catch (error) {
-        console.error('Errore nel recupero dei dati:', error);
-      }
     }
-  }
+}
   
   getImmaginePrincipale(): string {
     const immaginePrincipale = this.requestAttivita?.immagini?.find(i => i.isImmaginePrincipale);
@@ -664,6 +662,10 @@ export class DatiStrutturaComponent  implements OnInit {
   dismissDetailModal() {
     location.reload();
     this.isDetailModalOpen = false;
+  }
+
+  reloadHome(){
+    location.reload();
   }
 
   async InitRequestAtt() {

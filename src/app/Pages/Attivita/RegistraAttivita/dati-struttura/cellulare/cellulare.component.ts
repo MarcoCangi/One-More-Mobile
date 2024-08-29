@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-cellulare',
@@ -21,14 +22,14 @@ export class CellulareComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      cellFormControl: ['', [Validators.compose([Validators.pattern('[- +()0-9]+')])]]
+      cellFormControl: [this.cellulare || '', [Validators.compose([Validators.pattern('[- +()0-9]+')])], [asyncValidator]]
     });
 
     this.exampleForm.get('cellFormControl')!.valueChanges.subscribe((value: string) => {
       this.emitCellChange(value);
     });
 
-    this.cellPubblicoFormControl = new FormControl();
+    this.cellPubblicoFormControl = new FormControl(this.isPubblico || false);
     // Aggiungi un listener per il cambio di valore nel form control
     this.cellPubblicoFormControl.valueChanges.subscribe((value: boolean) => {
       this.emitIsCellPubblicoChange(value);

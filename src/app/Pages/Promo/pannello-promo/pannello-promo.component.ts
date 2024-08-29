@@ -35,8 +35,6 @@ export class PannelloPromoComponent implements OnInit {
   ngOnInit(): void {
     const user = this.authService.getCurrentUserFromAuth();
     const usersession = this.authService.getUserSessionFromCookie();
-    console.log(user);
-    console.log(usersession);
     if((user && user?.emailVerified == true && usersession?.typeLog == 1) || (usersession?.typeLog == 2 || usersession?.typeLog == 3))
        this.isVerificato = true;
   }

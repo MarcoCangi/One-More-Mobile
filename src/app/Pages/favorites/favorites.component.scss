@@ -36,3 +36,8 @@ ion-card {
   width: 27px;
 }
 
+.full-modal::part(content) {
+  height: 100%;
+  width: 100%;
+}
+

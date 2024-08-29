@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-cap',
@@ -17,7 +18,7 @@ export class CapComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      capFormControl: ['', [Validators.required]]
+      capFormControl: [this.cap || '', [Validators.required], [asyncValidator]]
     });
 
     // Aggiungi un listener per il cambio di valore nel form control

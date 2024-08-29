@@ -6,7 +6,7 @@
     <ion-icon slot="end" padding size="large" (click)="ShowLogin()" *ngIf="mostraLoginButton" name="person-circle"></ion-icon>
   </ion-toolbar>
 
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
     <ng-template>
       <ion-header>
         <ion-toolbar>

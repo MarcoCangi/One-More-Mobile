@@ -1,7 +1,7 @@
 <div class="container content">
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 </div>
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading && isVerificato">
 
   <div *ngIf="this.attivita && attivita?.isVerificata" class="ion-alert">
     <ion-grid>
@@ -17,7 +17,7 @@
       </ion-row>
       <ion-row>
         <ion-col *ngIf="!attivita?.esitoVerifica">
-          <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">{{this.attivita?.motivo}}</ion-label>
+          <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">{{this.attivita.motivo}}</ion-label>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -140,7 +140,20 @@
 </div>
 </div>
 
-  <ion-modal [isOpen]="isDetailModalOpen">
+<div *ngIf="!isLoading && !isVerificato">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Per poter registrare un'attività, completa la verifica dell' account controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="column ion-text-center ion-align-items-center">
+        <ion-button (click)="reloadHome()">CHIUDI</ion-button>
+      </ion-card-content>
+    </ion-card>
+</div>
+
+  <ion-modal [isOpen]="isDetailModalOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -162,7 +175,7 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal [isOpen]="isConfirmOpen">
+  <ion-modal [isOpen]="isConfirmOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -425,7 +438,7 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal [isOpen]="isEliminaModalOpen">
+  <ion-modal [isOpen]="isEliminaModalOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -445,7 +458,7 @@
           <ion-card-content style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
             <ion-button shape="round" color="danger" *ngIf="!this.isEliminazioneOK" (click)="eliminaAttivita()">ELIMINA</ion-button>
             <ion-button shape="round" *ngIf="!this.isEliminazioneOK" (click)="dismissEliminaModal()">ANNULLA</ion-button>
-            <ion-button shape="round" *ngIf="this.isEliminazioneOK" (click)="dismissEliminaModal()">CHIUDI</ion-button>
+            <ion-button shape="round" *ngIf="this.isEliminazioneOK" (click)="reloadHome()">CHIUDI</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-content>
