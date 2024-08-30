@@ -1,7 +1,30 @@
 <div class="container content">
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 </div>
-<div *ngIf="!isLoading && isVerificato">
+
+  <div style="margin-top: 5%;min-width: 400px;" *ngIf="!isLoading && isVerificato && this.listaAttivita && !this.attivita">
+    <ion-toolbar>
+      <ion-title>Le tue attività</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="addNewAtt()" style="background-color: #007bff; border-radius: 50%; width: 45px; height: 45px;"><ion-icon style="color: white; height: 35px; width: 35px;" name="add-outline"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar> 
+        <ion-card *ngFor="let att of listaAttivita" (click)="getAttivita(att.idSoggetto, att.idAttivita)">
+          <ion-card-header>
+            <ion-card-title>
+              {{ att.nome }}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-subtitle>
+              {{att.citta}}, {{att.indirizzo}}, {{att.civico}}, {{att.cap}}
+            </ion-card-subtitle>
+          </ion-card-content>
+        </ion-card>
+  </div>
+
+
+<div *ngIf="!isLoading && isVerificato && (this.attivita || !listaAttivita)">
 
   <div *ngIf="this.attivita && attivita?.isVerificata" class="ion-alert">
     <ion-grid>
@@ -55,7 +78,7 @@
     </div>
     <div class="row">
     <div class="formInput">
-      <ng-container *ngIf="this.idAttivita === 0 || this.attivita?.listaTipoAttivita">
+      <ng-container>
         <app-tipo-attivita [listaAttivitaDDL]="listaAttivitaDDL" [listaAttivitaSelezionate]="this.attivita?.listaTipoAttivita" (listaAttivitaChanged)="handleListaTipoAttivitaChange($event)"></app-tipo-attivita>
         <mat-error *ngIf="this.errorTipologia && (!this.requestAttivita?.listaTipoAttivita || this.requestAttivita?.listaTipoAttivita?.length === 0)" class="err">
           {{this.errorTipologia}}
@@ -157,7 +180,7 @@
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Lista delle Attività</ion-title>
+          <ion-title>Esito</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>

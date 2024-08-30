@@ -1,6 +1,24 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<div *ngIf="!this.isLoading && !this.isModifica" class="full-width-container">
+<div style="margin-top: 5%;min-width: 400px;" *ngIf="!isLoading && this.listaAttivita && !this.isModifica ">
+  <ion-toolbar>
+    <ion-title>Seleziona l'attività</ion-title>
+  </ion-toolbar> 
+      <ion-card *ngFor="let att of listaAttivita" (click)="getPromoAttivita(att)">
+        <ion-card-header>
+          <ion-card-title>
+            {{ att.nome }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-subtitle>
+            {{att.citta}}, {{att.indirizzo}}, {{att.civico}}, {{att.cap}}
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+  </div>
+
+<div *ngIf="!this.isLoading && !this.isModifica && !this.listaAttivita" class="full-width-container">
 
   <div class="segment">
     <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)">

@@ -1,32 +1,19 @@
-<ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
 
-<ion-card style="min-width: 400px; height: 90vh; width: 100vw;" *ngIf="!isLoading">
+<div class="map">
+  <ion-spinner style="background-color: white; border-radius: 25%;" *ngIf="isLoading" name="dots" color="primary"></ion-spinner>
+  <ion-button class="btnsearch" color="light" shape="round" style="margin-top: 20%; z-index: 10000;" *ngIf="this.isMooving" (click)="cerca()">CERCA QUI</ion-button>
+  <google-map *ngIf="isPositionLoaded" id="mapElement" #googleMap height="100%" width="100%" [center]="center" (centerChanged)="centerChanged()" (zoomChanged)="zoomChanged()" (mapClick)="move($event)">
+    <map-marker *ngFor="let markerPosition of markerPositions" 
+                [position]="markerPosition" 
+                [options]="markerOptions"
+                (mapClick)="markerClicked(markerPosition)">
+    </map-marker>
+  </google-map>
+  <ion-button shape="round" expand="block" (click)="openListModal()" class="floating-button">Lista completa</ion-button>
+</div>
   
-  <!-- <ion-grid style="background-color: #e9540a;">
-    <ion-row>
-      <ion-col size="10">
-        <ion-searchbar style="top:0" (click)="openSearch()" placeholder="Cerca"></ion-searchbar>
-      </ion-col>
-      <ion-col size="2">
-        <ion-button color="light" style="height: 40px;" (click)="openFilerModal()">
-          <ion-icon name="filter-outline" size="auto"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>  -->
-  
-  <div id="mapElement" class="map">
-    <google-map #googleMap height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="move($event)">
-      <map-marker *ngFor="let markerPosition of markerPositions" 
-                  [position]="markerPosition" 
-                  [options]="markerOptions"
-                  (mapClick)="markerClicked(markerPosition)">
-      </map-marker>
-    </google-map>
-  </div>
-    <ion-button shape="round" expand="block" (click)="openListModal()" class="floating-button">Lista completa</ion-button>
-</ion-card>
+
   
   
 

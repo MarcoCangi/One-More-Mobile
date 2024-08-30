@@ -1,7 +1,10 @@
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { GoogleMap } from '@angular/google-maps';
 import { IonModal } from '@ionic/angular';
 import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-mappa',
@@ -9,7 +12,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
   styleUrls: ['./mappa.component.scss'],
 })
 export class MappaComponent implements OnInit {
-  
+  @ViewChild('googleMap', { static: false }) googleMap!: GoogleMap;
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openSearchEvent = new EventEmitter<number>();
   attivitas: Attivita[] | undefined;
@@ -34,64 +37,54 @@ export class MappaComponent implements OnInit {
   isFilterModalOpen = false;
   listaAttivitaDDL: TipoAttivita[] | undefined;
   isLimitEnabled: boolean = false;
+  isPositionLoaded: boolean = false;
+  isMooving: boolean = false;
 
   constructor(private service: GetApiAttivitaService) {}
 
   async ngOnInit(): Promise<void> {
     this.isRicerca = false;
     this.isLoading = true;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     this.attivitaFiltrate = this.service.getListaAttivita();
     if (this.attivitaFiltrate == undefined || this.attivitaFiltrate == null) {
       this.filter= new FiltriAttivita();
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          (position) => this.handleLocationSuccess(position),
-          (error) => this.handleLocationError(error),
+          async (position) => {
+            this.position = position;
+            await this.setCenterPosition(position.coords.latitude, position.coords.longitude);
+            this.filter.latitudine = this.center.lat;
+            this.filter.longitudine = this.center.lng;
+            this.filter.tipoRicerca = 5; // Esempio di impostazione del tipo di ricerca
+            setTimeout(async () => {
+              await this.initMap();
+            }, 200);
+          },
+          async (error) => {
+            await this.setCenterPosition(41.9028, 12.4964);
+            this.filter.latitudine = this.center.lat;
+            this.filter.longitudine = this.center.lng;
+            this.filter.tipoRicerca = 5;
+  
+            setTimeout(async () => {
+              await this.initMap();
+            }, 200);
+          }
         );
       }
-      this.filter.tipoRicerca = 0;
-      (await this.service.apiGetListaAttivitaFiltrate(this.filter)).subscribe(
-        (data: AttivitaFiltrate) => {
-          this.attivitas = data.listaAttivita;
-          if(this.attivitas)
-            this.attivitas.forEach(e => {
-              if (e.latitudine !== undefined && e.longitudine !== undefined) {
-                const marker = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
-                this.markerPositions.push(marker.toJSON());
-              }
-          });
-          this.isLoading = false;
-        },
-        (error: any) => {
-          console.error("Errore durante la chiamata API:", error);
-        },
-      );
-    } else {
-      if (this.attivitaFiltrate.listaAttivita &&
-          this.attivitaFiltrate.latitudine &&
-          this.attivitaFiltrate.longitudine) {
-        this.attivitaFiltrate.listaAttivita.forEach(e => {
-          if (e.latitudine != undefined && e.longitudine != undefined) {
-            const marker = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
-            this.markerPositions.push(marker.toJSON());
-          }
-        });
-        this.center = { lat: this.attivitaFiltrate.latitudine, lng: this.attivitaFiltrate.longitudine };
-        this.initMap();
-      }
-      this.attivitas = this.attivitaFiltrate.listaAttivita;
-      this.isRicerca = true;
-      this.service.resetListaAttivitaFiltrate();
-      this.isLoading = false;
+    }
+    else {
+      await this.setCenterPosition(this.attivitaFiltrate.latitudine, this.attivitaFiltrate.longitudine);
+      setTimeout(async () => {
+        await this.initMap();
+      }, 200);
     }
   }
 
-  handleLocationSuccess(position: GeolocationPosition): void {
-    this.position = position;
-    this.center = { lat: position.coords.latitude, lng: position.coords.longitude };
-    this.initMap();
+  setCenterPosition(latitudine: number, longitudine:number){
+    this.center = { lat: latitudine, lng: longitudine };
+    this.isPositionLoaded = true;
   }
 
   handleLocationError(error: GeolocationPositionError): void {
@@ -109,13 +102,49 @@ export class MappaComponent implements OnInit {
     this.isLoading = false;
   }
 
-  initMap(): void {
-    const mapElement = document.getElementById('googleMap');
-    if (mapElement) {
-      const map = new google.maps.Map(mapElement, {
-        center: this.center,
-        zoom: 14
-      });
+  async initMap(): Promise<void> {
+    if (this.googleMap && this.googleMap.googleMap) {
+      const map = this.googleMap.googleMap;
+      map.panTo(this.center);
+      map.setZoom(12);
+      await this.updateVisibleActivities(map);
+    } else {
+      console.error("Errore: la mappa Google non è pronta.");
+    }
+  }
+
+  centerChanged(){
+    this.isMooving = true;
+  }
+
+  zoomChanged(){
+    this.isMooving = true;
+  }
+
+  async cerca() {
+    this.isMooving = false;
+  
+    if (this.googleMap && this.googleMap.googleMap) {
+      const mapCenter = this.googleMap.googleMap.getCenter();
+      if (mapCenter) {
+        console
+        const centerLat = mapCenter.lat();
+        const centerLng = mapCenter.lng();
+  
+        // Imposta la posizione centrale con le coordinate attuali della mappa
+        await this.setCenterPosition(centerLat, centerLng);
+        this.filter.latitudine = centerLat;
+        this.filter.longitudine = centerLng;
+        this.filter.tipoRicerca = 5; // Esempio di impostazione del tipo di ricerca
+  
+        setTimeout(async () => {
+          await this.initMap();
+        }, 200);
+      } else {
+        console.error("Impossibile recuperare il centro della mappa.");
+      }
+    } else {
+      console.error("La mappa non è pronta.");
     }
   }
 
@@ -123,15 +152,64 @@ export class MappaComponent implements OnInit {
     this.showMap = !this.showMap;
   }
 
-  zoom = 15;
-
-  moveMap(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.center = (event.latLng.toJSON());
-  }
-
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = event.latLng.toJSON();
   }
+
+  async updateVisibleActivities(map: google.maps.Map): Promise<void> {
+    this.isLoading = true;
+    const bounds = map.getBounds();
+    try {
+      if (this.attivitaFiltrate &&
+          this.attivitaFiltrate.listaAttivita &&
+          this.attivitaFiltrate.latitudine &&
+          this.attivitaFiltrate.longitudine) {
+          
+          this.attivitaFiltrate.listaAttivita.forEach(e => {
+            if (e.latitudine != undefined && e.longitudine != undefined) {
+              const marker = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
+              this.markerPositions.push(marker.toJSON());
+            }
+          });
+
+          this.attivitas = this.attivitaFiltrate.listaAttivita;
+          this.isRicerca = true;
+          this.service.resetListaAttivitaFiltrate();
+        }
+      else{
+
+        const observable = await this.service.apiGetListaAttivitaFiltrate(this.filter);
+        const data = await firstValueFrom(observable);
+        const allAttivitas = data.listaAttivita;
+        if (bounds) {
+          const filterAttivita = allAttivitas.filter(e => {
+            if (e.latitudine !== undefined && e.longitudine !== undefined) {
+                const position = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
+                if (bounds.contains(position)) {
+                    this.markerPositions.push(position.toJSON());
+                    return true; // Include l'attività se è visibile nella mappa
+                }
+            }
+            return false;
+        });
+
+
+        this.attivitas = filterAttivita;
+        this.markerPositions = [];
+        this.attivitas.forEach(e => {
+                if (e.latitudine !== undefined && e.longitudine !== undefined) {
+                    const position = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
+                    this.markerPositions.push(position.toJSON());
+                }
+            });
+          }
+      }
+    } catch (error) {
+        console.error("Errore durante la chiamata API:", error);
+    } finally {
+        this.isLoading = false;
+    }
+}
 
   getImmaginePrincipale(attivita: Attivita | undefined): string {
     if (attivita && attivita.immagini != undefined) {
@@ -177,37 +255,7 @@ export class MappaComponent implements OnInit {
     this.isListModalOpen = false;
   }
 
-  // async openFilerModal() {
-  //   //GET LISTA DEC TIPO ATTIVITA
-  //   this.isLoading = true;
-  //   if (!this.listaAttivitaDDL) {
-  //     this.listaAttivitaDDL = this.service.GetListaTipoAttivitaSession();
-  //     if (this.listaAttivitaDDL == undefined || this.listaAttivitaDDL.length == 0) {
-  //       try {
-  //         const data = await this.service.apiGetListaDecAttivita().toPromise();
-  //         if (data) {
-  //           this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
-  //             return {
-  //               codTipoAttivita: item.codTipoAttivita,
-  //               descrizione: item.descrizione
-  //             };
-  //           });
-  //           this.service.createListaTipoAttivitaSession(this.listaAttivitaDDL);
-  //         }
-  //       } catch (error) {
-  //         console.error('Errore nel recupero della lista di attività:', error);
-  //       }
-  //     }
-  //   }
-  //   this.isLoading = false;
-  //   this.isFilterModalOpen = true;
-  // }
-
-  // dismissFilterModal() {
-  //   this.isFilterModalOpen = false;
-  // }
  
-  
   async VisualizzaAttivita(idAttivita: number | undefined, idModal:number): Promise<void> {
 
     if(idModal == 1)

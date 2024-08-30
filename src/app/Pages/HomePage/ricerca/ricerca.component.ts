@@ -52,7 +52,7 @@ export class RicercaComponent implements OnInit {
               });
             }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
       this.isLoading = true;
       this.showDropdown = false;
   
@@ -66,7 +66,7 @@ export class RicercaComponent implements OnInit {
         map(value => this._filterAtt(value))
       );
   
-      this.GetAttivita();
+      await this.GetAttivita();
   
       document.addEventListener('click', this.closeDropdown);
   }

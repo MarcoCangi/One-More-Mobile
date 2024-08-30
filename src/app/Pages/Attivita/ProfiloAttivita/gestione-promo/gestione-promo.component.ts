@@ -1,12 +1,13 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, lastValueFrom, of, tap } from 'rxjs';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Router } from '@angular/router';
 import { Attivita, Orari } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GiorniSettimanaPromo, InsertPromoReqDto, Promo, TipologiaOfferta } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-gestione-promo',
@@ -20,14 +21,16 @@ export class GestionePromoComponent  implements OnInit {
     attivita: Attivita | undefined;
     orari: Orari | undefined;
     requestPromo!: InsertPromoReqDto;
-    
+    listaAttivita: Attivita[] | undefined;
     isPrincipale = false;
+    isConfirmOpen: boolean = false;
     sessioneString!:UserSession | null;
     promo: Promo | undefined;
     listaTipologie: TipologiaOfferta[] = [];
     isLimitEnabled: boolean = false;
     isLoading : boolean | undefined;
     msgErr:string | undefined;
+    isLoadingSalvataggio: boolean = false;
     @Input() modificaPromo!: Promo;
     @Output() openPageEvent = new EventEmitter<number>();
     
@@ -35,21 +38,28 @@ export class GestionePromoComponent  implements OnInit {
 
     constructor(
       private promoService : GetApiPromoService,
-      private router: Router,
-      private fb: FormBuilder,
-      private authService : AuthService
+      private authService : AuthService,
+      private attivitaService: GetApiAttivitaService,
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
       this.isLoading = true;
       this.requestPromo = new InsertPromoReqDto();
       this.requestPromo.days = [];
       this.idAttivita = 0;
       this.giorni = new GiorniSettimanaPromo();
+      this.sessioneString = this.authService.getUserSessionFromCookie();
+
+      if (this.sessioneString !== null) {
+        if(this.sessioneString.idSoggetto !== null && this.sessioneString.idSoggetto !== undefined && this.sessioneString.idSoggetto > 0)
+          this.id = this.sessioneString.idSoggetto;
+      }
 
       if(this.modificaPromo != undefined && this.modificaPromo != null)
       {
         this.requestPromo.idPromo = this.modificaPromo.idPromo;
+        this.requestPromo.idAttivita = this.modificaPromo.idAttivita;
+        this.idAttivita = this.modificaPromo.idAttivita;
         if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0)
           this.isLimitEnabled = true;
     
@@ -63,21 +73,21 @@ export class GestionePromoComponent  implements OnInit {
           this.listaTipologie = this.modificaPromo.listaTipologie;
         }
       }
-    
-      this.sessioneString = this.authService.getUserSessionFromCookie();
-    
-      if (this.sessioneString !== null) {
-    
-          if(this.sessioneString.idAttivita !== null && this.sessioneString.idAttivita !== undefined && this.sessioneString.idAttivita > 0)
-          {
-            this.idAttivita = this.sessioneString.idAttivita;
-            this.id = this.sessioneString.idSoggetto;
-          }
+      else if(!this.modificaPromo)
+      {
+        if (this.id) {
+          await this.getListaAttivita(this.id);
+        }
       }
       this.isLoading = false;
     }
 
+  prosegui(){
+    this.isConfirmOpen = true;
+  }
+
   salva() {
+    this.isConfirmOpen = false;
     this.msgErr = "";
     this.ControlPromo(this.requestPromo);
     if(this.msgErr)
@@ -87,8 +97,8 @@ export class GestionePromoComponent  implements OnInit {
   
     if (sessioneString !== null) {
       
-      if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0) {
-        this.requestPromo.idAttivita = sessioneString.idAttivita;
+      if (this.idAttivita) {
+        this.requestPromo.idAttivita = this.idAttivita;
       }
 
       if(this.requestPromo.days && this.requestPromo.days.length > 0)
@@ -110,20 +120,29 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   modifica() {
-    
+    this.isConfirmOpen = false;
+    this.msgErr = "";
+    this.ControlPromo(this.requestPromo);
+    if(this.msgErr)
+      return;
+
     const sessioneString = this.authService.getUserSessionFromCookie();
   
     if (sessioneString !== null) {
       
-      if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0) {
-        this.requestPromo.idAttivita = sessioneString.idAttivita;
+      if (this.idAttivita) {
+        this.requestPromo.idAttivita = this.idAttivita;
+      }
+
+      if(this.requestPromo.days && this.requestPromo.days.length > 0)
+      {
+        const sortedDays = this.requestPromo.days.sort((a, b) => a - b);
+        this.requestPromo.validDays = sortedDays.join('-');
       }
 
       this.promoService.apiUpdatePromo(this.requestPromo).pipe(
         tap((response: any) => {
-          this.router.navigateByUrl('/dummy', { skipLocationChange: true }).then(() => {
-            this.openPage(7);
-          });
+          this.openPage(7);
         }),
         catchError((error) => {
           console.error(error.error);
@@ -132,6 +151,7 @@ export class GestionePromoComponent  implements OnInit {
       ).subscribe();
     }
   }
+
   
   handleDataDalChange(dataDal: moment.Moment) {
     this.requestPromo.dataDal = dataDal.toDate();
@@ -404,5 +424,29 @@ export class GestionePromoComponent  implements OnInit {
 
   openPage(idPage:number){
     this.openPageEvent.emit(idPage);
+  }
+
+  async getListaAttivita(idSoggetto: number) {
+    try {
+      const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(idSoggetto));
+      if (data) {
+        this.listaAttivita = data;
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'attività:', error);
+    }
+  }
+
+  addPromo(attivita: Attivita){
+    if(attivita)
+    {
+      this.requestPromo = new InsertPromoReqDto()  
+      this.attivita = attivita;
+      this.idAttivita = this.attivita?.idAttivita;
+    }
+  }
+
+  dismissConferma(){
+    this.isConfirmOpen = false;
   }
 }

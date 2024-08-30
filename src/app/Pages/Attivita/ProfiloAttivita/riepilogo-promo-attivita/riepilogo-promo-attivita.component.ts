@@ -7,6 +7,8 @@ import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-f
 import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-riepilogo-promo-attivita',
@@ -22,20 +24,22 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   attivita: Attivita | undefined;
   idAttivita!: number;
   idSoggetto!: number;
-  isLoading! : boolean;
+  isLoading : boolean = false;
   isModifica! : boolean;
   promoSelezionata! : Promo;
   segmentValue: string = 'default';
   panelOpenState = false;
+  listaAttivita: Attivita[] | undefined;
 
   constructor(
     private promoService : GetApiPromoService,
     private router: Router,
     private dialog: MatDialog,
-    private authService : AuthService
+    private authService : AuthService,
+    private attivitaService: GetApiAttivitaService,
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     
     this.isLoading = true;
     this.idAttivita = 0;
@@ -43,33 +47,13 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
 
     this.sessioneString =  this.authService.getUserSessionFromCookie();
 
-    if (this.sessioneString !== null && this.sessioneString.idAttivita !== null && this.sessioneString.idAttivita !== undefined && this.sessioneString.idAttivita > 0) {
+    if (this.sessioneString !== null && this.sessioneString.idSoggetto !== null && this.sessioneString.idSoggetto !== undefined && this.sessioneString.idSoggetto > 0) 
+       this.idSoggetto = this.sessioneString.idSoggetto;
 
-          this.idAttivita = this.sessioneString.idAttivita;
-          this.idSoggetto = this.sessioneString.idSoggetto;
+    if (this.idSoggetto) {
+      await this.getListaAttivita(this.idSoggetto);
     }
-
-    if(this.idAttivita != null && this.idAttivita > 0)
-    {
-    this.promoService.apiGetListaPromoByIdAttivita(this.idAttivita).subscribe(data=>{
-      if(data != undefined ){
-
-        if (data != undefined) {
-          data.forEach(item => {
-            if (item.validDays) {
-              item.days = this.getDaysArray(item.validDays);
-            } else {
-              item.days = []; 
-            }
-          });
-        }
-
-        this.listaPromoAttive = data.filter(item => item.isAttiva === true);
-        this.listaPromoNonAttive = data.filter(item => item.isAttiva === false);
-        this.isLoading = false;
-        }
-      })
-    }
+    this.isLoading = false;
   }
 
   openDialogDisattivaPromo(idPromo: number | undefined): void {
@@ -106,5 +90,47 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
 
   onSegmentChange(event: any) {
     this.segmentValue = event.detail.value;
+  }
+
+  async getListaAttivita(idSoggetto: number) {
+    try {
+      const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(idSoggetto));
+      if (data) {
+        this.listaAttivita = data;
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'attività:', error);
+    }
+  }
+
+  async getPromoAttivita(attivita: Attivita) {
+    this.isLoading = true;
+    if (attivita && attivita.idAttivita) {
+        this.idAttivita = attivita.idAttivita;
+    }
+
+    if (this.idAttivita != null && this.idAttivita > 0) {
+        try {
+            const data = await firstValueFrom(this.promoService.apiGetListaPromoByIdAttivita(this.idAttivita));
+
+            if (data != undefined) {
+                data.forEach(item => {
+                    if (item.validDays) {
+                        item.days = this.getDaysArray(item.validDays);
+                    } else {
+                        item.days = []; 
+                    }
+                });
+                
+                this.listaPromoAttive = data.filter(item => item.isAttiva === true);
+                this.listaPromoNonAttive = data.filter(item => item.isAttiva === false);
+                this.listaAttivita = undefined;
+            }
+        } catch (error) {
+            console.error("Errore durante il recupero delle promozioni:", error);
+        }
+    }
+
+    this.isLoading = false;
   }
 }

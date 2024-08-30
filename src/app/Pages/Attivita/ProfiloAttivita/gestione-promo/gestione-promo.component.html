@@ -1,6 +1,24 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<div *ngIf="!this.isLoading">
+<div style="margin-top: 5%;min-width: 400px;" *ngIf="!isLoading && this.listaAttivita && !this.attivita && !this.modificaPromo">
+  <ion-toolbar>
+    <ion-title>Seleziona l'attività</ion-title>
+  </ion-toolbar> 
+      <ion-card *ngFor="let att of listaAttivita" (click)="addPromo(att)">
+        <ion-card-header>
+          <ion-card-title>
+            {{ att.nome }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-subtitle>
+            {{att.citta}}, {{att.indirizzo}}, {{att.civico}}, {{att.cap}}
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+  </div>
+
+<div *ngIf="!this.isLoading && (!this.listaAttivita || this.attivita)">
   <div class="container-msgErr">
     <h4 *ngIf="this.msgErr" class="msgErr">{{msgErr}}</h4>
   </div>
@@ -70,13 +88,148 @@
   <div class="container" style="margin-bottom: 10%;">
     <div class="row" *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo">
         <div class="col-5"></div>
-        <div class="col-3"><ion-button shape="round" (click)="salva()">Salva</ion-button></div>
+        <div class="col-3"><ion-button shape="round" (click)="prosegui()">Salva</ion-button></div>
         <div class="col-4"></div>
     </div>
     <div class="row" *ngIf="this.modificaPromo && modificaPromo.idPromo">
       <div class="col-5"></div>
-      <div class="col-3"><ion-button shape="round" (click)="modifica()">Modifica</ion-button></div>
+      <div class="col-3"><ion-button shape="round" (click)="prosegui()">Modifica</ion-button></div>
       <div class="col-4"></div>
   </div>
   </div>
 </div>
+
+
+<ion-modal [isOpen]="isConfirmOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title *ngIf="!idAttivita">Salva</ion-title>
+        <ion-title *ngIf="idAttivita">Modifica</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+
+      <div class="container content">
+        <ion-spinner *ngIf="isLoadingSalvataggio" name="crescent" color="primary"></ion-spinner>
+      </div>
+      <div *ngIf="!isLoadingSalvataggio">
+
+      
+      <ion-grid style="margin-top: 10px;"  >
+        <ion-row>
+          <ion-col class="column ion-text-center ion-align-items-center">
+            <ion-title>Riepilogo</ion-title>
+            <br>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label style="font-size: larger; font-weight: bold;">Titolo:</ion-label> <br>
+            <ion-label>{{this.requestPromo.titoloPromo}}</ion-label>
+            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label style="font-size: larger; font-weight: bold;">Periodo:</ion-label> <br>
+            <ion-label> DAL {{this.requestPromo.dataDal}} - AL {{this.requestPromo.dataAl}} </ion-label>
+            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label style="font-size: larger; font-weight: bold;">Descrizione</ion-label> <br>
+            <ion-label>{{this.requestPromo.descPromo}}</ion-label>
+            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label style="font-size: larger; font-weight: bold;">Giorni validità:</ion-label> <br>
+            <ion-list>
+              <ion-item *ngIf="this.requestPromo.days?.includes(0)">
+                <ion-label>Tutti i giorni</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo.days?.includes(1)">
+                <ion-label>Lunedì</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo.days?.includes(2)">
+                <ion-label>Martedì</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo.days?.includes(3)">
+                <ion-label>Mercoledì</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo.days?.includes(4)">
+                <ion-label>Giovedì</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo.days?.includes(5)">
+                <ion-label>Venerdì</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo.days?.includes(6)">
+                <ion-label>Sabato</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo.days?.includes(7)">
+                <ion-label>Domenica</ion-label>
+              </ion-item>
+            </ion-list>
+            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label style="font-size: larger; font-weight: bold;">Orario validità:</ion-label> <br>
+            <ion-label *ngIf="this.requestPromo.isAllDayValidita">Tutto il giorno</ion-label>
+            <ion-label *ngIf="this.requestPromo?.orarioValiditaDa && this.requestPromo?.orarioValiditaAl">DALLE {{this.requestPromo.orarioValiditaDa}} - ALLE {{this.requestPromo.orarioValiditaAl}}</ion-label>
+            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="margin-bottom: 4%;">
+            <ion-label style="font-size: larger; font-weight: bold;">Tipologie di offerta:</ion-label> <br>
+            <ion-list>
+              <ion-item *ngFor="let item of this.requestPromo?.listaTipologie">
+                <ion-label>{{item.descrizione}}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="margin-bottom: 4%;">
+            <ion-label style="font-size: larger; font-weight: bold;">Numero massimo dei coupon messi a disposizione:</ion-label> <br>
+            <ion-list>
+              <ion-item *ngIf="!this.requestPromo?.numCouponMax || this.requestPromo.numCouponMax === 0">
+                <ion-label>Nesssun limite</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo?.numCouponMax">
+                <ion-label>{{this.requestPromo.numCouponMax}}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="margin-bottom: 4%;">
+            <ion-label style="font-size: larger; font-weight: bold;">Numero massimo dei coupon utilizzabili da una singola persona:</ion-label> <br>
+            <ion-list>
+              <ion-item *ngIf="!this.requestPromo?.numUtilizziPerPersonaMax || this.requestPromo.numUtilizziPerPersonaMax === 0">
+                <ion-label>Nesssun limite</ion-label>
+              </ion-item>
+              <ion-item *ngIf="this.requestPromo?.numUtilizziPerPersonaMax">
+                <ion-label>{{this.requestPromo.numUtilizziPerPersonaMax}}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+      <div class="prosegui" style="display: flex; justify-content: center; align-items: center;">
+        <ion-button *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo" (click)="salva()">Salva</ion-button>
+        <ion-button *ngIf="this.modificaPromo && modificaPromo.idPromo" (click)="modifica()">Modifica</ion-button>
+      </div>
+    </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

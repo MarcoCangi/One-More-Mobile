@@ -89,7 +89,7 @@ import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-moda
 import { DettaglioCouponNonAttComponent } from './Pages/coupon/dettaglio-coupon-non-att/dettaglio-coupon-non-att.component';
 import { UserComponent } from './Pages/user/user.component';
 import { CookieConsentComponent } from './Pages/cookie-consent/cookie-consent.component';
-
+import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
@@ -184,6 +184,7 @@ const appRoute: Routes = [
             FormsModule,
             ReactiveFormsModule,
             GoogleMapsModule,
+            GoogleMap,
             HammerModule,
             ToastrModule.forRoot(),
             RecaptchaModule,

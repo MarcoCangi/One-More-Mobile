@@ -27,6 +27,17 @@ ion-spinner {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 10000;
+}
+
+.btnsearch {
+  width: 160px;
+  height: 40px;
+  position: fixed;
+  top: 3%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
 }
 
 .imgAtt{

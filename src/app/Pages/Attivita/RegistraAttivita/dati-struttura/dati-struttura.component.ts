@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup} from '@angular/forms';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
-import { Attivita, AttivitaSession, Immagini, InsertAttivitaReqDto, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { Attivita, Immagini, InsertAttivitaReqDto, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
@@ -16,6 +16,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class DatiStrutturaComponent  implements OnInit {
 
+  listaAttivita: Attivita[] | undefined;
   formGroup: FormGroup | undefined;
   id: number | undefined;
   idAttivita:number | undefined;
@@ -64,7 +65,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isLoading = true;
     this.orari = new Orari();
     this.idAttivita = 0;
-
+    await this.InitRequestAtt();
     const user = this.authService.getCurrentUserFromAuth();
     this.sessioneString = this.authService.getUserSessionFromCookie();
     if((user && user?.emailVerified == true && this.sessioneString?.typeLog == 1) || (this.sessioneString?.typeLog == 2 || this.sessioneString?.typeLog == 3))
@@ -74,27 +75,29 @@ export class DatiStrutturaComponent  implements OnInit {
     {
       await this.getListaComuni();
       await this.GetListaTipoAttivita();
-      await this.InitRequestAtt();
       
       if (this.sessioneString !== null) {
-        if (this.sessioneString.idAttivita !== null && this.sessioneString.idAttivita !== undefined && this.sessioneString.idAttivita > 0) {
-          this.idAttivita = this.sessioneString.idAttivita;
+        if (this.sessioneString.idSoggetto !== null && this.sessioneString.idSoggetto !== undefined && this.sessioneString.idSoggetto > 0) {
           this.id = this.sessioneString.idSoggetto;
         }
       }
   
       if (this.id) {
-        await this.getAttivita(this.id);
+        await this.getListaAttivita(this.id);
       }
     }
     this.isLoading = false;
   }
 
-  conferma(){
+  async conferma(){
     this.controlValidator(this.requestAttivita);
     if(!this.isError){
       this.isConfirmOpen = true;
     }
+  }
+
+  addNewAtt(){
+    this.listaAttivita = undefined;
   }
 
   dismissConferma(){
@@ -355,41 +358,14 @@ export class DatiStrutturaComponent  implements OnInit {
     }
   }
 
-  async getAttivita(id: number) {
+  async getAttivita(idSoggetto: number, idAttivita:number) {
+    this.isLoading = true;
     try {
-      const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(id));
+      const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggettoAndAtt(idSoggetto, idAttivita));
       if (data) {
         this.attivita = data;
         if (this.attivita && this.attivita.idAttivita && this.attivita.idSoggetto) {
-          this.attivitaService.createAttivitaSession(
-            this.attivita.idAttivita,
-            this.attivita.idSoggetto,
-            this.attivita.nome,
-            this.attivita.indirizzo,
-            this.attivita.citta,
-            this.attivita.provincia,
-            this.attivita.civico,
-            this.attivita.cap,
-            this.attivita.latitudine,
-            this.attivita.longitudine,
-            this.attivita.telefono,
-            this.attivita.cellulare,
-            this.attivita.isCellPubblico,
-            this.attivita.email,
-            this.attivita.descrizione,
-            this.attivita.descrizioneOfferta,
-            this.attivita.isPromoPresente,
-            this.attivita.isOffertaVegetariana,
-            this.attivita.isOffertaVegana,
-            this.attivita.isOffertaNoGlutine,
-            this.attivita.listaTipoAttivita,
-            this.attivita.orari,
-            this.attivita.isVerificata,
-            this.attivita.esitoVerifica,
-            this.attivita.immagini,
-            this.attivita.motivo
-          );
-  
+          this.idAttivita = this.attivita.idAttivita;
           await this.InitRequestAtt();
           if (this.attivita.orari) {
             this.orari = this.attivita.orari;
@@ -401,6 +377,19 @@ export class DatiStrutturaComponent  implements OnInit {
             this.provincia = this.attivita.provincia;
           }
         }
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'attività:', error);
+    }
+    console.log(this.attivita);
+    this.isLoading = false;
+  }
+
+  async getListaAttivita(idSoggetto: number) {
+    try {
+      const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(idSoggetto));
+      if (data) {
+        this.listaAttivita = data;
       }
     } catch (error) {
       console.error('Errore durante il recupero dell\'attività:', error);
@@ -516,36 +505,6 @@ export class DatiStrutturaComponent  implements OnInit {
       this.requestAttivita.telefono = newTelefono;
   }
 
-  mapAttivitaToSession(sessionAttivita : AttivitaSession | null, attivita : Attivita)
-  {
-    if(sessionAttivita != null)
-    {
-      sessionAttivita.idAttivita = attivita.idAttivita; 
-      sessionAttivita.idSoggetto = attivita.idSoggetto;
-      sessionAttivita.nome = attivita.nome;
-      sessionAttivita.indirizzo = attivita.indirizzo;
-      sessionAttivita.citta = attivita.citta;
-      sessionAttivita.provincia = attivita.provincia;
-      sessionAttivita.civico = attivita.civico;
-      sessionAttivita.cap = attivita.cap;
-      sessionAttivita.latitudine = attivita.latitudine;
-      sessionAttivita.longitudine = attivita.longitudine;
-      sessionAttivita.telefono = attivita.telefono;
-      sessionAttivita.cellulare = attivita.cellulare;
-      sessionAttivita.isCellPubblico = attivita.isCellPubblico;
-      sessionAttivita.email = attivita.email;
-      sessionAttivita.descrizione = attivita.descrizione;
-      sessionAttivita.descrizioneOfferta = attivita.descrizioneOfferta;
-      sessionAttivita.isPromoPresente = attivita.isPromoPresente;
-      sessionAttivita.isOffertaVegetariana = attivita.isOffertaVegetariana;
-      sessionAttivita.isOffertaVegana = attivita.isOffertaVegana;
-      sessionAttivita.isOffertaNoGlutine = attivita.isOffertaNoGlutine;
-      sessionAttivita.listaTipoAttivita = attivita.listaTipoAttivita;
-      sessionAttivita.orari = attivita.orari;
-      sessionAttivita.immagini = attivita.immagini;
-    }
-  }
-  
   handleListaTipoAttivitaChange(attivita: TipoAttivita[]) {
     this.errorTipologia="";
     this.listaTipoAttivita = attivita.map((attivitaSelezionate: TipoAttivita) => ({
