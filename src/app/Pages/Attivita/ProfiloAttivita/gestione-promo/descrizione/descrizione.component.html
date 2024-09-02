@@ -26,7 +26,7 @@
       formControlName="descFormControl"
       value={{descrizione}}
       [counter]="true"
-      maxlength="150"
+      maxlength="200"
       [autoGrow]="true">
     </ion-textarea>
   </ion-item>
@@ -37,6 +37,6 @@
     Lunghezza minima 5 caratteri
   </ion-note>
   <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
-    Lunghezza massima 150 caratteri
+    Lunghezza massima 200 caratteri
   </ion-note>
 </form>

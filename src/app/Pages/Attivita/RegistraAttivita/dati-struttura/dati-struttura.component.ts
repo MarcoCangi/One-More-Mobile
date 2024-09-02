@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { FormGroup} from '@angular/forms';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Attivita, Immagini, InsertAttivitaReqDto, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
@@ -15,7 +15,6 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./dati-struttura.component.scss'],
 })
 export class DatiStrutturaComponent  implements OnInit {
-
   listaAttivita: Attivita[] | undefined;
   formGroup: FormGroup | undefined;
   id: number | undefined;
@@ -43,6 +42,7 @@ export class DatiStrutturaComponent  implements OnInit {
   isError:boolean | undefined;
   errorNome:string | undefined;
   errorTel:string | undefined;
+  errorCell:string | undefined;
   errorTipologia:string | undefined;
   errorCitta:string | undefined;
   errorEmail:string | undefined;
@@ -52,7 +52,8 @@ export class DatiStrutturaComponent  implements OnInit {
   errorImg:string | undefined;
   errorDesc:string | undefined;
   errorDescServ:string | undefined;
-
+  errorOrari:string | undefined;
+  alertButtons = ['Chiudi'];
 
   constructor(
     private attivitaService: GetApiAttivitaService,
@@ -205,6 +206,8 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isError = false;
     const telefonoPattern = /^[0-9()+ -]*$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const noSpecialCharsRegex = /^[a-zA-Z0-9.,()!?/@# _-]*$/;
+    const noSpecialCharsRegexCitta = /^[a-zA-Z0-9 _-]*$/;
 
     if(request)
     {
@@ -214,6 +217,7 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
     else if(request.nome == ""){
+      this.errorNome = "Nome attivita obbligatoria";
       this.isError = true;
     }
     else if(request.nome.length < 2){
@@ -224,6 +228,10 @@ export class DatiStrutturaComponent  implements OnInit {
       this.errorNome = "Lunghezza massima 50 caratteri";
       this.isError = true;
     }
+    else if (!noSpecialCharsRegex.test(request.nome)) {
+      this.errorNome = "Il nome contiene caratteri non ammessi";
+      this.isError = true;
+    }
 
     //CONTROLLO TELEFONO//
     if(request.telefono == undefined){
@@ -231,17 +239,28 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
     else if(request.telefono == ""){
+      this.errorTel = "Numero di telefono obbligatorio";
       this.isError = true;
     }
     else if(!telefonoPattern.test(request.telefono)){
+      this.errorTel = "Formato del numero di telefono non valido";
       this.isError = true;
     }
-
+    
     //CONTROLLO CELLULARE//
-    if(request.cellulare && !telefonoPattern.test(request.cellulare)){
+    if(request.cellulare == undefined){
+      this.errorCell = "Numero di cellulare obbligatorio";
       this.isError = true;
     }
-
+    else if(request.cellulare == ""){
+      this.errorCell = "Numero di cellulare obbligatorio";
+      this.isError = true;
+    }
+    else if(request.cellulare && !telefonoPattern.test(request.cellulare)){
+      this.errorCell = "Formato del numero di cellulare non valido";
+      this.isError = true;
+    }
+    
     //CONTROLLO TIPO ATTIVITA//
     if(request.listaTipoAttivita == undefined){
       this.errorTipologia = "Indicare almeno una tipologia";
@@ -258,10 +277,15 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
     else if(request.citta == ""){
+      this.errorCitta = "Inserire Città o comune";
       this.isError = true;
     }
     else if(this.listaComuni && !this.listaComuni.some(comune => comune.descComune === request.citta)){
-      this.errorCitta = "Inserire città o comune valido";
+      this.errorCitta = "Inserire un comune valido";
+      this.isError = true;
+    }
+    else if (!noSpecialCharsRegexCitta.test(request.citta)) {
+      this.errorCitta = "Il campo Comune contiene caratteri non ammessi";
       this.isError = true;
     }
 
@@ -271,6 +295,7 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
     else if(request.email == ""){
+      this.errorEmail = "Mail obbligatoria";
       this.isError = true;
     }
     else if (!emailRegex.test(request.email)) {
@@ -284,6 +309,7 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
     else if(request.indirizzo == ""){
+      this.errorIndirizzo = "Indirizzo obbligatorio";
       this.isError = true;
     }
 
@@ -293,6 +319,7 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
     else if(request.civico == ""){
+      this.errorCivico = "Civico obbligatorio";
       this.isError = true;
     }
 
@@ -302,10 +329,13 @@ export class DatiStrutturaComponent  implements OnInit {
       this.isError = true;
     }
     else if(request.cap == ""){
+      this.errorCAP = "CAP obbligatorio";
       this.isError = true;
     }
 
-    if(!request.isVerificata)
+    //CONTROLLO ORARI//
+    this.controlOrari(request);
+
     //CONTROLLO IMMAGINI//
     if(request.immagini == undefined){
       this.errorImg = "Inserire una o più immagini";
@@ -315,17 +345,45 @@ export class DatiStrutturaComponent  implements OnInit {
       this.errorImg = "Inserire una o più immagini";
       this.isError = true;
     }
-    else if(!request.immagini.find(i => i.isImmaginePrincipale)){
+    if(!request.immagini.find(i => i.isImmaginePrincipale)){
       this.errorImg = "Inserire una immagine profilo";
       this.isError = true;
     }
 
-    if(this.isError)
-    {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    //CONTROLLO DESCRIZIONE//
+    if(request.descrizione == undefined){
+      this.errorDesc = "Descrizione attivita obbligatoria";
+      this.isError = true;
+    }
+    else if(request.descrizione == ""){
+      this.errorDesc = "Descrizione attivita obbligatoria";
+      this.isError = true;
+    }
+    else if(request.descrizione.length < 100){
+      this.errorDesc = "Lunghezza minima descrizione 100 caratteri";
+      this.isError = true;
+    }
+    else if(request.descrizione.length > 2000){
+      this.errorDesc = "Lunghezza massima descrizione 2000 caratteri";
+      this.isError = true;
+    }
+    else if (!noSpecialCharsRegex.test(request.descrizione)) {
+      this.errorDesc = "La descrizione contiene caratteri non ammessi";
+      this.isError = true;
+    }
+
+    //CONTROLLO DESCRIZIONE OFFERTE//
+    else if(request.descrizione.length > 2000){
+      this.errorDesc = "Lunghezza massima descrizione offerta 2000 caratteri";
+      this.isError = true;
+    }
+    else if (!noSpecialCharsRegex.test(request.descrizione)) {
+      this.errorDesc = "La descrizione offerta contiene caratteri non ammessi";
+      this.isError = true;
     }
     }
   }
+
 
   async eliminaAttivita() {
     this.isLoadingDelete = true;
@@ -653,4 +711,130 @@ export class DatiStrutturaComponent  implements OnInit {
       this.attivita?.isVerificata? this.attivita.isVerificata : false,
       this.attivita?.esitoVerifica? this.attivita.esitoVerifica : false)
   }
+
+  async controlOrari (request: InsertAttivitaReqDto) {
+    //CONTROLLO ORARI//
+    if(request.orari == undefined || 
+       !request.orari.lunediMatDa && !request.orari.lunediMatAl &&
+       !request.orari.lunediPomDa && !request.orari.lunediPomAl &&
+       !request.orari.martediMatDa && !request.orari.martediMatAl &&  
+       !request.orari.martediPomDa && !request.orari.martediPomAl && 
+       !request.orari.mercolediMatDa && !request.orari.mercolediMatAl &&
+       !request.orari.mercolediPomDa && !request.orari.mercolediPomAl &&
+       !request.orari.giovediMatDa && !request.orari.giovediMatAl &&
+       !request.orari.giovediPomDa && !request.orari.giovediPomAl &&
+       !request.orari.venerdiMatDa && !request.orari.venerdiMatAl &&
+       !request.orari.venerdiPomDa && !request.orari.venerdiPomAl &&
+       !request.orari.sabatoMatDa && !request.orari.sabatoMatAl &&
+       !request.orari.sabatoPomDa && !request.orari.sabatoPomAl &&
+       !request.orari.domenicaMatDa && !request.orari.domenicaMatAl &&
+       !request.orari.domenicaPomDa && !request.orari.domenicaPomAl
+    )
+      {
+        this.errorOrari = "Inserire almeno un orario di riferimento";
+        this.isError = true;
+      }
+    else  if((request.orari.lunediMatDa && !request.orari.lunediMatAl) ||
+             (request.orari.lunediPomDa && !request.orari.lunediPomAl) ||
+             (request.orari.martediMatDa && !request.orari.martediMatAl) ||
+             (request.orari.martediPomDa && !request.orari.martediPomAl) ||
+             (request.orari.mercolediMatDa && !request.orari.mercolediMatAl) ||
+             (request.orari.mercolediPomDa && !request.orari.mercolediPomAl) ||
+             (request.orari.giovediMatDa && !request.orari.giovediMatAl) ||
+             (request.orari.giovediPomDa && !request.orari.giovediPomAl) ||
+             (request.orari.venerdiMatDa && !request.orari.venerdiMatAl) ||
+             (request.orari.venerdiPomDa && !request.orari.venerdiPomAl) ||
+             (request.orari.sabatoMatDa && !request.orari.sabatoMatAl) ||
+             (request.orari.sabatoPomDa && !request.orari.sabatoPomAl) ||
+             (request.orari.domenicaMatDa && !request.orari.domenicaMatAl) ||
+             (request.orari.domenicaPomDa && !request.orari.domenicaPomAl))
+            {
+              this.errorOrari = "Dove è stato inserito un orario di apertura, inserire anche uno di chiusura";
+              this.isError = true;
+            }
+   else  if((request.orari.lunediMatAl && !request.orari.lunediMatDa) ||
+            (request.orari.lunediPomAl && !request.orari.lunediPomDa) ||
+            (request.orari.martediMatAl && !request.orari.martediMatDa) ||
+            (request.orari.martediPomAl && !request.orari.martediPomDa) ||
+            (request.orari.mercolediMatAl && !request.orari.mercolediMatDa) ||
+            (request.orari.mercolediPomAl && !request.orari.mercolediPomDa) ||
+            (request.orari.giovediMatAl && !request.orari.giovediMatDa) ||
+            (request.orari.giovediPomAl && !request.orari.giovediPomDa) ||
+            (request.orari.venerdiMatAl && !request.orari.venerdiMatDa) ||
+            (request.orari.venerdiPomAl && !request.orari.venerdiPomDa) ||
+            (request.orari.sabatoMatAl && !request.orari.sabatoMatDa) ||
+            (request.orari.sabatoPomAl && !request.orari.sabatoPomDa) ||
+            (request.orari.domenicaMatAl && !request.orari.domenicaMatDa) ||
+            (request.orari.domenicaPomAl && !request.orari.domenicaPomDa))
+            {
+              this.errorOrari = "Dove è stato inserito un orario di chiusura, inserire anche uno di apertura";
+              this.isError = true;
+            }
+
+   else  if((request.orari.lunediMatDa && request.orari.lunediMatAl && request.orari.lunediMatDa.trim() > request.orari.lunediMatAl.trim()) ||
+            (request.orari.lunediPomDa && request.orari.lunediPomAl && request.orari.lunediPomDa.trim() > request.orari.lunediPomAl.trim()) ||
+            (request.orari.martediMatDa && request.orari.martediMatAl && request.orari.martediMatDa.trim() > request.orari.martediMatAl.trim()) || 
+            (request.orari.martediPomDa && request.orari.martediPomDa && request.orari.martediPomDa.trim() > request.orari.martediPomDa.trim()) ||
+            (request.orari.mercolediMatDa && request.orari.mercolediMatAl && request.orari.mercolediMatDa.trim() > request.orari.mercolediMatAl.trim()) ||
+            (request.orari.mercolediPomDa && request.orari.mercolediPomAl && request.orari.mercolediPomDa.trim() > request.orari.mercolediPomAl.trim()) ||
+            (request.orari.giovediMatDa && request.orari.giovediMatAl && request.orari.giovediMatDa.trim() > request.orari.giovediMatAl.trim()) ||
+            (request.orari.giovediPomDa && request.orari.giovediPomAl && request.orari.giovediPomDa.trim() > request.orari.giovediPomAl.trim()) ||
+            (request.orari.venerdiMatDa && request.orari.venerdiMatAl && request.orari.venerdiMatDa.trim() > request.orari.venerdiMatAl.trim()) ||
+            (request.orari.venerdiPomDa && request.orari.venerdiPomAl && request.orari.venerdiPomDa.trim() > request.orari.venerdiPomAl.trim()) ||
+            (request.orari.sabatoMatDa && request.orari.sabatoMatAl && request.orari.sabatoMatDa.trim() > request.orari.sabatoMatAl.trim()) ||
+            (request.orari.sabatoPomDa && request.orari.sabatoPomAl && request.orari.sabatoPomDa.trim() > request.orari.sabatoPomAl.trim()) ||
+            (request.orari.domenicaMatDa && request.orari.domenicaMatAl && request.orari.domenicaMatDa.trim() > request.orari.domenicaMatAl.trim()) ||
+            (request.orari.domenicaPomDa && request.orari.domenicaPomAl && request.orari.domenicaPomDa.trim() > request.orari.domenicaPomAl.trim()) )
+            {
+              this.errorOrari = "L'orario di inizio non può essere maggiore dell'orario di fine";
+              this.isError = true;
+            }
+  }
+
+  getErrorMessage(): string {
+    let errorMessage = '';
+  
+    if (this.errorNome) {
+      errorMessage += `•${this.errorNome}\n`;
+    }
+    if (this.errorTel) {
+      errorMessage += `•${this.errorTel}\n`;
+    }
+    if (this.errorCell) {
+      errorMessage += `•${this.errorCell}\n`;
+    }
+    if (this.errorTipologia) {
+      errorMessage += `•${this.errorTipologia}\n`;
+    }
+    if (this.errorCitta) {
+      errorMessage += `•${this.errorCitta}\n`;
+    }
+    if (this.errorEmail) {
+      errorMessage += `•${this.errorEmail}\n`;
+    }
+    if (this.errorIndirizzo) {
+      errorMessage += `•${this.errorIndirizzo}\n`;
+    }
+    if (this.errorCivico) {
+      errorMessage += `•${this.errorCivico}\n`;
+    }
+    if (this.errorCAP) {
+      errorMessage += `•${this.errorCAP}\n`;
+    }
+    if (this.errorImg) {
+      errorMessage += `•${this.errorImg}\n`;
+    }
+    if (this.errorDesc) {
+      errorMessage += `•${this.errorDesc}\n`;
+    }
+    if (this.errorDescServ) {
+      errorMessage += `•${this.errorDescServ}\n`;
+    }
+    if (this.errorOrari) {
+      errorMessage += `•${this.errorOrari}\n`;
+    }
+  
+    return errorMessage.trim();
+  }
+
 }

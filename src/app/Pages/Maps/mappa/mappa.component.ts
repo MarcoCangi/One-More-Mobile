@@ -29,7 +29,17 @@ export class MappaComponent implements OnInit {
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
   display: any; // Dichiarazione della proprietà display
-  markerOptions: google.maps.MarkerOptions = { draggable: false };
+  markerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url:"assets/Img/marker.png",
+      scaledSize: new google.maps.Size(50, 80), // Regola le dimensioni come necessario
+      fillColor: '#FF0000', // Colore di riempimento
+      fillOpacity: 0.8, // Opacità del riempimento
+      strokeWeight: 2, // Spessore del bordo
+      strokeColor: '#000000' // Colore del bordo
+    }
+  };
   filter!: FiltriAttivita;
   // Modal states
   isDetailModalOpen = false;
@@ -105,8 +115,16 @@ export class MappaComponent implements OnInit {
   async initMap(): Promise<void> {
     if (this.googleMap && this.googleMap.googleMap) {
       const map = this.googleMap.googleMap;
-      map.panTo(this.center);
-      map.setZoom(12);
+      const currentZoom = map.getZoom();
+        
+        map.panTo(this.center);
+
+        // Applica lo zoom corrente, se esiste
+        if (currentZoom !== null && currentZoom !== undefined) {
+            map.setZoom(currentZoom);
+        } else {
+            map.setZoom(12); // Setta a 12 solo se lo zoom corrente non è disponibile
+        }
       await this.updateVisibleActivities(map);
     } else {
       console.error("Errore: la mappa Google non è pronta.");
@@ -209,6 +227,7 @@ export class MappaComponent implements OnInit {
     } finally {
         this.isLoading = false;
     }
+    console.log(this.attivitas);
 }
 
   getImmaginePrincipale(attivita: Attivita | undefined): string {
@@ -235,13 +254,13 @@ export class MappaComponent implements OnInit {
   selectNewAtt(idAtt: number | undefined){
     this.selectedAttivita = this.attivitas?.find(attivita => 
     attivita.idAttivita === idAtt);
-  if (this.selectedAttivita) {
-    {
-      this.isDetailModalOpen = false;
-      this.isDetailModalOpen = true;
+    if (this.selectedAttivita) {
+      {
+        this.isDetailModalOpen = false;
+        this.isDetailModalOpen = true;
+      }
     }
   }
-}
 
   openListModal() {
     this.isListModalOpen = true;

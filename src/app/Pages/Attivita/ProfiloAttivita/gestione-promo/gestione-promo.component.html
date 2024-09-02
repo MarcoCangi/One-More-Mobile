@@ -19,26 +19,32 @@
   </div>
 
 <div *ngIf="!this.isLoading && (!this.listaAttivita || this.attivita)">
-  <div class="container-msgErr">
-    <h4 *ngIf="this.msgErr" class="msgErr">{{msgErr}}</h4>
-  </div>
   <ion-title style="margin-top: 8%; margin-bottom: 3%;">Inserisci la tua promozione</ion-title>
   <form>
     <div class="row">
       <div class="formInput">
         <app-titolo [titolo]="this.modificaPromo && this.modificaPromo.titoloPromo ? this.modificaPromo.titoloPromo : ''" (titoloChange)="handleTitoloChange($event)"></app-titolo>
+        <ion-label *ngIf="this.errTitolo" class="err">
+          {{this.errTitolo}}
+        </ion-label>
       </div>
       <div class="formInput">
         <app-periodo-validita [dataDalValue]="this.modificaPromo && this.modificaPromo.dataDal ? this.modificaPromo.dataDal : undefined"
                               [dataAlValue]="this.modificaPromo && this.modificaPromo.dataAl ? this.modificaPromo.dataAl : undefined"
                               (dataDalChange)="handleDataDalChange($event)" 
                               (dataAlChange)="handleDataAlChange($event)"></app-periodo-validita>
+                              <mat-error *ngIf="this.errPeriodo" class="err">
+                                {{this.errPeriodo}}
+                              </mat-error>
       </div>
     </div>
     <div class="row">
       <div class="formInput">
         <app-descrizione [descrizione]="this.modificaPromo && this.modificaPromo.descPromo ? this.modificaPromo.descPromo : ''" 
                          (descrizioneChange)="handleDescChange($event)"></app-descrizione>
+                         <mat-error *ngIf="this.errDescrizione" class="err">
+                          {{this.errDescrizione}}
+                        </mat-error>
       </div>
       <div class="formInput">
         <app-giorni-validita [giorni]="this.giorni ? this.giorni : undefined" 
@@ -50,6 +56,9 @@
                              (isVenerdiChange)="handleVenerdiChange($event)"
                              (isSabatoChange)="handleSabatoChange($event)"
                              (isDomenicaChange)="handleDomenicaChange($event)"></app-giorni-validita>
+                             <mat-error *ngIf="this.errGiorni" class="err">
+                              {{this.errGiorni}}
+                            </mat-error>
       </div>
       <div class="row">
       <div class="formInput">
@@ -59,10 +68,16 @@
                              (isAllDayValiditaChange)="handleIsAllDayValiditaChange($event)"
                              (orarioValiditaDaChange)="handleOrarioValiditaDaChange($event)"
                              (orarioValiditaAlChange)="handleorarioValiditaAlChange($event)"></app-orario-validita>
+                             <mat-error *ngIf="this.errOrari" class="err">
+                              {{this.errOrari}}
+                            </mat-error>
       </div>
       <div class="formInput">
       <app-tipologia-offerta [listaTipologieSelezionate]="this.listaTipologie ? this.listaTipologie : undefined"
                              (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipologia-offerta>
+                             <mat-error *ngIf="this.errTipologia" class="err">
+                              {{this.errTipologia}}
+                            </mat-error>
       </div>
       </div>
     </div>
@@ -75,32 +90,40 @@
   <div class="formInput divNumMaxCoupon" *ngIf="isLimitEnabled" >
     <div>
       <app-num-max-coupon [numMax]="this.modificaPromo && this.modificaPromo.numCouponMax ? this.modificaPromo.numCouponMax : undefined" (numMaxChange)="handleNumMaxChange($event)"></app-num-max-coupon>
+      <mat-error *ngIf="this.errNumUtilizzi" class="err">
+        {{this.errNumUtilizzi}}
+      </mat-error>
     </div>
   </div>
   <div class="formInput divCouponPerPersona" *ngIf="isLimitEnabled">
     <div>
       <app-coupon-per-persona [numMaxPerPersona]="this.modificaPromo && this.modificaPromo.numUtilizziPerPersonaMax ? this.modificaPromo.numUtilizziPerPersonaMax : undefined" 
                               (numMaxPerPersonaChange)="handleNumMaxPerPersonaChange($event)"></app-coupon-per-persona>
+                              <mat-error *ngIf="this.errNumUtilizziPersona" class="err">
+                                {{this.errNumUtilizziPersona}}
+                              </mat-error>
     </div>
   </div>
   </form>
   
-  <div class="container" style="margin-bottom: 10%;">
-    <div class="row" *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo">
-        <div class="col-5"></div>
-        <div class="col-3"><ion-button shape="round" (click)="prosegui()">Salva</ion-button></div>
-        <div class="col-4"></div>
-    </div>
-    <div class="row" *ngIf="this.modificaPromo && modificaPromo.idPromo">
-      <div class="col-5"></div>
-      <div class="col-3"><ion-button shape="round" (click)="prosegui()">Modifica</ion-button></div>
-      <div class="col-4"></div>
-  </div>
+  <div class="container" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5%; margin-top: 5%;">
+    <ion-button *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo" shape="round" (click)="prosegui()">Salva</ion-button>
+    <ion-button *ngIf="this.modificaPromo && modificaPromo.idPromo" shape="round" (click)="prosegui()">Modifica</ion-button>
   </div>
 </div>
 
+<ion-alert
+  [isOpen]="this.isError"
+  header="Attenzione"
+  subHeader="Sono stati riscontrati i seguenti errori nella compilazione"
+  [message]="getErrorMessage()"
+  [buttons]="alertButtons"
+  cssClass="custom-alert"
+  (didDismiss)="isError = false">
+  </ion-alert>
 
-<ion-modal [isOpen]="isConfirmOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+
+<ion-modal [isOpen]="isConfirmOpen" class="full-modal">
   <ng-template>
     <ion-header>
       <ion-toolbar>

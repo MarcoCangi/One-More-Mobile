@@ -3,14 +3,17 @@
 <div class="map">
   <ion-spinner style="background-color: white; border-radius: 25%;" *ngIf="isLoading" name="dots" color="primary"></ion-spinner>
   <ion-button class="btnsearch" color="light" shape="round" style="margin-top: 20%; z-index: 10000;" *ngIf="this.isMooving" (click)="cerca()">CERCA QUI</ion-button>
-  <google-map *ngIf="isPositionLoaded" id="mapElement" #googleMap height="100%" width="100%" [center]="center" (centerChanged)="centerChanged()" (zoomChanged)="zoomChanged()" (mapClick)="move($event)">
-    <map-marker *ngFor="let markerPosition of markerPositions" 
-                [position]="markerPosition" 
-                [options]="markerOptions"
-                (mapClick)="markerClicked(markerPosition)">
-    </map-marker>
-  </google-map>
-  <ion-button shape="round" expand="block" (click)="openListModal()" class="floating-button">Lista completa</ion-button>
+  <google-map *ngIf="isPositionLoaded" id="mapElement" #googleMap height="100%" width="100%" [center]="center" 
+              (centerChanged)="centerChanged()" 
+              (zoomChanged)="zoomChanged()" 
+              (mapClick)="move($event)">
+  <map-marker *ngFor="let markerPosition of markerPositions" 
+              [position]="markerPosition" 
+              [options]="markerOptions"
+              (mapClick)="markerClicked(markerPosition)">
+  </map-marker>
+</google-map>
+  <ion-button class="btnListaAttivita" shape="round" expand="block" (click)="openListModal()">Lista completa</ion-button>
 </div>
   
 
@@ -18,7 +21,7 @@
   
 
   <!-- Modal for activity detail -->
-  <ion-modal [isOpen]="isDetailModalOpen" [componentProps]="{ attivita: selectedAttivita }" trigger="open-modal"  [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+  <ion-modal [isOpen]="isDetailModalOpen" [componentProps]="{ attivita: selectedAttivita }" trigger="open-modal" class="full-modal">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -65,7 +68,7 @@
   </ion-modal>
 
   <!-- Modal for activity list -->
-  <ion-modal [isOpen]="isListModalOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+  <ion-modal [isOpen]="isListModalOpen" class="full-modal">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -79,8 +82,17 @@
         <ion-card *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
           <img class="imgAtt" [src]="getImmaginePrincipale(attivita)" />
           <ion-card-header>
-            <ion-card-title>{{ attivita.nome }}</ion-card-title>
-            <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
+            <ion-grid style="width: 100%;">
+              <ion-row>
+                <ion-col size="9">
+                  <ion-card-title>{{ attivita.nome }}</ion-card-title>
+                  <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-card-title>{{ attivita.distanza }}</ion-card-title>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-card-header>
         </ion-card>
       </ion-content>

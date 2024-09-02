@@ -48,3 +48,12 @@ ion-spinner {
   height: 100%;
   width: 100%;
 }
+
+.custom-alert .alert-message {
+  white-space: pre-line;
+}
+
+.err{
+  color: red;
+  margin-left: 5%;
+}

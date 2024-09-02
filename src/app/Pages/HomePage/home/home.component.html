@@ -1,5 +1,10 @@
 
-<div class="container content">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh()">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
+    <div class="container content">
+
         <ion-spinner *ngIf="isLoading && (idPage === 1 || idPage === undefined)" name="crescent" color="primary"></ion-spinner>
         
     <div class="contentList" *ngIf="!isLoading && (idPage === 1 || idPage === undefined)">
@@ -60,6 +65,8 @@
         <app-user (openPageEvent)="openPageEvent($event)"></app-user>
     </div>
 </div>
+
+
 
   
 

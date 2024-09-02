@@ -85,7 +85,7 @@
   </ion-accordion-group>
 </div> 
 
-<ion-modal [isOpen]="isModalConfirmOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+<ion-modal [isOpen]="isModalConfirmOpen" class="full-modal">
   <ng-template>
     <ion-header *ngIf="isLoading">
       <ion-spinner  name="crescent" color="primary"></ion-spinner>
@@ -106,7 +106,7 @@
           </ion-title>
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
-          <ion-button expand="block" (click)="Prenota()">CONFERMA</ion-button>
+          <ion-button shape="round" (click)="Prenota()">CONFERMA</ion-button>
           <ion-button shape="round" color="light" (click)="dismissConfirmModal(false, false)">ANNULLA</ion-button>
         </ion-card-content>
         <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && isError">
@@ -143,7 +143,7 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal [isOpen]="isModalVerifiedOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+<ion-modal [isOpen]="isModalVerifiedOpen" class="full-modal">
   <ng-template>
     <ion-header>
       <ion-toolbar>

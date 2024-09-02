@@ -159,7 +159,7 @@
   </div>
 </div>
 
-<ion-modal [isOpen]="isModalDetailOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+<ion-modal [isOpen]="isModalDetailOpen" class="full-modal">
   <ng-template>
     <app-dettaglio-coupon style="height: 100%; overflow-y: auto;" (CloseModalDetailEvent)="dismissDetailModal()"  
     [coupon]="this.couponSelezionato"
@@ -168,7 +168,7 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal [isOpen]="isModalDetailNonAttOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+<ion-modal [isOpen]="isModalDetailNonAttOpen" class="full-modal">
   <ng-template>
     <app-dettaglio-coupon-non-att style="height: 100%; overflow-y: auto;" (CloseModalNonDetailEvent)="dismissDetailNonAttModal()"  
     [coupon]="this.couponSelezionato"
@@ -177,7 +177,7 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal [isOpen]="isModalConfirmOpen" [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+<ion-modal [isOpen]="isModalConfirmOpen" class="full-modal">
   <ng-template>
     <app-confirm-modal (CloseModalConfirmEvent)="dismissConfirmlModal()" 
     (CloseModalConfirmWithEsitoEvent)="dismissConfirmlModalWithEsito()"  

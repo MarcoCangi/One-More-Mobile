@@ -10,6 +10,12 @@ import { catchError, firstValueFrom, retry } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent  implements OnInit {
+  
+  handleRefresh() {
+    setTimeout(() => {
+      this.ngOnInit();
+    }, 1000);
+  }
 
   listaElencoConsigli : Attivita[] | undefined;
   listaElencoPromo : Attivita[] | undefined;

@@ -5,9 +5,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="image-grid">
-    <ion-card *ngFor="let immagine of immagini; let i = index" class="single-image" (click)="apriDialogIngrandimentoImmagine(i)">
-      <ion-img class="uniform-image" [src]="immagine.upload" alt="Immagine dell'attività"></ion-img>
-    </ion-card>
-  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let immagine of immagini; let i = index" (click)="apriDialogIngrandimentoImmagine(i)">
+        <ion-card style="border-radius: 10%;">
+          <ion-img class="uniform-image" [src]="immagine.upload" alt="Immagine dell'attività"></ion-img>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

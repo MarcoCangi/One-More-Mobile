@@ -29,7 +29,17 @@ export class GestionePromoComponent  implements OnInit {
     listaTipologie: TipologiaOfferta[] = [];
     isLimitEnabled: boolean = false;
     isLoading : boolean | undefined;
-    msgErr:string | undefined;
+    errTitolo:string | undefined;
+    errPeriodo:string | undefined;
+    errDescrizione:string | undefined;
+    errGiorni:string | undefined;
+    errOrari:string | undefined;
+    errTipologia:string | undefined;
+    errNumUtilizzi:string | undefined;
+    isError: boolean = false;
+    errNumUtilizziPersona:string | undefined;
+    alertButtons = ['Chiudi'];
+
     isLoadingSalvataggio: boolean = false;
     @Input() modificaPromo!: Promo;
     @Output() openPageEvent = new EventEmitter<number>();
@@ -82,15 +92,18 @@ export class GestionePromoComponent  implements OnInit {
       this.isLoading = false;
     }
 
-  prosegui(){
-    this.isConfirmOpen = true;
+  async prosegui(){
+    await this.ControlPromo(this.requestPromo);
+    if(this.isError)
+      return;
+    else
+      this.isConfirmOpen = true;
   }
 
-  salva() {
+  async salva() {
     this.isConfirmOpen = false;
-    this.msgErr = "";
-    this.ControlPromo(this.requestPromo);
-    if(this.msgErr)
+    await this.ControlPromo(this.requestPromo);
+    if(this.isError)
       return;
 
     const sessioneString = this.authService.getUserSessionFromCookie();
@@ -119,11 +132,10 @@ export class GestionePromoComponent  implements OnInit {
     }
   }
 
-  modifica() {
+  async modifica() {
     this.isConfirmOpen = false;
-    this.msgErr = "";
-    this.ControlPromo(this.requestPromo);
-    if(this.msgErr)
+    await this.ControlPromo(this.requestPromo);
+    if(this.isError)
       return;
 
     const sessioneString = this.authService.getUserSessionFromCookie();
@@ -321,97 +333,126 @@ export class GestionePromoComponent  implements OnInit {
     this.requestPromo.numUtilizziPerPersonaMax = num;
   }
 
-  ControlPromo(promo: InsertPromoReqDto){
+  async ControlPromo(promo: InsertPromoReqDto){
     const today = new Date().setHours(0, 0, 0, 0);
+    const noSpecialCharsRegex = /^[a-zA-Z0-9.,()!?/@# _-]*$/;
+    const onlyNumbersRegex = /^[0-9]+$/;
 
-    if(promo.titoloPromo == undefined || promo.titoloPromo == null){
-      this.msgErr = 'Titolo della Promo obbligatoria'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    //TITOLO
+    if(!promo.titoloPromo || promo.titoloPromo == ''){
+      this.errTitolo = 'Titolo obbligatorio'
+      this.isError = true;
     }
-    if(promo.titoloPromo.length > 50){
-      this.msgErr = 'La lunghezza massima per il titolo della promo è di 50 caratteri'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.titoloPromo && promo.titoloPromo.length > 50){
+      this.errTitolo = 'La lunghezza massima per il titolo è di 50 caratteri'
+      this.isError = true;
     }
-    if(promo.titoloPromo.length < 5){
-      this.msgErr = 'La lunghezza minima per il titolo della promo è di 5 caratteri'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.titoloPromo && promo.titoloPromo.length < 5){
+      this.errTitolo = 'La lunghezza minima per il titolo è di 5 caratteri'
+      this.isError = true;
     }
+    else if (!noSpecialCharsRegex.test(promo.titoloPromo)) {
+      this.errTitolo = "Il nome contiene caratteri non ammessi";
+      this.isError = true;
+    }
+    else if (onlyNumbersRegex.test(promo.titoloPromo) && !/[a-zA-Z]/.test(promo.titoloPromo)) {
+      this.errTitolo = 'Il titolo non può contenere solo numeri';
+      this.isError = true;
+    }
+
+    //PERIODO
     if(promo.dataDal == undefined || promo.dataDal == null){
-      this.msgErr = 'Inserire una data inizio validità'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+      this.errPeriodo = 'Inserire una data inizio validità'
+      this.isError = true;
     }
-    if(promo.dataDal.setHours(0, 0, 0, 0) < today){
-      this.msgErr = 'La data di inizio validità non può essere inferiore ad oggi'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.dataAl == undefined || promo.dataAl == null){
+      this.errPeriodo = 'Inserire una data di fine validità'
+      this.isError = true;
     }
-    if(promo.dataAl == undefined || promo.dataAl == null){
-      this.msgErr = 'Inserire una data di fine validità'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.dataDal.setHours(0, 0, 0, 0) < today){
+      this.errPeriodo = 'La data di inizio validità non può essere inferiore ad oggi'
+      this.isError = true;
     }
-    if(promo.dataAl.setHours(0, 0, 0, 0) < promo.dataDal.setHours(0, 0, 0, 0)){
-      this.msgErr = 'La data di fine validità non può essere inferiore alla data inizio'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.dataAl.setHours(0, 0, 0, 0) < today){
+      this.errPeriodo = 'La data di fine validità non può essere inferiore alla data di oggi'
+      this.isError = true;
     }
-    if(promo.dataAl.setHours(0, 0, 0, 0) < today){
-      this.msgErr = 'La data di fine validità non può essere inferiore alla data di oggi'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.dataAl.setHours(0, 0, 0, 0) < promo.dataDal.setHours(0, 0, 0, 0)){
+      this.errPeriodo = 'La data di fine validità non può essere inferiore alla data inizio'
+      this.isError = true;
     }
-    if(promo.descPromo == undefined || promo.descPromo == null){
-      this.msgErr = 'Inserire una breve descrizione';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    
+    //DESCRIZIONE
+    if(!promo.descPromo || promo.descPromo == ''){
+      this.errDescrizione = 'Inserire una breve descrizione';
+      this.isError = true;
     }
-    if(promo.descPromo.length > 200){
-      this.msgErr = 'La lunghezza massima per la descrizione della promo è di 200 caratteri';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.descPromo.length > 200){
+      this.errDescrizione = 'La lunghezza massima per la descrizione è di 200 caratteri';
+      this.isError = true;
     }
-    if(promo.descPromo.length < 5){
-      this.msgErr = 'La lunghezza minima per la descrizione della promo è di 5 caratteri'
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    else if(promo.descPromo.length < 5){
+      this.errDescrizione = 'La lunghezza minima per la descrizione è di 5 caratteri'
+      this.isError = true;
     }
+    else if (!noSpecialCharsRegex.test(promo.descPromo)) {
+      this.errDescrizione = "Il nome contiene caratteri non ammessi";
+      this.isError = true;
+    }
+    else if (onlyNumbersRegex.test(promo.descPromo) && !/[a-zA-Z]/.test(promo.descPromo)) {
+      this.errDescrizione = 'Il titolo non può contenere solo numeri';
+      this.isError = true;
+    }
+
+    //GIORNI
     if(promo.days == undefined || promo.days == null || promo.days.length == 0){
-        this.msgErr = "Indicare per quali giorni della settimana è disponibile l'offerta";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
+        this.errGiorni = "Indicare i giorni della settimana";
+        this.isError = true;
     }
-    // if(promo.days != undefined && promo.days.length > 1 && promo.days.includes(0))
-    // {
-    // }
-     if((promo.isAllDayValidita == undefined || promo.isAllDayValidita == false) && 
-        (promo.orarioValiditaDa == undefined || promo.orarioValiditaDa == null) &&
-        (promo.orarioValiditaAl == undefined || promo.orarioValiditaAl == null)){
-          this.msgErr = "Indicare il periodo della giornata";
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-       }
-      if((promo.isAllDayValidita == undefined || promo.isAllDayValidita == false) &&
-         ((promo.orarioValiditaDa == undefined || promo.orarioValiditaDa == null) &&
-         (promo.orarioValiditaAl != undefined && promo.orarioValiditaAl != null))){
-          this.msgErr = "Indicare l'orario di inizio validità";
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-       }
-       if((promo.isAllDayValidita == undefined || promo.isAllDayValidita == false) &&
-         ((promo.orarioValiditaAl == undefined || promo.orarioValiditaAl == null) &&
-         (promo.orarioValiditaDa != undefined && promo.orarioValiditaDa != null))){
-          this.msgErr = "Indicare l'orario di fine validità";
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-       }
-       if(promo.listaTipologie == undefined || promo.listaTipologie.length == 0){
-        this.msgErr = "Indicare una o più tipologie di offerta";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
+
+    //ORARI
+    if(!promo.isAllDayValidita && !promo.orarioValiditaDa && !promo.orarioValiditaAl){
+       this.errOrari = "Indicare il periodo della giornata";
+       this.isError = true;
+    }
+    else if(!promo.isAllDayValidita && (!promo.orarioValiditaAl && promo.orarioValiditaDa)){
+         this.errOrari = "Indicare l'orario di inizio validità";
+         this.isError = true;
+    }
+    else if(!promo.isAllDayValidita && (promo.orarioValiditaAl && !promo.orarioValiditaDa)){
+          this.errOrari = "Indicare l'orario di fine validità";
+          this.isError = true;
+    }
+
+    //TIPOLOGIE
+    if(!promo.listaTipologie){
+     this.errTipologia = "Indicare una o più tipologie di offerta";
+     this.isError = true;
+    }
+    else if(promo.listaTipologie.length > 5){
+      this.errTipologia = "È possibile inserire un massimo di 5 tipologie";
+      this.isError = true;
+    }
+
+    //NUM COUPON MAX
+    if(promo.numCouponMax !== null && promo.numCouponMax !== undefined && promo.numCouponMax < 1) {
+      console.log("prova");
+      this.errNumUtilizzi = "Deve essere maggiore di 0";
+      this.isError = true;
+    }
+    else if(promo.numCouponMax && promo.numCouponMax > 9999){
+      this.errNumUtilizzi = "Non è possibile inserire oltre 9999 coupon massimi";
+      this.isError = true;
+     }
+
+    //NUM COUPON MAX PER PERSONA
+    if(promo.numUtilizziPerPersonaMax !== null && promo.numUtilizziPerPersonaMax !== undefined && promo.numUtilizziPerPersonaMax < 1){
+      this.errNumUtilizziPersona = "Deve essere maggiore di 0";
+      this.isError = true;
+     }
+    else if(promo.numUtilizziPerPersonaMax && promo.numUtilizziPerPersonaMax > 9999){
+      this.errNumUtilizziPersona = "Non è possibile inserire oltre 9999 coupon massimi per persona";
+      this.isError = true;
      }
   }
 
@@ -448,5 +489,35 @@ export class GestionePromoComponent  implements OnInit {
 
   dismissConferma(){
     this.isConfirmOpen = false;
+  }
+
+  getErrorMessage(): string {
+    let errorMessage = '';
+  
+    if (this.errTitolo) {
+      errorMessage += `•${this.errTitolo} \n`;
+    }
+    if (this.errDescrizione) {
+      errorMessage += `•${this.errDescrizione}\n`;
+    }
+    if (this.errPeriodo) {
+      errorMessage += `•${this.errPeriodo}\n`;
+    }
+    if (this.errGiorni) {
+      errorMessage += `•${this.errGiorni}\n`;
+    }
+    if (this.errOrari) {
+      errorMessage += `•${this.errOrari}\n`;
+    }
+    if (this.errTipologia) {
+      errorMessage += `•${this.errTipologia}\n`;
+    }
+    if (this.errNumUtilizzi) {
+      errorMessage += `•${this.errNumUtilizzi}\n`;
+    }
+    if (this.errNumUtilizziPersona) {
+      errorMessage += `•${this.errNumUtilizziPersona}\n`;
+    }
+    return errorMessage.trim();
   }
 }

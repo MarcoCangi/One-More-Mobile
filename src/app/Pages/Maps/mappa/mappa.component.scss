@@ -34,7 +34,17 @@ ion-spinner {
   width: 160px;
   height: 40px;
   position: fixed;
-  top: 3%;
+  top: 6%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+}
+
+.btnListaAttivita{
+  width: 160px;
+  height: 40px;
+  position: fixed;
+  bottom: 5%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000;

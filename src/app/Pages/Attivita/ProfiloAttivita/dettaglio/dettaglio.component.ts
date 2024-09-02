@@ -137,7 +137,7 @@ export class DettaglioComponent  implements OnInit {
     this.isLoading = true;
     setTimeout(() => {
       this.redirectEsitoEvent.emit(typeRedirect);
-    }, 100); // 2000 millisecondi = 2 secondi
+    }, 100); // 100 millisecondi = 0.1 secondi
     this.isLoading = false;
   }
 }

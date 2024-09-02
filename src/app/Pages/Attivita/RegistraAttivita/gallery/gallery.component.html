@@ -43,7 +43,7 @@
     </ion-col>
   </ion-row>
 </ion-grid>
-<ion-modal [isOpen]="isModalOpen"  [breakpoints]="[0, 1]" [initialBreakpoint]="1" class="full-modal">
+<ion-modal [isOpen]="isModalOpen" class="full-modal">
   <app-dialog-gallery *ngIf="selectedImageUrl" 
                       [img]="selectedImageUrl" 
                       (deleteEvent)="deletePhoto()"
