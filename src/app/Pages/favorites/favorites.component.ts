@@ -24,6 +24,7 @@ export class FavoritesComponent  implements OnInit {
   listaPromo!: Promo[];
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openPageEvent = new EventEmitter<number>();
+  @Output() redirectEsitoEvent = new EventEmitter<boolean>();
 
   constructor(private attivitaService: GetApiAttivitaService,
               private authService : AuthService,
@@ -161,6 +162,13 @@ export class FavoritesComponent  implements OnInit {
       }
     }
     this.isLoading = false;
+  }
+
+  redirecEsitoEvent(typeRedirect:boolean){
+    setTimeout(() => {
+      this.redirectEsitoEvent.emit(typeRedirect);
+    }, 100); // 100 millisecondi = 0.1 secondi
+    this.isModalPromoOpen = false;
   }
 
 }

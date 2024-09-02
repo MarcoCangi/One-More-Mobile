@@ -14,7 +14,7 @@ ion-card {
 }
 
 .card-container{
-  min-width: 400px; 
+  min-width: 380px; 
   height: 90vh; 
   width: 100vw; 
   margin-top: 5%;
@@ -39,5 +39,9 @@ ion-card {
 .full-modal::part(content) {
   height: 100%;
   width: 100%;
+}
+
+.title{
+  margin-top: 5%;
 }
 

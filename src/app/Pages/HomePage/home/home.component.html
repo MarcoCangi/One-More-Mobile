@@ -54,7 +54,8 @@
     </div>
 
     <div id="favorite" *ngIf="idPage === 9" style="height: 100%">
-        <app-favorites (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"></app-favorites>
+        <app-favorites (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
+                       (redirectEsitoEvent)="redirectEsitoEvent($event)"></app-favorites>
     </div>
 
     <div id="coupon" *ngIf="idPage === 11" style="height: 100%">

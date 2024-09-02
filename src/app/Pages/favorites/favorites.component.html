@@ -1,10 +1,7 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
- <ion-card *ngIf="!isLoading" class="card-container">
-  <ion-card-title>
-    <ion-title class="title">I miei Preferiti</ion-title>
-  </ion-card-title>
-    <div class="content" style="height: 100%; width: 100%;">
+ <div *ngIf="!isLoading && listaAttivitaFavoriti" class="card-container">
+  <ion-title class="title">I miei Preferiti</ion-title>
       <ion-card *ngFor="let attivita of listaAttivitaFavoriti" style="--min-height: 140px; --min-width: 400px;">
         <ion-card-content style="padding: 0;" (click)="VisualizzaAttivita(attivita.idAttivita)">
           <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
@@ -35,7 +32,6 @@
         </ion-card-content>
       </ion-card>
     </div>
-</ion-card>
 
 <ion-modal [isOpen]="isModalPromoOpen" class="full-modal">
   <ng-template>
@@ -50,7 +46,8 @@
     <ion-content>
       <ion-card>
         <ion-card-content>
-          <app-pannello-promo [listaPromo]="this.listaPromo"></app-pannello-promo>
+          <app-pannello-promo [listaPromo]="this.listaPromo"
+                              (redirecEsitoEvent)="redirecEsitoEvent($event)"></app-pannello-promo>
         </ion-card-content>
       </ion-card>
     </ion-content>
