@@ -21,7 +21,7 @@
               <ion-label style="margin-left: 5%;" slot="start">SCADENZA {{ coupon.dataAl | date:'dd/MM/yyyy' }}</ion-label>
               <ion-icon slot="end" name="close-circle-outline"(click)="openConfirmModal(false, coupon)" slot="end" style="color:red; width: 25px; height: 25px; margin-right: 5%;"></ion-icon>
           </ion-toolbar>
-          <ion-card-content style="padding: 0;">
+          <ion-card-content style="padding: 0;" (click)="openDetailModal(coupon)">
             <ion-item lines="none">
               <ion-thumbnail slot="start" style="--size: 110px; margin-bottom: -5%; margin-top: -5%;">
                 <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />

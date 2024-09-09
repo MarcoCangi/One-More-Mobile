@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CouponService } from 'one-more-frontend-common/projects/one-more-fe-service/src/coupon-service';
 import { CouponListDto } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/CouponListDto.cjs';
 
@@ -24,12 +24,16 @@ export class CouponComponent  implements OnInit {
   segmentValue: string = 'default';
   subSegmentValue: string = 'utilizzati';
   isLoading : boolean | undefined;
+  @Output() openPageEventLogin = new EventEmitter<void>();
 
   constructor( private couponService: CouponService) { }
 
   async ngOnInit() {
     this.isLoading = true;
-    await this.getCoupon();
+    if(this.idSoggetto)
+      await this.getCoupon();
+    else
+      await this.openPageLogin();
     this.isLoading = false;
   }
 
@@ -182,6 +186,12 @@ export class CouponComponent  implements OnInit {
       }
     }
     return days;
+  }
+
+  async openPageLogin(){
+    setTimeout(() => {
+      this.openPageEventLogin.emit();
+    }, 100);
   }
 }
 

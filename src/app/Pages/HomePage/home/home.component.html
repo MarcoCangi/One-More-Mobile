@@ -97,7 +97,7 @@
     </div>
 
     <div id="coupon" *ngIf="idPage === 11" style="height: 100%">
-        <app-coupon [idSoggetto]="this.idSoggetto"></app-coupon>
+        <app-coupon (openPageEventLogin)="openPageEventLogin()" [idSoggetto]="this.idSoggetto"></app-coupon>
     </div>
 
     <div id="profile" *ngIf="idPage === 12" style="height: 100%">

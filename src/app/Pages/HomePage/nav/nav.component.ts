@@ -90,6 +90,13 @@ export class NavComponent implements OnInit {
       this.cancel();
     }
 
+    openCoupon(){
+      this.idPage = 11;
+      this.openPageEventNav(this.idPage);
+      this.openPage(this.idPage);
+      this.cancel();
+    }
+
     openRegistraAttivita(){
       this.idPage = 5;
       this.openPageEventNav(this.idPage);

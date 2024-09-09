@@ -104,6 +104,10 @@ export class HomeComponent  implements OnInit {
     this.openPageEventNav.emit(this.idPage);
   }
 
+  openPageEventLogin() {
+    this.isOpenPageLoginEvent(true);
+  }
+
   setiIdSogggetto(id:number | undefined){
     this.updateIdFooter.emit(id);
   }
