@@ -22,6 +22,10 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
+
+  .card-wrapper::-webkit-scrollbar {
+    display: none;
+  }
   
   .card-consigli {
     flex: 0 0 auto;
@@ -42,7 +46,6 @@
   }
 
   .mat-card-content {
-    max-height: 50px; /* Imposta un'altezza massima per il contenuto della card */
     overflow: hidden; /* Nasconde il contenuto che supera l'altezza massima */
   }
 
@@ -50,6 +53,11 @@
     max-height: 5px;
   }
   
+  .title{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.4rem;
+  }
 
 
   

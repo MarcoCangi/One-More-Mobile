@@ -9,7 +9,7 @@
               <img [src]="getImmaginePrincipale(attivita)" style="--width: 140px; --height: 140px; object-fit: cover;" />
             </ion-thumbnail>
             <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
-              <ion-card-title>{{ attivita.nome }}</ion-card-title>
+              <ion-card-title class="title2">{{ attivita.nome }}</ion-card-title>
               <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
               <ion-card-subtitle style="margin-top: 2%;">{{ attivita.citta }}</ion-card-subtitle>
             </div>
@@ -37,7 +37,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Promozioni</ion-title>
+        <ion-title class="title">Promozioni</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissPromoModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -58,7 +58,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Rimuovi dai Preferiti</ion-title>
+        <ion-title class="title">Rimuovi dai Preferiti</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissConfirmModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -67,7 +67,7 @@
     <ion-content class="column ion-text-center ion-align-items-center">
       <ion-card>
         <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-title>
+          <ion-title class="title">
             Vuoi rimuoverla dai preferiti?
           </ion-title>
         </ion-card-header>

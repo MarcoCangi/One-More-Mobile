@@ -54,6 +54,7 @@ export class DatiStrutturaComponent  implements OnInit {
   errorDescServ:string | undefined;
   errorOrari:string | undefined;
   alertButtons = ['Chiudi'];
+  isCheckboxChecked = false;
 
   constructor(
     private attivitaService: GetApiAttivitaService,
@@ -101,6 +102,10 @@ export class DatiStrutturaComponent  implements OnInit {
     this.listaAttivita = undefined;
   }
 
+  onCheckboxChange(event: any) {
+    this.isCheckboxChecked = event.detail.checked;
+  }
+
   dismissConferma(){
     this.isConfirmOpen = false;
   }
@@ -115,6 +120,8 @@ export class DatiStrutturaComponent  implements OnInit {
   
   async prosegui() {
     this.isLoadingSalvataggio = true;
+    if(this.isCheckboxChecked)
+    {
     await this.controlValidator(this.requestAttivita);
     
     if (!this.isError) {
@@ -164,6 +171,7 @@ export class DatiStrutturaComponent  implements OnInit {
     
     this.isLoadingSalvataggio = false;
     this.dismissConferma();
+    }
   }
 
   async modifica() {

@@ -92,7 +92,7 @@
     </ion-header>
     <ion-header *ngIf="!isLoading">
       <ion-toolbar>
-        <ion-title>Esito</ion-title>
+        <ion-title class="title">Esito</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissConfirmModal(false, false)"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -101,7 +101,7 @@
     <ion-content class="column ion-text-center ion-align-items-center">
       <ion-card *ngIf="!isLoading && !isConfirmed">
         <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-title>
+          <ion-title class="title">
             Stai per acquaisire il coupon!!
           </ion-title>
         </ion-card-header>
@@ -147,7 +147,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Attenzione</ion-title>
+        <ion-title class="title">Attenzione</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissisModalVerified()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -156,7 +156,7 @@
     <ion-content class="column ion-text-center ion-align-items-center">
       <ion-card>
         <ion-card-header>
-          <ion-card-title>
+          <ion-card-title class="subTitle">
             Per poter richiedere un coupon, completa la verifica controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.
           </ion-card-title>
         </ion-card-header>

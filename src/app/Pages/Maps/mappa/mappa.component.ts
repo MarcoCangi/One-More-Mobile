@@ -300,4 +300,9 @@ export class MappaComponent implements OnInit {
   openSearch(){
     this.openSearchEvent.emit(8);
   }
+
+  popoverDismissed(){
+    this.isDetailModalOpen = false;
+    this.selectedAttivita = undefined;
+  }
 }

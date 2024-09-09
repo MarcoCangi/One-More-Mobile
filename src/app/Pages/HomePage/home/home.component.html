@@ -1,15 +1,21 @@
-
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh()">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-
+ 
     <div class="container content">
 
         <ion-spinner *ngIf="isLoading && (idPage === 1 || idPage === undefined)" name="crescent" color="primary"></ion-spinner>
         
-    <div class="contentList" *ngIf="!isLoading && (idPage === 1 || idPage === undefined)">
+    <div class="contentList" *ngIf="!isLoading && isCaricamentoOk && (idPage === 1 || idPage === undefined)">
         
         <app-icon-promo (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-icon-promo>
+
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div class="slider">
+                <div class="slides" [ngStyle]="{'transform': 'translateX(-' + (currentSlide * 100) + '%)'}">
+                  <img src="assets/Img/Slider1.avif" class="imgSlider"/>
+                  <img src="assets/Img/Attivita.avif" class="imgSlider"/>
+                  <!-- Aggiungi altre immagini qui -->
+                </div>
+              </div>
+        </div>
 
         <app-elenco-promo [elencoPromo]="listaElencoPromo" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
 
@@ -17,7 +23,39 @@
 
         <app-elenco-consigli [elencoConsigli]="listaElencoConsigli " (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
 
+        <ion-card>
+            <ion-card-content>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="5">
+                            <img src="assets/Img/guy.avif" class="imgSlider"/>
+                        </ion-col>
+                        <ion-col size="7" class="column ion-text-center ion-align-items-center">
+                            <ion-card-title class="title">
+                                Hai un'attività? registrati con noi!
+                            </ion-card-title>
+                            <br>
+                            <ion-card-subtitle>Scopri tutti i vantaggi e vedi come fare</ion-card-subtitle>
+                            <br>
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <ion-button fill="outline" shape="round" (click)="openPageEvent(13)"> SCOPRI DI PIÙ</ion-button>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+        </ion-card>
+
     </div>
+
+    <ion-alert
+        [isOpen]="!isLoading && !isCaricamentoOk && (idPage === 1 || idPage === undefined)"
+        header="Ops, qualcosa è andato storto"
+        [message]="getErrorMessage()"
+        [buttons]="alertButtons"
+        cssClass="custom-alert"
+        (didDismiss)="retry()">
+    </ion-alert>
 
     <div *ngIf="idPage === 2">
         <app-mappa (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
@@ -64,6 +102,10 @@
 
     <div id="profile" *ngIf="idPage === 12" style="height: 100%">
         <app-user (openPageEvent)="openPageEvent($event)"></app-user>
+    </div>
+
+    <div id="infoAttivita" *ngIf="idPage === 13" style="height: 100%">
+        <app-info-registrazione-attivita></app-info-registrazione-attivita>
     </div>
 </div>
 

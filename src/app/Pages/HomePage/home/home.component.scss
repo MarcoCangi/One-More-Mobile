@@ -29,4 +29,29 @@
     width: 100%; 
     margin-bottom: 5%;
   }
+
+  .title{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.4rem;
+  }
+
+  .slider {
+    position: relative;
+    width: 90%;
+    overflow: hidden;
+  }
+  
+  /* Images inside the slider */
+  .slides {
+    display: flex;
+    width: 100%; /* Cambia in base al numero di immagini */
+    transition: transform 1s ease-in-out; /* Transizione di 1 secondo */
+  }
+  
+  .imgSlider {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5%;
+  }
   

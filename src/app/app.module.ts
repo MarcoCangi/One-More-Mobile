@@ -89,6 +89,7 @@ import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-moda
 import { DettaglioCouponNonAttComponent } from './Pages/coupon/dettaglio-coupon-non-att/dettaglio-coupon-non-att.component';
 import { UserComponent } from './Pages/user/user.component';
 import { CookieConsentComponent } from './Pages/cookie-consent/cookie-consent.component';
+import { InfoRegistrazioneAttivitaComponent } from './Pages/Attivita/info-registrazione-attivita/info-registrazione-attivita.component';
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
@@ -170,7 +171,8 @@ const appRoute: Routes = [
                  ConfirmModalComponent,
                  DettaglioCouponNonAttComponent,
                  UserComponent,
-                 CookieConsentComponent
+                 CookieConsentComponent,
+                 InfoRegistrazioneAttivitaComponent
   ],
   imports: [BrowserModule, 
             AngularFireModule.initializeApp(firebaseConfig),

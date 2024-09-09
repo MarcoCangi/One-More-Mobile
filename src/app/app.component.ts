@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   idSoggetto: number | undefined;
   idPage!: number;
   showSplash = true;
+  IsShowSplashVisible : boolean = false;
   showCookiePanel = true;
 
   constructor(private authService: AuthService, 
@@ -39,11 +40,12 @@ export class AppComponent implements OnInit {
       //this.showCookiePanel = false;
     }
 
-    const splashShown = localStorage.getItem('splashShown');
-    if (!splashShown) {
+    this.IsShowSplashVisible = this.authService.getIsShowedSplash();
+    if (this.showSplash && !this.IsShowSplashVisible) {
       setTimeout(() => {
         this.showSplash = false;
         localStorage.setItem('splashShown', 'true');
+        this.authService.setIsShowedSplash(true);
       }, 3000);
     } else {
       this.showSplash = false;

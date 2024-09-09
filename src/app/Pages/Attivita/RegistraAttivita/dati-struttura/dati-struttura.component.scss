@@ -57,3 +57,26 @@ ion-spinner {
   color: red;
   margin-left: 5%;
 }
+
+.title{
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 1.4rem;
+}
+
+.subTitle{
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 1.1rem;
+}
+
+.contentListAtt{
+  margin-top: 5%;
+  min-width: 340px; 
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
+
+.contentListAtt::-webkit-scrollbar {
+  display: none; /* Nasconde la scrollbar nei browser basati su WebKit */
+}

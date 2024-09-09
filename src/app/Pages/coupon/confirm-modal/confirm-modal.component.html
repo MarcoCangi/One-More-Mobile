@@ -8,8 +8,8 @@
     <ion-card>
       <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
       <ion-card-content *ngIf="this.isAdd && !this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
-        <ion-card-title *ngIf="isUtilizzabile"> Vuoi utilizzare il coupon?</ion-card-title>
-        <ion-card-title *ngIf="!isUtilizzabile"> Coupon non utilizzabile ora </ion-card-title>
+        <ion-card-title class="title" *ngIf="isUtilizzabile"> Vuoi utilizzare il coupon?</ion-card-title>
+        <ion-card-title class="title" *ngIf="!isUtilizzabile"> Coupon non utilizzabile ora </ion-card-title>
       <ion-grid *ngIf="isUtilizzabile" style="margin-top:15px;">
         <ion-row>
           <ion-col size="6" class="column ion-text-center ion-align-items-center">
@@ -68,7 +68,7 @@
       </ion-card-content>
       
       <ion-card-content *ngIf="!this.isAdd && !this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
-        <ion-card-title> Sicuro di voler eliminare il coupon?</ion-card-title>
+        <ion-card-title class="title"> Sicuro di voler eliminare il coupon?</ion-card-title>
       <ion-grid>
         <ion-row style="margin-top:15px;">
           <ion-col size="6" class="column ion-text-center ion-align-items-center">
@@ -82,9 +82,9 @@
     </ion-card-content>
   
       <ion-card-content *ngIf="this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px; height: 400px;">
-        <ion-card-title *ngIf="this.isConfirmed && this.typeUtilizzo === 2">COUPON UTILIZZATO</ion-card-title>
-        <ion-card-title *ngIf="this.isConfirmed && this.typeUtilizzo === 3">COUPON ELIMINATO</ion-card-title>
-        <ion-card-title *ngIf="!this.isConfirmed">ATTENZIONE</ion-card-title>
+        <ion-card-title class="title" *ngIf="this.isConfirmed && this.typeUtilizzo === 2">COUPON UTILIZZATO</ion-card-title>
+        <ion-card-title class="title" *ngIf="this.isConfirmed && this.typeUtilizzo === 3">COUPON ELIMINATO</ion-card-title>
+        <ion-card-title class="title" *ngIf="!this.isConfirmed">ATTENZIONE</ion-card-title>
   
         <ion-grid>
           <ion-row class="column ion-text-center ion-align-items-center">

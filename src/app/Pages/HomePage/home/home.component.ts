@@ -17,6 +17,9 @@ export class HomeComponent  implements OnInit {
     }, 1000);
   }
 
+  currentSlide = 0;
+  totalSlides = 2; // Modifica in base al numero di immagini
+
   listaElencoConsigli : Attivita[] | undefined;
   listaElencoPromo : Attivita[] | undefined;
   listaElencoPub : Attivita[] | undefined;
@@ -26,11 +29,14 @@ export class HomeComponent  implements OnInit {
   listaAttivitaRicerca: AttivitaFiltrate | undefined;
   position: GeolocationPosition | undefined;
   isLoading : boolean | undefined;
+  isCaricamentoOk : boolean | undefined;
+  errorMessage: string | undefined;
   idSoggetto : number | undefined;
   @Input() idPage!: number;
   @Input() listaTipoAttivita: TipoAttivita[] =[];
   attivita: Attivita | undefined;
   attivitaRicercate: Attivita [] | undefined;
+  alertButtons = ['Ricarica'];
   @Output() openPageEventNav = new EventEmitter<number>();
   @Output() updateIdFooter = new EventEmitter<number>();
   @Output() isModalLoginOpenEvent = new EventEmitter<boolean>();
@@ -42,6 +48,8 @@ export class HomeComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
+    
+
     const userSession = this.authService.getUserSessionFromCookie();
           if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
             this.idSoggetto = userSession.idSoggetto;
@@ -50,7 +58,18 @@ export class HomeComponent  implements OnInit {
           }
           this.setiIdSogggetto(this.idSoggetto);
 
-          this.loadData()
+          this.loadData();
+          this.startSlider();
+    }
+
+    startSlider() {
+      setInterval(() => {
+        this.showNextSlide();
+      }, 6000); // Cambia ogni 3 secondi
+    }
+
+    showNextSlide() {
+      this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
     }
 
   onAttivitaSelezionata(attivita: Attivita): void {
@@ -198,6 +217,7 @@ export class HomeComponent  implements OnInit {
 
   async loadData() {
     if (this.idPage == 1 || this.idPage == undefined) {
+      this.isCaricamentoOk = false;
       this.isLoading = true;
 
       
@@ -208,8 +228,9 @@ export class HomeComponent  implements OnInit {
               retry(2), // Riprova la chiamata fino a 3 volte in caso di errore
               catchError((error) => {
                 // Gestione errore
-                console.error('Errore durante la chiamata all\'API', error);
+                console.error('Errore di connessione', error);
                 this.isLoading = false;
+                this.errorMessage = 'Errore di connessione, si prega di riprovare';
                 throw error; // Propaga l'errore
               })
             )
@@ -222,11 +243,17 @@ export class HomeComponent  implements OnInit {
             this.attivitaService.createListAttivitaPromoHomeSession(this.listaElencoPromo);
         } catch (error) {
           // Gestisci l'errore in caso di fallimento anche dopo i retry
-          console.error('Errore irreversibile', error);
+          console.error('Errore di connessione', error);
+          this.errorMessage = 'Errore di connessione, si prega di riprovare';
         } finally {
           this.isLoading = false;
         }
       }
+    }
+    if(this.listaElencoConsigli && this.listaElencoPromo)
+    {
+      this.errorMessage ='';
+      this.isCaricamentoOk = true;
     }
     this.isLoading = false;
   }
@@ -237,5 +264,13 @@ export class HomeComponent  implements OnInit {
 
   async redirectEsitoEvent(typeRedirect:boolean){
     this.openPageEventNav.emit(typeRedirect? 11 : 1);
+  }
+
+  getErrorMessage(): string | undefined {
+    return this.errorMessage;
+  }
+
+  retry(){
+    location.reload();
   }
 }

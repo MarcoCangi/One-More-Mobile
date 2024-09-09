@@ -1,8 +1,12 @@
 .map {
-  height: 90vh; /* 90% dell'altezza della viewport */
-  width: 100vw; /* 100% della larghezza della viewport */
+  top: 0;
+  height: 90vh; /* 90% of the viewport height */
+  width: 100vw; /* 100% of the viewport width */
+  max-width: 100%; /* Ensures the map doesn't overflow the screen width */
+  max-height: 100%; /* Ensures the map doesn't overflow the screen width */
+  overflow: hidden; /* Prevents overflow content from being visible */
+  position: relative; /* Ensures the map stays within its container */
 }
-
 ion-button.floating-button {
   position: absolute;
   bottom: 30px;
@@ -78,4 +82,10 @@ ion-item-divider{
   display: flex; 
   justify-content: center; 
   margin-top: 10px;
+}
+
+.title{
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 1.4rem;
 }

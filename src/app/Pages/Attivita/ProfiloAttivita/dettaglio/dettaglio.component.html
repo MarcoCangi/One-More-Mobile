@@ -15,10 +15,15 @@
     <ion-icon *ngIf="this.idSoggetto && this.isFavorite" class="preferiti" name="star" style="color: #e9540a;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
   </div>
   
-  <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0">
-    <ion-card-title>
-      <ion-title style="margin-top: 5%;">Le nostre Promozioni</ion-title>
-    </ion-card-title>
+  <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card-title class="title">Le nostre Promozioni</ion-card-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
     <ion-card-content>
       <app-pannello-promo (openPageLogin)="isOpenPageLoginEvent($event)"
                           (redirecEsitoEvent)="redirecEsitoEvent($event)"
@@ -27,22 +32,27 @@
   </ion-card>
   
   <ion-card>
+  <ion-item>
     <ion-card-header>
-      <ion-card-title>{{attivita.nome}}</ion-card-title>
+      <ion-card-title class="nome">{{attivita.nome}}</ion-card-title>
       <ion-card-subtitle>
         <ion-icon name="location-outline"></ion-icon>{{attivita.indirizzo}}, {{attivita.civico}}, {{attivita.cap}}, {{attivita.citta}}
       </ion-card-subtitle>
+      
       <div class="chip-container">
-        <ion-chip [outline]="true" *ngFor="let tipo of attivita.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
+          <ion-chip [outline]="true" *ngFor="let tipo of attivita.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
       </div>
-      <ion-item-divider></ion-item-divider>
     </ion-card-header>
+  </ion-item>
     
+  <ion-item>
     <ion-card-content>
-      <h3 class="lbl-title">Chi siamo</h3>
-      <ion-label>{{attivita.descrizione}}</ion-label>
-  
-      <ion-item-divider></ion-item-divider>
+      <ion-card-title class="nome">Chi siamo</ion-card-title>
+      <ion-label style="margin-top:2%;">{{attivita.descrizione}}</ion-label>
+    </ion-card-content>
+  </ion-item>
+
+    <ion-card-content>
   
       <div class="descOfferta">
         <ion-accordion-group expand="inset">
@@ -61,7 +71,7 @@
         <ion-grid style="margin-top: 3%;">
           <ion-row>
             <ion-col>
-              <ion-card-title style="margin-left: 10%;">Orari</ion-card-title>
+              <ion-card-title class="nome" style="margin-left: 10%;">Orari</ion-card-title>
             </ion-col>
             <ion-col>
               <ion-card-subtitle>Mattina</ion-card-subtitle>

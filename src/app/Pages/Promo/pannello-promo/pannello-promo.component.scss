@@ -2,10 +2,6 @@ h2{
     margin-left: 3%;
   }
 
-  .contenitore{
-    margin-top: 5%;
-  }
-  
   .headers-align .mat-expansion-panel-header-description {
     justify-content: space-between;
     align-items: center;
@@ -72,6 +68,18 @@ h2{
   .full-modal::part(content) {
     height: 100%;
     width: 100%;
+  }
+
+  .title{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.4rem;
+  }
+
+  .subTitle{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.1rem;
   }
 
   

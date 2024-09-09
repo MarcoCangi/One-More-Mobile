@@ -2,11 +2,11 @@
 
 <div style="margin-top: 5%;min-width: 400px;" *ngIf="!isLoading && this.listaAttivita && !this.isModifica ">
   <ion-toolbar>
-    <ion-title>Seleziona l'attività</ion-title>
+    <ion-title class="title">Seleziona l'attività</ion-title>
   </ion-toolbar> 
       <ion-card *ngFor="let att of listaAttivita" (click)="getPromoAttivita(att)">
         <ion-card-header>
-          <ion-card-title>
+          <ion-card-title class="title">
             {{ att.nome }}
           </ion-card-title>
         </ion-card-header>
@@ -46,7 +46,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col size="6">
-                  <ion-title>{{ promo.titoloPromo }}</ion-title>
+                  <ion-title class="title">{{ promo.titoloPromo }}</ion-title>
                 </ion-col>
                 <ion-col>
                   <ion-label>{{ promo.dataInserimento | date:'dd-MM-yyyy' }}</ion-label>
@@ -208,7 +208,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col size="6">
-                  <ion-title>{{ promo.titoloPromo }}</ion-title>
+                  <ion-title class="title">{{ promo.titoloPromo }}</ion-title>
                 </ion-col>
                 <ion-col>
                   <ion-label>{{ promo.dataInserimento | date:'dd-MM-yyyy' }}</ion-label>

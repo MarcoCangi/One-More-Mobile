@@ -18,7 +18,20 @@
     align-items: center;
     height: 28px;
   }
+
+  .title{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.4rem;
+    margin-top: 2%;
+    margin-left: 2%;
+  }
   
+  .nome{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.4rem;
+  }
   
   .lbl-info{
     font-size: 13px;
@@ -56,6 +69,8 @@
     width: fit-content; /* Adatta la larghezza del wrapper al contenuto */
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
+    -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
   }
   
   .card-img {

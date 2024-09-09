@@ -3,16 +3,16 @@
     <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
   </div>
   
-    <div style="margin-top: 5%;min-width: 400px;" *ngIf="!isLoading && isVerificato && this.listaAttivita && !this.attivita">
-      <ion-toolbar>
-        <ion-title>Le tue attività</ion-title>
+    <div class="contentListAtt" *ngIf="!isLoading && isVerificato && this.listaAttivita && !this.attivita">
+      <ion-toolbar style="background-color: white;">
+        <ion-title class="title">Le tue attività</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="addNewAtt()" style="background-color: #007bff; border-radius: 50%; width: 45px; height: 45px;"><ion-icon style="color: white; height: 35px; width: 35px;" name="add-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar> 
           <ion-card *ngFor="let att of listaAttivita" (click)="getAttivita(att.idSoggetto, att.idAttivita)">
             <ion-card-header>
-              <ion-card-title>
+              <ion-card-title class="title">
                 {{ att.nome }}
               </ion-card-title>
             </ion-card-header>
@@ -28,17 +28,13 @@
   <div *ngIf="!isLoading && isVerificato && (this.attivita || !listaAttivita)">
   
     <div *ngIf="this.attivita && attivita?.isVerificata" class="ion-alert">
+      <div class="column ion-text-center ion-align-items-center">
+        <ion-icon *ngIf="attivita?.esitoVerifica" style="color: green; margin-right: 1%; width: 25px; height: 25px;" name="checkmark-outline"></ion-icon>
+        <ion-icon *ngIf="!attivita?.esitoVerifica" style="color: red; margin-right: 1%; width: 25px; height: 25px;" name="close-circle-outline"></ion-icon>
+        <ion-label *ngIf="attivita?.esitoVerifica" style="color: #008000; font-family:Helvetica; font-size: large;">Attivita verificata</ion-label>
+        <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-family:Helvetica; font-size: large;">Verifica non andata a buon fine</ion-label>
+      </div> 
       <ion-grid>
-        <ion-row>
-          <ion-col size="1" class="column ion-text-center ion-align-items-center">
-            <ion-icon *ngIf="attivita?.esitoVerifica" style="color: green; margin-right: 5%; width: 30px; height: 30px; margin-top: 1%;" name="checkmark-outline"></ion-icon>
-            <ion-icon *ngIf="!attivita?.esitoVerifica" style="color: red; margin-right: 5%; width: 30px; height: 30px; margin-top: 1%;" name="close-circle-outline"></ion-icon>
-          </ion-col>
-          <ion-col size="11" class="column ion-text-center ion-align-items-center">
-            <ion-label *ngIf="attivita?.esitoVerifica" style="color: #008000; font-weight: bold; font-size: large;">Attivita verificata</ion-label>
-            <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">Verifica non andata a buon fine</ion-label>
-          </ion-col>
-        </ion-row>
         <ion-row>
           <ion-col *ngIf="!attivita?.esitoVerifica">
             <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">{{this.attivita.motivo}}</ion-label>
@@ -176,7 +172,7 @@
   <div *ngIf="!isLoading && !isVerificato">
       <ion-card>
         <ion-card-header>
-          <ion-card-title>
+          <ion-card-title class="subTitle">
             Per poter registrare un'attività, completa la verifica dell' account controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.
           </ion-card-title>
         </ion-card-header>
@@ -200,15 +196,15 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title>Esito</ion-title>
+            <ion-title class="title">Esito</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
           <ion-card>
             <ion-card-header>
-              <ion-card-title *ngIf="this.isEliminazioneOK"> Attivita eliminata </ion-card-title>
-              <ion-card-title *ngIf="this.isSalvataggioOK"> Salvataggio eseguito correttamente </ion-card-title>
-              <ion-card-title *ngIf="!this.isSalvataggioOK"> OPS qualcosa è andato storto </ion-card-title>
+              <ion-card-title class="title" *ngIf="this.isEliminazioneOK"> Attivita eliminata </ion-card-title>
+              <ion-card-title class="title" *ngIf="this.isSalvataggioOK"> Salvataggio eseguito correttamente </ion-card-title>
+              <ion-card-title class="title" *ngIf="!this.isSalvataggioOK"> OPS qualcosa è andato storto </ion-card-title>
             </ion-card-header>
             <ion-card-content style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
               <ion-button shape="round" (click)="dismissDetailModal()">CHIUDI</ion-button>
@@ -222,8 +218,8 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title *ngIf="!idAttivita">Salva</ion-title>
-            <ion-title *ngIf="idAttivita">Modifica</ion-title>
+            <ion-title class="title" *ngIf="!idAttivita">Salva</ion-title>
+            <ion-title class="title" *ngIf="idAttivita">Modifica</ion-title>
             <ion-buttons slot="end">
               <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
             </ion-buttons>
@@ -240,85 +236,96 @@
           <ion-grid style="margin-top: 10px;"  >
             <ion-row>
               <ion-col class="column ion-text-center ion-align-items-center">
-                <ion-title>Riepilogo</ion-title>
+                <ion-title class="subTitle" >Riepilogo</ion-title>
                 <br>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">Nome:</ion-label> <br>
-                <ion-label>{{this.requestAttivita?.nome}}</ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+                <ion-item>
+                  <ion-label class="subTitle">Nome:</ion-label> <br><br>
+                  <ion-label>{{this.requestAttivita?.nome}}</ion-label>
+                </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">indirizzo:</ion-label> <br>
+                <ion-item>
+                <ion-label class="subTitle">Indirizzo:</ion-label> <br>
                 <ion-label>{{this.requestAttivita?.indirizzo}}, {{this.requestAttivita?.civico}}, {{this.requestAttivita?.cap}}, {{this.requestAttivita?.citta}} </ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+              </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">Email:</ion-label> <br>
+                <ion-item>
+                <ion-label class="subTitle">Email:</ion-label> <br>
                 <ion-label>{{this.requestAttivita?.email}}</ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+              </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">Numero di telefono:</ion-label> <br>
-                <ion-label>{{this.requestAttivita?.telefono}}</ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+                <ion-item>
+                  <ion-label class="subTitle">Numero di telefono:</ion-label> <br>
+                  <ion-label>{{this.requestAttivita?.telefono}}</ion-label>
+                </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col *ngIf="this.requestAttivita?.cellulare">
-                <ion-label style="font-size: larger; font-weight: bold;">Numero di cellulare:</ion-label> <br>
-                <ion-label>{{this.requestAttivita?.cellulare}}</ion-label>
-                <br> <br>
-                <ion-label style="font-size: larger; font-weight: bold;">Vuoi renderlo visibile sulla pagina:</ion-label> <br>
-                <ion-label *ngIf="this.requestAttivita?.isCellPubblico">SI</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.isCellPubblico">NO</ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+                <ion-item>
+                  <ion-label class="subTitle">Numero di cellulare:</ion-label> <br>
+                  <ion-label>{{this.requestAttivita?.cellulare}}</ion-label>
+                </ion-item>
+                <ion-item>
+                  <br> <br>
+                  <ion-label class="subTitle">Vuoi renderlo visibile sulla pagina:</ion-label> <br>
+                  <ion-label *ngIf="this.requestAttivita?.isCellPubblico">SI</ion-label>
+                  <ion-label *ngIf="!this.requestAttivita?.isCellPubblico">NO</ion-label>
+                </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col style="margin-bottom: 4%;">
-                <ion-label style="font-size: larger; font-weight: bold;">Tipo di attività:</ion-label> <br>
-                <ion-list>
-                  <ion-item *ngFor="let item of this.requestAttivita?.listaTipoAttivita">
-                    <ion-label>{{item.descrizione}}</ion-label>
-                  </ion-item>
-                </ion-list>
+                <ion-item>
+                  <ion-label class="subTitle">Tipo di attività:</ion-label> <br>
+                  <ion-list>
+                    <ion-item *ngFor="let item of this.requestAttivita?.listaTipoAttivita">
+                      <ion-label>{{item.descrizione}}</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col style="margin-bottom: 4%;">
-                <ion-label style="font-size: larger; font-weight: bold;">Offri:</ion-label> <br>
-                <ion-list>
-                  <ion-item *ngIf="this.requestAttivita?.isOffertaNoGlutine">
-                    <ion-label>Prodotti senza glutine</ion-label>
-                  </ion-item>
-                  <ion-item *ngIf="this.requestAttivita?.isOffertaVegana">
-                    <ion-label>Prodotti vegani</ion-label>
-                  </ion-item>
-                  <ion-item *ngIf="this.requestAttivita?.isOffertaVegetariana">
-                    <ion-label>Prodotti vegetariani</ion-label>
-                  </ion-item>
-                </ion-list>
+                <ion-item>
+                  <ion-label class="subTitle">Offri:</ion-label> <br>
+                  <ion-list>
+                    <ion-item *ngIf="this.requestAttivita?.isOffertaNoGlutine">
+                      <ion-label>Prodotti senza glutine</ion-label>
+                    </ion-item>
+                    <ion-item *ngIf="this.requestAttivita?.isOffertaVegana">
+                      <ion-label>Prodotti vegani</ion-label>
+                    </ion-item>
+                    <ion-item *ngIf="this.requestAttivita?.isOffertaVegetariana">
+                      <ion-label>Prodotti vegetariani</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label style="font-size: larger; font-weight: bold;">Orari:</ion-label>
-              </ion-col>
-              <ion-col size="5" class="column ion-text-center ion-align-items-center">
-                <ion-label>MATTINA</ion-label>
-              </ion-col>
-              <ion-col size="5" class="column ion-text-center ion-align-items-center">
-                <ion-label>SERA</ion-label>
-              </ion-col>
+                <ion-col size="2" class="column ion-text-center ion-align-items-center">
+                  <ion-label class="subTitle">Orari:</ion-label>
+                </ion-col>
+                <ion-col size="5" class="column ion-text-center ion-align-items-center">
+                  <ion-label>MATTINA</ion-label>
+                </ion-col>
+                <ion-col size="5" class="column ion-text-center ion-align-items-center">
+                  <ion-label>SERA</ion-label>
+                </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
@@ -430,33 +437,41 @@
                   {{this.requestAttivita?.orari?.domenicaPomDa}} - {{this.requestAttivita?.orari?.domenicaPomAl}}
                 </ion-label>
                 <ion-label *ngIf="!this.requestAttivita?.orari?.domenicaPomDa && !this.requestAttivita?.orari?.domenicaPomAl"> Chiuso </ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
               </ion-col>
             </ion-row>
-  
+            <ion-item style="margin-bottom: 20px;"></ion-item>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">Descrizione:</ion-label> <br>
-                <ion-label>{{this.requestAttivita?.descrizione}}</ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+                  <ion-label class="subTitle">Descrizione:</ion-label> <br>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">Descrizione Offerta:</ion-label> <br>
+                  <ion-label>{{this.requestAttivita?.descrizione}}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-item style="margin-bottom: 20px;"></ion-item>
+            <ion-row>
+              <ion-col>
+                <ion-label class="subTitle">Descrizione Offerta:</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
                 <ion-label>{{this.requestAttivita?.descrizioneOfferta}}</ion-label>
-                <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
               </ion-col>
             </ion-row>
+            <ion-item style="margin-bottom: 20px;"></ion-item>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">Immagine profilo:</ion-label> <br>
+                <ion-label class="subTitle">Immagine profilo:</ion-label> <br>
                 <ion-img [src]="getImmaginePrincipale()" class="photo"></ion-img>
               </ion-col>
             </ion-row>
+            <ion-item style="margin-bottom: 20px;"></ion-item>
             <ion-row>
               <ion-col>
-                <ion-label style="font-size: larger; font-weight: bold;">Gallery:</ion-label> <br>
+                <ion-label class="subTitle">Gallery:</ion-label> <br>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -464,16 +479,22 @@
                 <ion-img [src]="img.upload" class="photo"></ion-img>
             </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-label style="margin-top: 2%; margin-bottom: 2%; font-size: large; font-weight: bold;">
-                Una volta salvata l'attività, questa verrà sottoposta a verifica. Finchè non verrà validata l'attività non sarà visibile agli utenti.
-              </ion-label>
+            <ion-item style="margin-bottom: 20px;"></ion-item>
+            <ion-row style="flex-wrap: wrap;" *ngIf="!this.idAttivita">
+              <ion-card>
+                <ion-card-header>
+                  <ion-label>Dichiaro di essere consapevole che una volta eseguito il salvataggio dell'attività, questa verrà sottoposta a verifica. Finché questa non verrà validata, non sarà visibile agli utenti.</ion-label>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-checkbox labelPlacement="end" (ionChange)="onCheckboxChange($event)" style="margin-top: 10px;"> Accetta <ion-label style="color: #007bff;">termini e condizioni</ion-label> </ion-checkbox>
+                </ion-card-content>
+              </ion-card>
             </ion-row>
           </ion-grid>
           
   
           <div class="prosegui" style="display: flex; justify-content: center; align-items: center;">
-            <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="prosegui()">Salva</ion-button>
+            <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="prosegui()" [disabled]="!isCheckboxChecked">Salva</ion-button>
             <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="modifica()">Modifica</ion-button>
           </div>
         </div>
@@ -485,7 +506,7 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title>Elimina</ion-title>
+            <ion-title class="title">Elimina</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -494,9 +515,9 @@
           </div>
           <ion-card *ngIf="!isLoadingDelete">
             <ion-card-header>
-              <ion-card-title *ngIf="!this.isEliminazioneOK"> Sicuro di voler eliminare l'attivita? </ion-card-title>
+              <ion-card-title class="title" *ngIf="!this.isEliminazioneOK"> Sicuro di voler eliminare l'attivita? </ion-card-title>
               <ion-card-subtitle *ngIf="!this.isEliminazioneOK"> L'eliminazione comporterà anche la rimozione di eventuali promo legate all'attività </ion-card-subtitle>
-              <ion-card-title *ngIf="this.isEliminazioneOK"> Attivita eliminata</ion-card-title>
+              <ion-card-title class="title" *ngIf="this.isEliminazioneOK"> Attivita eliminata</ion-card-title>
             </ion-card-header>
             <ion-card-content style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
               <ion-button shape="round" color="danger" *ngIf="!this.isEliminazioneOK" (click)="eliminaAttivita()">ELIMINA</ion-button>

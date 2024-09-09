@@ -2,13 +2,22 @@
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch; // Abilita il momentum scrolling su iOS
+    overflow-y: hidden;
     height: 170px;
   }
   
-    ion-row {
-      display: flex;
-      flex-wrap: nowrap;
-    }
+  ion-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto; /* Permette lo scrolling */
+    -webkit-overflow-scrolling: touch; /* Aggiunge lo scrolling fluido per i dispositivi iOS */
+    scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
+    -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
+  }
+  
+  ion-row::-webkit-scrollbar {
+    display: none; /* Nasconde la scrollbar nei browser basati su WebKit */
+  }
   
     ion-col {
       display: inline-block;
@@ -37,8 +46,3 @@
       color: #000000; // Colore del testo, cambialo a tuo piacimento
       bottom:10px;
     }
-
-    // img{
-    //   width: 100px;
-    //   height: 100px;
-    // }

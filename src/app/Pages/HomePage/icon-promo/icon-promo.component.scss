@@ -1,13 +1,23 @@
 .horizontal-scroll {
   overflow-x: auto;
   white-space: nowrap;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch; // Abilita il momentum scrolling su iOS
-  height: 120px;
 }
 
 ion-row {
   display: flex;
   flex-wrap: nowrap;
+  overflow: auto; /* Permette lo scrolling */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* Aggiunge lo scrolling fluido per i dispositivi iOS */
+  scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
+  -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
+  min-height: 120px;
+}
+
+ion-row::-webkit-scrollbar {
+  display: none; /* Nasconde la scrollbar nei browser basati su WebKit */
 }
 
 ion-col {
@@ -20,8 +30,8 @@ ion-col {
 
 .icon-container {
   position: relative; // Assicura che il contenitore dell'icona abbia una posizione relativa
-  width: 60px; // Larghezza dell'icona
-  height: 60px; // Altezza dell'icona
+  width: 70px; // Larghezza dell'icona
+  height: 70px; // Altezza dell'icona
   border-radius: 70%; // Rende l'immagine circolare
   background-color: #e9540a; // Imposta il colore di sfondo 
   padding: 5px; // Spazio tra il bordo dell'immagine e il bordo del cerchio
@@ -40,5 +50,4 @@ ion-col {
   width: 100%; // Occupa l'intera larghezza del contenitore
   font-size: 14px; // Dimensione del font per l'intestazione
   color: #000000; // Colore del testo, cambialo a tuo piacimento
-  bottom: -5px; // Sposta il testo verso il basso per renderlo visibile
 }

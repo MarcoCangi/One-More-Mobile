@@ -1,7 +1,7 @@
 <ion-grid style="margin-top: 10%; width: 350px;">
   <ion-row>
     <ion-col size="12" class="column ion-text-center ion-align-items-center">
-      <ion-title>
+      <ion-title class="title">
         Il mio profilo
       </ion-title>
       <ion-item-divider style="margin-bottom: 5%;"></ion-item-divider>
@@ -40,7 +40,7 @@
   <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Modifica Password</ion-title>
+          <ion-title class="title">Modifica Password</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="DimsissModalModificaPassword()"><ion-icon name="close-outline"></ion-icon></ion-button>
           </ion-buttons>
@@ -90,7 +90,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Elimina Account</ion-title>
+        <ion-title class="title">Elimina Account</ion-title>
         <ion-buttons slot="end">
           <ion-button *ngIf="this.isDeleted" (click)="openPage(1)"><ion-icon name="close-outline"></ion-icon></ion-button>
           <ion-button *ngIf="!this.isDeleted" (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline"></ion-icon></ion-button>
