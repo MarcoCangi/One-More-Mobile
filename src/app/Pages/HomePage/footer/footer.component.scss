@@ -16,7 +16,13 @@
     background-color: #e9540a;
   }
 
-  ion-toolbar {
+  ion-toolbar ion-tabs ion-tab-button{
     --background: #e9540a;
     --color: #FFFFFF;
+  } 
+
+  ion-tabs ion-tab-button{
+    margin-left: -1px;
+    margin-right: -1px;
   }
+

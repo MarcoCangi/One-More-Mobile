@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { reauthenticateWithCredential, EmailAuthProvider, updatePassword, deleteUser } from '@angular/fire/auth';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { getFireBaseErrorMessage } from '../../Utilities/auth-error'
+import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -11,7 +12,7 @@ import { getFireBaseErrorMessage } from '../../Utilities/auth-error'
 })
 export class UserComponent  implements OnInit {
   
-  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef) {
+  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef, private fb: FormBuilder) {
     this.formRegistrazione = new FormGroup({
       vecchiaPassword: new FormControl('', [Validators.required]),
       newPasswordRegistrazione: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(15),this.customPasswordValidator()]),
@@ -36,6 +37,9 @@ export class UserComponent  implements OnInit {
   errore = '';
   selectedReason: string | null = null;
   isDeleted : boolean = false;
+  passwordForm!: FormGroup;
+  passwordEliminazione: string | undefined;
+  passwordError: boolean = false;
   @Output() openPageEvent = new EventEmitter<number>();
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -62,12 +66,70 @@ export class UserComponent  implements OnInit {
   }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.user = this.authService.getUserSessionFromCookie();
+
+    this.passwordForm = this.fb.group({
+      passwordFormControl: ['', [Validators.required]] // Aggiorna qui il nome e i validator
+    });
+
+    // Aggiungi un listener per il cambio di valore nel form control
+    this.passwordForm.get('passwordFormControl')!.valueChanges.subscribe((value: string) => {
+      this.emitPasswordChange(value);
+    });
+  }
+
+  async eliminaAccount() {
+    this.isLoading = true;
+    try {
+      const utente = this.authService.getUser(); // Ottieni l'utente attuale
+
+      // Esegui la ri-autenticazione su Firebase
+      if (this.passwordForm.valid && this.passwordEliminazione && utente?.email) {
+        console.log(this.passwordEliminazione);
+        const isReautenticated = await this.authService.reauthenticateUser(utente.email, this.passwordEliminazione);
+
+        if (isReautenticated) {
+          // Elimina l'account da Firebase
+          await this.authService.deleteUserAccount(); 
+
+          // Elimina la sessione utente
+          this.authService.deleteUserSession();
+
+          // Chiama l'API per eliminare l'account
+          await this.authService.apiDeleteUtente(utente, this.selectedReason).toPromise();
+
+          this.isLoading = false;
+          this.isDeleted = true;
+          this.passwordError = false; // Reset dell'errore se tutto va bene
+        } else {
+          this.isLoading = false;
+          this.passwordError = true; // Imposta l'errore per visualizzarlo
+        }
+      } else {
+        this.isLoading = false;
+        this.passwordError = true; // Imposta l'errore se la password è vuota o non valida
+      }
+    } catch (error) {
+      this.isLoading = false;
     }
+  }
+
+  hasError(errorCode: string): boolean {
+    const control = this.passwordFormControl;
+    return !!control && control.hasError(errorCode) && control.touched;
+  }
+
+  get passwordFormControl() {
+    return this.passwordForm.get('passwordFormControl');
+  }
 
   OpenModalModificaPassword(){
     this.isModificaPassword = true;
+  }
+
+  emitPasswordChange(value: string) {
+    this.passwordEliminazione = value;
   }
 
   DimsissModalModificaPassword(){
@@ -107,27 +169,6 @@ export class UserComponent  implements OnInit {
 
   onReasonSelected() {
     this.selectedReason = ''
-  }
-
-  async eliminaAccount() {
-    this.isLoading = true;
-    try {
-
-      const utente = this.authService.getUser(); // Ottieni l'utente attuale
-      // Elimina l'account da Firebase
-      await this.authService.deleteUserAccount(); // Assicurati che questo metodo elimini l'account da Firebase
-      
-      this.authService.deleteUserSession();
-      // Chiama l'API per eliminare l'account
-      await this.authService.apiDeleteUtente(utente, this.selectedReason).toPromise();
-
-      this.isLoading = false;
-      this.isDeleted = true;
-
-    } catch (error) {
-      console.error('Errore durante l\'eliminazione dell\'account:', error);
-      this.isLoading = false;
-    }
   }
 
   async onSubmit(){

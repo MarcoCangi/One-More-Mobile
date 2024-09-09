@@ -1,13 +1,12 @@
-<ion-grid style="margin-top: 10%; width: 350px;">
+<ion-grid style="margin-top: 5%; width: 350px;">
   <ion-row>
     <ion-col size="12" class="column ion-text-center ion-align-items-center">
-      <ion-title class="title">
-        Il mio profilo
-      </ion-title>
-      <ion-item-divider style="margin-bottom: 5%;"></ion-item-divider>
+      <ion-item class="column ion-text-center ion-align-items-center">
+        <ion-title class="title">Il mio profilo</ion-title>
+      </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row style="margin-top: 2rem;">
     <ion-col size="4" >
       <ion-icon name="person-outline" class="icon"></ion-icon>
     </ion-col>
@@ -23,8 +22,8 @@
     <ion-col size="8">
       <ion-label style="font-size: medium;">{{this.user?.email}}</ion-label>
     </ion-col>
-    <ion-item-divider style="margin-bottom: 5%;"></ion-item-divider>
   </ion-row>
+  <ion-item></ion-item>
   <ion-row style="margin-top: 5%;">
     <ion-col size="12" style="margin-left: -5%;">
       <ion-button fill="clear" (click)="OpenModalModificaPassword()">Modifica Password</ion-button>
@@ -101,21 +100,43 @@
     <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
     <ion-card *ngIf="!isLoading">
       <ion-card-header>
-        <ion-card-subtitle *ngIf="!this.isDeleted" style="font-weight: bold;">Sicuro di voler eliminare il tuo account?</ion-card-subtitle>
+        <ion-card-title class="title" *ngIf="!this.isDeleted">Sicuro di voler eliminare il tuo account?</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <div *ngIf="!this.isDeleted">
-          <ion-label style="margin-top: 5%; margin-bottom: 3%; font-weight: bold;">Puoi dirci perchè al fine di poter migliorare il nostro servizio? </ion-label>
-          <ion-radio-group [(ngModel)]="selectedReason">
+          <ion-label style="margin-top: 1rem; margin-bottom: 1rem; font-weight: bold;">Puoi dirci perchè al fine di poter migliorare il nostro servizio? </ion-label>
+          <ion-radio-group [(ngModel)]="selectedReason" value="custom-checked">
             <ion-radio value="L'app non ha soddisfatto le mie aspettative" labelPlacement="end">L'app non ha soddisfatto le mie aspettative</ion-radio>
             <ion-radio value="Le promozioni non erano coerenti" labelPlacement="end">Le promozioni non erano coerenti</ion-radio>
             <ion-radio value="Le attività non hanno fornito il servizio offerto" labelPlacement="end">Le attività non hanno fornito il servizio offerto</ion-radio>
             <ion-radio value="no-answer" labelPlacement="end">Preferisco non rispondere</ion-radio>
           </ion-radio-group>
+
+          <div>
+            <form [formGroup]="passwordForm">
+              <ion-item>
+                <ion-input
+                  label="Password*" 
+                  labelPlacement="stacked"
+                  type="password"
+                  formControlName="passwordFormControl">
+                </ion-input>
+              </ion-item>
+              <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
+                Inserire la password per l'eliminazione
+              </ion-note>
+              <ion-note style="margin-left: 5%;" *ngIf="passwordError" color="danger">
+                La password non è valida o non è stata inserita correttamente.
+              </ion-note>
+            </form>
+          </div>
           
           <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%;">
             <ion-button shape="round" color="success" (click)="DimsissModalEliminaAccount()">Annulla</ion-button>
-            <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason">Elimina Account</ion-button>
+            <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason && !this.passwordEliminazione">Elimina Account</ion-button>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <ion-button fill="clear" (click)="resetPassword()">Password dimenticata?</ion-button>
           </div>
         </div>
         <div *ngIf="this.isDeleted">

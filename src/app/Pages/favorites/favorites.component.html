@@ -1,37 +1,41 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
-
+<ion-toolbar>
+  <ion-title class="title2">I miei Preferiti</ion-title>
+</ion-toolbar>
  <div *ngIf="!isLoading && listaAttivitaFavoriti" class="card-container">
-  <ion-title class="title">I miei Preferiti</ion-title>
-      <ion-card *ngFor="let attivita of listaAttivitaFavoriti" style="--min-height: 140px; --min-width: 400px;">
-        <ion-card-content style="padding: 0;" (click)="VisualizzaAttivita(attivita.idAttivita)">
-          <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
-            <ion-thumbnail slot="start" style="--size: 140px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
-              <img [src]="getImmaginePrincipale(attivita)" style="--width: 140px; --height: 140px; object-fit: cover;" />
-            </ion-thumbnail>
-            <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
-              <ion-card-title class="title2">{{ attivita.nome }}</ion-card-title>
-              <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
-              <ion-card-subtitle style="margin-top: 2%;">{{ attivita.citta }}</ion-card-subtitle>
-            </div>
-          </ion-item>
-        </ion-card-content>
-        <ion-card-content>
-          <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
-            <ion-row>
-              <ion-col col="4" class="column ion-text-center ion-align-items-center">
-                  <ion-icon (click)="openPromoModal(attivita.idAttivita)" class="btn" name="ticket-outline"></ion-icon>
+  <div *ngIf="listaAttivitaFavoriti && listaAttivitaFavoriti.length > 0">
+    <ion-card *ngFor="let attivita of listaAttivitaFavoriti" style="--min-height: 140px; --min-width: 400px;">
+      <ion-card-content style="padding: 0;" (click)="VisualizzaAttivita(attivita.idAttivita)">
+        <ion-item lines="none" style="--padding-start: 0; --inner-padding-end: 0;">
+          <ion-thumbnail slot="start" style="--size: 140px; --border-radius: 0; margin-bottom: -5%; margin-top: -5%;">
+            <img [src]="getImmaginePrincipale(attivita)" style="--width: 140px; --height: 140px; object-fit: cover;" />
+          </ion-thumbnail>
+          <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
+            <ion-card-title class="title2">{{ attivita.nome }}</ion-card-title>
+            <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
+            <ion-card-subtitle style="margin-top: 2%;">{{ attivita.citta }}</ion-card-subtitle>
+          </div>
+        </ion-item>
+      </ion-card-content>
+      <ion-card-content>
+        <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
+          <ion-row>
+            <ion-col col="4" class="column ion-text-center ion-align-items-center">
+                <ion-icon (click)="openPromoModal(attivita.idAttivita)" class="btn" name="ticket-outline"></ion-icon>
+            </ion-col>
+            <ion-col col="4" class="column ion-text-center ion-align-items-center">
+                <ion-icon (click)="openConfirmModal(attivita.idAttivita)" class="btn" name="star" style="color: #f1976a;"></ion-icon>
               </ion-col>
-              <ion-col col="4" class="column ion-text-center ion-align-items-center">
-                  <ion-icon (click)="openConfirmModal(attivita.idAttivita)" class="btn" name="star" style="color: #f1976a;"></ion-icon>
-                </ion-col>
-              <ion-col col="4" class="column ion-text-center ion-align-items-center">
-                  <ion-icon (click)="VisualizzaAttivita(attivita.idAttivita)"  class="btn" name="business-outline"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-card-content>
-      </ion-card>
-    </div>
+            <ion-col col="4" class="column ion-text-center ion-align-items-center">
+                <ion-icon (click)="VisualizzaAttivita(attivita.idAttivita)"  class="btn" name="business-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+    <ion-label class="labelTitle" *ngIf="!isLoading && listaAttivitaFavoriti && listaAttivitaFavoriti.length === 0" >Non sono presenti Attività</ion-label>
+</div>
 
 <ion-modal [isOpen]="isModalPromoOpen" class="full-modal">
   <ng-template>
@@ -58,7 +62,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title class="title">Rimuovi dai Preferiti</ion-title>
+        <ion-card-title class="title2">Rimuovi dai Preferiti</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissConfirmModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -67,9 +71,9 @@
     <ion-content class="column ion-text-center ion-align-items-center">
       <ion-card>
         <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-title class="title">
+          <ion-card-title class="title2">
             Vuoi rimuoverla dai preferiti?
-          </ion-title>
+          </ion-card-title>
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center">
           <ion-button shape="round" color="danger" (click)="AddRemoveFavorite()">ELIMINA</ion-button>

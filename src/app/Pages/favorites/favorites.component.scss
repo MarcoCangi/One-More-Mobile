@@ -14,7 +14,7 @@ ion-card {
 }
 
 .card-container{
-  min-width: 380px; 
+  min-width: 370px; 
   height: 90vh; 
   width: 100vw; 
   margin-top: 5%;
@@ -46,7 +46,16 @@ ion-card {
 }
 
 .title2{
-  margin-top: 5%;
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 1.4rem;
+}
+
+.labelTitle{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-family: Helvetica;
   font-weight: lighter;
   font-size: 1.4rem;

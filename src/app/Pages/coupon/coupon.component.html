@@ -14,7 +14,7 @@
 <!--ATTIVE -->
 <div *ngIf="!isLoading">
   <div *ngIf="segmentValue === 'default'">
-  <ion-card *ngIf="!isLoading" class="card-container">
+  <ion-card *ngIf="!isLoading && couponAttivi" class="card-container">
       <div class="content" style="height: 100%; width: 100%;">
         <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
           <ion-toolbar>
@@ -50,6 +50,8 @@
         </ion-card>
       </div>
   </ion-card>
+  <div class="column ion-text-center ion-align-items-center">
+    <ion-label class="labelTitle" *ngIf="!isLoading && couponAttivi && couponAttivi.length === 0" >Non sono presenti coupon attivi</ion-label>
   </div>
 </div>
 
@@ -97,7 +99,10 @@
           </ion-card>
         </div>
     </ion-card>
+    <div class="column ion-text-center ion-align-items-center">
+      <ion-label class="labelTitle" *ngIf="!isLoading && (!couponUtilizzati || couponUtilizzati.length === 0)" >Non hai utilizzato coupon</ion-label>
     </div>
+  </div>
 
     <!-- SCADUTI -->
     <div *ngIf="subSegmentValue === 'scaduti'">
@@ -125,7 +130,10 @@
             </ion-card-content>
           </ion-card>
         </div>
-    </ion-card>
+      </ion-card>
+      <div class="column ion-text-center ion-align-items-center">
+        <ion-label class="labelTitle" *ngIf="!isLoading && couponScaduti && couponScaduti.length === 0" >Non sono presenti coupon scaduti</ion-label>
+      </div>
     </div>
     
     <!-- ANNULLATI -->
@@ -154,7 +162,10 @@
             </ion-card-content>
           </ion-card>
         </div>
-    </ion-card>
+      </ion-card>
+      <div class="column ion-text-center ion-align-items-center"></div>
+        <ion-label class="labelTitle" *ngIf="!isLoading && couponAnnullati && couponAnnullati.length === 0" >Non sono presenti coupon annullati</ion-label>
+      </div>
     </div>
   </div>
 </div>

@@ -1,38 +1,32 @@
- <ion-footer>
-  <ion-toolbar class="ion-toolbar">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-tab-button (click)="openPage(1)">
-            <ion-icon name="home-outline"></ion-icon>
-            Home
-          </ion-tab-button>
-        </ion-col>
-        <ion-col>
-          <ion-tab-button (click)="openPage(2)">
-          <ion-icon name="map-outline" ></ion-icon>
-          Mappa
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button (click)="openPage(1)">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
         </ion-tab-button>
-      </ion-col>
-        <ion-col>
-          <ion-tab-button (click)="openPage(8)">
-            <ion-icon name="search-outline"></ion-icon>
-            Cerca
-          </ion-tab-button>
-        </ion-col>
-        <ion-col>
-          <ion-tab-button>
-            <ion-icon name="ticket-outline" (click)="openPage(11)"></ion-icon>
-            Coupon
-          </ion-tab-button>
-        </ion-col>
-        <ion-col *ngIf="this.idSoggetto">
-          <ion-tab-button>
-            <ion-icon name="heart-outline"(click)="openPage(9)"></ion-icon>
-          Preferiti
+
+        <ion-tab-button (click)="openPage(2)">
+          <ion-icon name="map-outline"></ion-icon>
+          <ion-label>Mappa</ion-label>
         </ion-tab-button>
-      </ion-col>
-      </ion-row>
-    </ion-grid>
+
+        <ion-tab-button (click)="openPage(8)">
+          <ion-icon name="search-outline"></ion-icon>
+          <ion-label>Cerca</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="openPage(11)">
+          <ion-icon name="ticket-outline"></ion-icon>
+          <ion-label>Coupon</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button *ngIf="idSoggetto" (click)="openPage(9)">
+          <ion-icon name="heart-outline"></ion-icon>
+          <ion-label>Preferiti</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
   </ion-toolbar>
-</ion-footer> 
+</ion-footer>
