@@ -227,7 +227,6 @@ export class MappaComponent implements OnInit {
     } finally {
         this.isLoading = false;
     }
-    console.log(this.attivitas);
 }
 
   getImmaginePrincipale(attivita: Attivita | undefined): string {

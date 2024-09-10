@@ -44,7 +44,7 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     this.isLoading = true;
     this.idAttivita = 0;
     this.idSoggetto = 0;
-
+    this.attivita = undefined;
     this.sessioneString =  this.authService.getUserSessionFromCookie();
 
     if (this.sessioneString !== null && this.sessioneString.idSoggetto !== null && this.sessioneString.idSoggetto !== undefined && this.sessioneString.idSoggetto > 0) 

@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, output, Output, ViewChild } from '@angular/core';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
 import { Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-nav',
@@ -17,6 +18,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 export class NavComponent implements OnInit {
 
   @Input() listaTipoAttivita: TipoAttivita[] = [];
+  @ViewChild(HomeComponent) childComponent!: HomeComponent;
   faMap = faMap;
   searchForm: FormGroup | undefined;
   inputControl = new FormControl();
@@ -37,13 +39,13 @@ export class NavComponent implements OnInit {
   isModalLoginOpen = false;
   isModalRegisterOpen = false;
   isHomeOpen = true;
-  isReload = false;
   listaElencoConsigli: Attivita[] | undefined;
   listaElencoPromo: Attivita[] | undefined;
   @ViewChild(IonModal) modal: IonModal | undefined;
   @Output() openMappaEvent = new EventEmitter<void>();
   @Output() openPageEvent = new EventEmitter<number>();
   @Output() updateIdFooterEvent = new EventEmitter<number>();
+
   @Input() idPage!: number;
 
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
@@ -52,7 +54,7 @@ export class NavComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private attivitaService: GetApiAttivitaService,
-              private formBuilder: FormBuilder, ) {}
+              private formBuilder: FormBuilder ) {}
 
     ngOnInit(): void { 
         this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
@@ -76,52 +78,101 @@ export class NavComponent implements OnInit {
         this.modal.dismiss(null, 'cancel');
     }
 
+    callChildMethod() {
+      // Verifica se il componente figlio è stato caricato
+      if (this.childComponent) {
+        this.childComponent.reloadComponent();  // Chiama il metodo del figlio
+      }
+    }
+
     openLogOut(){
       this.idPage = 4;
-      this.openPageEventNav(this.idPage);
-      this.openPage(this.idPage);
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
       this.cancel();
     }
 
     openProfile(){
       this.idPage = 12;
-      this.openPageEventNav(this.idPage);
-      this.openPage(this.idPage);
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
       this.cancel();
     }
 
     openCoupon(){
       this.idPage = 11;
-      this.openPageEventNav(this.idPage);
-      this.openPage(this.idPage);
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
       this.cancel();
     }
 
     openRegistraAttivita(){
       this.idPage = 5;
-      this.openPageEventNav(this.idPage);
-      this.openPage(this.idPage);
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
       this.cancel();
     }
 
     openNewPromo(){
       this.idPage = 6;
-      this.openPageEventNav(this.idPage);
-      this.openPage(this.idPage);
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
       this.cancel();
     }
 
     openRiepilogoPromoAtt(){
       this.idPage = 7;
-      this.openPageEventNav(this.idPage);
-      this.openPage(this.idPage);
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
       this.cancel();
     }
 
     openPreferiti(){
       this.idPage = 9;
-      this.openPageEventNav(this.idPage);
-      this.openPage(this.idPage);
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
       this.cancel();
     }
     
@@ -190,10 +241,11 @@ export class NavComponent implements OnInit {
     }
   }
 
-  openPageEventNav(idPage:number) {
+  async openPageEventNav(idPage:number) {
     this.openPage(idPage);
     this.idPage = idPage;
   }
+
 
   openPage(idPage:number){
     this.openPageEvent.emit(idPage);

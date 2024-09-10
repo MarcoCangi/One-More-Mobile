@@ -34,7 +34,9 @@
       </ion-card-content>
     </ion-card>
   </div>
+  <div class="column ion-text-center ion-align-items-center">
     <ion-label class="labelTitle" *ngIf="!isLoading && listaAttivitaFavoriti && listaAttivitaFavoriti.length === 0" >Non sono presenti Attività</ion-label>
+  </div>
 </div>
 
 <ion-modal [isOpen]="isModalPromoOpen" class="full-modal">

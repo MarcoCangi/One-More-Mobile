@@ -1,8 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Attivita, AttivitaFiltrate, AttivitaHomePageResponse, FiltriAttivita, Immagini, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { catchError, firstValueFrom, retry } from 'rxjs';
+import { DettaglioComponent } from '../../Attivita/ProfiloAttivita/dettaglio/dettaglio.component';
+import { LogoutComponent } from '../logout/logout.component';
+import { DatiStrutturaComponent } from '../../Attivita/RegistraAttivita/dati-struttura/dati-struttura.component';
+import { GestionePromoComponent } from '../../Attivita/ProfiloAttivita/gestione-promo/gestione-promo.component';
+import { RicercaComponent } from '../ricerca/ricerca.component';
+import { FavoritesComponent } from '../../favorites/favorites.component';
+import { CouponComponent } from '../../coupon/coupon.component';
+import { UserComponent } from '../../user/user.component';
+import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +28,15 @@ export class HomeComponent  implements OnInit {
 
   currentSlide = 0;
   totalSlides = 2; // Modifica in base al numero di immagini
-
+  @ViewChild(DettaglioComponent) dettaglioComponent!: DettaglioComponent;
+  @ViewChild(LogoutComponent) logoutComponent!: LogoutComponent;
+  @ViewChild(DatiStrutturaComponent) datiStrutturaComponent!: DatiStrutturaComponent;
+  @ViewChild(GestionePromoComponent) gestionePromoComponent!: GestionePromoComponent;
+  @ViewChild(RiepilogoPromoAttivitaComponent) riepilogoPromoComponent!: RiepilogoPromoAttivitaComponent;
+  @ViewChild(RicercaComponent) ricercaComponent!: RicercaComponent;
+  @ViewChild(FavoritesComponent) favoriteComponent!: FavoritesComponent;
+  @ViewChild(CouponComponent) couponComponent!: CouponComponent;
+  @ViewChild(UserComponent) userComponent!: UserComponent;
   listaElencoConsigli : Attivita[] | undefined;
   listaElencoPromo : Attivita[] | undefined;
   listaElencoPub : Attivita[] | undefined;
@@ -48,8 +65,6 @@ export class HomeComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    
-
     const userSession = this.authService.getUserSessionFromCookie();
           if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
             this.idSoggetto = userSession.idSoggetto;
@@ -60,6 +75,34 @@ export class HomeComponent  implements OnInit {
 
           this.loadData();
           this.startSlider();
+    }
+
+    reloadComponent(): void {
+      const id = this.authService.getLastIdPageFromSession();
+        if(id && id != undefined && id != 0)
+        {
+          switch(id){
+            case 5:
+              this.datiStrutturaComponent.ngOnInit();
+              break;
+            case 6:
+              this.gestionePromoComponent.ngOnInit();
+              break;
+            case 7:
+              this.riepilogoPromoComponent.ngOnInit();
+              break;
+            case 9:
+              this.favoriteComponent.ngOnInit();
+              break;
+            case 11:
+              this.couponComponent.ngOnInit();
+              break;
+            case 12:
+              this.userComponent.ngOnInit();
+              break;
+          }
+          
+        }
     }
 
     startSlider() {
@@ -81,6 +124,7 @@ export class HomeComponent  implements OnInit {
      });
     this.attivita = attivita;
     this.idPage = 3;
+    this.authService.setLastIdPageInSession(this.idPage);
     this.openPageEvent(this.idPage)
   }
 
@@ -88,6 +132,7 @@ export class HomeComponent  implements OnInit {
     if(attivitaRequest)
         this.attivita = attivitaRequest;
     this.idPage = 3;
+    this.authService.setLastIdPageInSession(this.idPage);
     this.openPageEvent(this.idPage)
   }
 
@@ -95,6 +140,7 @@ export class HomeComponent  implements OnInit {
     if(attivitaRequest)
         this.attivitaRicercate = attivitaRequest;
     this.idPage = 2;
+    this.authService.setLastIdPageInSession(this.idPage);
     this.openPageEvent(this.idPage)
   }
   
@@ -221,6 +267,9 @@ export class HomeComponent  implements OnInit {
 
   async loadData() {
     if (this.idPage == 1 || this.idPage == undefined) {
+      if(this.idPage == 1)
+        this.authService.setLastIdPageInSession(this.idPage);
+      
       this.isCaricamentoOk = false;
       this.isLoading = true;
 

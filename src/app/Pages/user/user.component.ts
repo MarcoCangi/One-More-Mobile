@@ -86,7 +86,6 @@ export class UserComponent  implements OnInit {
 
       // Esegui la ri-autenticazione su Firebase
       if (this.passwordForm.valid && this.passwordEliminazione && utente?.email) {
-        console.log(this.passwordEliminazione);
         const isReautenticated = await this.authService.reauthenticateUser(utente.email, this.passwordEliminazione);
 
         if (isReautenticated) {

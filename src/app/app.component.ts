@@ -99,8 +99,8 @@ export class AppComponent implements OnInit {
     this.isSearchSticky = scrollPosition > 50; // Puoi regolare il valore di 50 in base alla tua esigenza
   }
 
-  openPageEvent(idPage: number) {
-    this.idPage = idPage;
+  async openPageEvent(idPage: number) {
+      this.idPage = idPage;
   }
 
   updateIdFooterEvent(id: number | undefined) {

@@ -17,7 +17,7 @@
 </div>
   
 
-<ion-popover [trigger]="null" [isOpen]="isDetailModalOpen" side="top" alignment="center" (didDismiss)="popoverDismissed()">
+<ion-popover style="width: 400px;" [trigger]="null" [isOpen]="isDetailModalOpen" side="top" alignment="center" (didDismiss)="popoverDismissed()">
   <ng-template>
         <img [src]="getImmaginePrincipale(selectedAttivita)" class="imgAttDetail" alt="Immagine dell'attività" />
         <ion-card-header>
@@ -26,9 +26,8 @@
         </ion-card-header>
         <ion-card-content>
           <div class="chip-container">
-            <ion-chip style="font-size: small;" [outline]="true" *ngFor="let tipo of selectedAttivita?.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
+            <ion-chip style="font-size: x-small;" [outline]="true" *ngFor="let tipo of selectedAttivita?.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
           </div>
-          <ion-item-divider></ion-item-divider>
           <div class="btnContent" style="display: flex; justify-content: center; margin-top: 10px;">
             <ion-button class="btnDettaglio" shape="round" (click)="VisualizzaAttivita(selectedAttivita?.idAttivita, 1)">Dettaglio</ion-button>
           </div>

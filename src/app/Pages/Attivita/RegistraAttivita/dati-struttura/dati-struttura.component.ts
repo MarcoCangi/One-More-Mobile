@@ -67,6 +67,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isLoading = true;
     this.orari = new Orari();
     this.idAttivita = 0;
+    this.attivita = undefined;
     await this.InitRequestAtt();
     const user = this.authService.getCurrentUserFromAuth();
     this.sessioneString = this.authService.getUserSessionFromCookie();
@@ -447,7 +448,6 @@ export class DatiStrutturaComponent  implements OnInit {
     } catch (error) {
       console.error('Errore durante il recupero dell\'attività:', error);
     }
-    console.log(this.attivita);
     this.isLoading = false;
   }
 

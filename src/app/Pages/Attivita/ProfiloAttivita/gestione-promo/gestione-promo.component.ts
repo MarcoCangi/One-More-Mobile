@@ -59,7 +59,7 @@ export class GestionePromoComponent  implements OnInit {
       this.idAttivita = 0;
       this.giorni = new GiorniSettimanaPromo();
       this.sessioneString = this.authService.getUserSessionFromCookie();
-
+      this.attivita = undefined;
       if (this.sessioneString !== null) {
         if(this.sessioneString.idSoggetto !== null && this.sessioneString.idSoggetto !== undefined && this.sessioneString.idSoggetto > 0)
           this.id = this.sessioneString.idSoggetto;
@@ -436,7 +436,6 @@ export class GestionePromoComponent  implements OnInit {
 
     //NUM COUPON MAX
     if(promo.numCouponMax !== null && promo.numCouponMax !== undefined && promo.numCouponMax < 1) {
-      console.log("prova");
       this.errNumUtilizzi = "Deve essere maggiore di 0";
       this.isError = true;
     }

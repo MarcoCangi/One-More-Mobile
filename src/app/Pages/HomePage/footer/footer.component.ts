@@ -24,6 +24,10 @@ export class FooterComponent  implements OnInit {
   }
 
   openPage(idPage:number){
-    this.openPageEvent.emit(idPage);
+    if(idPage)
+    {
+      this.authService.setLastIdPageInSession(idPage);
+      this.openPageEvent.emit(idPage);
+    }
   }
 }
