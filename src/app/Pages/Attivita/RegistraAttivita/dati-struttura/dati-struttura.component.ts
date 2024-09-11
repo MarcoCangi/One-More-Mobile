@@ -55,6 +55,7 @@ export class DatiStrutturaComponent  implements OnInit {
   errorOrari:string | undefined;
   alertButtons = ['Chiudi'];
   isCheckboxChecked = false;
+  esitoResendVerification: string | undefined;
 
   constructor(
     private attivitaService: GetApiAttivitaService,
@@ -69,7 +70,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.idAttivita = 0;
     this.attivita = undefined;
     await this.InitRequestAtt();
-    const user = this.authService.getCurrentUserFromAuth();
+    const user = await this.authService.getCurrentUserFromAuth();
     this.sessioneString = this.authService.getUserSessionFromCookie();
     if((user && user?.emailVerified == true && this.sessioneString?.typeLog == 1) || (this.sessioneString?.typeLog == 2 || this.sessioneString?.typeLog == 3))
        this.isVerificato = true;
@@ -838,4 +839,7 @@ export class DatiStrutturaComponent  implements OnInit {
     return errorMessage.trim();
   }
 
+  async resendVerificationEmail(){
+    this.esitoResendVerification = await this.authService.resendVerificationEmail();
+  }
 }

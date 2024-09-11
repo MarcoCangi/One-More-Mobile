@@ -25,6 +25,7 @@ export class PannelloPromoComponent implements OnInit {
   isError: boolean | undefined;
   isVerificato: boolean = false;
   isModalVerifiedOpen: boolean = false;
+  esitoResendVerification: string | undefined;
 
   constructor( 
     private authService: AuthService,
@@ -74,9 +75,7 @@ export class PannelloPromoComponent implements OnInit {
     this.riepilogoPromo = undefined;
     this.isModalConfirmOpen = false;
     if(isCoupon)
-      this.redirecEsitoEvent.emit(true);
-    else
-      location.reload();
+    this.redirecEsitoEvent.emit(true);
   }
 
   openConfirmModal(promo: Promo): void {
@@ -93,5 +92,9 @@ export class PannelloPromoComponent implements OnInit {
     } else {
       this.openPageLogin.emit(true);
     }
+  }
+
+  async resendVerificationEmail(){
+    this.esitoResendVerification = await this.authService.resendVerificationEmail();
   }
 }

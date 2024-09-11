@@ -162,6 +162,13 @@
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center">
           <ion-button (click)="dismissisModalVerified()">CHIUDI</ion-button>
+          <br>
+          <br>
+          <ion-label *ngIf="!esitoResendVerification">(Non ti è arrivata nessuna mail?)</ion-label>
+          <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{esitoResendVerification}}</ion-label>
+          <br>
+          <br>
+          <ion-label color="primary" (click)="resendVerificationEmail()">Reinvia la mail di verifica</ion-label>
         </ion-card-content>
       </ion-card>
     </ion-content>

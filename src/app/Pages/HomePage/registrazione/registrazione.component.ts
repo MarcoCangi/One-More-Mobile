@@ -25,6 +25,7 @@ export class RegistrazioneComponent {
   minPw = 8;
   isRegistered : boolean = false;
   passwordsDoNotMatch: boolean = false;
+  esitoResendVerification: string | undefined;
   @Output() closeRegisterEvent = new EventEmitter<void>();
 
   constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef) {
@@ -239,6 +240,10 @@ export class RegistrazioneComponent {
 
   closeRegister(){
     this.closeRegisterEvent.emit();
+  }
+
+  async resendVerificationEmail(){
+    this.esitoResendVerification = await this.authService.resendVerificationEmail();
   }
 
 }

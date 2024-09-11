@@ -57,6 +57,17 @@
           <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center; margin-top: 10%;">
             <ion-button shape="round" color="success" (click)="closeRegister()">Chiudi</ion-button>
           </div>
+          <br>
+          <br>
+          <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center;">
+            <ion-label *ngIf="!esitoResendVerification">(Non ti è arrivata nessuna mail?)</ion-label>
+            <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{esitoResendVerification}}</ion-label>
+          </div>
+          <br>
+          <br>
+          <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center;">
+            <ion-label color="primary" (click)="resendVerificationEmail()">Reinvia la mail di verifica</ion-label>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-col>
