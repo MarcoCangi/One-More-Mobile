@@ -24,6 +24,7 @@ export class RegistrazioneComponent {
   errore = '';
   minPw = 8;
   isRegistered : boolean = false;
+  passwordsDoNotMatch: boolean = false;
   @Output() closeRegisterEvent = new EventEmitter<void>();
 
   constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef) {
@@ -47,6 +48,15 @@ export class RegistrazioneComponent {
   }
 
   onPasswordInput() {
+    const password = this.formRegistrazione.get('passwordRegistrazione')?.value;
+    const confirmPassword = this.formRegistrazione.get('ConfermaPasswordRegistrazione')?.value;
+    
+    if (confirmPassword && password !== confirmPassword) {
+      this.passwordsDoNotMatch = true;
+    } else {
+      this.passwordsDoNotMatch = false;
+    }
+    
     this.formRegistrazione.get('ConfermaPasswordRegistrazione')?.updateValueAndValidity();
   }
 
@@ -117,7 +127,8 @@ export class RegistrazioneComponent {
           {
             if(!response.utente.errore)
             {
-              this.authService.createUserSession(email? email : '', uid, token, response.idAttivita, response.id, '', 1, displayName, nome, cognome);
+              console.log(response);
+              this.authService.createUserSession(email? email : '', uid, token, response.idAttivita, response.utente.id, '', 1, displayName, nome, cognome);
               this.isLoading = false;
               this.isRegistered = true;
             }

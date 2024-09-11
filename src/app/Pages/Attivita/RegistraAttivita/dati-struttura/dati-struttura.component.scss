@@ -19,7 +19,7 @@
 
 .prosegui{
   margin-top: 10%;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,11 +27,11 @@
 }
 
 .elimina{
-  margin-top: 5%;
   margin-bottom: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: small;
   width: 100%;
 }
 
@@ -62,6 +62,19 @@ ion-spinner {
   font-family: Helvetica;
   font-weight: lighter;
   font-size: 1.4rem;
+}
+
+.title2{
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 1rem;
+}
+
+.cardContainer{
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-top: 1%;
 }
 
 .subTitle{

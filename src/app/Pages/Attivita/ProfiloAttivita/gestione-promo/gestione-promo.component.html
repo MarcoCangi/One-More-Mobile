@@ -1,8 +1,8 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<div style="margin-top: 5%;min-width: 400px;" *ngIf="!isLoading && this.listaAttivita && !this.attivita && !this.modificaPromo">
+<div class="contentListAtt" *ngIf="!isLoading && this.listaAttivita && !this.attivita && !this.modificaPromo">
   <ion-toolbar>
-    <ion-title class="title">Seleziona l'attività</ion-title>
+    <ion-card-title class="title">Seleziona l'attività</ion-card-title>
   </ion-toolbar> 
       <ion-card *ngFor="let att of listaAttivita" (click)="addPromo(att)">
         <ion-card-header>
@@ -129,8 +129,8 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title class="title" *ngIf="!idAttivita">Salva</ion-title>
-        <ion-title class="title" *ngIf="idAttivita">Modifica</ion-title>
+        <ion-card-title class="title" *ngIf="!idAttivita">Salva</ion-card-title>
+        <ion-card-title class="title" *ngIf="idAttivita">Modifica</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -147,7 +147,7 @@
       <ion-grid style="margin-top: 10px;"  >
         <ion-row>
           <ion-col class="column ion-text-center ion-align-items-center">
-            <ion-title class="title">Riepilogo</ion-title>
+            <ion-card-title class="title">Riepilogo</ion-card-title>
             <br>
           </ion-col>
         </ion-row>

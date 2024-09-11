@@ -87,8 +87,8 @@
         <ion-card-title class="title" *ngIf="!this.isConfirmed">ATTENZIONE</ion-card-title>
   
         <ion-grid>
-          <ion-row class="column ion-text-center ion-align-items-center">
-            <ion-col>
+          <ion-row>
+            <ion-col class="column ion-text-center ion-align-items-center">
               <ion-icon *ngIf="this.isConfirmed" color="success" class="img" name="checkmark-circle-outline"></ion-icon>
               <ion-icon *ngIf="!this.isConfirmed" color="danger" class="img" name="close-circle-outline"></ion-icon>
             </ion-col>

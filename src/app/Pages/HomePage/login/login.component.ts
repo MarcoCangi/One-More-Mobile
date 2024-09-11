@@ -82,11 +82,17 @@ export class LoginComponent {
   }
     
   async resetPassword(){
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    this.errore = "";
     this.isLoading = true;
     const email = this.homeForm.value.emailLogin;
     if(email){
       try{
-        this.isLoading = true;
+        if (!emailRegex.test(email)) {
+          this.errore = "Inserire una mail valida per richiedere il reset della password";
+          this.isLoading = false;
+          return;
+        }
         await this.authService.passwordReset(email);
         this.notificaInvio = "Controlla la tua mail per reimpostare la password"
       }
@@ -98,9 +104,9 @@ export class LoginComponent {
       }
     }
     else{
-      this.errore = "inserire la mail per richiedere una nuova password";
-      this.isLoading = false;
+      this.errore = "Inserire una mail valida per richiedere il reset della password";
     }
+    this.isLoading = false;
   }
 
   async signInWithGoogle() {

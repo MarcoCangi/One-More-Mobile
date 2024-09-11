@@ -74,7 +74,9 @@ export class PannelloPromoComponent implements OnInit {
     this.riepilogoPromo = undefined;
     this.isModalConfirmOpen = false;
     if(isCoupon)
-    this.redirecEsitoEvent.emit(true);
+      this.redirecEsitoEvent.emit(true);
+    else
+      location.reload();
   }
 
   openConfirmModal(promo: Promo): void {

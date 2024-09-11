@@ -1,34 +1,42 @@
-.divClose{
+.divClose {
     display: flex;
     justify-content: flex-end;
   }
-
-.close{
-    color: black; 
-    width: 30px; 
+  
+  .close {
+    color: black;
+    width: 30px;
     height: 30px;
     margin-right: 10px;
     margin-top: 10px;
-}
-
-.content{
+  }
+  
+  .content-wrapper {
     text-align: center;
-    margin-top: 20%;
-}
-
-.button{
+    margin-top: 1rem;
+    overflow: hidden; /* Rimuovi l'overflow in entrambe le direzioni */
+  }
+  
+  ion-content::-webkit-scrollbar {
+    display: none; /* Nascondi la scrollbar nei browser basati su WebKit */
+  }
+  
+  .contentButton {
     margin-top: 5%;
-}
-
-.card{
+  }
+  
+  .card {
     margin-top: 15%;
     width: 300px;
     height: 300px;
-}
-
-ion-button{
+  }
+  
+  ion-button {
     width: 50%;
-}
+    height: 45px;
+  }
+
+  
 
   
   

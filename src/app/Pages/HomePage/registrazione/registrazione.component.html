@@ -5,7 +5,8 @@
       <ion-card>
         <ion-card-header>
           <ion-toolbar>
-            <ion-card-title>Registrati</ion-card-title>
+            <ion-card-title *ngIf="!isRegistered" class="title">Registrati</ion-card-title>
+            <ion-card-title *ngIf="isRegistered" class="title">Benvenuto!</ion-card-title>
             <ion-icon slot="end"  name="close-outline" class="close" (click)="closeRegister()"></ion-icon>
           </ion-toolbar>
         </ion-card-header>
@@ -38,8 +39,12 @@
                 <div slot="label">Conferma Password</div>
               </ion-input>
             </ion-item>
+            <ion-note style="margin-left: 5%;" *ngIf="passwordsDoNotMatch" color="danger">
+              Le password non coincidono
+            </ion-note>
               <br>
-              <ion-button shape="round" type="input" [disabled]="!formRegistrazione.valid">Registrati</ion-button>
+              <br>
+              <ion-button style="--height: 40px;" shape="round" type="input" [disabled]="!formRegistrazione.valid">Registrati</ion-button>
               
               <div class="divIcon">
                 <label>oppure registrati tramite</label>
@@ -53,3 +58,7 @@
             <ion-button shape="round" color="success" (click)="closeRegister()">Chiudi</ion-button>
           </div>
         </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

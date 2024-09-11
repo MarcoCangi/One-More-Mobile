@@ -92,7 +92,7 @@
     </ion-header>
     <ion-header *ngIf="!isLoading">
       <ion-toolbar>
-        <ion-title class="title">Esito</ion-title>
+        <ion-card-title class="title">Esito</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissConfirmModal(false, false)"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -101,9 +101,9 @@
     <ion-content class="column ion-text-center ion-align-items-center">
       <ion-card *ngIf="!isLoading && !isConfirmed">
         <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-title class="title">
+          <ion-card-title class="title">
             Stai per acquaisire il coupon!!
-          </ion-title>
+          </ion-card-title>
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
           <ion-button shape="round" (click)="Prenota()">CONFERMA</ion-button>
@@ -117,9 +117,9 @@
       </ion-card>
       <ion-card *ngIf="!isLoading && isConfirmed">
         <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-title style="font-size: medium;">
+          <ion-card-title class="title2">
             LA TUA PROMO È ORA ATTIVA <ion-icon name="alert-circle-outline"></ion-icon>
-          </ion-title>
+          </ion-card-title>
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center">
           <img class="img" src="assets/Img/icons8-ok-480.png">
@@ -147,7 +147,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title class="title">Attenzione</ion-title>
+        <ion-card-title class="title">Attenzione</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissisModalVerified()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>

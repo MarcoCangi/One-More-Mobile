@@ -12,15 +12,11 @@
     transform: translateX(-50%); /* Trasla l'immagine a sinistra del 50% della sua larghezza per centrarla */
 }
 
-.lbl{
-    position: relative;
-    left: 50%; /* Posiziona l'immagine al centro rispetto al bordo sinistro del contenitore */
-    transform: translateX(-50%); /* Trasla l'immagine a sinistra del 50% della sua larghezza per centrarla */
-    font-family: Roboto, sans-serif;
-    font-weight: 300;
-    font-size: 40px;
-    margin-top: 4%;
-  }
+.title{
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 1.4rem;
+}
 
   .lbl-info{
     position: absolute;

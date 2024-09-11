@@ -85,7 +85,7 @@ export class UserComponent  implements OnInit {
       const utente = this.authService.getUser(); // Ottieni l'utente attuale
 
       // Esegui la ri-autenticazione su Firebase
-      if (this.passwordForm.valid && this.passwordEliminazione && utente?.email) {
+      if (this.passwordForm.valid && this.passwordEliminazione && utente?.email && utente?.idSoggetto && utente?.uid) {
         const isReautenticated = await this.authService.reauthenticateUser(utente.email, this.passwordEliminazione);
 
         if (isReautenticated) {
@@ -144,10 +144,17 @@ export class UserComponent  implements OnInit {
   }
 
   async resetPassword(){
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    this.errore = "";
     this.isLoading = true;
     const email = this.user?.email;
     if(email){
       try{
+        if (!emailRegex.test(email)) {
+          this.errore = "Inserire una mail valida per richiedere il reset della password";
+          this.isLoading = false;
+          return;
+        }
         this.isLoading = true;
         await this.authService.passwordReset(email);
         this.notificaInvio = "Controlla la tua mail per reimpostare la password";
@@ -161,9 +168,9 @@ export class UserComponent  implements OnInit {
       }
     }
     else{
-      this.errore = "inserire la mail per richiedere una nuova password";
-      this.isLoading = false;
+      this.errore = "Inserire una mail valida per richiedere il reset della password";
     }
+    this.isLoading = false;
   }
 
   onReasonSelected() {

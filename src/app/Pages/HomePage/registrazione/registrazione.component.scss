@@ -17,7 +17,7 @@
 
 .scroll-content {
   overflow-y: auto;
-  max-height: 60vh; /* Altezza massima consentita, regola a tuo piacimento */
+  max-height: 70vh; /* Altezza massima consentita, regola a tuo piacimento */
 }
 
 ion-spinner {
@@ -27,6 +27,16 @@ ion-spinner {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.title{
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 1.4rem;
+}
+
+ion-grid{
+  overflow-y: hidden;
 }
   
   

@@ -780,19 +780,12 @@ export class DatiStrutturaComponent  implements OnInit {
             }
 
    else  if((request.orari.lunediMatDa && request.orari.lunediMatAl && request.orari.lunediMatDa.trim() > request.orari.lunediMatAl.trim()) ||
-            (request.orari.lunediPomDa && request.orari.lunediPomAl && request.orari.lunediPomDa.trim() > request.orari.lunediPomAl.trim()) ||
             (request.orari.martediMatDa && request.orari.martediMatAl && request.orari.martediMatDa.trim() > request.orari.martediMatAl.trim()) || 
-            (request.orari.martediPomDa && request.orari.martediPomDa && request.orari.martediPomDa.trim() > request.orari.martediPomDa.trim()) ||
             (request.orari.mercolediMatDa && request.orari.mercolediMatAl && request.orari.mercolediMatDa.trim() > request.orari.mercolediMatAl.trim()) ||
-            (request.orari.mercolediPomDa && request.orari.mercolediPomAl && request.orari.mercolediPomDa.trim() > request.orari.mercolediPomAl.trim()) ||
             (request.orari.giovediMatDa && request.orari.giovediMatAl && request.orari.giovediMatDa.trim() > request.orari.giovediMatAl.trim()) ||
-            (request.orari.giovediPomDa && request.orari.giovediPomAl && request.orari.giovediPomDa.trim() > request.orari.giovediPomAl.trim()) ||
             (request.orari.venerdiMatDa && request.orari.venerdiMatAl && request.orari.venerdiMatDa.trim() > request.orari.venerdiMatAl.trim()) ||
-            (request.orari.venerdiPomDa && request.orari.venerdiPomAl && request.orari.venerdiPomDa.trim() > request.orari.venerdiPomAl.trim()) ||
             (request.orari.sabatoMatDa && request.orari.sabatoMatAl && request.orari.sabatoMatDa.trim() > request.orari.sabatoMatAl.trim()) ||
-            (request.orari.sabatoPomDa && request.orari.sabatoPomAl && request.orari.sabatoPomDa.trim() > request.orari.sabatoPomAl.trim()) ||
-            (request.orari.domenicaMatDa && request.orari.domenicaMatAl && request.orari.domenicaMatDa.trim() > request.orari.domenicaMatAl.trim()) ||
-            (request.orari.domenicaPomDa && request.orari.domenicaPomAl && request.orari.domenicaPomDa.trim() > request.orari.domenicaPomAl.trim()) )
+            (request.orari.domenicaMatDa && request.orari.domenicaMatAl && request.orari.domenicaMatDa.trim() > request.orari.domenicaMatAl.trim()) )
             {
               this.errorOrari = "L'orario di inizio non può essere maggiore dell'orario di fine";
               this.isError = true;

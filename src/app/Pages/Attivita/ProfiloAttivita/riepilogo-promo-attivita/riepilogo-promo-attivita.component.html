@@ -1,8 +1,8 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<div style="margin-top: 5%;min-width: 400px;" *ngIf="!isLoading && this.listaAttivita && !this.isModifica ">
+<div class="contentListAtt" *ngIf="!isLoading && this.listaAttivita && !this.isModifica ">
   <ion-toolbar>
-    <ion-title class="title">Seleziona l'attività</ion-title>
+    <ion-card-title class="title">Seleziona l'attività</ion-card-title>
   </ion-toolbar> 
       <ion-card *ngFor="let att of listaAttivita" (click)="getPromoAttivita(att)">
         <ion-card-header>
@@ -46,7 +46,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col size="6">
-                  <ion-title class="title">{{ promo.titoloPromo }}</ion-title>
+                  <ion-card-title class="title2">{{ promo.titoloPromo }}</ion-card-title>
                 </ion-col>
                 <ion-col>
                   <ion-label>{{ promo.dataInserimento | date:'dd-MM-yyyy' }}</ion-label>
@@ -55,6 +55,7 @@
             </ion-grid>
           </ion-item>
           <div class="ion-padding" slot="content">
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -67,7 +68,8 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -80,18 +82,25 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <ion-label> Valida dal {{ promo.dataDal | date:'dd-MM-yyyy' }} </ion-label>
+                  <ion-label style="font-weight: bold;"> Periodo Validità </ion-label>
                 </ion-col>
-                <ion-col> 
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label> Dal {{ promo.dataDal | date:'dd-MM-yyyy' }} </ion-label>
+                </ion-col>
+                <ion-col size="6"> 
                   <ion-label> Al {{ promo.dataAl | date:'dd-MM-yyyy' }} </ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -99,48 +108,57 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col> 
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(0)">Tutti i giorni</ion-label>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(1)">LUN</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(0)"> 
+                  <ion-label>Tutti i giorni</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(2)">MAR</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(1)">
+                  <ion-label>LUN</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(3)">MER</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(2)">
+                  <ion-label>MAR</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(4)">GIO</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(3)">
+                  <ion-label>MER</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(5)">VEN</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(4)">
+                  <ion-label>GIO</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(6)">SAB</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(5)">
+                  <ion-label>VEN</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(7)">DOM</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(6)">
+                  <ion-label>SAB</ion-label>
+                </ion-col>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(7)">
+                  <ion-label>DOM</ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
                   <ion-label style="font-weight: bold;"> Orario: </ion-label>
                 </ion-col>
-                <ion-col> 
-                  <ion-label *ngIf="promo.isAllDayValidita">Tutto il giorno</ion-label>
-                  <ion-label *ngIf="promo.orarioValiditaDa">Dalle {{promo.orarioValiditaDa}} - </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-col *ngIf="promo.isAllDayValidita"> 
+                  <ion-label>Tutto il giorno</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label style="margin-left: 0,5%;" *ngIf="promo.orarioValiditaAl">alle {{promo.orarioValiditaAl}}</ion-label>
+                <ion-col *ngIf="promo.orarioValiditaDa">
+                  <ion-label>Dalle {{promo.orarioValiditaDa}} - </ion-label>
+                </ion-col>
+                <ion-col *ngIf="promo.orarioValiditaAl">
+                  <ion-label style="margin-left: 1%;">alle {{promo.orarioValiditaAl}}</ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-chip [outline]="true" *ngFor="let tipologia of promo.listaTipologie">{{tipologia.descrizione}}</ion-chip>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -152,7 +170,8 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -164,14 +183,16 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
                   <ion-label style="font-weight: bold;"> Coupon Richiesti </ion-label>
                 </ion-col>
                 <ion-col> 
-                  <ion-label>{{promo.numCouponRichiesti}}</ion-label>
+                  <ion-label *ngIf="promo.numCouponRichiesti">{{promo.numCouponRichiesti}}</ion-label>
+                  <ion-label *ngIf="!promo.numCouponRichiesti">0</ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -179,7 +200,8 @@
                   <ion-label style="font-weight: bold;"> Coupon Utilizzati </ion-label>
                 </ion-col>
                 <ion-col> 
-                  <ion-label>{{promo.numCouponUtilizzati}}</ion-label>
+                  <ion-label *ngIf="promo.numCouponUtilizzati">{{promo.numCouponUtilizzati}}</ion-label>
+                  <ion-label *ngIf="!promo.numCouponUtilizzati">0</ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -187,12 +209,12 @@
                   <ion-label style="font-weight: bold;"> Coupon Rimanenti </ion-label>
                 </ion-col>
                 <ion-col> 
-                  <ion-label *ngIf="promo.numCouponMax">{{promo.numCouponRimanenti}}</ion-label>
+                  <ion-label *ngIf="promo.numCouponRimanenti">{{promo.numCouponRimanenti}}</ion-label>
                   <ion-label *ngIf="!promo.numCouponMax">Illimitati</ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
             <ion-button shape="round" (click)="ModificaPromo(promo)">Modifica</ion-button>
             <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDialogDisattivaPromo(promo.idPromo)">Disattiva</ion-button>
           </div>
@@ -208,7 +230,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col size="6">
-                  <ion-title class="title">{{ promo.titoloPromo }}</ion-title>
+                  <ion-card-title class="title2">{{ promo.titoloPromo }}</ion-card-title>
                 </ion-col>
                 <ion-col>
                   <ion-label>{{ promo.dataInserimento | date:'dd-MM-yyyy' }}</ion-label>
@@ -217,6 +239,7 @@
             </ion-grid>
           </ion-item>
           <div class="ion-padding" slot="content">
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -229,7 +252,8 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -242,18 +266,25 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <ion-label> Valida dal {{ promo.dataDal | date:'dd-MM-yyyy' }} </ion-label>
+                  <ion-label style="font-weight: bold;"> Periodo Validità </ion-label>
                 </ion-col>
-                <ion-col> 
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label> Dal {{ promo.dataDal | date:'dd-MM-yyyy' }} </ion-label>
+                </ion-col>
+                <ion-col size="6"> 
                   <ion-label> Al {{ promo.dataAl | date:'dd-MM-yyyy' }} </ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -261,48 +292,57 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col> 
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(0)">Tutti i giorni</ion-label>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(1)">LUN</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(0)"> 
+                  <ion-label>Tutti i giorni</ion-label> 
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(2)">MAR</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(1)">
+                  <ion-label>LUN</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(3)">MER</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(2)">
+                  <ion-label>MAR</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(4)">GIO</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(3)">
+                  <ion-label>MER</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(5)">VEN</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(4)">
+                  <ion-label>GIO</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(6)">SAB</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(5)">
+                  <ion-label>VEN</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(7)">DOM</ion-label>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(6)">
+                  <ion-label>SAB</ion-label>
+                </ion-col>
+                <ion-col *ngIf="promo !== undefined && promo.days !== undefined && promo.days.includes(7)">
+                  <ion-label>DOM</ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
                   <ion-label style="font-weight: bold;"> Orario: </ion-label>
                 </ion-col>
-                <ion-col> 
-                  <ion-label *ngIf="promo.isAllDayValidita">Tutto il giorno</ion-label>
-                  <ion-label *ngIf="promo.orarioValiditaDa">Dalle {{promo.orarioValiditaDa}} - </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-col *ngIf="promo.isAllDayValidita"> 
+                  <ion-label>Tutto il giorno</ion-label>
                 </ion-col>
-                <ion-col>
-                  <ion-label style="margin-left: 0,5%;" *ngIf="promo.orarioValiditaAl">alle {{promo.orarioValiditaAl}}</ion-label>
+                <ion-col *ngIf="promo.orarioValiditaDa">
+                  <ion-label>Dalle {{promo.orarioValiditaDa}} - </ion-label>
+                </ion-col>
+                <ion-col *ngIf="promo.orarioValiditaAl">
+                  <ion-label style="margin-left: 0,5%;">alle {{promo.orarioValiditaAl}}</ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-chip [outline]="true" *ngFor="let tipologia of promo.listaTipologie">{{tipologia.descrizione}}</ion-chip>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -314,7 +354,8 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
+            </ion-item>
+            <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -326,9 +367,8 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <ion-item-divider></ion-item-divider>
-            <ion-button shape="round" (click)="ModificaPromo(promo)">Modifica</ion-button>
-            <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDialogDisattivaPromo(promo.idPromo)">Disattiva</ion-button>
+            </ion-item>
+            <ion-button shape="round" (click)="ModificaPromo(promo)">Riattiva</ion-button>
           </div>
         </ion-accordion>
       </ion-accordion-group>

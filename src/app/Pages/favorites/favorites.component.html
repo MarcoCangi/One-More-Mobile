@@ -1,6 +1,6 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 <ion-toolbar>
-  <ion-title class="title2">I miei Preferiti</ion-title>
+  <ion-card-title class="title2">I miei Preferiti</ion-card-title>
 </ion-toolbar>
  <div *ngIf="!isLoading && listaAttivitaFavoriti" class="card-container">
   <div *ngIf="listaAttivitaFavoriti && listaAttivitaFavoriti.length > 0">
@@ -43,7 +43,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title class="title">Promozioni</ion-title>
+        <ion-card-title class="title">Promozioni</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissPromoModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>

@@ -32,6 +32,18 @@ ion-spinner {
     font-size: 1.4rem;
   }
 
+  .title2{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.3rem;
+  }
+
+  .title3{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.1rem;
+  }
+
   .labelTitle{
     width: 310px;
     position: fixed;
@@ -42,4 +54,11 @@ ion-spinner {
     font-weight: lighter;
     font-size: 1.2rem;
   }
+
+.divContainerBottom{
+  margin-top: -1rem;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
 

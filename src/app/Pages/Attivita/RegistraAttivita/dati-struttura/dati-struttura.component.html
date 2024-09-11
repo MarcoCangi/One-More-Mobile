@@ -196,7 +196,7 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title class="title">Esito</ion-title>
+            <ion-card-title class="title">Esito</ion-card-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -218,8 +218,8 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title class="title" *ngIf="!idAttivita">Salva</ion-title>
-            <ion-title class="title" *ngIf="idAttivita">Modifica</ion-title>
+            <ion-card-title class="title" *ngIf="!idAttivita">Salva</ion-card-title>
+            <ion-card-title class="title" *ngIf="idAttivita">Modifica</ion-card-title>
             <ion-buttons slot="end">
               <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
             </ion-buttons>
@@ -236,7 +236,7 @@
           <ion-grid style="margin-top: 10px;"  >
             <ion-row>
               <ion-col class="column ion-text-center ion-align-items-center">
-                <ion-title class="subTitle" >Riepilogo</ion-title>
+                <ion-card-title class="subTitle" >Riepilogo</ion-card-title>
                 <br>
               </ion-col>
             </ion-row>
@@ -506,7 +506,7 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title class="title">Elimina</ion-title>
+            <ion-card-title class="title">Elimina</ion-card-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -514,12 +514,14 @@
             <ion-spinner *ngIf="isLoadingDelete" name="crescent" color="primary"></ion-spinner>
           </div>
           <ion-card *ngIf="!isLoadingDelete">
-            <ion-card-header>
+            <ion-card-header class="cardContainer">
               <ion-card-title class="title" *ngIf="!this.isEliminazioneOK"> Sicuro di voler eliminare l'attivita? </ion-card-title>
-              <ion-card-subtitle *ngIf="!this.isEliminazioneOK"> L'eliminazione comporterà anche la rimozione di eventuali promo legate all'attività </ion-card-subtitle>
               <ion-card-title class="title" *ngIf="this.isEliminazioneOK"> Attivita eliminata</ion-card-title>
             </ion-card-header>
-            <ion-card-content style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
+            <ion-card-content class="cardContainer">
+              <ion-card-title class="title2" *ngIf="!this.isEliminazioneOK"> L'eliminazione comporterà anche la rimozione di eventuali promo legate all'attività </ion-card-title>
+            </ion-card-content>
+            <ion-card-content class="cardContainer">
               <ion-button shape="round" color="danger" *ngIf="!this.isEliminazioneOK" (click)="eliminaAttivita()">ELIMINA</ion-button>
               <ion-button shape="round" *ngIf="!this.isEliminazioneOK" (click)="dismissEliminaModal()">ANNULLA</ion-button>
               <ion-button shape="round" *ngIf="this.isEliminazioneOK" (click)="reloadHome()">CHIUDI</ion-button>

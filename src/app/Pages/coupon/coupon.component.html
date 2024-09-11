@@ -13,47 +13,31 @@
 
 <!--ATTIVE -->
 <div *ngIf="!isLoading">
-  <div *ngIf="segmentValue === 'default'">
-  <ion-card *ngIf="!isLoading && couponAttivi" class="card-container">
-      <div class="content" style="height: 100%; width: 100%;">
-        <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
+  <div *ngIf="segmentValue === 'default' && !isLoading && couponAttivi">
+      <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 140px; --min-width: 400px;">
           <ion-toolbar>
               <ion-label style="margin-left: 5%;" slot="start">SCADENZA {{ coupon.dataAl | date:'dd/MM/yyyy' }}</ion-label>
               <ion-icon slot="end" name="close-circle-outline"(click)="openConfirmModal(false, coupon)" slot="end" style="color:red; width: 25px; height: 25px; margin-right: 5%;"></ion-icon>
           </ion-toolbar>
-          <ion-card-content style="padding: 0;" (click)="openDetailModal(coupon)">
-            <ion-item lines="none">
-              <ion-thumbnail slot="start" style="--size: 110px; margin-bottom: -5%; margin-top: -5%;">
-                <img [src]="coupon.imgPrincipale.upload" style="--width: 110px; --height: 110px; object-fit: cover;" />
-              </ion-thumbnail>
-              <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
-                <ion-card-title class="title">{{ coupon.nome }}</ion-card-title>
-                <ion-card-subtitle>{{ coupon.titoloPromo }}</ion-card-subtitle>
-              </div>
-            </ion-item>
+          <img [src]="coupon.imgPrincipale.upload" style="border-radius: 10px;"/>
+          <ion-card-header>
+            <ion-card-title class="title2">{{ coupon.nome }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content (click)="openDetailModal(coupon)">
+            <ion-card-title class="title3">{{ coupon.titoloPromo }}</ion-card-title>
           </ion-card-content>
           <ion-card-content>
-            <ion-grid style="margin-top: -1%; margin-bottom: -1%;">
-              <ion-row>
-                <ion-col size="5" class="column ion-text-center ion-align-items-center" (click)="openDetailModal(coupon)">
-                  <ion-label style="color: #0275d8; font-weight: bold;">DETTAGLIO</ion-label>
-                </ion-col>
-                <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                    <ion-label>|</ion-label>
-                </ion-col>
-                <ion-col size="5" class="column ion-text-center ion-align-items-center" (click)="openConfirmModal(true, coupon)">
-                   <ion-label style="color: #5cb85c; font-weight: bold;">UTILIZZA</ion-label>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+            <div class="divContainerBottom">
+              <ion-label style="color: #0275d8; font-weight: bold; margin-right: 2rem;" (click)="openDetailModal(coupon)">DETTAGLIO</ion-label>
+              <ion-label>|</ion-label>
+              <ion-label style="color: #5cb85c; font-weight: bold; margin-left: 2rem;" (click)="openConfirmModal(true, coupon)">UTILIZZA</ion-label>
+            </div>
           </ion-card-content>
-        </ion-card>
-      </div>
-  </ion-card>
-  <div class="column ion-text-center ion-align-items-center">
-    <ion-label class="labelTitle" *ngIf="!isLoading && couponAttivi && couponAttivi.length === 0" >Non sono presenti coupon attivi</ion-label>
+      </ion-card>
+    <div class="column ion-text-center ion-align-items-center">
+      <ion-label class="labelTitle" *ngIf="!isLoading && couponAttivi && couponAttivi.length === 0" >Non sono presenti coupon attivi</ion-label>
+    </div>
   </div>
-</div>
 
 <!-- NON ATTIVE -->
 <div *ngIf="!isLoading">
@@ -102,7 +86,7 @@
     <div class="column ion-text-center ion-align-items-center">
       <ion-label class="labelTitle" *ngIf="!isLoading && (!couponUtilizzati || couponUtilizzati.length === 0)" >Non hai utilizzato coupon</ion-label>
     </div>
-  </div>
+    </div>
 
     <!-- SCADUTI -->
     <div *ngIf="subSegmentValue === 'scaduti'">
@@ -165,7 +149,7 @@
       </ion-card>
       <div class="column ion-text-center ion-align-items-center"></div>
         <ion-label class="labelTitle" *ngIf="!isLoading && couponAnnullati && couponAnnullati.length === 0" >Non sono presenti coupon annullati</ion-label>
-      </div>
+    </div>
     </div>
   </div>
 </div>
