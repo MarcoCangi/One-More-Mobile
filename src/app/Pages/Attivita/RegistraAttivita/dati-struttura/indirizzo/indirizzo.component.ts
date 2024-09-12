@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-indirizzo',
@@ -18,7 +17,7 @@ export class IndirizzoComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      indirizzoFormControl: [this.indirizzo || '', [Validators.required, Validators.minLength(3)], [asyncValidator]]
+      indirizzoFormControl: [this.indirizzo || '']
     });
 
     // Aggiungi un listener per il cambio di valore nel form control
@@ -35,11 +34,5 @@ export class IndirizzoComponent  implements OnInit {
   // Metodo di accesso rapido al form control
   get indirizzoFormControl() {
     return this.exampleForm.get('indirizzoFormControl');
-  }
-
-  // Funzione helper per controllare gli errori del form control
-  hasError(errorCode: string): boolean {
-    const control = this.indirizzoFormControl;
-    return !!control && control.hasError(errorCode) && control.touched;
   }
 }

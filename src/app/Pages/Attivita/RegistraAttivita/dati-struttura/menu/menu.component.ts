@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-menu',
@@ -21,11 +20,11 @@ export class MenuComponent  implements OnInit {
 
    ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      descFormControl: [this.descrizione || '', [Validators.required, Validators.minLength(100), Validators.maxLength(2000)], [asyncValidator]]
+      descFormControl: [this.descrizione || '']
     });
 
     this.exampleFormDesc = this.fb.group({
-      descOffertaFormControl: [this.descrizioneOfferta || '', [asyncValidator]]
+      descOffertaFormControl: [this.descrizioneOfferta || '']
     });
 
     this.exampleForm.get('descFormControl')!.valueChanges.subscribe((value: string) => {
@@ -51,11 +50,6 @@ export class MenuComponent  implements OnInit {
 
   get descOffertaFormControl() {
     return this.exampleFormDesc.get('descOffertaFormControl');
-  }
-
-  hasError(errorCode: string): boolean {
-    const control = this.descFormControl;
-    return !!control && control.hasError(errorCode) && control.touched;
   }
 
   customCounterFormatter(inputLength: number, maxLength: number) {

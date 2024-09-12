@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-telefono',
@@ -19,7 +18,7 @@ export class TelefonoComponent  implements OnInit {
   ngOnInit(): void {
 
     this.exampleForm = this.fb.group({
-      telefonoFormControl: [this.telefono || '', [Validators.required, Validators.pattern('[- +()0-9]+')], [asyncValidator]]
+      telefonoFormControl: [this.telefono || '']
     });
 
     // Aggiungi un listener per il cambio di valore nel form control
@@ -36,10 +35,5 @@ export class TelefonoComponent  implements OnInit {
 
   get telefonoFormControl() {
     return this.exampleForm.get('telefonoFormControl');
-  }
-
-  hasError(errorCode: string): boolean {
-    const control = this.telefonoFormControl;
-    return !!control && control.hasError(errorCode) && control.touched;
   }
 }

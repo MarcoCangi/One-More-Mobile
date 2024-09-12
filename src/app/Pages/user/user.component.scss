@@ -54,10 +54,14 @@ ion-spinner {
   ion-radio.radio-checked::part(mark) {
     width: 6px;
     height: 10px;
-  
     border-width: 0px 2px 2px 0px;
     border-style: solid;
     border-color: #fff;
-  
     transform: rotate(45deg);
+  }
+
+  .divCenter{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
   }

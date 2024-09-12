@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-nome',
@@ -18,7 +17,7 @@ export class NomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      nomeFormControl: [this.nome || '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)], [asyncValidator]]
+      nomeFormControl: [this.nome || '']
     });
 
     // Aggiungi un listener per il cambio di valore nel form control
@@ -35,11 +34,5 @@ export class NomeComponent implements OnInit {
   // Metodo di accesso rapido al form control
   get nomeFormControl() {
     return this.exampleForm.get('nomeFormControl');
-  }
-
-  // Funzione helper per controllare gli errori del form control
-  hasError(errorCode: string): boolean {
-    const control = this.nomeFormControl;
-    return !!control && control.hasError(errorCode) && control.touched;
   }
 }

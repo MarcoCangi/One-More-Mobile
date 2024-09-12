@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 @Component({
   selector: 'app-cellulare',
@@ -22,7 +21,7 @@ export class CellulareComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      cellFormControl: [this.cellulare || '', [Validators.compose([Validators.pattern('[- +()0-9]+')])], [asyncValidator]]
+      cellFormControl: [this.cellulare || '']
     });
 
     this.exampleForm.get('cellFormControl')!.valueChanges.subscribe((value: string) => {
@@ -48,11 +47,5 @@ export class CellulareComponent  implements OnInit {
   // Metodo di accesso rapido al form control
   get cellFormControl() {
     return this.exampleForm.get('cellFormControl');
-  }
-
-  // Funzione helper per controllare gli errori del form control
-  hasError(errorCode: string): boolean {
-    const control = this.cellFormControl;
-    return !!control && control.hasError(errorCode) && control.touched;
   }
 }

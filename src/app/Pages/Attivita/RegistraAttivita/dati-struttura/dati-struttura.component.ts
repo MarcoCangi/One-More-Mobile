@@ -222,11 +222,7 @@ export class DatiStrutturaComponent  implements OnInit {
     if(request)
     {
     //CONTROLLO NOME//
-    if(request.nome == undefined){
-      this.errorNome = "Nome attivita obbligatoria";
-      this.isError = true;
-    }
-    else if(request.nome == ""){
+    if(request.nome == undefined || request.nome == ""){
       this.errorNome = "Nome attivita obbligatoria";
       this.isError = true;
     }
@@ -244,50 +240,34 @@ export class DatiStrutturaComponent  implements OnInit {
     }
 
     //CONTROLLO TELEFONO//
-    if(request.telefono == undefined){
-      this.errorTel = "Numero di telefono obbligatorio";
-      this.isError = true;
-    }
-    else if(request.telefono == ""){
+    if(request.telefono == undefined || request.telefono == ""){
       this.errorTel = "Numero di telefono obbligatorio";
       this.isError = true;
     }
     else if(!telefonoPattern.test(request.telefono)){
-      this.errorTel = "Formato del numero di telefono non valido";
+      this.errorTel = "Formato non valido";
       this.isError = true;
     }
     
     //CONTROLLO CELLULARE//
-    if(request.cellulare == undefined){
-      this.errorCell = "Numero di cellulare obbligatorio";
-      this.isError = true;
-    }
-    else if(request.cellulare == ""){
+    if(request.cellulare == undefined || request.cellulare == ""){
       this.errorCell = "Numero di cellulare obbligatorio";
       this.isError = true;
     }
     else if(request.cellulare && !telefonoPattern.test(request.cellulare)){
-      this.errorCell = "Formato del numero di cellulare non valido";
+      this.errorCell = "Formato non valido";
       this.isError = true;
     }
     
     //CONTROLLO TIPO ATTIVITA//
-    if(request.listaTipoAttivita == undefined){
-      this.errorTipologia = "Indicare almeno una tipologia";
-      this.isError = true;
-    }
-    else if(request.listaTipoAttivita.length == 0){
+    if(request.listaTipoAttivita == undefined || request.listaTipoAttivita.length == 0){
       this.errorTipologia = "Indicare almeno una tipologia";
       this.isError = true;
     }
 
     //CONTROLLO CITTA'//
-    if(request.citta == undefined){
-      this.errorCitta = "Inserire Città o comune";
-      this.isError = true;
-    }
-    else if(request.citta == ""){
-      this.errorCitta = "Inserire Città o comune";
+    if(request.citta == undefined || request.citta == ""){
+      this.errorCitta = "Inserire Città o Comune";
       this.isError = true;
     }
     else if(this.listaComuni && !this.listaComuni.some(comune => comune.descComune === request.citta)){
@@ -300,11 +280,7 @@ export class DatiStrutturaComponent  implements OnInit {
     }
 
     //CONTROLLO EMAIL//
-    if(request.email == undefined){
-      this.errorEmail = "Mail obbligatoria";
-      this.isError = true;
-    }
-    else if(request.email == ""){
+    if(request.email == undefined || request.email == ""){
       this.errorEmail = "Mail obbligatoria";
       this.isError = true;
     }
@@ -314,31 +290,19 @@ export class DatiStrutturaComponent  implements OnInit {
     }
 
     //CONTROLLO INDIRIZZO//
-    if(request.indirizzo == undefined){
-      this.errorIndirizzo = "Indirizzo obbligatorio";
-      this.isError = true;
-    }
-    else if(request.indirizzo == ""){
+    if(request.indirizzo == undefined || request.indirizzo == ""){
       this.errorIndirizzo = "Indirizzo obbligatorio";
       this.isError = true;
     }
 
     //CONTROLLO CIVICO//
-    if(request.civico == undefined){
-      this.errorCivico = "Civico obbligatorio";
-      this.isError = true;
-    }
-    else if(request.civico == ""){
+    if(request.civico == undefined || request.civico == ""){
       this.errorCivico = "Civico obbligatorio";
       this.isError = true;
     }
 
     //CONTROLLO CAP//
-    if(request.cap == undefined){
-      this.errorCAP = "CAP obbligatorio";
-      this.isError = true;
-    }
-    else if(request.cap == ""){
+    if(request.cap == undefined || request.cap == ""){
       this.errorCAP = "CAP obbligatorio";
       this.isError = true;
     }
@@ -347,11 +311,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.controlOrari(request);
 
     //CONTROLLO IMMAGINI//
-    if(request.immagini == undefined){
-      this.errorImg = "Inserire una o più immagini";
-      this.isError = true;
-    }
-    else if(request.immagini.length == 0){
+    if(request.immagini == undefined || request.immagini.length == 0){
       this.errorImg = "Inserire una o più immagini";
       this.isError = true;
     }
@@ -361,11 +321,7 @@ export class DatiStrutturaComponent  implements OnInit {
     }
 
     //CONTROLLO DESCRIZIONE//
-    if(request.descrizione == undefined){
-      this.errorDesc = "Descrizione attivita obbligatoria";
-      this.isError = true;
-    }
-    else if(request.descrizione == ""){
+    if(request.descrizione == undefined || request.descrizione == ""){
       this.errorDesc = "Descrizione attivita obbligatoria";
       this.isError = true;
     }
@@ -390,10 +346,9 @@ export class DatiStrutturaComponent  implements OnInit {
     else if (!noSpecialCharsRegex.test(request.descrizione)) {
       this.errorDesc = "La descrizione offerta contiene caratteri non ammessi";
       this.isError = true;
-    }
+    }console.log(this.isError);
     }
   }
-
 
   async eliminaAttivita() {
     this.isLoadingDelete = true;

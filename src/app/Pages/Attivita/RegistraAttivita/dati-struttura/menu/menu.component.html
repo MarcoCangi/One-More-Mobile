@@ -11,15 +11,6 @@
       [autoGrow]="true">
     </ion-textarea>
   </ion-item>
-  <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
-    Inserisci una descrizione della tua attività
-  </ion-note>
-  <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
-    Lunghezza minima 100 caratteri
-  </ion-note>
-  <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
-    Lunghezza massima 2000 caratteri
-  </ion-note>
 </form>
 
 <form [formGroup]="exampleFormDesc" style="margin-top: 15%;">

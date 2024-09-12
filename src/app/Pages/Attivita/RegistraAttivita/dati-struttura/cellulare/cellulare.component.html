@@ -8,9 +8,6 @@
       value={{cellulare}}>
     </ion-input>
   </ion-item>
-  <ion-note style="margin-left: 5%;" *ngIf="hasError('pattern')" color="danger">
-    Inserire un numero di cellulare valido
-  </ion-note>
 </form>
 <br>
 <ion-checkbox style="margin-left: 5%;" labelPlacement="end" [formControl]="cellPubblicoFormControl" [checked]="isPubblico"><ion-label style="color: black;">Vuoi renderlo visibile sulla pagina?</ion-label></ion-checkbox>

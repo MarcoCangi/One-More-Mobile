@@ -167,6 +167,16 @@
     <div class="elimina" style="display: flex; justify-content: center; align-items: center;">
       <ion-button fill="clear" color="danger" *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="openEliminaModal()">ELIMINA ATTIVITA</ion-button>
   </div>
+
+  <ion-alert
+  [isOpen]="this.isError"
+  header="Attenzione"
+  subHeader="Sono stati riscontrati i seguenti errori nella compilazione"
+  [message]="getErrorMessage()"
+  [buttons]="alertButtons"
+  cssClass="custom-alert"
+  (didDismiss)="this.isError = false">
+  </ion-alert>
   </div>
   
   <div *ngIf="!isLoading && !isVerificato">
@@ -189,16 +199,6 @@
       </ion-card>
   </div>
 
-  <ion-alert
-  [isOpen]="isError"
-  header="Attenzione"
-  subHeader="Sono stati riscontrati i seguenti errori nella compilazione"
-  [message]="getErrorMessage()"
-  [buttons]="alertButtons"
-  cssClass="custom-alert"
-  (didDismiss)="isError = false">
-  </ion-alert>
-  
     <ion-modal [isOpen]="isDetailModalOpen" class="full-modal">
       <ng-template>
         <ion-header>

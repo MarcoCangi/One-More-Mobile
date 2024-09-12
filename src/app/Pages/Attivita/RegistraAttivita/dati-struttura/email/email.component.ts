@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 
 
 @Component({
@@ -19,7 +18,7 @@ export class EmailComponent  implements OnInit {
 
   ngOnInit(): void {
     this.exampleForm = this.fb.group({
-      emailFormControl: [this.email || '', [Validators.email, Validators.required], [asyncValidator]]
+      emailFormControl: [this.email || '']
     });
 
     // Aggiungi un listener per il cambio di valore nel form control
@@ -36,11 +35,5 @@ export class EmailComponent  implements OnInit {
   // Metodo di accesso rapido al form control
   get emailFormControl() {
     return this.exampleForm.get('emailFormControl');
-  }
-
-  // Funzione helper per controllare gli errori del form control
-  hasError(errorCode: string): boolean {
-    const control = this.emailFormControl;
-    return !!control && control.hasError(errorCode) && control.touched;
   }
 }

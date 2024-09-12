@@ -32,6 +32,25 @@
       <ion-button fill="clear" color="danger" (click)="OpenModalEliminaAccount()">Elimina Account</ion-button>
     </ion-col>
   </ion-row>
+  <ion-row style="margin-top: 5%;" *ngIf="!isVerificato">
+    <ion-col size="12" style="margin-left: -5%;">
+      <div class="divCenter">
+        <ion-label>Completa la verifica del tuo account aprendo il link che ti abbiamo inviato via mail</ion-label>
+      </div>
+      <br>
+      <br>
+      <div class="divCenter">
+        <ion-label>Non ti è arrivata nessuna mail?</ion-label>
+      </div>
+      <div class="divCenter">
+        <ion-label color="primary" (click)="resendVerificationEmail()">Clicca qui per richiederla di nuovo</ion-label>
+      </div>
+      <br>
+      <div class="divCenter">
+        <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{esitoResendVerification}}</ion-label>
+      </div>
+    </ion-col>
+  </ion-row>
 </ion-grid>
 
 

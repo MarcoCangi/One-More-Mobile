@@ -8,14 +8,5 @@
         value={{nome}}>
       </ion-input>
     </ion-item>
-    <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
-      Nome attività obbligatorio
-    </ion-note>
-    <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
-      Lunghezza minima 2 caratteri
-    </ion-note>
-    <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
-      Lunghezza massima 50 caratteri
-    </ion-note>
   </form>
   

@@ -40,6 +40,8 @@ export class UserComponent  implements OnInit {
   passwordForm!: FormGroup;
   passwordEliminazione: string | undefined;
   passwordError: boolean = false;
+  isVerificato: boolean = false;
+  esitoResendVerification: string | undefined;
   @Output() openPageEvent = new EventEmitter<number>();
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -68,6 +70,10 @@ export class UserComponent  implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit(): Promise<void> {
     this.user = this.authService.getUserSessionFromCookie();
+    const userForAuth = await this.authService.getCurrentUserFromAuth();
+
+    if((userForAuth && userForAuth?.emailVerified == true && this.user?.typeLog == 1) || (this.user?.typeLog == 2 || this.user?.typeLog == 3))
+      this.isVerificato = true;
 
     this.passwordForm = this.fb.group({
       passwordFormControl: ['', [Validators.required]] // Aggiorna qui il nome e i validator
@@ -255,5 +261,9 @@ export class UserComponent  implements OnInit {
     setTimeout(() => {
       this.openPageEvent.emit(1);
     }, 100);
+  }
+
+  async resendVerificationEmail(){
+    this.esitoResendVerification = await this.authService.resendVerificationEmail();
   }
 }
