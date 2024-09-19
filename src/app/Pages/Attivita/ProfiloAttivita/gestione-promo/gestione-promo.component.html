@@ -161,7 +161,10 @@
         <ion-row>
           <ion-col>
             <ion-label style="font-size: larger; font-weight: bold;">Periodo:</ion-label> <br>
-            <ion-label> DAL {{this.requestPromo.dataDal}} - AL {{this.requestPromo.dataAl}} </ion-label>
+            <ion-label> 
+              DAL {{ datePipe.transform(this.requestPromo.dataDal, 'dd/MM/yyyy') }} 
+              - AL {{ datePipe.transform(this.requestPromo.dataAl, 'dd/MM/yyyy') }}
+            </ion-label>
             <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
           </ion-col>
         </ion-row>

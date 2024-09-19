@@ -30,6 +30,7 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   segmentValue: string = 'default';
   panelOpenState = false;
   listaAttivita: Attivita[] | undefined;
+  isConfirmOpen: boolean = false;
 
   constructor(
     private promoService : GetApiPromoService,
@@ -56,12 +57,8 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     this.isLoading = false;
   }
 
-  openDialogDisattivaPromo(idPromo: number | undefined): void {
-    const dialogRef = this.dialog.open(ConfermaEliminazionePromoComponent, {
-      width: '450px',
-      height: '450px',
-      data: { idPromo: idPromo } // Passaggio dei dati all'interno della dialog
-    });
+  openDialogDisattivaPromo(idPromo: number | undefined, idAttivita: number | undefined): void {
+    this.isConfirmOpen = true;
   }
 
   openPage(){

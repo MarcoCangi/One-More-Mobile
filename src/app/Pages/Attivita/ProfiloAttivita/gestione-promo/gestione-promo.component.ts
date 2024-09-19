@@ -2,7 +2,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { catchError, lastValueFrom, of, tap } from 'rxjs';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
-import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { Attivita, Orari } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GiorniSettimanaPromo, InsertPromoReqDto, Promo, TipologiaOfferta } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
@@ -13,6 +13,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
   selector: 'app-gestione-promo',
   templateUrl: './gestione-promo.component.html',
   styleUrls: ['./gestione-promo.component.scss'],
+  providers: [DatePipe]
 })
 export class GestionePromoComponent  implements OnInit {
 
@@ -50,6 +51,7 @@ export class GestionePromoComponent  implements OnInit {
       private promoService : GetApiPromoService,
       private authService : AuthService,
       private attivitaService: GetApiAttivitaService,
+      public datePipe: DatePipe
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -101,6 +103,7 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   async salva() {
+    console.log(this.requestPromo);
     this.isConfirmOpen = false;
     await this.ControlPromo(this.requestPromo);
     if(this.isError)
@@ -118,6 +121,18 @@ export class GestionePromoComponent  implements OnInit {
       {
         const sortedDays = this.requestPromo.days.sort((a, b) => a - b);
         this.requestPromo.validDays = sortedDays.join('-');
+      }
+
+      const dataDal = this.requestPromo.dataDal ? new Date(this.requestPromo.dataDal) : undefined;
+      const dataAl = this.requestPromo.dataAl ? new Date(this.requestPromo.dataAl) : undefined;
+          
+      if (dataDal) {
+        // Imposta le date in UTC
+        this.requestPromo.dataDal = new Date(Date.UTC(dataDal.getFullYear(), dataDal.getMonth(), dataDal.getDate(), 0, 0, 0));
+      }
+      
+      if (dataAl) {
+        this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
       }
 
       this.promoService.apiInsertPromo(this.requestPromo).pipe(

@@ -90,6 +90,8 @@ import { DettaglioCouponNonAttComponent } from './Pages/coupon/dettaglio-coupon-
 import { UserComponent } from './Pages/user/user.component';
 import { CookieConsentComponent } from './Pages/cookie-consent/cookie-consent.component';
 import { InfoRegistrazioneAttivitaComponent } from './Pages/Attivita/info-registrazione-attivita/info-registrazione-attivita.component';
+import { ConfermaDisattivazionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-disattivazione-promo/conferma-disattivazione-promo.component';
+
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
@@ -172,7 +174,8 @@ const appRoute: Routes = [
                  DettaglioCouponNonAttComponent,
                  UserComponent,
                  CookieConsentComponent,
-                 InfoRegistrazioneAttivitaComponent
+                 InfoRegistrazioneAttivitaComponent,
+                 ConfermaDisattivazionePromoComponent
   ],
   imports: [BrowserModule, 
             AngularFireModule.initializeApp(firebaseConfig),

@@ -216,7 +216,7 @@
             </ion-grid>
             </ion-item>
             <ion-button shape="round" (click)="ModificaPromo(promo)">Modifica</ion-button>
-            <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDialogDisattivaPromo(promo.idPromo)">Disattiva</ion-button>
+            <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDialogDisattivaPromo(promo.idPromo, promo.idAttivita)">Disattiva</ion-button>
           </div>
         </ion-accordion>
  </ion-accordion-group>
@@ -378,3 +378,10 @@
 <div *ngIf="!this.isLoading && this.isModifica">
   <app-gestione-promo [modificaPromo]="this.promoSelezionata"></app-gestione-promo>
 </div>
+
+
+<ion-modal [isOpen]="isConfirmOpen" class="full-modal">
+  <ng-template>
+    <app-conferma-disattivazione-promo></app-conferma-disattivazione-promo>
+  </ng-template>
+</ion-modal>

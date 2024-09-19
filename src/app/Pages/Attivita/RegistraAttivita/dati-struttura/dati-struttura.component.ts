@@ -39,7 +39,7 @@ export class DatiStrutturaComponent  implements OnInit {
   isEliminazioneOK: boolean = false;
   isSalvataggioOK = false;
   isVerificato: boolean = false;
-  isError:boolean | undefined;
+  isError:boolean = false;
   errorNome:string | undefined;
   errorTel:string | undefined;
   errorCell:string | undefined;
@@ -346,7 +346,7 @@ export class DatiStrutturaComponent  implements OnInit {
     else if (!noSpecialCharsRegex.test(request.descrizione)) {
       this.errorDesc = "La descrizione offerta contiene caratteri non ammessi";
       this.isError = true;
-    }console.log(this.isError);
+    }
     }
   }
 
