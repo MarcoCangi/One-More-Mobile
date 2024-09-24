@@ -1,7 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { ConfermaEliminazionePromoComponent } from './conferma-eliminazione-promo/conferma-eliminazione-promo.component';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
@@ -31,11 +28,12 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   panelOpenState = false;
   listaAttivita: Attivita[] | undefined;
   isConfirmOpen: boolean = false;
+  idPromoDisable: number | undefined;
+  idAttivitaDisable: number | undefined;
+  numCouponRichiesti: number | undefined;
 
   constructor(
     private promoService : GetApiPromoService,
-    private router: Router,
-    private dialog: MatDialog,
     private authService : AuthService,
     private attivitaService: GetApiAttivitaService,
   ) {}
@@ -46,6 +44,7 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     this.idAttivita = 0;
     this.idSoggetto = 0;
     this.attivita = undefined;
+    this.isModifica = false;
     this.sessioneString =  this.authService.getUserSessionFromCookie();
 
     if (this.sessioneString !== null && this.sessioneString.idSoggetto !== null && this.sessioneString.idSoggetto !== undefined && this.sessioneString.idSoggetto > 0) 
@@ -57,8 +56,21 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     this.isLoading = false;
   }
 
-  openDialogDisattivaPromo(idPromo: number | undefined, idAttivita: number | undefined): void {
-    this.isConfirmOpen = true;
+  openDisattivaPromo(idPromo: number | undefined, idAttivita: number | undefined, numCouponRichiesti: number | undefined): void {
+    if(idPromo && idAttivita)
+    {
+      this.idPromoDisable = idPromo;
+      this.idAttivitaDisable = idAttivita;
+      if(numCouponRichiesti)
+        this.numCouponRichiesti = numCouponRichiesti;
+      this.isConfirmOpen = true;
+    }
+  }
+
+  dismissDisattivaPromo(): void {
+      this.idPromoDisable = undefined;
+      this.idAttivitaDisable = undefined;
+      this.isConfirmOpen = false;
   }
 
   openPage(){

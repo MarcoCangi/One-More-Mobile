@@ -215,8 +215,10 @@
               </ion-row>
             </ion-grid>
             </ion-item>
-            <ion-button shape="round" (click)="ModificaPromo(promo)">Modifica</ion-button>
-            <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDialogDisattivaPromo(promo.idPromo, promo.idAttivita)">Disattiva</ion-button>
+            <div class="container" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5%; margin-top: 5%;">
+              <ion-button shape="round" (click)="ModificaPromo(promo)">Modifica</ion-button>
+              <ion-button style="margin-left: 1%;" shape="round" color="warning" (click)="openDisattivaPromo(promo.idPromo, promo.idAttivita, promo.numCouponRichiesti)">Disattiva</ion-button>
+            </div>
           </div>
         </ion-accordion>
  </ion-accordion-group>
@@ -382,6 +384,9 @@
 
 <ion-modal [isOpen]="isConfirmOpen" class="full-modal">
   <ng-template>
-    <app-conferma-disattivazione-promo></app-conferma-disattivazione-promo>
+    <app-conferma-disattivazione-promo [idPromo]="this.idPromoDisable" 
+                                       [idAttivita]="this.idAttivitaDisable"
+                                       [couponRichiesti]="this.numCouponRichiesti"
+                                       (dismissDisattivazioneEvent)="dismissDisattivaPromo()"></app-conferma-disattivazione-promo>
   </ng-template>
 </ion-modal>

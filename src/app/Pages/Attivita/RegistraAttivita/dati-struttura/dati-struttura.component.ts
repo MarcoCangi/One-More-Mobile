@@ -362,7 +362,7 @@ export class DatiStrutturaComponent  implements OnInit {
       if(this.attivita && this.attivita.idAttivita && utente?.idSoggetto)
       {
         await this.attivitaService.apiDeleteAttivita(this.attivita?.idAttivita, utente?.idSoggetto).toPromise();
-
+        
         const sessioneString = this.authService.getUserSessionFromCookie();
 
         if(sessioneString && sessioneString.idAttivita)

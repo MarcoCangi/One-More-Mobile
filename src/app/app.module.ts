@@ -75,7 +75,6 @@ import { OrarioValiditaComponent } from './Pages/Attivita/ProfiloAttivita/gestio
 import { PeriodoValiditaComponent } from './Pages/Attivita/ProfiloAttivita/gestione-promo/periodo-validita/periodo-validita.component';
 import { TipologiaOffertaComponent } from './Pages/Attivita/ProfiloAttivita/gestione-promo/tipologia-offerta/tipologia-offerta.component';
 import { TitoloComponent } from './Pages/Attivita/ProfiloAttivita/gestione-promo/titolo/titolo.component';
-import { ConfermaEliminazionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-eliminazione-promo/conferma-eliminazione-promo.component';
 import { ConfermaEsitoComponent } from './Pages/Promo/conferma-esito/conferma-esito.component';
 import { DialogConfermaComponent } from './Pages/Promo/dialog-conferma/dialog-conferma.component';
 import { PannelloPromoComponent } from './Pages/Promo/pannello-promo/pannello-promo.component';
@@ -160,7 +159,6 @@ const appRoute: Routes = [
                  PeriodoValiditaComponent,
                  TipologiaOffertaComponent,
                  TitoloComponent,
-                 ConfermaEliminazionePromoComponent,
                  ConfermaEsitoComponent,
                  DialogConfermaComponent,
                  PannelloPromoComponent,

@@ -187,7 +187,6 @@ export class NavComponent implements OnInit {
     const userSession = this.authService.getUserSessionFromCookie();
 
     if (userSession && userSession.idAttivita && userSession.idAttivita > 0) {  
- 
       return true;  
     }
     return false;
