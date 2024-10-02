@@ -29,8 +29,8 @@
   
     <div *ngIf="this.attivita && attivita?.isVerificata" class="ion-alert">
       <div class="column ion-text-center ion-align-items-center">
-        <ion-icon *ngIf="attivita?.esitoVerifica" style="color: green; margin-right: 1%; width: 25px; height: 25px;" name="checkmark-outline"></ion-icon>
-        <ion-icon *ngIf="!attivita?.esitoVerifica" style="color: red; margin-right: 1%; width: 25px; height: 25px;" name="close-circle-outline"></ion-icon>
+        <!-- <ion-icon *ngIf="attivita?.esitoVerifica" style="color: green; margin-right: 1%; width: 25px; height: 25px;" name="checkmark-outline"></ion-icon>
+        <ion-icon *ngIf="!attivita?.esitoVerifica" style="color: red; margin-right: 1%; width: 25px; height: 25px;" name="close-circle-outline"></ion-icon> -->
         <ion-label *ngIf="attivita?.esitoVerifica" style="color: #008000; font-family:Helvetica; font-size: large;">Attivita verificata</ion-label>
         <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-family:Helvetica; font-size: large;">Verifica non andata a buon fine</ion-label>
       </div> 
@@ -161,8 +161,8 @@
     </form>
     
     <div class="prosegui" style="display: flex; justify-content: center; align-items: center;">
-          <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="conferma()">Prosegui</ion-button>
-          <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="conferma()">Modifica</ion-button>
+      <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="conferma()">Prosegui</ion-button>
+      <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="conferma()">Modifica</ion-button>
     </div>
     <div class="elimina" style="display: flex; justify-content: center; align-items: center;">
       <ion-button fill="clear" color="danger" *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="openEliminaModal()">ELIMINA ATTIVITA</ion-button>
