@@ -159,29 +159,42 @@ export class RicercaComponent implements OnInit {
     const citta = this.searchForm.get('citta')?.value;
     const codTipoAttivita = this.selectedOption?.codTipoAttivita;
     this.filtro = new FiltriAttivita();
-    this.filtro.tipoRicerca = 0
 
     if (nomeLocale != null && nomeLocale.trim() !== '') {
       this.filtro.nome = nomeLocale;
-      this.filtro.tipoRicerca = 1
+      this.filtro.range = 1000;
+    }
+    else{
+      this.filtro.range = 100;
     }
     if (citta != null && citta.trim() !== '') {
       this.filtro.citta = citta;
-      if (this.filtro.tipoRicerca == 0)
-        this.filtro.tipoRicerca = 2
+    }
+    else{
+      const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
+        return new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+      };
+    
+      if (navigator.geolocation) {
+        try {
+          const position = await getCurrentPositionPromise();
+          this.filtro.latitudine = position.coords.latitude;
+          this.filtro.longitudine = position.coords.longitude;
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
 
     if (codTipoAttivita != null && codTipoAttivita.trim() !== '') {
       this.filtro.codTipoAttivita = codTipoAttivita;
-      if (this.filtro.tipoRicerca == 0)
-        this.filtro.tipoRicerca = 3
     }
 
     if(this.tipoOfferte && this.tipoOfferte.length > 0)
     {
       this.filtro.codTipoPromo = this.tipoOfferte;
-      if (this.filtro.tipoRicerca == 0)
-        this.filtro.tipoRicerca = 4
     }
 
     (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
@@ -193,6 +206,8 @@ export class RicercaComponent implements OnInit {
       },
       () => {
         this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+        this.attivitaService.setIsListaAttModalOpen(true);
+        this.attivitaService.setFilter(this.filtro);
         this.isLoading = false;
         this.isLoadingRicerca = false;
         this.openPage(2);

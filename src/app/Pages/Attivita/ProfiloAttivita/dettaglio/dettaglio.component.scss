@@ -22,7 +22,7 @@
   .title{
     font-family: Helvetica;
     font-weight: lighter;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     margin-top: 2%;
     margin-left: 2%;
   }
@@ -30,7 +30,7 @@
   .nome{
     font-family: Helvetica;
     font-weight: lighter;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
   }
   
   .lbl-info{
@@ -135,4 +135,12 @@
     margin-left: 15px;
     --border-color: #e9540a;
     --color: #e9540a;;
+  }
+
+  .noPreferiti{
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+    --border-color: #c1bcba;
+    --color: #c1bcba;;
   }

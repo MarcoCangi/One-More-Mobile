@@ -37,13 +37,10 @@ ion-spinner {
     margin-left: 2%;
   }
 
-  .colIcon{
-    align-items: center; 
-    justify-content: center;
-  }
-
-  .iconArrow{
-    height: 35px; 
-    width: 35px; 
-    color: #e9540a;
+  .label-overlay {
+    z-index: 100;
+    background-color: rgb(30, 192, 39); /* Aggiungi uno sfondo semi-trasparente se lo desideri */
+    color: white; /* Colore del testo */
+    padding: 5px 10px;
+    border-radius: 4px;
   }

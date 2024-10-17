@@ -101,6 +101,8 @@ export class AppComponent implements OnInit {
 
   async openPageEvent(idPage: number) {
       this.idPage = idPage;
+      if(this.idPage != 2)
+        this.attivitaService.setFilter(undefined);
   }
 
   updateIdFooterEvent(id: number | undefined) {

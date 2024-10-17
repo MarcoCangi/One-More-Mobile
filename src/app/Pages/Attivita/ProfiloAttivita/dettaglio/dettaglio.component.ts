@@ -49,7 +49,6 @@ export class DettaglioComponent  implements OnInit {
         this.attivita = this.attivitaSelezionata;
         if(this.attivita)
         {
-          console.log(this.attivita);
           if (this.attivita.idAttivita && this.attivita.idAttivita > 0 && this.attivita.isPromoPresente) {
             const promoData = await this.promoService.apiGetListaPromoByIdAttivitaAndUser(this.attivita.idAttivita, this.idSoggetto).toPromise();
             if (promoData) {

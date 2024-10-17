@@ -22,7 +22,7 @@
                     <ion-label>SCADENZA {{ coupon.dataAl | date:'dd/MM/yyyy' }}</ion-label>
                 </ion-col>
                 <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                  <ion-icon name="close-outline"(click)="openConfirmModal(false, coupon)" style="color:red; width: 20px; height: 20px;"></ion-icon>
+                  <ion-icon name="close-outline"(click)="openConfirmModal(false, coupon)" style="color:red; width: 25px; height: 25px;"></ion-icon>
                 </ion-col>
               </ion-row>
                 <ion-row (click)="openDetailModal(coupon)">
@@ -37,10 +37,10 @@
                 </ion-row>
               <ion-row>
                 <ion-col size="6" class="column ion-text-center ion-align-items-center">
-                  <ion-button shape="round" fill="outline" color="primary" (click)="openDetailModal(coupon)">DETTAGLIO</ion-button>
+                  <ion-button shape="round" fill="solid" color="primary" (click)="openDetailModal(coupon)">DETTAGLIO</ion-button>
                 </ion-col>
                 <ion-col size="6" class="column ion-text-center ion-align-items-center">
-                  <ion-button shape="round" fill="outline" color="success" (click)="openDetailModal(coupon)">UTILIZZA</ion-button>
+                  <ion-button shape="round" fill="solid" color="success" (click)="openConfirmModal(true, coupon)">UTILIZZA</ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>

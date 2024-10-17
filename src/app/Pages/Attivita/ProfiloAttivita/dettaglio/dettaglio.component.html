@@ -11,8 +11,8 @@
   
   <div style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
     <ion-button shape="round" (click)="openDialogImg(attivita.idAttivita)"><ion-icon name="images-outline"></ion-icon>Gallery</ion-button>
-    <ion-icon *ngIf="this.idSoggetto && !this.isFavorite" class="preferiti" name="star-outline" style="--border-color: #e9540a;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
-    <ion-icon *ngIf="this.idSoggetto && this.isFavorite" class="preferiti" name="star" style="color: #e9540a;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
+    <ion-icon *ngIf="this.idSoggetto && !this.isFavorite" class="noPreferiti" name="star" style="color: #aeaaa8;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
+    <ion-icon *ngIf="this.idSoggetto && this.isFavorite" class="preferiti" name="star" style="color: #cfd20e;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
   </div>
   
   <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >

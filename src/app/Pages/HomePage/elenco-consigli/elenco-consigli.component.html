@@ -1,10 +1,13 @@
-<ion-item style="margin-top: 5%;">
+<ion-item>
   <ion-card-title class="title">Vicino a te</ion-card-title>
 </ion-item>
 
   <div class="card-container" #widgetsContent>
     <div class="card-wrapper">
       <ion-card class="card-consigli" *ngFor="let attivita of elencoConsigli" (click)="VisualizzaAttivita(attivita)">
+        <div class="label-overlay" *ngIf="attivita.isPromoPresente">
+          <label>Promo</label>
+        </div>
         <img mat-card-image [src]="getImmaginePrincipale(attivita)" class="imgAtt" alt="Immagine dell'attività"/>
         <ion-card-header>
           <ion-card-title class="title">{{attivita.nome}}</ion-card-title>

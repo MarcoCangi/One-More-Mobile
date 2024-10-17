@@ -164,7 +164,6 @@ export class HomeComponent  implements OnInit {
 
   async RicercaPromo(id:number): Promise<void> {
     this.filtro = new FiltriAttivita();
-    this.filtro.tipoRicerca = 4;
 
     const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
       return new Promise((resolve, reject) => {
@@ -196,8 +195,10 @@ export class HomeComponent  implements OnInit {
         },
         () => {
 
-          if(this.listaAttivitaRicerca)
+          if(this.listaAttivitaRicerca){
             this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+            this.attivitaService.setIsListaAttModalOpen(true);
+          }
           this.isLoading = false;
           this.openPageEvent(2);
         }
@@ -211,7 +212,6 @@ export class HomeComponent  implements OnInit {
 
   async RicercaTipoAtt(tipoAtt:string): Promise<void> {
     this.filtro = new FiltriAttivita();
-    this.filtro.tipoRicerca = 3;
 
     const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
       return new Promise((resolve, reject) => {
@@ -241,8 +241,10 @@ export class HomeComponent  implements OnInit {
           console.error("Errore durante la chiamata API:", error);
         },
         () => {
-          if(this.listaAttivitaRicerca)
+          if(this.listaAttivitaRicerca){
             this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+            this.attivitaService.setIsListaAttModalOpen(true);
+          }
           this.isLoading = false;
           this.openPageEvent(2);
         }

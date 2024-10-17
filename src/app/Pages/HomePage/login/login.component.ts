@@ -74,7 +74,6 @@ export class LoginComponent {
         this.isLoading = false;
       } 
       catch(error:any) {
-        console.log(error.message);
         this.errore = getFireBaseErrorMessage(error);
         this.isLoading = false;
       }

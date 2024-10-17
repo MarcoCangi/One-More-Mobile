@@ -103,7 +103,6 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   async salva() {
-    console.log(this.requestPromo);
     this.isConfirmOpen = false;
     await this.ControlPromo(this.requestPromo);
     if(this.isError)

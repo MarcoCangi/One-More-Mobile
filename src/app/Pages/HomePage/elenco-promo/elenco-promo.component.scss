@@ -38,6 +38,8 @@
     width: 100%;
     height: 160px;
     object-fit: cover;
+    position: relative;
+    overflow: hidden;
   }
   
   .mat-card-actions {
@@ -56,8 +58,21 @@
   .title{
     font-family: Helvetica;
     font-weight: lighter;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
+
+  .label-overlay {
+    position: absolute;
+    top: 10px; /* Modifica questa posizione in base alle tue preferenze */
+    left: 10px; /* Modifica questa posizione in base alle tue preferenze */
+    z-index: 100;
+    background-color: rgb(30, 192, 39); /* Aggiungi uno sfondo semi-trasparente se lo desideri */
+    color: white; /* Colore del testo */
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+
 
 
   

@@ -3,7 +3,7 @@
 <div class="map">
   <ion-spinner style="background-color: white; border-radius: 25%;" *ngIf="isLoading" name="dots" color="primary"></ion-spinner>
   <ion-button class="btnsearch" color="light" shape="round" style="margin-top: 5rem; z-index: 10000;" *ngIf="this.isMooving" (click)="cerca()">CERCA QUI</ion-button>
-  <google-map *ngIf="isPositionLoaded" id="mapElement" #googleMap height="100%" width="100%" [center]="center" 
+  <google-map *ngIf="isPositionLoaded" [zoom]="12" id="mapElement" #googleMap height="100%" width="100%" [center]="center" 
               (centerChanged)="centerChanged()" 
               (zoomChanged)="zoomChanged()" 
               (mapClick)="move($event)">
@@ -41,13 +41,18 @@
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-card-title class="title">Lista delle Attività</ion-card-title>
           <ion-buttons slot="end">
             <ion-button (click)="dismissListModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
+        <div style="display: flex; justify-content: center; margin-top: 10px;">
+          <ion-button shape="round" color="primary" (click)="dismissListModal()">
+
+            <ion-icon name="map-outline"></ion-icon> <ion-label style="margin-left: 10px;">Mappa</ion-label> 
+          </ion-button>
+        </div>
         <ion-card *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
           <img class="imgAtt" [src]="getImmaginePrincipale(attivita)" />
           <ion-card-header>
@@ -57,8 +62,8 @@
                   <ion-card-title class="title">{{ attivita.nome }}</ion-card-title>
                   <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
                 </ion-col>
-                <ion-col size="3">
-                  <ion-card-title class="title">{{ attivita.distanza }}</ion-card-title>
+                <ion-col size="3" class="column ion-text-center ion-align-items-center">
+                  <ion-card-title class="distance">{{ attivita.distanza }}</ion-card-title>
                 </ion-col>
               </ion-row>
             </ion-grid>

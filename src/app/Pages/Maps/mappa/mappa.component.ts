@@ -32,8 +32,8 @@ export class MappaComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
     icon: {
-      url:"assets/Img/marker.png",
-      scaledSize: new google.maps.Size(50, 80), // Regola le dimensioni come necessario
+      url:"assets/Img/Marker.png",
+      scaledSize: new google.maps.Size(40, 50), // Regola le dimensioni come necessario
       fillColor: '#FF0000', // Colore di riempimento
       fillOpacity: 0.8, // Opacità del riempimento
       strokeWeight: 2, // Spessore del bordo
@@ -55,10 +55,10 @@ export class MappaComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.isRicerca = false;
     this.isLoading = true;
-
+    this.filter= new FiltriAttivita();
     this.attivitaFiltrate = this.service.getListaAttivita();
     if (this.attivitaFiltrate == undefined || this.attivitaFiltrate == null) {
-      this.filter= new FiltriAttivita();
+      
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
@@ -66,7 +66,6 @@ export class MappaComponent implements OnInit {
             await this.setCenterPosition(position.coords.latitude, position.coords.longitude);
             this.filter.latitudine = this.center.lat;
             this.filter.longitudine = this.center.lng;
-            this.filter.tipoRicerca = 5; // Esempio di impostazione del tipo di ricerca
             setTimeout(async () => {
               await this.initMap();
             }, 200);
@@ -75,7 +74,6 @@ export class MappaComponent implements OnInit {
             await this.setCenterPosition(41.9028, 12.4964);
             this.filter.latitudine = this.center.lat;
             this.filter.longitudine = this.center.lng;
-            this.filter.tipoRicerca = 5;
   
             setTimeout(async () => {
               await this.initMap();
@@ -86,6 +84,9 @@ export class MappaComponent implements OnInit {
     }
     else {
       await this.setCenterPosition(this.attivitaFiltrate.latitudine, this.attivitaFiltrate.longitudine);
+      this.isListModalOpen = this.service.getIsListaModalOpen();
+      if(this.isListModalOpen)
+        this.service.setIsListaAttModalOpen(false);
       setTimeout(async () => {
         await this.initMap();
       }, 200);
@@ -116,14 +117,29 @@ export class MappaComponent implements OnInit {
     if (this.googleMap && this.googleMap.googleMap) {
       const map = this.googleMap.googleMap;
       const currentZoom = map.getZoom();
-        
+      const earthCircumference = 40075000; // in metri
+      const mapCenter = map.getCenter();
+      const centerLat = mapCenter?.lat();
+
         map.panTo(this.center);
 
         // Applica lo zoom corrente, se esiste
         if (currentZoom !== null && currentZoom !== undefined) {
             map.setZoom(currentZoom);
+
+            if (centerLat !== undefined && currentZoom !== null && currentZoom !== undefined) {
+              // Calcolo del raggio in metri
+              const radiusMeters = (earthCircumference / Math.pow(2, currentZoom)) * Math.cos(centerLat * Math.PI / 180);
+        
+              // Converti in chilometri (1 km = 1000 metri)
+              let radiusKm = radiusMeters / 1000;
+              radiusKm = parseFloat(radiusKm.toFixed(2));
+              // Imposta il raggio in base allo zoom
+              this.filter.range = radiusKm;
+            }
+
         } else {
-            map.setZoom(12); // Setta a 12 solo se lo zoom corrente non è disponibile
+            map.setZoom(15); // Setta a 12 solo se lo zoom corrente non è disponibile
         }
       await this.updateVisibleActivities(map);
     } else {
@@ -141,19 +157,17 @@ export class MappaComponent implements OnInit {
 
   async cerca() {
     this.isMooving = false;
-  
+    
     if (this.googleMap && this.googleMap.googleMap) {
       const mapCenter = this.googleMap.googleMap.getCenter();
       if (mapCenter) {
-        console
         const centerLat = mapCenter.lat();
         const centerLng = mapCenter.lng();
-  
         // Imposta la posizione centrale con le coordinate attuali della mappa
         await this.setCenterPosition(centerLat, centerLng);
+        this.filter.isMovingMap = true;
         this.filter.latitudine = centerLat;
         this.filter.longitudine = centerLng;
-        this.filter.tipoRicerca = 5; // Esempio di impostazione del tipo di ricerca
   
         setTimeout(async () => {
           await this.initMap();
@@ -176,6 +190,19 @@ export class MappaComponent implements OnInit {
 
   async updateVisibleActivities(map: google.maps.Map): Promise<void> {
     this.isLoading = true;
+    
+    if(this.filter && this.filter.isMovingMap){
+      if(this.attivitaFiltrate && this.attivitaFiltrate.listaAttivita)
+        this.attivitaFiltrate = null;
+      const sessionfilter = this.service.getFilter();
+      if(sessionfilter){
+        this.filter.citta = sessionfilter.citta ? sessionfilter.citta : undefined;
+        this.filter.nome = sessionfilter.nome ? sessionfilter.nome : undefined;
+        this.filter.codTipoPromo = sessionfilter.codTipoPromo ? sessionfilter.codTipoPromo : undefined;
+        this.filter.codTipoAttivita = sessionfilter.codTipoAttivita ? sessionfilter.codTipoAttivita : undefined;
+      }
+    }
+
     const bounds = map.getBounds();
     try {
       if (this.attivitaFiltrate &&
@@ -195,6 +222,24 @@ export class MappaComponent implements OnInit {
           this.service.resetListaAttivitaFiltrate();
         }
       else{
+
+        if(this.filter && !this.filter.latitudine && !this.filter.longitudine){
+          const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
+            return new Promise((resolve, reject) => {
+              navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+          };
+        
+          if (navigator.geolocation) {
+            try {
+              const position = await getCurrentPositionPromise();
+              this.filter.latitudine = position.coords.latitude;
+              this.filter.longitudine = position.coords.longitude;
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        }
 
         const observable = await this.service.apiGetListaAttivitaFiltrate(this.filter);
         const data = await firstValueFrom(observable);

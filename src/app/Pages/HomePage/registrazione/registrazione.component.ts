@@ -128,7 +128,6 @@ export class RegistrazioneComponent {
           {
             if(!response.utente.errore)
             {
-              console.log(response);
               this.authService.createUserSession(email? email : '', uid, token, response.idAttivita, response.utente.id, '', 1, displayName, nome, cognome);
               this.isLoading = false;
               this.isRegistered = true;
