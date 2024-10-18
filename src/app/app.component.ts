@@ -6,6 +6,8 @@ import { Attivita, Orari, TipoAttivita } from 'one-more-frontend-common/projects
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Geolocation } from '@capacitor/geolocation';
+import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 
 @Component({
   selector: 'app-root',
@@ -29,10 +31,14 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, 
               private attivitaService: GetApiAttivitaService,
-              private cookieService: CookieService) { }
+              private cookieService: CookieService,
+              private messagingService: MessagingService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.checkAndRefreshToken();
+
+    await this.requestGeolocationPermission();
+    await this.messagingService.requestPermission();
 
     const cookieConsent = this.cookieService.get('cookieConsent');
     if (cookieConsent === 'true') {
@@ -67,6 +73,21 @@ export class AppComponent implements OnInit {
         this.listaAttivitaDDL = listaAttivitaDDL;
       }
     });
+  }
+
+  async requestGeolocationPermission() {
+    try {
+      const permission = await Geolocation.requestPermissions();
+      if (permission.location === 'granted') {
+        // Il permesso è stato concesso
+        const position = await Geolocation.getCurrentPosition();
+        console.log('Current position:', position);
+      } else {
+        console.log('Permesso negato per la geolocalizzazione');
+      }
+    } catch (error) {
+      console.error('Errore durante la richiesta dei permessi di geolocalizzazione:', error);
+    }
   }
 
   async checkAndRefreshToken(): Promise<void> {

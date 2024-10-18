@@ -7,6 +7,7 @@ import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { sendEmailVerification } from 'firebase/auth';
+import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 
 @Component({
   selector: 'app-registrazione',
@@ -28,7 +29,7 @@ export class RegistrazioneComponent {
   esitoResendVerification: string | undefined;
   @Output() closeRegisterEvent = new EventEmitter<void>();
 
-  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef) {
+  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef, private messagingService: MessagingService) {
     this.formRegistrazione = new FormGroup({
       emailRegistrazione: new FormControl('', [Validators.required, Validators.email]),
       passwordRegistrazione: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(15),this.customPasswordValidator()]),
@@ -121,8 +122,18 @@ export class RegistrazioneComponent {
           isFacebookLogin : false,
           registrationDate: undefined,
           lastLoginDate: undefined,
-          errore:''
+          errore:'',
+          fcmToken: ''
+        };
+
+        if(this.utente){
+          const token = await this.messagingService.requestPermission();
+          if (token){
+            this.utente.fcmToken = token;
+          }
+          console.log(this.utente.fcmToken);
         }
+        
         this.authService.apiInsertNewUtente(this.utente).pipe(
           tap((response) =>
           {
@@ -175,8 +186,17 @@ export class RegistrazioneComponent {
           isFacebookLogin: false,
           registrationDate: undefined,
           lastLoginDate: undefined,
-          errore: ''
+          errore: '',
+          fcmToken: ''
         };
+
+        if(this.utente){
+          const token = await this.messagingService.requestPermission();
+          if (token){
+            this.utente.fcmToken = token;
+          }
+          console.log(this.utente.fcmToken);
+        }
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {
@@ -211,8 +231,18 @@ export class RegistrazioneComponent {
           isFacebookLogin: true,
           registrationDate: undefined,
           lastLoginDate: undefined,
-          errore: ''
+          errore: '',
+          fcmToken: ''
         };
+
+        if(this.utente){
+          const token = await this.messagingService.requestPermission();
+          if (token){
+            this.utente.fcmToken = token;
+          }
+        }
+        
+        console.log(this.utente.fcmToken);
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {

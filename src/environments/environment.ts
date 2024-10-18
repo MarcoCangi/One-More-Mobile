@@ -4,6 +4,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getMessaging, onMessage } from "firebase/messaging";
 
 /*
  * For easier debugging in development mode, you can import the following file
@@ -29,5 +30,12 @@ export const environment = {
 
 
 // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const messaging = getMessaging(app);
+
+// Listener for foreground notifications
+onMessage(messaging, (payload) => {
+  console.log('Notification received in foreground:', payload);
+});

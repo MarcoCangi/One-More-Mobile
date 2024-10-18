@@ -6,6 +6,7 @@ import 'firebase/compat/auth';
 import { getFireBaseErrorMessage } from '../../../Utilities/auth-error'
 import { firstValueFrom, of } from 'rxjs';
 import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
+import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent {
   @Output() closeLoginEvent = new EventEmitter<void>();
   @Output() openRegisterEvent = new EventEmitter<void>();
 
-  constructor(private afAuth: AngularFireAuth, private authService: AuthService) {
+  constructor(private afAuth: AngularFireAuth, private authService: AuthService, private messagingService: MessagingService) {
     this.homeForm = new FormGroup({
       emailLogin: new FormControl('', [Validators.required, Validators.email]),
       passwordLogin: new FormControl('', Validators.required)
@@ -57,8 +58,19 @@ export class LoginComponent {
             isFacebookLogin: false,
             registrationDate: undefined,
             lastLoginDate: undefined,
-            errore: ''
+            errore: '',
+            fcmToken :''
           };
+
+          if(this.utente){
+            const token = await this.messagingService.requestPermission();
+            if (token){
+              this.utente.fcmToken = token;
+            }
+          }
+
+          console.log(this.utente.fcmToken);
+
           const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
           if (!response.utente.errore) {
             this.authService.createUserSession(this.utente.email?? '', this.utente.uid?? '', token, response.idAttivita, response.userId, docData?.photoURL ? docData.photoURL : '', 1, docData?.displayName ? docData.displayName : '', docData?.nome ? docData.nome : '', docData?.cognome ? docData.cognome : '');
@@ -80,34 +92,6 @@ export class LoginComponent {
     }
   }
     
-  async resetPassword(){
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    this.errore = "";
-    this.isLoading = true;
-    const email = this.homeForm.value.emailLogin;
-    if(email){
-      try{
-        if (!emailRegex.test(email)) {
-          this.errore = "Inserire una mail valida per richiedere il reset della password";
-          this.isLoading = false;
-          return;
-        }
-        await this.authService.passwordReset(email);
-        this.notificaInvio = "Controlla la tua mail per reimpostare la password"
-      }
-      catch(err: any){
-        this.errore = getFireBaseErrorMessage(err);
-      }
-      finally{
-        this.isLoading = false;
-      }
-    }
-    else{
-      this.errore = "Inserire una mail valida per richiedere il reset della password";
-    }
-    this.isLoading = false;
-  }
-
   async signInWithGoogle() {
     this.isLoading = true;
     try {
@@ -126,8 +110,18 @@ export class LoginComponent {
           isFacebookLogin: false,
           registrationDate: undefined,
           lastLoginDate: undefined,
-          errore: ''
+          errore: '',
+          fcmToken: ''
         };
+
+        if(this.utente){
+          const token = await this.messagingService.requestPermission();
+          if (token){
+            this.utente.fcmToken = token;
+          }
+        }
+
+        console.log(this.utente.fcmToken);
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {
@@ -162,8 +156,18 @@ export class LoginComponent {
           isFacebookLogin: true,
           registrationDate: undefined,
           lastLoginDate: undefined,
-          errore: ''
+          errore: '',
+          fcmToken:'',
         };
+
+        if(this.utente){
+          const token = await this.messagingService.requestPermission();
+          if (token){
+            this.utente.fcmToken = token;
+          }
+        }
+
+        console.log(this.utente.fcmToken);
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {
@@ -178,6 +182,34 @@ export class LoginComponent {
       this.isLoading = false;
       this.errore = getFireBaseErrorMessage(error);
     }
+  }
+
+  async resetPassword(){
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    this.errore = "";
+    this.isLoading = true;
+    const email = this.homeForm.value.emailLogin;
+    if(email){
+      try{
+        if (!emailRegex.test(email)) {
+          this.errore = "Inserire una mail valida per richiedere il reset della password";
+          this.isLoading = false;
+          return;
+        }
+        await this.authService.passwordReset(email);
+        this.notificaInvio = "Controlla la tua mail per reimpostare la password"
+      }
+      catch(err: any){
+        this.errore = getFireBaseErrorMessage(err);
+      }
+      finally{
+        this.isLoading = false;
+      }
+    }
+    else{
+      this.errore = "Inserire una mail valida per richiedere il reset della password";
+    }
+    this.isLoading = false;
   }
 
   closeLogin(){

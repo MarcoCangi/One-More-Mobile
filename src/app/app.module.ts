@@ -7,7 +7,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { getApp, initializeApp } from 'firebase/app';
 import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
-import { firebaseConfig } from '../environments/environment';
+import { environment, firebaseConfig } from '../environments/environment';
 import { Auth, GoogleAuthProvider, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore'
 import { getStorage, provideStorage } from '@angular/fire/storage'
@@ -21,6 +21,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppComponent } from './app.component';
 import { provideFirebaseApp } from '@angular/fire/app';
@@ -191,7 +193,12 @@ const appRoute: Routes = [
             HammerModule,
             ToastrModule.forRoot(),
             RecaptchaModule,
-            RecaptchaFormsModule
+            RecaptchaFormsModule,
+            AngularFireMessagingModule,
+            ServiceWorkerModule.register('firebase-messaging-sw.js', {
+              enabled: environment.production || !environment.production,
+              registrationStrategy: 'registerWhenStable:30000'
+            }),
           ],
           providers: [
             { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
