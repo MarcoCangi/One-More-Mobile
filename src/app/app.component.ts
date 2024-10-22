@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
     this.checkAndRefreshToken();
 
     await this.requestGeolocationPermission();
+    
     await this.messagingService.requestPermission();
 
     const cookieConsent = this.cookieService.get('cookieConsent');

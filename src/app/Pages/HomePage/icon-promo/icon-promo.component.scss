@@ -47,7 +47,8 @@ ion-col {
 .icon-caption {
   position: absolute; // Posizionamento assoluto rispetto al contenitore dell'icona
   left: 0; // Allinea il testo al centro
+  margin-top: 1%;
   width: 100%; // Occupa l'intera larghezza del contenitore
-  font-size: 14px; // Dimensione del font per l'intestazione
+  font-size: 0.9rem; // Dimensione del font per l'intestazione
   color: #000000; // Colore del testo, cambialo a tuo piacimento
 }

@@ -69,15 +69,23 @@ export class PannelloPromoComponent implements OnInit {
     this.isModalVerifiedOpen = false;
   }
 
-  dismissConfirmModal(isEsito:boolean, isCoupon:boolean): void {
+  dismissConfirmModal(tipeEsito: number): void {
     this.isError = false;
     this.isConfirmed = false;
     this.riepilogoPromo = undefined;
-    this.isModalConfirmOpen = false;
-    if(isCoupon)
-      this.redirecEsitoEvent.emit(true);
-    else
-      location.reload();
+    switch(tipeEsito){
+      case 0:
+        this.isModalConfirmOpen = false;
+        break;
+      case 1:
+        this.isModalConfirmOpen = false;
+        this.redirecEsitoEvent.emit(true);
+        break;
+      case 2:
+        this.isModalConfirmOpen = false;
+        location.reload();
+        break;
+    }
   }
 
   openConfirmModal(promo: Promo): void {

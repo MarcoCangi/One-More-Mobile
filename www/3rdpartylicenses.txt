@@ -119,6 +119,9 @@ MIT
 @angular/router
 MIT
 
+@angular/service-worker
+MIT
+
 @babel/runtime
 MIT
 MIT License
@@ -244,7 +247,16 @@ Apache-2.0
 @firebase/firestore-compat
 Apache-2.0
 
+@firebase/installations
+Apache-2.0
+
 @firebase/logger
+Apache-2.0
+
+@firebase/messaging
+Apache-2.0
+
+@firebase/messaging-compat
 Apache-2.0
 
 @firebase/storage
@@ -661,7 +673,11 @@ firebase/compat/auth
 
 firebase/compat/firestore
 
+firebase/compat/messaging
+
 firebase/firestore
+
+firebase/messaging
 
 firebase/storage
 

@@ -39,8 +39,9 @@ export class NavComponent implements OnInit {
   isModalLoginOpen = false;
   isModalRegisterOpen = false;
   isHomeOpen = true;
-  listaElencoConsigli: Attivita[] | undefined;
+  listaElencoNuove: Attivita[] | undefined;
   listaElencoPromo: Attivita[] | undefined;
+  listaElencoVicine: Attivita[] | undefined;
   @ViewChild(IonModal) modal: IonModal | undefined;
   @Output() openMappaEvent = new EventEmitter<void>();
   @Output() openPageEvent = new EventEmitter<number>();
@@ -206,9 +207,10 @@ export class NavComponent implements OnInit {
   }
 
   closeLogin() {
-    this.listaElencoConsigli = this.attivitaService.getListAttivitaNearHomeSession();
+    this.listaElencoNuove = this.attivitaService.getListAttivitaNewSession();
     this.listaElencoPromo = this.attivitaService.getListAttivitaPromoHomeSession();
-    if(!this.listaElencoConsigli || this.listaElencoPromo)
+    this.listaElencoVicine = this.attivitaService.getListAttivitaVicineHomeSession();
+    if(!this.listaElencoNuove || !this.listaElencoPromo || !this.listaElencoVicine)
       window.location.reload();
     
     this.isModalLoginOpen = false;

@@ -11,7 +11,7 @@ export class ElencoConsigliComponent {
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
 
-  @Input() elencoConsigli:Attivita[] | undefined;
+  @Input() elencoNew:Attivita[] | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
   attivitaSelezionata: Attivita | undefined;
 

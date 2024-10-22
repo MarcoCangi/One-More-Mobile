@@ -129,6 +129,10 @@ export class DettaglioComponent  implements OnInit {
     return days;
   }
 
+  callPhoneNumber(telefono: string) {
+    window.location.href = telefono; // Inserisci il numero di telefono che vuoi precompilare
+  }
+
   isOpenPageLoginEvent(isOpen:boolean){
     this.isModalLoginOpenEvent.emit(isOpen);
   }

@@ -1,0 +1,54 @@
+.horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; // Abilita il momentum scrolling su iOS
+  }
+  
+  ion-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto; /* Permette lo scrolling */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* Aggiunge lo scrolling fluido per i dispositivi iOS */
+    scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
+    -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
+  }
+  
+  ion-row::-webkit-scrollbar {
+    display: none; /* Nasconde la scrollbar nei browser basati su WebKit */
+  }
+  
+  ion-col {
+    display: inline-block;
+    flex: 0 0 auto;
+    position: relative; // Permette il posizionamento assoluto degli elementi interni
+    text-align: center; // Centra sia le immagini che le didascalie
+  }
+  
+  .icon-container {
+    position: relative; // Assicura che il contenitore dell'icona abbia una posizione relativa
+    width: 100px; // Larghezza dell'icona
+    height: 100px; // Altezza dell'icona
+    border-radius: 70%; // Rende l'immagine circolare
+  }
+  
+  .icon-container img {
+    width: 100%; // Riempie completamente il contenitore dell'icona
+    height: auto; // Altezza automatica per mantenere l'aspect ratio
+    filter: brightness(0) invert(1); // Rende l'icona bianca
+  }
+  
+  .icon-caption {
+    position: absolute; // Posizionamento assoluto rispetto al contenitore dell'icona
+    left: 0; // Allinea il testo al centro
+    width: 100%; // Occupa l'intera larghezza del contenitore
+    font-size: 1rem; // Dimensione del font per l'intestazione
+    color: #000000; // Colore del testo, cambialo a tuo piacimento
+  }
+
+  .title2{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.1rem;
+  }

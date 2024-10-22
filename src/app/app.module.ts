@@ -92,6 +92,8 @@ import { UserComponent } from './Pages/user/user.component';
 import { CookieConsentComponent } from './Pages/cookie-consent/cookie-consent.component';
 import { InfoRegistrazioneAttivitaComponent } from './Pages/Attivita/info-registrazione-attivita/info-registrazione-attivita.component';
 import { ConfermaDisattivazionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-disattivazione-promo/conferma-disattivazione-promo.component';
+import { ElencoViciniComponent } from './Pages/HomePage/elenco-vicini/elenco-vicini.component';
+import { IconCittaComponent } from './Pages/HomePage/icon-citta/icon-citta.component';
 
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
@@ -175,7 +177,9 @@ const appRoute: Routes = [
                  UserComponent,
                  CookieConsentComponent,
                  InfoRegistrazioneAttivitaComponent,
-                 ConfermaDisattivazionePromoComponent
+                 ConfermaDisattivazionePromoComponent,
+                 ElencoViciniComponent,
+                 IconCittaComponent
   ],
   imports: [BrowserModule, 
             AngularFireModule.initializeApp(firebaseConfig),

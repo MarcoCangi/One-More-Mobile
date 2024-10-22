@@ -22,7 +22,7 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
-
+  
   .card-wrapper::-webkit-scrollbar {
     display: none;
   }
@@ -46,13 +46,10 @@
     align-items: center;
     justify-content: flex-end;
   }
-
+  
   .mat-card-content {
+    max-height: 50px; /* Imposta un'altezza massima per il contenuto della card */
     overflow: hidden; /* Nasconde il contenuto che supera l'altezza massima */
-  }
-
-  .ion-chip{
-    max-height: 5px;
   }
   
   .title{
@@ -61,6 +58,12 @@
     font-size: 1.3rem;
   }
 
+  .title2{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.1rem;
+  }
+  
   .label-overlay {
     position: absolute;
     top: 10px; /* Modifica questa posizione in base alle tue preferenze */
@@ -71,14 +74,4 @@
     padding: 5px 10px;
     border-radius: 4px;
   }
-
-  .title2{
-    font-family: Helvetica;
-    font-weight: lighter;
-    font-size: 1.1rem;
-  }
-
-
-
-
   

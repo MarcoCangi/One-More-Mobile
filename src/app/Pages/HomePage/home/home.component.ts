@@ -12,6 +12,7 @@ import { FavoritesComponent } from '../../favorites/favorites.component';
 import { CouponComponent } from '../../coupon/coupon.component';
 import { UserComponent } from '../../user/user.component';
 import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -37,11 +38,10 @@ export class HomeComponent  implements OnInit {
   @ViewChild(FavoritesComponent) favoriteComponent!: FavoritesComponent;
   @ViewChild(CouponComponent) couponComponent!: CouponComponent;
   @ViewChild(UserComponent) userComponent!: UserComponent;
-  listaElencoConsigli : Attivita[] | undefined;
+  listaElencoNuove : Attivita[] | undefined;
   listaElencoPromo : Attivita[] | undefined;
-  listaElencoPub : Attivita[] | undefined;
-  listaElencoRistoranti : Attivita[] | undefined;
-  listaElencoFastFood : Attivita[] | undefined;
+  listaElencoVicini : Attivita[] | undefined;
+  listCitta : string[] | undefined;
   filtro: FiltriAttivita | undefined;
   listaAttivitaRicerca: AttivitaFiltrate | undefined;
   position: GeolocationPosition | undefined;
@@ -54,6 +54,8 @@ export class HomeComponent  implements OnInit {
   attivita: Attivita | undefined;
   attivitaRicercate: Attivita [] | undefined;
   alertButtons = ['Ricarica'];
+  latitudine: number = 0;
+  longitudine: number = 0;
   @Output() openPageEventNav = new EventEmitter<number>();
   @Output() updateIdFooter = new EventEmitter<number>();
   @Output() isModalLoginOpenEvent = new EventEmitter<boolean>();
@@ -162,6 +164,10 @@ export class HomeComponent  implements OnInit {
     this.RicercaPromo(idTipoPromo);
   }
 
+  openPageRicercaCittaEvent(citta:string) {
+    this.RicercaCitta(citta);
+  }
+
   async RicercaPromo(id:number): Promise<void> {
     this.filtro = new FiltriAttivita();
 
@@ -186,6 +192,34 @@ export class HomeComponent  implements OnInit {
       this.filtro.codTipoPromo = [];
       this.isLoading = true;
       this.filtro.codTipoPromo?.push(id);
+      (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
+        (data: AttivitaFiltrate) => {
+          this.listaAttivitaRicerca = data;
+        },
+        (error: any) => {
+          console.error("Errore durante la chiamata API:", error);
+        },
+        () => {
+
+          if(this.listaAttivitaRicerca){
+            this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+            this.attivitaService.setIsListaAttModalOpen(true);
+          }
+          this.isLoading = false;
+          this.openPageEvent(2);
+        }
+      );
+    }
+  }
+
+  async RicercaCitta(citta:string): Promise<void> {
+    this.filtro = new FiltriAttivita();
+
+    if(citta)
+    {
+      this.filtro.citta = citta;
+      this.isLoading = true;
+      
       (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
         (data: AttivitaFiltrate) => {
           this.listaAttivitaRicerca = data;
@@ -276,11 +310,28 @@ export class HomeComponent  implements OnInit {
       this.isLoading = true;
 
       
-      if(!this.listaElencoConsigli || !this.listaElencoPromo){
+      if(!this.listaElencoNuove || !this.listaElencoPromo || !this.listaElencoVicini){
+
+        const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
+          return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+          });
+        };
+      
+        if (navigator.geolocation) {
+          try {
+            const position = await getCurrentPositionPromise();
+            this.latitudine = position.coords.latitude;
+            this.longitudine = position.coords.longitude;
+          } catch (error) {
+            this.latitudine = 41.9028;
+            this.longitudine = 12.4964;
+          }
+        }
         try {
           const data: AttivitaHomePageResponse = await firstValueFrom(
-            this.attivitaService.apiGetListaAttivitaHomePage().pipe(
-              retry(2), // Riprova la chiamata fino a 3 volte in caso di errore
+            this.attivitaService.apiGetListaAttivitaHomePage(this.latitudine, this.longitudine).pipe(
+              //retry(2), // Riprova la chiamata fino a 3 volte in caso di errore
               catchError((error) => {
                 // Gestione errore
                 console.error('Errore di connessione', error);
@@ -290,12 +341,19 @@ export class HomeComponent  implements OnInit {
               })
             )
           );
-          this.listaElencoConsigli = data.listUltimeAttReg;
-          if(this.listaElencoConsigli)
-            this.attivitaService.createListAttivitaNearHomeSession(this.listaElencoConsigli);
+          this.listaElencoNuove = data.listUltimeAttReg;
+          if(this.listaElencoNuove)
+            this.attivitaService.createListAttivitaNewHomeSession(this.listaElencoNuove);
           this.listaElencoPromo = data.listAttivitaWithPromo;
           if(this.listaElencoPromo)
             this.attivitaService.createListAttivitaPromoHomeSession(this.listaElencoPromo);
+          this.listaElencoVicini = data.listNearbyAttivita;
+          if(this.listaElencoVicini)
+            this.attivitaService.createListAttivitaVicineSession(this.listaElencoVicini);
+          this.listCitta = data.listCitta;
+          if(this.listCitta)
+            this.attivitaService.createListCittaIconSession(this.listCitta);
+
         } catch (error) {
           // Gestisci l'errore in caso di fallimento anche dopo i retry
           console.error('Errore di connessione', error);
@@ -305,7 +363,7 @@ export class HomeComponent  implements OnInit {
         }
       }
     }
-    if(this.listaElencoConsigli && this.listaElencoPromo)
+    if(this.listaElencoNuove && this.listaElencoPromo && this.listaElencoVicini)
     {
       this.errorMessage ='';
       this.isCaricamentoOk = true;

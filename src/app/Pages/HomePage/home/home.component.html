@@ -21,7 +21,11 @@
 
         <app-card-tipo-attivita (openPageRicercaTipoAttEvent)="openPageRicercaTipoAttEvent($event)" style="margin-bottom: 100px;"></app-card-tipo-attivita>
 
-        <app-elenco-consigli [elencoConsigli]="listaElencoConsigli " (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
+        <app-elenco-vicini [elencoVicini]="listaElencoVicini " (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-vicini>
+
+        <app-icon-citta [listaCitta]="listCitta " (openPageRicercaEvent)="openPageRicercaCittaEvent($event)"></app-icon-citta>
+        
+        <app-elenco-consigli style="margin-top: -5% !important;" [elencoNew]="listaElencoNuove " (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
 
         <ion-card>
             <ion-card-content>
