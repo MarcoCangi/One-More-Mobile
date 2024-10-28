@@ -7,6 +7,7 @@ import { getFireBaseErrorMessage } from '../../../Utilities/auth-error'
 import { firstValueFrom, of } from 'rxjs';
 import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-login',
@@ -63,9 +64,18 @@ export class LoginComponent {
           };
 
           if(this.utente){
-            const token = await this.messagingService.requestPermission();
-            if (token){
-              this.utente.fcmToken = token;
+            if (Capacitor.isNativePlatform()) {
+              // Se stai su una piattaforma mobile (iOS/Android)
+              const token = await this.messagingService.requestPermission();
+              if (token){
+                this.utente.fcmToken = token;
+              }
+            } else {
+              // Se stai sul web, usa il Firebase Messaging Web SDK
+              const token = await this.messagingService.setupFirebaseWeb();
+              if (token){
+                this.utente.fcmToken = token;
+              }
             }
           }
 
@@ -115,9 +125,18 @@ export class LoginComponent {
         };
 
         if(this.utente){
-          const token = await this.messagingService.requestPermission();
-          if (token){
-            this.utente.fcmToken = token;
+          if (Capacitor.isNativePlatform()) {
+            // Se stai su una piattaforma mobile (iOS/Android)
+            const token = await this.messagingService.requestPermission();
+            if (token){
+              this.utente.fcmToken = token;
+            }
+          } else {
+            // Se stai sul web, usa il Firebase Messaging Web SDK
+            const token = await this.messagingService.setupFirebaseWeb();
+            if (token){
+              this.utente.fcmToken = token;
+            }
           }
         }
 
@@ -161,9 +180,18 @@ export class LoginComponent {
         };
 
         if(this.utente){
-          const token = await this.messagingService.requestPermission();
-          if (token){
-            this.utente.fcmToken = token;
+          if (Capacitor.isNativePlatform()) {
+            // Se stai su una piattaforma mobile (iOS/Android)
+            const token = await this.messagingService.requestPermission();
+            if (token){
+              this.utente.fcmToken = token;
+            }
+          } else {
+            // Se stai sul web, usa il Firebase Messaging Web SDK
+            const token = await this.messagingService.setupFirebaseWeb();
+            if (token){
+              this.utente.fcmToken = token;
+            }
           }
         }
 

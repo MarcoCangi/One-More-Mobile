@@ -8,6 +8,7 @@ import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { sendEmailVerification } from 'firebase/auth';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-registrazione',
@@ -127,11 +128,19 @@ export class RegistrazioneComponent {
         };
 
         if(this.utente){
-          const token = await this.messagingService.requestPermission();
-          if (token){
-            this.utente.fcmToken = token;
+          if (Capacitor.isNativePlatform()) {
+            // Se stai su una piattaforma mobile (iOS/Android)
+            const token = await this.messagingService.requestPermission();
+            if (token){
+              this.utente.fcmToken = token;
+            }
+          } else {
+            // Se stai sul web, usa il Firebase Messaging Web SDK
+            const token = await this.messagingService.setupFirebaseWeb();
+            if (token){
+              this.utente.fcmToken = token;
+            }
           }
-          console.log(this.utente.fcmToken);
         }
         
         this.authService.apiInsertNewUtente(this.utente).pipe(
@@ -191,11 +200,19 @@ export class RegistrazioneComponent {
         };
 
         if(this.utente){
-          const token = await this.messagingService.requestPermission();
-          if (token){
-            this.utente.fcmToken = token;
+          if (Capacitor.isNativePlatform()) {
+            // Se stai su una piattaforma mobile (iOS/Android)
+            const token = await this.messagingService.requestPermission();
+            if (token){
+              this.utente.fcmToken = token;
+            }
+          } else {
+            // Se stai sul web, usa il Firebase Messaging Web SDK
+            const token = await this.messagingService.setupFirebaseWeb();
+            if (token){
+              this.utente.fcmToken = token;
+            }
           }
-          console.log(this.utente.fcmToken);
         }
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
@@ -236,9 +253,18 @@ export class RegistrazioneComponent {
         };
 
         if(this.utente){
-          const token = await this.messagingService.requestPermission();
-          if (token){
-            this.utente.fcmToken = token;
+          if (Capacitor.isNativePlatform()) {
+            // Se stai su una piattaforma mobile (iOS/Android)
+            const token = await this.messagingService.requestPermission();
+            if (token){
+              this.utente.fcmToken = token;
+            }
+          } else {
+            // Se stai sul web, usa il Firebase Messaging Web SDK
+            const token = await this.messagingService.setupFirebaseWeb();
+            if (token){
+              this.utente.fcmToken = token;
+            }
           }
         }
         

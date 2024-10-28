@@ -1,4 +1,4 @@
-<ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+<ion-spinner *ngIf="isLoading && this.mapInstance" name="crescent" color="primary"></ion-spinner>
 
 <div *ngIf="!isLoading && this.attivita.immagini">
   <div class="card-container" #widgetsContent>
@@ -7,13 +7,15 @@
         <img class="uniform-image" mat-card-image [src]="immagine.upload" alt="Immagine dell'attività">
       </ion-card>
     </div>
+    <div class="overlayGallery">
+      <ion-button class="btnGallery" (click)="openDialogImg(attivita.idAttivita)" [outline]="true"><ion-icon name="images-outline" style="margin-right: 5px; margin-top: 2px;"></ion-icon><ion-label>Gallery</ion-label></ion-button>
+    </div>
+    <div class="overlayFavourite">
+      <ion-button class="btnFavourite" *ngIf="this.idSoggetto && !this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart"></ion-icon></ion-button>
+      <ion-button class="btnFavourite" *ngIf="this.idSoggetto && this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart-outline"></ion-icon></ion-button>
+    </div>
   </div>
   
-  <div style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
-    <ion-button fill="outline" (click)="openDialogImg(attivita.idAttivita)"><ion-icon name="images-outline"></ion-icon>Gallery</ion-button>
-    <ion-icon *ngIf="this.idSoggetto && !this.isFavorite" class="noPreferiti" name="star" style="color: #aeaaa8;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
-    <ion-icon *ngIf="this.idSoggetto && this.isFavorite" class="preferiti" name="star" style="color: #cfd20e;" (click)="AddRemoveFavorite(attivita.idAttivita)"></ion-icon>
-  </div>
   
   <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >
     <ion-grid>
@@ -27,7 +29,8 @@
     <ion-card-content>
       <app-pannello-promo (openPageLogin)="isOpenPageLoginEvent($event)"
                           (redirecEsitoEvent)="redirecEsitoEvent($event)"
-                          [listaPromo]="this.listaPromo"></app-pannello-promo>
+                          [listaPromo]="this.listaPromo"
+                          [idAttivita]="this.attivitaSelezionata?.idAttivita"></app-pannello-promo>
     </ion-card-content>
   </ion-card>
   
@@ -35,8 +38,11 @@
   <ion-item>
     <ion-card-header>
       <ion-card-title class="nome">{{attivita.nome}}</ion-card-title>
-      <ion-card-subtitle>
-        <ion-icon name="location-outline"></ion-icon>{{attivita.indirizzo}}, {{attivita.civico}}, {{attivita.cap}}, {{attivita.citta}}
+      <ion-card-subtitle style="margin-top: 20px;">
+        <ion-icon style="margin-right: 5px;" name="location-outline"></ion-icon>{{attivita.indirizzo}}, {{attivita.civico}}, {{attivita.cap}}, {{attivita.citta}}
+      </ion-card-subtitle >
+      <ion-card-subtitle style="margin-top: 20px;" (click)="callPhoneNumber(attivita.telefono)">
+        <ion-icon style="margin-right: 5px;" name="call-outline"></ion-icon>{{attivita.telefono}}
       </ion-card-subtitle>
     </ion-card-header>
   </ion-item>
@@ -48,7 +54,7 @@
     
   <ion-item>
     <ion-card-content>
-      <ion-card-title class="nome">Chi siamo</ion-card-title>
+      <ion-card-title class="subtitle">Chi siamo</ion-card-title>
       <ion-label style="margin-top:2%;">{{attivita.descrizione}}</ion-label>
     </ion-card-content>
   </ion-item>
@@ -69,12 +75,12 @@
       </div>
 
       <ion-item *ngIf="attivita.isOffertaNoGlutine || attivita.isOffertaVegana || attivita.isOffertaVegetariana">
-        <ion-card>
-          <ion-card-content style="min-width: 320px !important; margin-top: 15px;">
-            <div style="display: flex; justify-content: center; align-items: center;">
-              <ion-card-title class="nome">Da noi potete trovare prodotti</ion-card-title>
-            </div>
-            <ion-grid style="margin-top: 7px;">
+            <ion-grid style="margin-top: 15px;">
+              <ion-row>
+                <ion-col size="12" class="column ion-text-center ion-align-items-center">
+                  <ion-card-title class="nome">Da noi potete trovare prodotti</ion-card-title>
+                </ion-col>
+              </ion-row>
               <ion-row>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center" *ngIf="attivita.isOffertaVegetariana">
                   <img class="imgOffer" src="assets/Img/gluten-free.png">
@@ -98,17 +104,20 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-          </ion-card-content>
-        </ion-card>
       </ion-item>
 
-        <ion-item>
-          <ion-card-content>
-            <ion-card-title class="nome">I nostri contatti</ion-card-title>
-            <ion-button (click)="callPhoneNumber(attivita.telefono)">Telefono</ion-button>
-          </ion-card-content>
-        </ion-item>
-  
+      <div class="map-container">
+          <google-map [center]="center" 
+                      [zoom]="17" id="mapElement" (mapReady)="onMapReady($event)" 
+                      [width]="350" 
+                      [height]="280">
+            <map-marker [position]="center"></map-marker>
+          </google-map>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; margin-top: 3%;">
+        <ion-button (click)="copyAddress(attivita.indirizzo, attivita.civico, attivita.cap, attivita.citta)" size="small" shape="round" fill="outline" color="dark"><ion-icon name="copy-outline" style="margin-right: 5px;"></ion-icon>  COPIA INDIRIZZO</ion-button>
+      </div>
+
       <ion-card class="card-orari" style="margin-top: 5%;">
         <ion-grid style="margin-top: 3%;">
           <ion-row>

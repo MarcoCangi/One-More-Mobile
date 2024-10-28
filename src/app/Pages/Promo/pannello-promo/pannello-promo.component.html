@@ -19,60 +19,60 @@
         </ion-chip>
         <br>
         <br>
-          <ion-label >Valido nei giorni</ion-label>
+          <ion-label class="lbl">Valido nei giorni</ion-label>
             <ion-grid>
               <ion-row>
-                  <ion-col>
+                  <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">LUN</ion-label>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">MAR</ion-label>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">MER</ion-label>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">GIO</ion-label>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">VEN</ion-label>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">SAB</ion-label>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">DOM</ion-label>
                   </ion-col>
               </ion-row>
               <ion-row>
                 <ion-col class="column ion-text-center ion-align-items-center">
-                  <ion-label *ngIf="promo.days?.includes(1) || promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="checkmark-outline"></ion-icon></ion-label>
-                  <ion-label *ngIf="!promo.days?.includes(1) && !promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="close-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="promo.days?.includes(1) || promo.days?.includes(0)"><ion-icon color="success" style="height: 22px; width: 22px;" name="checkmark-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="!promo.days?.includes(1) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
                 </ion-col>
                 <ion-col class="column ion-text-center ion-align-items-center">
-                  <ion-label *ngIf="promo.days?.includes(2) || promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="checkmark-outline"></ion-icon></ion-label>
-                  <ion-label *ngIf="!promo.days?.includes(2) && !promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="close-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="promo.days?.includes(2) || promo.days?.includes(0)"><ion-icon color="success" style="height: 22px; width: 22px;" name="checkmark-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="!promo.days?.includes(2) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
 
                 </ion-col>
                 <ion-col class="column ion-text-center ion-align-items-center">
-                  <ion-label *ngIf="promo.days?.includes(3) || promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="checkmark-outline"></ion-icon></ion-label>
-                  <ion-label *ngIf="!promo.days?.includes(3) && !promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="close-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="promo.days?.includes(3) || promo.days?.includes(0)"><ion-icon color="success" style="height: 22px; width: 22px;" name="checkmark-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="!promo.days?.includes(3) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
                 </ion-col>
                 <ion-col class="column ion-text-center ion-align-items-center">
-                  <ion-label *ngIf="promo.days?.includes(4) || promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="checkmark-outline"></ion-icon></ion-label>
-                  <ion-label *ngIf="!promo.days?.includes(4) && !promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="close-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="promo.days?.includes(4) || promo.days?.includes(0)"><ion-icon color="success" style="height: 22px; width: 22px;" name="checkmark-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="!promo.days?.includes(4) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
                 </ion-col>
                 <ion-col class="column ion-text-center ion-align-items-center">
-                  <ion-label *ngIf="promo.days?.includes(5) || promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="checkmark-outline"></ion-icon></ion-label>
-                  <ion-label *ngIf="!promo.days?.includes(5) && !promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="close-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="promo.days?.includes(5) || promo.days?.includes(0)"><ion-icon color="success" style="height: 22px; width: 22px;" name="checkmark-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="!promo.days?.includes(5) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
                 </ion-col>
                 <ion-col class="column ion-text-center ion-align-items-center">
-                  <ion-label *ngIf="promo.days?.includes(6) || promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="checkmark-outline"></ion-icon></ion-label>
-                  <ion-label *ngIf="!promo.days?.includes(6) && !promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="close-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="promo.days?.includes(6) || promo.days?.includes(0)"><ion-icon color="success" style="height: 22px; width: 22px;" name="checkmark-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="!promo.days?.includes(6) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
                 </ion-col>
                 <ion-col class="column ion-text-center ion-align-items-center">
-                  <ion-label *ngIf="promo.days?.includes(7) || promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="checkmark-outline"></ion-icon></ion-label>
-                  <ion-label *ngIf="!promo.days?.includes(7) && !promo.days?.includes(0)"><ion-icon color="success" style="height: 20px; width: 20px;" name="close-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="promo.days?.includes(7) || promo.days?.includes(0)"><ion-icon color="success" style="height: 22px; width: 22px;" name="checkmark-outline"></ion-icon></ion-label>
+                  <ion-label *ngIf="!promo.days?.includes(7) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
                 </ion-col>
             </ion-row>
             </ion-grid>

@@ -21,15 +21,18 @@
 
   .title{
     font-family: Helvetica;
-    font-weight: lighter;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-top: 2%;
     margin-left: 2%;
   }
-  
+
   .nome{
     font-family: Helvetica;
-    font-weight: lighter;
+    font-size: 1.3rem;
+  }
+  
+  .subtitle{
+    font-family: Helvetica;
     font-size: 1.1rem;
   }
   
@@ -53,6 +56,7 @@
     scroll-behavior: smooth;
     flex: 1;
     margin-top: 5%;
+    position: relative; /* Rendi la card il contesto di posizionamento per l'overlay */
   }
   
   .container {
@@ -149,4 +153,44 @@
   .imgOffer{
     width: 25px;
     height: 25px;
+  }
+
+  .map-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .overlayFavourite {
+    position: absolute;
+    top: 0rem; /* Posizionamento dall'alto */
+    right: 0.5rem; /* Posizionamento dal lato destro */
+    z-index: 100; /* Assicurati che l'overlay sia visibile sopra gli altri elementi */
+    display: flex; /* Se vuoi allineare i bottoni in fila */
+  }
+
+  .overlayGallery {
+    position: absolute;
+    bottom: 0rem; /* Posizionamento dall'alto */
+    left: 0.5rem; /* Posizionamento dal lato destro */
+    z-index: 100; /* Assicurati che l'overlay sia visibile sopra gli altri elementi */
+    display: flex; /* Se vuoi allineare i bottoni in fila */
+  }
+
+  .btnGallery{
+    --background: rgba(59, 59, 59, 0.8) !important; /* Imposta un colore di sfondo personalizzato */
+    --background-activated: rgba(59, 59, 59, 0.4); /* Sfondo quando il pulsante è premuto */
+    --background-hover: rgba(59, 59, 59, 0.4); /* Sfondo al passaggio del mouse (su desktop) */
+    --background-color: rgba(59, 59, 59, 0.4) !important; /* Sfondo grigio opaco */
+    border-radius: 4px;
+  }
+
+  .btnFavourite{
+    --background: rgba(59, 59, 59, 0.8) !important; /* Imposta un colore di sfondo personalizzato */
+    --background-activated: rgba(59, 59, 59, 0.4); /* Sfondo quando il pulsante è premuto */
+    --background-hover: rgba(59, 59, 59, 0.4); /* Sfondo al passaggio del mouse (su desktop) */
+    --background-color: rgba(59, 59, 59, 0.4) !important; /* Sfondo grigio opaco */
+    border-radius: 4px;
   }

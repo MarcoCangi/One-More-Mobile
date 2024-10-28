@@ -32,8 +32,8 @@ export class MappaComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
     icon: {
-      url:"assets/Img/Marker.png",
-      scaledSize: new google.maps.Size(40, 50), // Regola le dimensioni come necessario
+      url:"assets/Img/posizione one more_def.png",
+      scaledSize: new google.maps.Size(90, 85), // Regola le dimensioni come necessario
       fillColor: '#FF0000', // Colore di riempimento
       fillOpacity: 0.8, // Opacità del riempimento
       strokeWeight: 2, // Spessore del bordo

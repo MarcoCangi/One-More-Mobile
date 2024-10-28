@@ -3,6 +3,8 @@ import { CouponService } from 'one-more-frontend-common/projects/one-more-fe-ser
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Coupon } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Coupon';
 import { InsertPromoUserAttiva, Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-pannello-promo',
@@ -13,6 +15,7 @@ export class PannelloPromoComponent implements OnInit {
   @Input() listaPromo!: Promo[];
   @Output() openPageLogin = new EventEmitter<boolean>();
   @Output() redirecEsitoEvent = new EventEmitter<boolean>();
+  @Input() idAttivita: number | undefined;
   id!: number;
   requestPromo!: InsertPromoUserAttiva;
   Coupon!: Coupon;
@@ -29,7 +32,8 @@ export class PannelloPromoComponent implements OnInit {
 
   constructor( 
     private authService: AuthService,
-    private couponService: CouponService
+    private couponService: CouponService,
+    private messagingService: MessagingService
   ) {}
   
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
@@ -55,8 +59,12 @@ export class PannelloPromoComponent implements OnInit {
         if (this.Coupon) {
           await this.couponService.AddCoupon(this.Coupon).toPromise();
           this.isConfirmed = true;
+          const fcmToken = await lastValueFrom(this.messagingService.apiGetFCMToken(this.idAttivita)); // Tratta il token come stringa
+          if(fcmToken)
+            await this.messagingService.sendNotification(fcmToken, 'Prenotazione effettuata', 'È stato prenotato un coupon.');
         }
       } catch (error) {
+        console.log(error);
         this.isConfirmed = false;
         this.isError = true;
       }

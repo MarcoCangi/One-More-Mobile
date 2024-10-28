@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 import { AppComponent } from './app.component';
 import { provideFirebaseApp } from '@angular/fire/app';
@@ -200,13 +201,14 @@ const appRoute: Routes = [
             RecaptchaFormsModule,
             AngularFireMessagingModule,
             ServiceWorkerModule.register('firebase-messaging-sw.js', {
-              enabled: environment.production || !environment.production,
+              enabled: environment.production && !Capacitor.isNativePlatform(),
               registrationStrategy: 'registerWhenStable:30000'
             }),
           ],
           providers: [
             { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
             GetApiAttivitaService,
+            InAppBrowser,
             GetApiPromoService,
             GetApiComuniService,
             FileUploadService,

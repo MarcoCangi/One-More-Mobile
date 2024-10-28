@@ -1,19 +1,8 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getMessaging, onMessage } from "firebase/messaging";
+import { Capacitor } from "@capacitor/core";
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
 export const firebaseConfig = {
   apiKey: "AIzaSyBV2_PYleiEY5cpNDsd-WDulEWQPihVdf8",
   authDomain: "one-more-angular.firebaseapp.com",
@@ -28,14 +17,14 @@ export const environment = {
   production: false
 };
 
+// Solo per il Web: inizializza Firebase
+if (!Capacitor.isNativePlatform()) {
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const messaging = getMessaging(app);
 
-// Initialize Firebase
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const messaging = getMessaging(app);
-
-// Listener for foreground notifications
-onMessage(messaging, (payload) => {
-  console.log('Notification received in foreground:', payload);
-});
+  // Listener per le notifiche in foreground (solo web)
+  onMessage(messaging, (payload) => {
+    console.log('Notifica ricevuta in foreground (web):', payload);
+  });
+}
