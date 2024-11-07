@@ -165,7 +165,7 @@
 
   .overlayFavourite {
     position: absolute;
-    top: 0rem; /* Posizionamento dall'alto */
+    top: 0.5rem; /* Posizionamento dall'alto */
     right: 0.5rem; /* Posizionamento dal lato destro */
     z-index: 100; /* Assicurati che l'overlay sia visibile sopra gli altri elementi */
     display: flex; /* Se vuoi allineare i bottoni in fila */
@@ -173,7 +173,7 @@
 
   .overlayGallery {
     position: absolute;
-    bottom: 0rem; /* Posizionamento dall'alto */
+    bottom: 0.5rem; /* Posizionamento dall'alto */
     left: 0.5rem; /* Posizionamento dal lato destro */
     z-index: 100; /* Assicurati che l'overlay sia visibile sopra gli altri elementi */
     display: flex; /* Se vuoi allineare i bottoni in fila */

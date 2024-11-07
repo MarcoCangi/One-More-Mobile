@@ -386,4 +386,48 @@ export class HomeComponent  implements OnInit {
   retry(){
     location.reload();
   }
+
+  async getListAttivita(idTypeRicerca:number){
+    this.filtro = new FiltriAttivita();
+
+    const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+    };
+  
+    if (navigator.geolocation) {
+      try {
+        const position = await getCurrentPositionPromise();
+        this.filtro.latitudine = position.coords.latitude;
+        this.filtro.longitudine = position.coords.longitude;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if(idTypeRicerca)
+    {
+      this.isLoading = true;
+      this.filtro.isHomePage = true;
+      this.filtro.typeFilterHomePage = idTypeRicerca;
+      (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
+        (data: AttivitaFiltrate) => {
+          this.listaAttivitaRicerca = data;
+        },
+        (error: any) => {
+          console.error("Errore durante la chiamata API:", error);
+        },
+        () => {
+
+          if(this.listaAttivitaRicerca){
+            this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+            this.attivitaService.setIsListaAttModalOpen(true);
+          }
+          this.isLoading = false;
+          this.openPageEvent(2);
+        }
+      );
+    }
+  }
 }

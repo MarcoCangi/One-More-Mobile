@@ -89,7 +89,7 @@
                   <img class="imgOffer" src="assets/Img/vegan.png">
                 </ion-col>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center" *ngIf="attivita.isOffertaVegetariana">
-                  <img class="imgOffer" src="assets/Img/leaf.png">
+                  <img class="imgOffer" src="assets/Img/vegetarian.png">
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -115,7 +115,7 @@
           </google-map>
       </div>
       <div style="display: flex; justify-content: center; align-items: center; margin-top: 3%;">
-        <ion-button (click)="copyAddress(attivita.indirizzo, attivita.civico, attivita.cap, attivita.citta)" size="small" shape="round" fill="outline" color="dark"><ion-icon name="copy-outline" style="margin-right: 5px;"></ion-icon>  COPIA INDIRIZZO</ion-button>
+        <ion-button (click)="copyAddress(attivita.indirizzo, attivita.civico, attivita.cap, attivita.citta)" size="small" fill="clear" color="dark"><ion-icon name="copy-outline" style="margin-right: 5px;" ></ion-icon>  COPIA INDIRIZZO</ion-button>
       </div>
 
       <ion-card class="card-orari" style="margin-top: 5%;">

@@ -13,6 +13,7 @@ export class ElencoPromoComponent{
 
   @Input() elencoPromo:Attivita[] | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
+  @Output() ricercaAttivitaEvent = new EventEmitter<number>();
   attivitaSelezionata: Attivita | undefined;
 
   constructor() { }
@@ -52,5 +53,9 @@ export class ElencoPromoComponent{
     this.attivitaSelezionata = attivita;
     if(this.attivitaSelezionata)
       this.attivitaSelezionataEvent.emit(this.attivitaSelezionata);
+  }
+
+  RicercaAttivitaEvent(){
+    this.ricercaAttivitaEvent.emit(1);
   }
 }

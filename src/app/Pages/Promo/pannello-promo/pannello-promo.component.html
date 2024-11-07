@@ -125,46 +125,54 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="column ion-text-center ion-align-items-center">
-      <ion-card *ngIf="!isLoading && !isConfirmed">
-        <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-card-title class="title">
-            Stai per acquaisire il coupon!!
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
-          <ion-button shape="round" (click)="Prenota()">CONFERMA</ion-button>
-          <ion-button shape="round" color="light" (click)="dismissConfirmModal(0)">ANNULLA</ion-button>
-        </ion-card-content>
-        <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && isError">
-          <ion-label>Ops, qualcosa è andato storto</ion-label>
-          <br>
-          <ion-button shape="round" color="light" style="margin-left: 10px;" (click)="dismissConfirmModal(2)">CHIUDI</ion-button>
-        </ion-card-content>
-      </ion-card>
-      <ion-card *ngIf="!isLoading && isConfirmed">
-        <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-card-title class="title2">
-            LA TUA PROMO È ORA ATTIVA <ion-icon name="alert-circle-outline"></ion-icon>
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content class="column ion-text-center ion-align-items-center">
-          <img class="img" src="assets/Img/icons8-ok-480.png">
-          <br>
-          <ion-label class="lbl-info">Per poterla utilizzare, presentati presso l'attività e mostragli il coupon nella sezione "PROMO ATTIVE" così che possano confermarne l'utilizzo.
-            Per maggiorni informazioni visionare le condizioni di utilizzo nelle info.
-        </ion-label>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6">
-              <ion-button shape="round" (click)="dismissConfirmModal(1)"> <ion-icon name="ticket-outline" ></ion-icon> Coupon</ion-button>
-            </ion-col>
-            <ion-col size="6">
-              <ion-button shape="round" (click)="dismissConfirmModal(2)"> <ion-icon name="home-outline" ></ion-icon> Home</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        </ion-card-content>
-      </ion-card>
+      <div class="center-card">
+        <ion-card *ngIf="!isLoading && !isConfirmed">
+          <ion-card-header class="column ion-text-center ion-align-items-center">
+            <ion-card-title class="titleConfirm">
+              Ci sei quasi!
+            </ion-card-title>
+            <br>
+            <ion-card-title class="subtitleConfirm">
+              Stai per acquisire il coupon
+            </ion-card-title>
+            <img class="img" src="assets/Img/spunta_vicino.png">
+            
+          </ion-card-header>
+          <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
+            <ion-button shape="round" (click)="Prenota()">CONFERMA</ion-button>
+            <ion-button shape="round" color="light" (click)="dismissConfirmModal(0)">ANNULLA</ion-button>
+          </ion-card-content>
+          <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && isError">
+            <ion-label>Ops, qualcosa è andato storto</ion-label>
+            <br>
+            <ion-button shape="round" color="light" style="margin-left: 10px;" (click)="dismissConfirmModal(2)">CHIUDI</ion-button>
+          </ion-card-content>
+        </ion-card>
+        <ion-card *ngIf="!isLoading && isConfirmed">
+          <ion-card-header class="column ion-text-center ion-align-items-center">
+            <ion-card-title class="title2">
+              LA TUA PROMO È ORA ATTIVA <ion-icon name="alert-circle-outline"></ion-icon>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="column ion-text-center ion-align-items-center">
+            <img class="img" src="assets/Img/spunta_okay.png">
+            <br>
+            <ion-label class="lbl-info">Per poterla utilizzare, presentati presso l'attività e mostragli il coupon nella sezione "PROMO ATTIVE" così che possano confermarne l'utilizzo.
+              Per maggiorni informazioni visionare le condizioni di utilizzo nelle info.
+          </ion-label>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <ion-button shape="round" (click)="dismissConfirmModal(1)"> <ion-icon name="ticket-outline" ></ion-icon> Coupon</ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button shape="round" (click)="dismissConfirmModal(2)"> <ion-icon name="home-outline" ></ion-icon> Home</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </div>
     </ion-content>
   </ng-template>
 </ion-modal>

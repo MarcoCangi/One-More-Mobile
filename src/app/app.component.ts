@@ -80,7 +80,6 @@ export class AppComponent implements OnInit {
       if (permission.location === 'granted') {
         // Il permesso è stato concesso
         const position = await Geolocation.getCurrentPosition();
-        console.log('Current position:', position);
       } else {
         console.log('Permesso negato per la geolocalizzazione');
       }

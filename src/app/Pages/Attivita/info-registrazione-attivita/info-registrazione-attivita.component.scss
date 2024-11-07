@@ -1,24 +1,41 @@
 .title{
     margin-top: 2rem;
-    font-family: Helvetica;
-    font-size: 1.7rem;
-}
-
-.title1{
-    margin-top: 0.5rem;
     margin-bottom:0.5rem;
     font-family: Helvetica;
     font-size: 1.7rem;
+    color: #e9540a;
 }
 
 .lblSubtitle{
     font-family: Helvetica;
     font-weight: 600;
     font-size: 1.3rem;
+    color: #e9540a;
+    margin-bottom:0.5rem;
 }
 
 .lblDescription{
     font-family: Helvetica;
     font-weight: 400;
     font-size: 1rem;
+}
+
+.lblFaq{
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.lblTitleFaq{
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.contentFaq{
+    background-color: white !important;
+    border-color: rgb(13, 86, 244);
+    border-style: solid;
+    border-radius: 15px;
+    margin-bottom: 0.5rem;
 }

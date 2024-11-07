@@ -10,7 +10,7 @@ export class ElencoViciniComponent {
 
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
-
+  @Output() ricercaAttivitaEvent = new EventEmitter<number>();
   @Input() elencoVicini:Attivita[] | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
   attivitaSelezionata: Attivita | undefined;
@@ -52,6 +52,10 @@ export class ElencoViciniComponent {
     this.attivitaSelezionata = attivita;
     if(this.attivitaSelezionata)
       this.attivitaSelezionataEvent.emit(this.attivitaSelezionata);
+  }
+
+  RicercaAttivitaEvent(){
+    this.ricercaAttivitaEvent.emit(2);
   }
 
 }

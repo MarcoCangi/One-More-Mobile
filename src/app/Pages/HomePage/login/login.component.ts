@@ -79,8 +79,6 @@ export class LoginComponent {
             }
           }
 
-          console.log(this.utente.fcmToken);
-
           const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
           if (!response.utente.errore) {
             this.authService.createUserSession(this.utente.email?? '', this.utente.uid?? '', token, response.idAttivita, response.userId, docData?.photoURL ? docData.photoURL : '', 1, docData?.displayName ? docData.displayName : '', docData?.nome ? docData.nome : '', docData?.cognome ? docData.cognome : '');
@@ -139,8 +137,6 @@ export class LoginComponent {
             }
           }
         }
-
-        console.log(this.utente.fcmToken);
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {
@@ -194,8 +190,6 @@ export class LoginComponent {
             }
           }
         }
-
-        console.log(this.utente.fcmToken);
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {

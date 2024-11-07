@@ -138,13 +138,11 @@ export class FavoritesComponent  implements OnInit {
   }
 
   openConfirmModal(id:number | undefined) {
-    console.log('prova');
     this.idAttivitaSelezionata = id;
     this.isModalConfirmOpen = true;
   }
 
   dismissConfirmModal() {
-    console.log('prova');
     this.idAttivitaSelezionata = undefined;
     this.isModalConfirmOpen = false;
   }

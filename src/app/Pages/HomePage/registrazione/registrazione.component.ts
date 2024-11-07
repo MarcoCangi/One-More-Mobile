@@ -267,8 +267,6 @@ export class RegistrazioneComponent {
             }
           }
         }
-        
-        console.log(this.utente.fcmToken);
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {

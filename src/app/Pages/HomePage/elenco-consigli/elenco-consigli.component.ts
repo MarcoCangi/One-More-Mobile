@@ -13,6 +13,7 @@ export class ElencoConsigliComponent {
 
   @Input() elencoNew:Attivita[] | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
+  @Output() ricercaAttivitaEvent = new EventEmitter<number>();
   attivitaSelezionata: Attivita | undefined;
 
   constructor() { }
@@ -53,4 +54,7 @@ export class ElencoConsigliComponent {
       this.attivitaSelezionataEvent.emit(this.attivitaSelezionata);
   }
 
+  RicercaAttivitaEvent(){
+    this.ricercaAttivitaEvent.emit(3);
+  }
 }
