@@ -330,8 +330,8 @@ export class HomeComponent  implements OnInit {
         }
         try {
           const data: AttivitaHomePageResponse = await firstValueFrom(
-            this.attivitaService.apiGetListaAttivitaHomePage(this.latitudine, this.longitudine).pipe(
-              //retry(2), // Riprova la chiamata fino a 3 volte in caso di errore
+            (await this.attivitaService.apiGetListaAttivitaHomePage(this.latitudine, this.longitudine)).pipe(
+              
               catchError((error) => {
                 // Gestione errore
                 console.error('Errore di connessione', error);

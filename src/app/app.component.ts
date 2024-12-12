@@ -57,9 +57,9 @@ export class AppComponent implements OnInit {
     }
 
     //GET LISTA DEC TIPO ATTIVITA
-    this.attivitaService.getlistaAttivitaDDL().subscribe((listaAttivitaDDL) => {
+    this.attivitaService.getlistaAttivitaDDL().subscribe(async (listaAttivitaDDL) => {
       if (!listaAttivitaDDL) {
-        this.attivitaService.apiGetListaDecAttivita().subscribe((data: TipoAttivita[]) => {
+        (await this.attivitaService.apiGetListaDecAttivita()).subscribe((data: TipoAttivita[]) => {
           this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
             return {
               codTipoAttivita: item.codTipoAttivita,

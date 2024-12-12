@@ -66,13 +66,13 @@ export class LoginComponent {
           if(this.utente){
             if (Capacitor.isNativePlatform()) {
               // Se stai su una piattaforma mobile (iOS/Android)
-              const token = await this.messagingService.requestPermission();
+              const token = await this.messagingService.getFCMToken();
               if (token){
                 this.utente.fcmToken = token;
               }
             } else {
               // Se stai sul web, usa il Firebase Messaging Web SDK
-              const token = await this.messagingService.setupFirebaseWeb();
+              const token = await this.messagingService.getFCMToken();
               if (token){
                 this.utente.fcmToken = token;
               }
@@ -125,13 +125,13 @@ export class LoginComponent {
         if(this.utente){
           if (Capacitor.isNativePlatform()) {
             // Se stai su una piattaforma mobile (iOS/Android)
-            const token = await this.messagingService.requestPermission();
+            const token = await this.messagingService.getFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
           } else {
             // Se stai sul web, usa il Firebase Messaging Web SDK
-            const token = await this.messagingService.setupFirebaseWeb();
+            const token = await this.messagingService.getFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
@@ -178,13 +178,13 @@ export class LoginComponent {
         if(this.utente){
           if (Capacitor.isNativePlatform()) {
             // Se stai su una piattaforma mobile (iOS/Android)
-            const token = await this.messagingService.requestPermission();
+            const token = await this.messagingService.getFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
           } else {
             // Se stai sul web, usa il Firebase Messaging Web SDK
-            const token = await this.messagingService.setupFirebaseWeb();
+            const token = await this.messagingService.getFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }

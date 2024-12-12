@@ -477,7 +477,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.listaAttivitaDDL = this.attivitaService.GetListaTipoAttivitaSession();
     if (!this.listaAttivitaDDL || this.listaAttivitaDDL.length === 0) {
         try {
-            const data = await firstValueFrom(this.attivitaService.apiGetListaDecAttivita());
+            const data = await firstValueFrom(await this.attivitaService.apiGetListaDecAttivita());
             if (data) {
                 this.listaAttivitaDDL = data.map((item: TipoAttivita) => {
                     return {
