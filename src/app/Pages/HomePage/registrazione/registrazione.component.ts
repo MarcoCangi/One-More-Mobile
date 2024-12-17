@@ -130,13 +130,13 @@ export class RegistrazioneComponent {
         if(this.utente){
           if (Capacitor.isNativePlatform()) {
             // Se stai su una piattaforma mobile (iOS/Android)
-            const token = await this.messagingService.getFCMToken();
+            const token = await this.messagingService.getMobileFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
           } else {
             // Se stai sul web, usa il Firebase Messaging Web SDK
-            const token = await this.messagingService.getFCMToken();
+            const token = await this.messagingService.getWebFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
@@ -202,13 +202,13 @@ export class RegistrazioneComponent {
         if(this.utente){
           if (Capacitor.isNativePlatform()) {
             // Se stai su una piattaforma mobile (iOS/Android)
-            const token = await this.messagingService.getFCMToken();
+            const token = await this.messagingService.getMobileFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
           } else {
             // Se stai sul web, usa il Firebase Messaging Web SDK
-            const token = await this.messagingService.getFCMToken();
+            const token = await this.messagingService.getWebFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
@@ -255,13 +255,13 @@ export class RegistrazioneComponent {
         if(this.utente){
           if (Capacitor.isNativePlatform()) {
             // Se stai su una piattaforma mobile (iOS/Android)
-            const token = await this.messagingService.getFCMToken();
+            const token = await this.messagingService.getMobileFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
           } else {
             // Se stai sul web, usa il Firebase Messaging Web SDK
-            const token = await this.messagingService.getFCMToken();
+            const token = await this.messagingService.getWebFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }

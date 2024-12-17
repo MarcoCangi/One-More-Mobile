@@ -25,37 +25,6 @@ if (!environment.production) {
 
 const app = initializeApp(firebaseConfig);
 
-// if (Capacitor.isNativePlatform()) {
-//   // Piattaforme native (Android/iOS) con Play Integrity
-//   initializeAppCheck(app, {
-//     provider: new CustomProvider({
-//       getToken: async () => {
-//         // Logica per recuperare il token reale da Play Integrity
-//         // Sostituisci questa logica se necessario
-//         const tokenFromServer = 'debug-token'; // Usa un token reale in produzione
-//         return {
-//           token: tokenFromServer,
-//           expireTimeMillis: Date.now() + 60 * 60 * 1000, // Valido per 1 ora
-//         };
-//       },
-//     }),
-//     isTokenAutoRefreshEnabled: true,
-//   });
-// } else {
-//   // Web - usa il debug token
-//   initializeAppCheck(app, {
-//     provider: new CustomProvider({
-//       getToken: async () => {
-//         // Genera un debug token per testare le richieste su localhost
-//         return {
-//           token: 'debug-token', // Assicurati che sia registrato nella Firebase Console
-//           expireTimeMillis: Date.now() + 60 * 60 * 1000,
-//         };
-//       },
-//     }),
-//     isTokenAutoRefreshEnabled: true,
-//   });
-
   // Configura Analytics e Messaging solo per il Web
   const analytics = getAnalytics(app);
   const messaging = getMessaging(app);
