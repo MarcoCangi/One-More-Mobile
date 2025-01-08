@@ -24,7 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { AppCheckInterceptor } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/interceptors/AppCheckInterceptor';
+import { AppCheckInterceptor } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/interceptors/app-check.interceptor';
 
 import { AppComponent } from './app.component';
 import { provideFirebaseApp } from '@angular/fire/app';

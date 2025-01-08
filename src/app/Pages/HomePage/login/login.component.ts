@@ -41,6 +41,7 @@ export class LoginComponent {
       const password = this.homeForm.value.passwordLogin;
       try {
         const { userCredential, token } = await this.authService.login(email, password);
+        console.log(email, password);
         if(userCredential){
 
           const docData = await this.authService.getCurrentUser(userCredential.user.uid)
@@ -64,18 +65,9 @@ export class LoginComponent {
           };
 
           if(this.utente){
-            if (Capacitor.isNativePlatform()) {
-              // Se stai su una piattaforma mobile (iOS/Android)
-              const token = await this.messagingService.getMobileFCMToken();
-              if (token){
-                this.utente.fcmToken = token;
-              }
-            } else {
-              // Se stai sul web, usa il Firebase Messaging Web SDK
-              const token = await this.messagingService.getWebFCMToken();
-              if (token){
-                this.utente.fcmToken = token;
-              }
+            const token = await this.messagingService.getFCMToken();
+            if (token){
+              this.utente.fcmToken = token;
             }
           }
 
@@ -123,18 +115,9 @@ export class LoginComponent {
         };
 
         if(this.utente){
-          if (Capacitor.isNativePlatform()) {
-            // Se stai su una piattaforma mobile (iOS/Android)
-            const token = await this.messagingService.getMobileFCMToken();
-            if (token){
-              this.utente.fcmToken = token;
-            }
-          } else {
-            // Se stai sul web, usa il Firebase Messaging Web SDK
-            const token = await this.messagingService.getWebFCMToken();
-            if (token){
-              this.utente.fcmToken = token;
-            }
+          const token = await this.messagingService.getFCMToken();
+          if (token){
+            this.utente.fcmToken = token;
           }
         }
   
@@ -176,19 +159,10 @@ export class LoginComponent {
         };
 
         if(this.utente){
-          if (Capacitor.isNativePlatform()) {
-            // Se stai su una piattaforma mobile (iOS/Android)
-            const token = await this.messagingService.getMobileFCMToken();
+            const token = await this.messagingService.getFCMToken();
             if (token){
               this.utente.fcmToken = token;
             }
-          } else {
-            // Se stai sul web, usa il Firebase Messaging Web SDK
-            const token = await this.messagingService.getWebFCMToken();
-            if (token){
-              this.utente.fcmToken = token;
-            }
-          }
         }
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
