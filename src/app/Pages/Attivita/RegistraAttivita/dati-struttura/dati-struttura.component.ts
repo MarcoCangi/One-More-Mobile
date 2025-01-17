@@ -216,7 +216,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isError = false;
     const telefonoPattern = /^[0-9()+ -]*$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const noSpecialCharsRegex = /^[a-zA-Z0-9.,()!?/@# _-]*$/;
+    const noSpecialCharsRegex = /^(?!.*(DROP|TABLE|INSERT|DELETE|UPDATE)).*[a-zA-Z0-9À-ÖØ-öø-ÿ.,()!?/@#& _-]*$/i;
     const noSpecialCharsRegexCitta = /^[a-zA-Z0-9 _-]*$/;
 
     if(request)
@@ -339,11 +339,11 @@ export class DatiStrutturaComponent  implements OnInit {
     }
 
     //CONTROLLO DESCRIZIONE OFFERTE//
-    else if(request.descrizione.length > 2000){
+    else if(request.descrizioneOfferta.length > 2000){
       this.errorDesc = "Lunghezza massima descrizione offerta 2000 caratteri";
       this.isError = true;
     }
-    else if (!noSpecialCharsRegex.test(request.descrizione)) {
+    else if (!noSpecialCharsRegex.test(request.descrizioneOfferta)) {
       this.errorDesc = "La descrizione offerta contiene caratteri non ammessi";
       this.isError = true;
     }
