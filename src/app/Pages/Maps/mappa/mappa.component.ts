@@ -241,6 +241,7 @@ export class MappaComponent implements OnInit {
           }
         }
 
+        this.filter.typeFilterHomePage = 2;
         const observable = await this.service.apiGetListaAttivitaFiltrate(this.filter);
         const data = await firstValueFrom(observable);
         const allAttivitas = data.listaAttivita;
