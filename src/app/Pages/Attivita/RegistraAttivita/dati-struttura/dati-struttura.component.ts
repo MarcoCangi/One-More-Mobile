@@ -154,7 +154,7 @@ export class DatiStrutturaComponent  implements OnInit {
             immagine.ordinamento = this.countImg;
             this.countImg = this.countImg + 1;
           });
-  
+        }
           if (this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0) {
             this.requestAttivita.listaTipoAttivita.forEach(att => {
               if (att.codTipoAttivita) {
@@ -162,7 +162,7 @@ export class DatiStrutturaComponent  implements OnInit {
               }
             });
           }
-        }
+        
         if (this.requestAttivita) {
           await this.insertAttivita();
         }
@@ -193,6 +193,16 @@ export class DatiStrutturaComponent  implements OnInit {
         }
         if (this.requestAttivita && this.orari) {
           this.requestAttivita.orari = this.orari;
+        }
+        if (this.requestAttivita && this.requestAttivita.immagini != undefined && this.requestAttivita.immagini.length > 0) {
+          this.requestAttivita.immagini.forEach(immagine => {
+            if (!this.isPrincipale) {
+              immagine.isImmaginePrincipale = true;
+              this.isPrincipale = true;
+            }
+            immagine.ordinamento = this.countImg;
+            this.countImg = this.countImg + 1;
+          });
         }
         if (this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0) {
           this.requestAttivita.listaTipoAttivita.forEach(att => {

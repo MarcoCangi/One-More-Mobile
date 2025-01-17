@@ -51,11 +51,11 @@ export class GalleryComponent implements OnInit {
         this.urlPrincipale = url;
       else
         this.urls.push(url);
-
+      const nomeImmagine = 'camera_image_' + this.immaginiArray.length.toString();
       const nuovaImmagine: Immagini = {
         idImmagine: 0,
         idAttivita: 0,
-        nomeUpload: 'camera_image',
+        nomeUpload: nomeImmagine,
         upload: url,
         isImmaginePrincipale: isProfile,
         ordinamento: 0,

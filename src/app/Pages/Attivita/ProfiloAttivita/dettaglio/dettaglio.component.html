@@ -11,8 +11,8 @@
       <ion-button class="btnGallery" (click)="openDialogImg(attivita.idAttivita)" [outline]="true"><ion-icon name="images-outline" style="margin-right: 5px; margin-top: 2px;"></ion-icon><ion-label>Gallery</ion-label></ion-button>
     </div>
     <div class="overlayFavourite">
-      <ion-button class="btnFavourite" *ngIf="this.idSoggetto && !this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart"></ion-icon></ion-button>
-      <ion-button class="btnFavourite" *ngIf="this.idSoggetto && this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart-outline"></ion-icon></ion-button>
+      <ion-button class="btnFavourite" *ngIf="this.idSoggetto && !this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart-outline"></ion-icon></ion-button>
+      <ion-button class="btnFavourite" *ngIf="this.idSoggetto && this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart"></ion-icon></ion-button>
     </div>
   </div>
   
@@ -43,6 +43,9 @@
       </ion-card-subtitle >
       <ion-card-subtitle style="margin-top: 20px;" (click)="callPhoneNumber(attivita.telefono)">
         <ion-icon style="margin-right: 5px;" name="call-outline"></ion-icon>{{attivita.telefono}}
+      </ion-card-subtitle>
+      <ion-card-subtitle *ngIf="this.attivita.isCellPubblico" style="margin-top: 20px;" (click)="callPhoneNumber(attivita.cellulare)">
+        <ion-icon style="margin-right: 5px;" name="phone-portrait-sharp"></ion-icon>{{attivita.cellulare}} 
       </ion-card-subtitle>
     </ion-card-header>
   </ion-item>
