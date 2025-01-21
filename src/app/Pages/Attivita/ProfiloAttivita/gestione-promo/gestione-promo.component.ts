@@ -377,8 +377,10 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   async ControlPromo(promo: InsertPromoReqDto){
+    this.errTitolo = '';
+    this.isError = false;
     const today = new Date().setHours(0, 0, 0, 0);
-    const noSpecialCharsRegex = /^[a-zA-Z0-9.,()!?/@# _\u00C0-\u017F€-]*$/;
+    const noSpecialCharsRegex = /^(?!.*(DROP|TABLE|INSERT|DELETE|UPDATE)).*[a-zA-Z0-9À-ÖØ-öø-ÿ.,()!?/@#& _-]*$/i;
     const onlyNumbersRegex = /^[0-9]+$/;
 
     //TITOLO
@@ -395,7 +397,7 @@ export class GestionePromoComponent  implements OnInit {
       this.isError = true;
     }
     else if (!noSpecialCharsRegex.test(promo.titoloPromo)) {
-      this.errTitolo = "Il nome contiene caratteri non ammessi";
+      this.errTitolo = "Il titolo contiene caratteri non ammessi";
       this.isError = true;
     }
     else if (onlyNumbersRegex.test(promo.titoloPromo) && !/[a-zA-Z]/.test(promo.titoloPromo)) {
