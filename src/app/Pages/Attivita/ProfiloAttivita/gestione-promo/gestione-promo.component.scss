@@ -32,3 +32,57 @@
     scrollbar-width: none;
     overflow-x: hidden;
   }
+
+  .custom-error-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 100%; /* Larghezza completa dello schermo */
+    max-width: 100%; /* Assicurati che non superi la larghezza dello schermo */
+    height: auto;
+    text-align: center; /* Centra il contenuto del dialogo */
+  }
+  
+  .custom-error-dialog h2,
+  .custom-error-dialog h4 {
+    margin: 10px 0;
+  }
+  
+  .custom-error-dialog ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  .custom-error-dialog li {
+    margin: 5px 0;
+  }
+  
+  .custom-error-dialog button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .custom-error-dialog button:hover {
+    background: #0056b3;
+  }
+
+  .titleError{
+    color: red;
+  }
+
+  .imgError{
+    height: 100px;
+    width: 80px;
+  }

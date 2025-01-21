@@ -40,6 +40,7 @@ export class GestionePromoComponent  implements OnInit {
     isError: boolean = false;
     errNumUtilizziPersona:string | undefined;
     alertButtons = ['Chiudi'];
+    errorList: string[] = [];
 
     isLoadingSalvataggio: boolean = false;
     @Input() modificaPromo!: Promo;
@@ -72,17 +73,45 @@ export class GestionePromoComponent  implements OnInit {
         this.requestPromo.idPromo = this.modificaPromo.idPromo;
         this.requestPromo.idAttivita = this.modificaPromo.idAttivita;
         this.idAttivita = this.modificaPromo.idAttivita;
-        if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0)
+        if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0){
           this.isLimitEnabled = true;
-    
-        if(this.modificaPromo.days != undefined && this.modificaPromo.days.length > 0)
-        {
-          this.giorni.days = this.modificaPromo.days;
+          this.requestPromo.numCouponMax = this.modificaPromo.numCouponMax;
         }
-    
+        if(this.modificaPromo.dataDal){
+          this.requestPromo.dataDal = this.modificaPromo.dataDal;
+        }
+        if(this.modificaPromo.dataAl){
+          this.requestPromo.dataAl = this.modificaPromo.dataAl;
+        }
+        if(this.modificaPromo.titoloPromo){
+          this.requestPromo.titoloPromo = this.modificaPromo.titoloPromo;
+        }
+        if(this.modificaPromo.descPromo){
+          this.requestPromo.descPromo = this.modificaPromo.descPromo;
+        }
+        if(this.modificaPromo.validDays){
+          this.requestPromo.validDays = this.modificaPromo.validDays;
+        }
+        if(this.modificaPromo.isAllDayValidita){
+          this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
+        }
+        if(this.modificaPromo.days != undefined && this.modificaPromo.days.length > 0){
+          this.giorni.days = this.modificaPromo.days;
+          this.requestPromo.days = this.modificaPromo.days;
+        }
+        if(this.modificaPromo.isAllDayValidita){
+          this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
+        }
+        if(this.modificaPromo.numCouponMax){
+          this.requestPromo.numCouponMax = this.modificaPromo.numCouponMax;
+        }
+        if(this.modificaPromo.numUtilizziPerPersonaMax){
+          this.requestPromo.numUtilizziPerPersonaMax = this.modificaPromo.numUtilizziPerPersonaMax;
+        }
         if(this.modificaPromo.listaTipologie != undefined)
         {
           this.listaTipologie = this.modificaPromo.listaTipologie;
+          this.requestPromo.listaTipologie = this.modificaPromo.listaTipologie;
         }
       }
       else if(!this.modificaPromo)
@@ -349,7 +378,7 @@ export class GestionePromoComponent  implements OnInit {
 
   async ControlPromo(promo: InsertPromoReqDto){
     const today = new Date().setHours(0, 0, 0, 0);
-    const noSpecialCharsRegex = /^[a-zA-Z0-9.,()!?/@# _-]*$/;
+    const noSpecialCharsRegex = /^[a-zA-Z0-9.,()!?/@# _\u00C0-\u017F€-]*$/;
     const onlyNumbersRegex = /^[0-9]+$/;
 
     //TITOLO
@@ -383,17 +412,21 @@ export class GestionePromoComponent  implements OnInit {
       this.errPeriodo = 'Inserire una data di fine validità'
       this.isError = true;
     }
-    else if(promo.dataDal.setHours(0, 0, 0, 0) < today){
-      this.errPeriodo = 'La data di inizio validità non può essere inferiore ad oggi'
-      this.isError = true;
-    }
-    else if(promo.dataAl.setHours(0, 0, 0, 0) < today){
-      this.errPeriodo = 'La data di fine validità non può essere inferiore alla data di oggi'
-      this.isError = true;
-    }
-    else if(promo.dataAl.setHours(0, 0, 0, 0) < promo.dataDal.setHours(0, 0, 0, 0)){
-      this.errPeriodo = 'La data di fine validità non può essere inferiore alla data inizio'
-      this.isError = true;
+    else{
+      const dataDal = promo.dataDal instanceof Date ? promo.dataDal : new Date(promo.dataDal);
+      const dataAl = promo.dataAl instanceof Date ? promo.dataAl : new Date(promo.dataAl);
+      if(dataDal.setHours(0, 0, 0, 0) < today){
+        this.errPeriodo = 'La data di inizio validità non può essere inferiore ad oggi'
+        this.isError = true;
+      }
+      else if(dataAl.setHours(0, 0, 0, 0) < today){
+        this.errPeriodo = 'La data di fine validità non può essere inferiore alla data di oggi'
+        this.isError = true;
+      }
+      else if(dataAl.setHours(0, 0, 0, 0) < dataDal.setHours(0, 0, 0, 0)){
+        this.errPeriodo = 'La data di fine validità non può essere inferiore alla data inizio'
+        this.isError = true;
+      }
     }
     
     //DESCRIZIONE
@@ -505,32 +538,34 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   getErrorMessage(): string {
-    let errorMessage = '';
+    const errorList: string[] = [];
   
     if (this.errTitolo) {
-      errorMessage += `•${this.errTitolo} \n`;
+      errorList.push(`• ${this.errTitolo}`);
     }
     if (this.errDescrizione) {
-      errorMessage += `•${this.errDescrizione}\n`;
+      errorList.push(`• ${this.errDescrizione}`);
     }
     if (this.errPeriodo) {
-      errorMessage += `•${this.errPeriodo}\n`;
+      errorList.push(`• ${this.errPeriodo}`);
     }
     if (this.errGiorni) {
-      errorMessage += `•${this.errGiorni}\n`;
+      errorList.push(`• ${this.errGiorni}`);
     }
     if (this.errOrari) {
-      errorMessage += `•${this.errOrari}\n`;
+      errorList.push(`• ${this.errOrari}`);
     }
     if (this.errTipologia) {
-      errorMessage += `•${this.errTipologia}\n`;
+      errorList.push(`• ${this.errTipologia}`);
     }
     if (this.errNumUtilizzi) {
-      errorMessage += `•${this.errNumUtilizzi}\n`;
+      errorList.push(`• ${this.errNumUtilizzi}`);
     }
     if (this.errNumUtilizziPersona) {
-      errorMessage += `•${this.errNumUtilizziPersona}\n`;
+      errorList.push(`• ${this.errNumUtilizziPersona}`);
     }
-    return errorMessage.trim();
-  }
+  
+    // Costruisci un elenco HTML
+    return `<ul>${errorList.map(error => `<li>${error}</li>`).join('')}</ul>`;
+  }  
 }

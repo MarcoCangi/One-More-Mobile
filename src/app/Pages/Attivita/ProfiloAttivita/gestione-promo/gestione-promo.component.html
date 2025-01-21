@@ -114,15 +114,23 @@
   </div>
 </div>
 
-<ion-alert
-  [isOpen]="this.isError"
-  header="Attenzione"
-  subHeader="Sono stati riscontrati i seguenti errori nella compilazione"
-  [message]="getErrorMessage()"
-  [buttons]="alertButtons"
-  cssClass="custom-alert"
-  (didDismiss)="isError = false">
-  </ion-alert>
+<div *ngIf="isError" class="custom-error-dialog">
+  <img src="/assets/Img/not_okay.png" class="imgError" alt="error img">
+  <h2 class="titleError">Attenzione</h2>
+  <h4>Sono stati riscontrati i seguenti errori nella compilazione:</h4>
+  <ul>
+    <li *ngIf="errTitolo">• {{ errTitolo }}</li>
+    <li *ngIf="errDescrizione">• {{ errDescrizione }}</li>
+    <li *ngIf="errPeriodo">• {{ errPeriodo }}</li>
+    <li *ngIf="errGiorni">• {{ errGiorni }}</li>
+    <li *ngIf="errOrari">• {{ errOrari }}</li>
+    <li *ngIf="errTipologia">• {{ errTipologia }}</li>
+    <li *ngIf="errNumUtilizzi">• {{ errNumUtilizzi }}</li>
+    <li *ngIf="errNumUtilizziPersona">• {{ errNumUtilizziPersona }}</li>
+  </ul>
+  <button (click)="isError = false">Chiudi</button>
+</div>
+
 
 
 <ion-modal [isOpen]="isConfirmOpen" class="full-modal">
