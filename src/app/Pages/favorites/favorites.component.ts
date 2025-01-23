@@ -138,6 +138,7 @@ export class FavoritesComponent  implements OnInit {
   }
 
   openConfirmModal(id:number | undefined) {
+    console.log(id);
     this.idAttivitaSelezionata = id;
     this.isModalConfirmOpen = true;
   }
@@ -152,16 +153,27 @@ export class FavoritesComponent  implements OnInit {
   }
 
   async AddRemoveFavorite(): Promise<void> {
+    console.log('prova1');
     this.isLoading = true;
-    const userSession = this.authService.getUserSessionFromCookie();
-    if (userSession && this.idAttivitaSelezionata && this.idSoggetto) {
-      this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, this.idAttivitaSelezionata).toPromise();
-      if(this.isOk && this.listaAttivitaFavoriti){
-        this.listaAttivitaFavoriti = this.listaAttivitaFavoriti.filter(attivita => attivita.idAttivita !== this.idAttivitaSelezionata);
-        this.dismissConfirmModal();
+    try {
+      const userSession = this.authService.getUserSessionFromCookie();
+      console.log('prova2');
+      if (userSession && this.idAttivitaSelezionata && this.idSoggetto) {
+        this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, this.idAttivitaSelezionata);
+        if (this.isOk && this.listaAttivitaFavoriti) {
+          this.listaAttivitaFavoriti = this.listaAttivitaFavoriti.filter(
+            attivita => attivita.idAttivita !== this.idAttivitaSelezionata 
+          );
+          setTimeout(() => {
+            this.dismissConfirmModal();
+          }, 100); // 100 millisecondi = 0.1 secondi
+        }
       }
+    } catch (error) {
+      console.error('Errore durante AddRemoveFavorite:', error);
+    } finally {
+      this.isLoading = false;
     }
-    this.isLoading = false;
   }
 
   redirecEsitoEvent(typeRedirect:boolean){

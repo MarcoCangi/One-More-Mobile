@@ -127,7 +127,7 @@ export class DettaglioComponent  implements OnInit {
   async AddRemoveFavorite(idAttivita: number | undefined): Promise<void> {
     const userSession = this.authService.getUserSessionFromCookie();
     if (userSession && idAttivita) {
-      this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, idAttivita).toPromise();
+      this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, idAttivita);
       if(this.isOk){
         if(this.isFavorite)
           this.isFavorite = false;

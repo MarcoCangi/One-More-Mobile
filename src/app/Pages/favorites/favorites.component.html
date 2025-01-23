@@ -58,26 +58,24 @@
 
 <ion-modal [isOpen]="isModalConfirmOpen" class="full-modal">
   <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-card-title class="title" style="margin-left: 3%;">Rimuovi dai Preferiti</ion-card-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="dismissConfirmModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="column ion-text-center ion-align-items-center">
-      <ion-card>
-        <ion-card-header class="column ion-text-center ion-align-items-center">
-          <ion-card-title class="title">
-            Vuoi rimuoverla dai preferiti?
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content class="column ion-text-center ion-align-items-center">
-          <ion-button shape="round" color="danger" (click)="AddRemoveFavorite()">ELIMINA</ion-button>
-          <ion-button shape="round" color="light" (click)="dismissConfirmModal()">ANNULLA</ion-button>
-        </ion-card-content>
-      </ion-card>
-    </ion-content>
-  </ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-card-title class="title" style="margin-left: 3%;">Rimuovi dai Preferiti</ion-card-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismissConfirmModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+        <ion-card>
+          <ion-card-header class="column ion-text-center ion-align-items-center">
+            <ion-card-title class="title">
+              Vuoi rimuoverla dai preferiti?
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="column ion-text-center ion-align-items-center">
+              <ion-button shape="round" color="danger" (click)="AddRemoveFavorite()">ELIMINA</ion-button>
+              <ion-button shape="round" color="light" (click)="dismissConfirmModal()">ANNULLA</ion-button>
+          </ion-card-content>
+        </ion-card>
+    </ng-template>
 </ion-modal>

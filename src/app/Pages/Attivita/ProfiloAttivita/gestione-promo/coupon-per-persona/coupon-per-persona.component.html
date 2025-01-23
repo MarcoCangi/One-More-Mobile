@@ -1,5 +1,5 @@
 <form [formGroup]="exampleForm" class="form">
-  <ion-label>Una singola persona può richiedere più di un coupon?</ion-label>
+  <ion-label>Vuoi impostare un limite di utilizzi per persona?</ion-label>
   <ion-toggle style="margin-left: 5%;" [(ngModel)]="isLimitEnabled" [ngModelOptions]="{standalone: true}" color="primary"></ion-toggle>
 <div *ngIf="isLimitEnabled" style="margin-top: 5%;">
   <ion-label>Quanti coupon può utilizzare una singola persona?</ion-label>

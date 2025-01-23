@@ -25,7 +25,8 @@
         <ion-datetime class="date"
           [value]="dataDalFormControl.value"
           (ionChange)="onDataDalSelected($event)"
-          presentation="date">
+          presentation="date"
+          firstDayOfWeek="1">
         </ion-datetime>
         <ion-button (click)="closeDataDalPicker()">Chiudi</ion-button>
       </div>
