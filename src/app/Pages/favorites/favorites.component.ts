@@ -72,6 +72,7 @@ export class FavoritesComponent  implements OnInit {
         try {
             const data = await this.attivitaService.apiGetAttivitaByIdAttivita(idAttivita).toPromise();
             this.attivita = data;
+            console.log(this.attivita?.isPromoPresente);
             this.ricercaAttiviaSelezionataEvent.emit(this.attivita);
             this.openPage(3);
         } catch (error) {
@@ -137,14 +138,15 @@ export class FavoritesComponent  implements OnInit {
     this.isModalPromoOpen = false;
   }
 
-  openConfirmModal(id:number | undefined) {
+ async openConfirmModal(id:number | undefined,event:Event) {
+    event.stopPropagation()
     console.log(id);
     this.idAttivitaSelezionata = id;
     this.isModalConfirmOpen = true;
   }
 
-  dismissConfirmModal() {
-    this.idAttivitaSelezionata = undefined;
+  async dismissConfirmModal() {
+    // this.idAttivitaSelezionata = undefined;
     this.isModalConfirmOpen = false;
   }
 
