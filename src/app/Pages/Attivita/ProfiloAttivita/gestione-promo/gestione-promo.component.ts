@@ -99,8 +99,12 @@ export class GestionePromoComponent  implements OnInit {
           this.giorni.days = this.modificaPromo.days;
           this.requestPromo.days = this.modificaPromo.days;
         }
-        if(this.modificaPromo.isAllDayValidita){
-          this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
+        // if(this.modificaPromo.isAllDayValidita){
+        //   this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
+        // }
+        if(this.modificaPromo.orarioValiditaDa && this.modificaPromo.orarioValiditaAl){
+          this.requestPromo.orarioValiditaDa = this.modificaPromo.orarioValiditaDa;
+          this.requestPromo.orarioValiditaAl = this.modificaPromo.orarioValiditaAl;
         }
         if(this.modificaPromo.numCouponMax){
           this.requestPromo.numCouponMax = this.modificaPromo.numCouponMax;
@@ -194,12 +198,33 @@ export class GestionePromoComponent  implements OnInit {
         const sortedDays = this.requestPromo.days.sort((a, b) => a - b);
         this.requestPromo.validDays = sortedDays.join('-');
       }
-
+      
+      const dataDal = this.requestPromo.dataDal ? new Date(this.requestPromo.dataDal) : undefined;
+      const dataAl = this.requestPromo.dataAl ? new Date(this.requestPromo.dataAl) : undefined;
+      if (dataDal) {
+        // Imposta le date in UTC
+        this.requestPromo.dataDal = new Date(Date.UTC(dataDal.getFullYear(), dataDal.getMonth(), dataDal.getDate(), 0, 0, 0));
+      }
+      
+      if (dataAl) {
+        this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
+      }
+      const today = new Date().setHours(0, 0, 0, 0);
+      const dataDalCheck = this.requestPromo.dataDal instanceof Date ? this.requestPromo.dataDal : undefined;
+      const dataAlCheck = this.requestPromo.dataAl instanceof Date ? this.requestPromo.dataAl : undefined;
+      if((dataDalCheck && dataDalCheck.setHours(0, 0, 0, 0) >= today) && (dataAlCheck && dataAlCheck.setHours(0,0,0,0) >= dataDalCheck.setHours(0, 0, 0, 0))){
+        this.requestPromo.isAttiva = true;
+      }
+      else{
+        this.requestPromo.isAttiva = false;
+      }
       this.promoService.apiUpdatePromo(this.requestPromo).pipe(
         tap((response: any) => {
           this.openPage(7);
         }),
         catchError((error) => {
+          console.log(error);
+          console.log(error.error);
           console.error(error.error);
           return of(null);
         })
@@ -378,6 +403,13 @@ export class GestionePromoComponent  implements OnInit {
 
   async ControlPromo(promo: InsertPromoReqDto){
     this.errTitolo = '';
+    this.errPeriodo = '';
+    this.errDescrizione = '';
+    this.errGiorni = '';
+    this.errOrari = '';
+    this.errTipologia = '';
+    this.errNumUtilizzi = ''; 
+    this.errNumUtilizziPersona = '';
     this.isError = false;
     const today = new Date().setHours(0, 0, 0, 0);
     const noSpecialCharsRegex = /^(?!.*(DROP|TABLE|INSERT|DELETE|UPDATE)).*[a-zA-Z0-9À-ÖØ-öø-ÿ.,()!?/@#& _-]*$/i;
