@@ -27,6 +27,7 @@ export class ConfermaDisattivazionePromoComponent  implements OnInit {
         () => {
           this.isLoading = false;
           this.isDisattivata = true;
+          this.dismissDisattivazioneEvent.emit();
         },
         (error) => {
           this.isLoading = false;

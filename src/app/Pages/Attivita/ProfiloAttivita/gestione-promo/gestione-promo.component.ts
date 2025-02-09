@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { catchError, lastValueFrom, of, tap } from 'rxjs';
+import { catchError, lastValueFrom, of, tap, throwError } from 'rxjs';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { DatePipe } from '@angular/common';
 import { Attivita, Orari } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
@@ -45,6 +45,7 @@ export class GestionePromoComponent  implements OnInit {
     isLoadingSalvataggio: boolean = false;
     @Input() modificaPromo!: Promo;
     @Output() openPageEvent = new EventEmitter<number>();
+    @Output() openPageEventUpd = new EventEmitter<number>();
     
     giorni: GiorniSettimanaPromo | undefined;
 
@@ -198,7 +199,6 @@ export class GestionePromoComponent  implements OnInit {
         const sortedDays = this.requestPromo.days.sort((a, b) => a - b);
         this.requestPromo.validDays = sortedDays.join('-');
       }
-      
       const dataDal = this.requestPromo.dataDal ? new Date(this.requestPromo.dataDal) : undefined;
       const dataAl = this.requestPromo.dataAl ? new Date(this.requestPromo.dataAl) : undefined;
       if (dataDal) {
@@ -209,6 +209,7 @@ export class GestionePromoComponent  implements OnInit {
       if (dataAl) {
         this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
       }
+      
       const today = new Date().setHours(0, 0, 0, 0);
       const dataDalCheck = this.requestPromo.dataDal instanceof Date ? this.requestPromo.dataDal : undefined;
       const dataAlCheck = this.requestPromo.dataAl instanceof Date ? this.requestPromo.dataAl : undefined;
@@ -218,14 +219,21 @@ export class GestionePromoComponent  implements OnInit {
       else{
         this.requestPromo.isAttiva = false;
       }
+      if (dataDal) {
+        // Imposta le date in UTC
+        this.requestPromo.dataDal = new Date(Date.UTC(dataDal.getFullYear(), dataDal.getMonth(), dataDal.getDate(), 0, 0, 0));
+      }
+      
+      if (dataAl) {
+        this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
+      }
       this.promoService.apiUpdatePromo(this.requestPromo).pipe(
         tap((response: any) => {
-          this.openPage(7);
+          this.openPageEventUpd.emit(7);
         }),
         catchError((error) => {
-          console.log(error);
-          console.log(error.error);
-          console.error(error.error);
+          return throwError(() => error);
+          console.error(error.error); 
           return of(null);
         })
       ).subscribe();
@@ -544,6 +552,7 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   openPage(idPage:number){
+    console.log('entrato in openPage');
     this.openPageEvent.emit(idPage);
   }
 
