@@ -58,6 +58,7 @@ export class GalleryComponent implements OnInit {
         nomeUpload: nomeImmagine,
         upload: url,
         isImmaginePrincipale: isProfile,
+        isImmaginePrincipaleTemp: false,
         ordinamento: 0,
         isVerificata: false
       };
@@ -83,6 +84,7 @@ export class GalleryComponent implements OnInit {
             nomeUpload: fileName,
             upload: url,
             isImmaginePrincipale: false,
+            isImmaginePrincipaleTemp: false,
             ordinamento: 0,
             isVerificata: false
           };

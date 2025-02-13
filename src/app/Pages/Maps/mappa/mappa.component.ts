@@ -277,7 +277,7 @@ export class MappaComponent implements OnInit {
 
   getImmaginePrincipale(attivita: Attivita | undefined): string {
     if (attivita && attivita.immagini != undefined) {
-      const immaginePrincipale = attivita.immagini.find(img => img.isImmaginePrincipale);
+      const immaginePrincipale = attivita.immagini.find(img => img.isImmaginePrincipale || img.isImmaginePrincipaleTemp);
       if (immaginePrincipale) {
         return immaginePrincipale.upload;
       } else {
