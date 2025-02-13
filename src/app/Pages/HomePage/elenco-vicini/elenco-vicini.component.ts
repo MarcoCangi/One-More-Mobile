@@ -1,5 +1,6 @@
 import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-elenco-vicini',
@@ -11,11 +12,25 @@ export class ElencoViciniComponent {
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
   @Output() ricercaAttivitaEvent = new EventEmitter<number>();
-  @Input() elencoVicini:Attivita[] | undefined;
+  // @Input() elencoVicini:Attivita[] | undefined;
+  @Input() latitudine:number | undefined;
+  @Input() longitudine:number | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
   attivitaSelezionata: Attivita | undefined;
+  elencoVicini: Attivita[] | undefined;
 
-  constructor() { }
+   constructor(private attivitaService: GetApiAttivitaService) { }
+  
+    ngOnInit(): void {
+      this.loadData();
+  }
+  
+  async loadData(){
+    if(this.latitudine && this.longitudine)
+  (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
+    this.elencoVicini = data;
+   });
+  }
 
 
   getImmaginePrincipale(attivita: Attivita): string {

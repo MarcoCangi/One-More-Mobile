@@ -17,15 +17,15 @@
               </div>
         </div>
 
-        <app-elenco-promo [elencoPromo]="listaElencoPromo" (ricercaAttivitaEvent)="getListAttivita($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
+        <app-elenco-promo [latitudine]="latitudine" [longitudine]="longitudine"  (ricercaAttivitaEvent)="getListAttivita($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
 
         <app-card-tipo-attivita (openPageRicercaTipoAttEvent)="openPageRicercaTipoAttEvent($event)" style="margin-bottom: 100px;"></app-card-tipo-attivita>
 
-        <app-elenco-vicini [elencoVicini]="listaElencoVicini" (ricercaAttivitaEvent)="getListAttivita($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-vicini>
+        <app-elenco-vicini [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivita($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-vicini>
 
         <app-icon-citta [listaCitta]="listCitta " (openPageRicercaEvent)="openPageRicercaCittaEvent($event)"></app-icon-citta>
         
-        <app-elenco-consigli style="margin-top: -5% !important;" (ricercaAttivitaEvent)="getListAttivita($event)" [elencoNew]="listaElencoNuove " (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
+        <app-elenco-consigli style="margin-top: -5% !important;" (ricercaAttivitaEvent)="getListAttivita($event)" [latitudine]="latitudine" [longitudine]="longitudine" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
 
         <ion-card>
             <ion-card-content>

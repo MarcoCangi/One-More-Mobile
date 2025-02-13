@@ -12,7 +12,6 @@ import { FavoritesComponent } from '../../favorites/favorites.component';
 import { CouponComponent } from '../../coupon/coupon.component';
 import { UserComponent } from '../../user/user.component';
 import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
-import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -308,10 +307,7 @@ export class HomeComponent  implements OnInit {
       
       this.isCaricamentoOk = false;
       this.isLoading = true;
-
       
-      if(!this.listaElencoNuove || !this.listaElencoPromo || !this.listaElencoVicini){
-
         const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
           return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -328,46 +324,9 @@ export class HomeComponent  implements OnInit {
             this.longitudine = 12.4964;
           }
         }
-        try {
-          const data: AttivitaHomePageResponse = await firstValueFrom(
-            (await this.attivitaService.apiGetListaAttivitaHomePage(this.latitudine, this.longitudine)).pipe(
-              
-              catchError((error) => {
-                // Gestione errore
-                console.error('Errore di connessione', error);
-                this.isLoading = false;
-                this.errorMessage = 'Errore di connessione, si prega di riprovare';
-                throw error; // Propaga l'errore
-              })
-            )
-          );
-          this.listaElencoNuove = data.listUltimeAttReg;
-          if(this.listaElencoNuove)
-            this.attivitaService.createListAttivitaNewHomeSession(this.listaElencoNuove);
-          this.listaElencoPromo = data.listAttivitaWithPromo;
-          if(this.listaElencoPromo)
-            this.attivitaService.createListAttivitaPromoHomeSession(this.listaElencoPromo);
-          this.listaElencoVicini = data.listNearbyAttivita;
-          if(this.listaElencoVicini)
-            this.attivitaService.createListAttivitaVicineSession(this.listaElencoVicini);
-          this.listCitta = data.listCitta;
-          if(this.listCitta)
-            this.attivitaService.createListCittaIconSession(this.listCitta);
-
-        } catch (error) {
-          // Gestisci l'errore in caso di fallimento anche dopo i retry
-          console.error('Errore di connessione', error);
-          this.errorMessage = 'Errore di connessione, si prega di riprovare';
-        } finally {
-          this.isLoading = false;
-        }
       }
-    }
-    if(this.listaElencoNuove && this.listaElencoPromo && this.listaElencoVicini)
-    {
-      this.errorMessage ='';
-      this.isCaricamentoOk = true;
-    }
+    
+    this.isCaricamentoOk = true;
     this.isLoading = false;
   }
 

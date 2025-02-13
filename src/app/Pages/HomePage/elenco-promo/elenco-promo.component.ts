@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
   selector: 'app-elenco-promo',
@@ -8,16 +9,29 @@ import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/
 })
 export class ElencoPromoComponent{
 
+  
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
 
-  @Input() elencoPromo:Attivita[] | undefined;
+  // @Input() elencoPromo:Attivita[] | undefined;
+  @Input() latitudine:number | undefined;
+  @Input() longitudine:number | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() ricercaAttivitaEvent = new EventEmitter<number>();
   attivitaSelezionata: Attivita | undefined;
+  elencoPromo: Attivita[] | undefined;
+  constructor(private attivitaService: GetApiAttivitaService) { }
 
-  constructor() { }
+  ngOnInit(): void {
+    this.loadData();
+}
 
+async loadData(){
+  if(this.latitudine && this.longitudine)
+  (await this.attivitaService.apiGetListaAttivitaWhitPromo(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
+  this.elencoPromo = data;
+ });
+}
 
   getImmaginePrincipale(attivita: Attivita): string {
     const immaginePrincipale = attivita.immagini?.find(img => img.isImmaginePrincipale);

@@ -6,7 +6,7 @@
 
   <div class="card-container" #widgetsContent>
     <div class="card-wrapper">
-      <ion-card class="card-consigli" *ngFor="let attivita of elencoNew" (click)="VisualizzaAttivita(attivita)">
+      <ion-card class="card-consigli" *ngFor="let attivita of listaElencoNuove" (click)="VisualizzaAttivita(attivita)">
         <div class="label-overlay" *ngIf="attivita.isPromoPresente">
           <label>Promo</label>
         </div>
