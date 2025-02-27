@@ -1,13 +1,16 @@
-<ion-spinner *ngIf="isLoading && this.mapInstance" name="crescent" color="primary"></ion-spinner>
-
-<div *ngIf="!isLoading && this.attivita.immagini">
+<div *ngIf="this.attivita.immagini">
   <div class="card-container" #widgetsContent>
-    <div class="card-wrapper" *ngIf="attivita.immagini && attivita.immagini.length > 0">
+    <div class="card-wrapper" *ngIf="!isLoading && attivita.immagini && attivita.immagini.length > 0">
       <ion-card class="card-img" *ngFor="let immagine of attivita.immagini.slice(0, 3)" (click)="openDialogImg(attivita.idAttivita)">
         <img class="uniform-image" mat-card-image [src]="immagine.upload" alt="Immagine dell'attività">
       </ion-card>
     </div>
-    <div class="overlayGallery">
+    <div *ngIf="isLoading && attivita.immagini && attivita.immagini.length > 0">
+      <ion-card class="card-Skeleton">
+        <ion-skeleton-text [animated]="true" class="Skeletonimage"></ion-skeleton-text>
+      </ion-card>
+    </div>
+    <div class="overlayGallery" *ngIf="!isLoading">
       <ion-button class="btnGallery" (click)="openDialogImg(attivita.idAttivita)" [outline]="true"><ion-icon name="images-outline" style="margin-right: 5px; margin-top: 2px;"></ion-icon><ion-label>Gallery</ion-label></ion-button>
     </div>
     <div class="overlayFavourite">
@@ -17,7 +20,7 @@
   </div>
   
   
-  <ion-card *ngIf="this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >
+  <ion-card *ngIf="!isLoading && this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -37,16 +40,18 @@
   <ion-card>
   <ion-item>
     <ion-card-header>
-      <ion-card-title class="nome">{{attivita.nome}}</ion-card-title>
+      <ion-card-title *ngIf="!isLoading" class="nome">{{attivita.nome}}</ion-card-title>
+      <ion-skeleton-text *ngIf="isLoading" [animated]="true" style="height: 25px;"></ion-skeleton-text>
       <ion-card-subtitle style="margin-top: 20px;">
         <ion-icon style="margin-right: 5px;" name="location-outline"></ion-icon>{{attivita.indirizzo}}, {{attivita.civico}}, {{attivita.cap}}, {{attivita.citta}}
-      </ion-card-subtitle >
+      </ion-card-subtitle>
+
       <ion-card-subtitle style="margin-top: 20px;" (click)="callPhoneNumber(attivita.telefono)">
-        <ion-icon style="margin-right: 5px;" name="call-outline"></ion-icon>{{attivita.telefono}}
-      </ion-card-subtitle>
-      <ion-card-subtitle *ngIf="this.attivita.isCellPubblico" style="margin-top: 20px;" (click)="callPhoneNumber(attivita.cellulare)">
-        <ion-icon style="margin-right: 5px;" name="phone-portrait-sharp"></ion-icon>{{attivita.cellulare}} 
-      </ion-card-subtitle>
+        <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;">
+          <ion-icon name="call-outline"></ion-icon>
+        </ion-button>
+    </ion-card-subtitle>
+
     </ion-card-header>
   </ion-item>
   <ion-item>

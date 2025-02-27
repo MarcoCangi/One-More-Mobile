@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
@@ -18,6 +19,7 @@ export class ElencoViciniComponent {
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
   attivitaSelezionata: Attivita | undefined;
   elencoVicini: Attivita[] | undefined;
+  isLoading: boolean = false;
 
    constructor(private attivitaService: GetApiAttivitaService) { }
   
@@ -26,10 +28,14 @@ export class ElencoViciniComponent {
   }
   
   async loadData(){
-    if(this.latitudine && this.longitudine)
-  (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
-    this.elencoVicini = data;
-   });
+    if(this.latitudine && this.longitudine){
+      this.isLoading = true;
+      console.log(this.isLoading);
+      (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
+        this.elencoVicini = data;
+        this.isLoading = false;
+       });
+    }
   }
 
 

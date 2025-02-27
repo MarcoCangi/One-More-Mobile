@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
@@ -9,7 +10,6 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 })
 export class ElencoPromoComponent{
 
-  
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
 
@@ -20,6 +20,7 @@ export class ElencoPromoComponent{
   @Output() ricercaAttivitaEvent = new EventEmitter<number>();
   attivitaSelezionata: Attivita | undefined;
   elencoPromo: Attivita[] | undefined;
+  isLoading: boolean = false;
   constructor(private attivitaService: GetApiAttivitaService) { }
 
   ngOnInit(): void {
@@ -27,10 +28,13 @@ export class ElencoPromoComponent{
 }
 
 async loadData(){
-  if(this.latitudine && this.longitudine)
-  (await this.attivitaService.apiGetListaAttivitaWhitPromo(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
-  this.elencoPromo = data;
- });
+  if(this.latitudine && this.longitudine){
+    this.isLoading = true;
+    (await this.attivitaService.apiGetListaAttivitaWhitPromo(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
+    this.elencoPromo = data;
+    this.isLoading = false;
+   });
+  }
 }
 
   getImmaginePrincipale(attivita: Attivita): string {

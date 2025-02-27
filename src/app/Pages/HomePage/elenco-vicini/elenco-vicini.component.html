@@ -4,7 +4,7 @@
 </ion-item>
 
   <div class="card-container" #widgetsContent>
-    <div class="card-wrapper">
+    <div class="card-wrapper" *ngIf="!isLoading">
       <ion-card class="card-consigli" *ngFor="let attivita of elencoVicini" (click)="VisualizzaAttivita(attivita)">
         <div class="label-overlay" *ngIf="attivita.isPromoPresente">
           <label>Promo</label>
@@ -20,6 +20,23 @@
             </ion-col>
           </ion-row>
         </ion-grid>
+      </ion-card>
+    </div>
+
+    <div class="card-wrapper" *ngIf="isLoading">
+      <ion-card class="skeleton">
+        <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
+        <ion-card-header>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        </ion-card-header>
+      </ion-card>
+      <ion-card class="skeleton">
+        <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
+        <ion-card-header>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        </ion-card-header>
       </ion-card>
     </div>
   </div>

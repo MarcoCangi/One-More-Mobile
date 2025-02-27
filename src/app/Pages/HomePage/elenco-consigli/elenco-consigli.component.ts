@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component, OnInit, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
@@ -19,7 +20,8 @@ export class ElencoConsigliComponent {
   @Output() ricercaAttivitaEvent = new EventEmitter<number>();
   attivitaSelezionata: Attivita | undefined;
   listaElencoNuove : Attivita[] | undefined;
-
+  isLoading: boolean = false;
+  
   constructor(private attivitaService: GetApiAttivitaService) {}
 
   ngOnInit(): void {
@@ -27,10 +29,13 @@ export class ElencoConsigliComponent {
     }
 
     async loadData(){
-      if(this.latitudine && this.longitudine)
-      (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
-        this.listaElencoNuove = data;
-       });
+      if(this.latitudine && this.longitudine){
+        this.isLoading = true;
+        (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
+          this.listaElencoNuove = data;
+          this.isLoading = false;
+         });
+      }
     }
 
 
