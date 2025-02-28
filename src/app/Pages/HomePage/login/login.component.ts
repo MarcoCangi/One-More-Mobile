@@ -41,7 +41,6 @@ export class LoginComponent {
       const password = this.homeForm.value.passwordLogin;
       try {
         const { userCredential, token } = await this.authService.login(email, password);
-        console.log(email, password);
         if(userCredential){
 
           const docData = await this.authService.getCurrentUser(userCredential.user.uid)

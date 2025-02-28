@@ -76,9 +76,9 @@ export class HomeComponent  implements OnInit {
 
           this.loadData();
           this.startSlider();
-    }
+  }
 
-    reloadComponent(): void {
+  reloadComponent(): void {
       const id = this.authService.getLastIdPageFromSession();
         if(id && id != undefined && id != 0)
         {
@@ -104,17 +104,17 @@ export class HomeComponent  implements OnInit {
           }
           
         }
-    }
+  }
 
-    startSlider() {
+  startSlider() {
       setInterval(() => {
         this.showNextSlide();
       }, 6000); // Cambia ogni 3 secondi
-    }
+  }
 
-    showNextSlide() {
-      this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-    }
+  showNextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+  }
 
   onAttivitaSelezionata(attivita: Attivita): void {
     this.attivitaService.apiGetListaTop3ImmaginiById(attivita.idAttivita).subscribe((data: Immagini[]) => {
@@ -182,7 +182,8 @@ export class HomeComponent  implements OnInit {
         this.filtro.latitudine = position.coords.latitude;
         this.filtro.longitudine = position.coords.longitude;
       } catch (error) {
-        console.log(error);
+        this.filtro.latitudine = 41.9028;
+        this.filtro.longitudine = 12.4964;
       }
     }
 
@@ -258,7 +259,8 @@ export class HomeComponent  implements OnInit {
         this.filtro.latitudine = position.coords.latitude;
         this.filtro.longitudine = position.coords.longitude;
       } catch (error) {
-        console.log(error);
+        this.filtro.latitudine = 41.9028;
+        this.filtro.longitudine = 12.4964;
       }
     }
 
@@ -324,6 +326,10 @@ export class HomeComponent  implements OnInit {
             this.longitudine = 12.4964;
           }
         }
+        else{
+          this.latitudine = 41.9028;
+          this.longitudine = 12.4964;
+        }
       }
     
     this.isCaricamentoOk = true;
@@ -361,7 +367,8 @@ export class HomeComponent  implements OnInit {
         this.filtro.latitudine = position.coords.latitude;
         this.filtro.longitudine = position.coords.longitude;
       } catch (error) {
-        console.log(error);
+        this.filtro.latitudine = 41.9028;
+        this.filtro.longitudine = 12.4964;
       }
     }
 

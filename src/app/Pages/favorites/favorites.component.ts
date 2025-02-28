@@ -5,6 +5,7 @@ import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 
 @Component({
   selector: 'app-favorites',
@@ -15,7 +16,7 @@ export class FavoritesComponent  implements OnInit {
 
   isLoading : boolean | undefined;
   listaAttivitaFavoriti : AttivitaRicerca [] | undefined;
-  idSoggetto: number | undefined;
+  idSoggetto: number = 0;
   idAttivitaSelezionata: number | undefined;
   attivita: Attivita | undefined;
   isModalPromoOpen = false;
@@ -29,7 +30,8 @@ export class FavoritesComponent  implements OnInit {
   constructor(private attivitaService: GetApiAttivitaService,
               private authService : AuthService,
               private userService: UserService,
-              private promoService: GetApiPromoService
+              private promoService: GetApiPromoService,
+              private storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -48,12 +50,21 @@ export class FavoritesComponent  implements OnInit {
 
   async GetAttivita() {
     this.isLoading = true;
-  
-    if ((!this.listaAttivitaFavoriti || this.listaAttivitaFavoriti.length === 0) && typeof this.idSoggetto === 'number') {
+    const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
+    const cachedData = await this.storageService.getItem(cacheKey);
+    if (cachedData) {
+      if (typeof cachedData === 'string') {
+        this.listaAttivitaFavoriti = JSON.parse(cachedData);
+      } else {
+        this.listaAttivitaFavoriti = cachedData;
+      }
+      this.isLoading = false;
+    } else if (!this.listaAttivitaFavoriti || this.listaAttivitaFavoriti.length === 0) {
       try {
         const listaAttivita = await this.attivitaService.apiGetAttivitaFavorite(this.idSoggetto).toPromise();
         if (listaAttivita) {
           this.listaAttivitaFavoriti = listaAttivita;
+          await this.storageService.setItem(cacheKey, listaAttivita);
         }
       } catch (error) {
         console.error('Error fetching activities:', error);
@@ -72,7 +83,6 @@ export class FavoritesComponent  implements OnInit {
         try {
             const data = await this.attivitaService.apiGetAttivitaByIdAttivita(idAttivita).toPromise();
             this.attivita = data;
-            console.log(this.attivita?.isPromoPresente);
             this.ricercaAttiviaSelezionataEvent.emit(this.attivita);
             this.openPage(3);
         } catch (error) {
@@ -140,7 +150,6 @@ export class FavoritesComponent  implements OnInit {
 
  async openConfirmModal(id:number | undefined,event:Event) {
     event.stopPropagation()
-    console.log(id);
     this.idAttivitaSelezionata = id;
     this.isModalConfirmOpen = true;
   }
@@ -155,20 +164,29 @@ export class FavoritesComponent  implements OnInit {
   }
 
   async AddRemoveFavorite(): Promise<void> {
-    console.log('prova1');
     this.isLoading = true;
+    
     try {
       const userSession = this.authService.getUserSessionFromCookie();
-      console.log('prova2');
+      
       if (userSession && this.idAttivitaSelezionata && this.idSoggetto) {
         this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, this.idAttivitaSelezionata);
-        if (this.isOk && this.listaAttivitaFavoriti) {
-          this.listaAttivitaFavoriti = this.listaAttivitaFavoriti.filter(
-            attivita => attivita.idAttivita !== this.idAttivitaSelezionata 
-          );
+        if (this.isOk) {
+          const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
+          let cachedData: AttivitaRicerca[] = await this.storageService.getItem(cacheKey) || [];
+  
+          if (cachedData.length > 0) {
+            // Rimuove l'attività usando il tipo esplicito
+            cachedData = cachedData.filter((attivita: AttivitaRicerca) => attivita.idAttivita !== this.idAttivitaSelezionata);
+            await this.storageService.setItem(cacheKey, cachedData);
+          }
+  
+          // Aggiorna la lista locale
+          this.listaAttivitaFavoriti = cachedData;
+  
           setTimeout(() => {
             this.dismissConfirmModal();
-          }, 100); // 100 millisecondi = 0.1 secondi
+          }, 100);
         }
       }
     } catch (error) {

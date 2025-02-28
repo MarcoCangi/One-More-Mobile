@@ -552,7 +552,6 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   openPage(idPage:number){
-    console.log('entrato in openPage');
     this.openPageEvent.emit(idPage);
   }
 

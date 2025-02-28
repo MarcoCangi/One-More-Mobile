@@ -42,13 +42,12 @@
     <ion-card-header>
       <ion-card-title *ngIf="!isLoading" class="nome">{{attivita.nome}}</ion-card-title>
       <ion-skeleton-text *ngIf="isLoading" [animated]="true" style="height: 25px;"></ion-skeleton-text>
-      <ion-card-subtitle style="margin-top: 20px;">
-        <ion-icon style="margin-right: 5px;" name="location-outline"></ion-icon>{{attivita.indirizzo}}, {{attivita.civico}}, {{attivita.cap}}, {{attivita.citta}}
-      </ion-card-subtitle>
-
       <ion-card-subtitle style="margin-top: 20px;" (click)="callPhoneNumber(attivita.telefono)">
         <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;">
           <ion-icon name="call-outline"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;">
+          <ion-icon name="location-outline"></ion-icon>
         </ion-button>
     </ion-card-subtitle>
 

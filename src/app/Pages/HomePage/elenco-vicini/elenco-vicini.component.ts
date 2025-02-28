@@ -30,7 +30,6 @@ export class ElencoViciniComponent {
   async loadData(){
     if(this.latitudine && this.longitudine){
       this.isLoading = true;
-      console.log(this.isLoading);
       (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
         this.elencoVicini = data;
         this.isLoading = false;

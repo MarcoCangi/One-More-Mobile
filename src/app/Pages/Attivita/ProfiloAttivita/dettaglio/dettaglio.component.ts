@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { GalleriaDettaglioComponent } from '../galleria dettaglio/galleria-dettaglio/galleria-dettaglio.component';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { ModalController } from '@ionic/angular';
-import { Attivita, Immagini } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { Attivita, AttivitaRicerca, Immagini } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
@@ -10,6 +10,7 @@ import { UserService } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { GoogleMap } from '@angular/google-maps';
 import { Clipboard } from '@capacitor/clipboard';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 
 @Component({
   selector: 'app-dettaglio',
@@ -42,7 +43,7 @@ export class DettaglioComponent  implements OnInit {
               private authService : AuthService,
               private userService: UserService,
               private iab: InAppBrowser,
-              private clipboard: Clipboard) { }
+              private storageService: StorageService) { }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit(): Promise<void> {
@@ -126,16 +127,33 @@ export class DettaglioComponent  implements OnInit {
 
   async AddRemoveFavorite(idAttivita: number | undefined): Promise<void> {
     const userSession = this.authService.getUserSessionFromCookie();
+
     if (userSession && idAttivita) {
-      this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, idAttivita);
-      if(this.isOk){
-        if(this.isFavorite)
-          this.isFavorite = false;
-        else
-        this.isFavorite = true;
-      }
+        this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, idAttivita);
+        
+        if (this.isOk) {
+            const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
+            let cachedData: AttivitaRicerca[] = await this.storageService.getItem(cacheKey) || [];
+
+            // Verifica se l'attività è già nei preferiti
+            const index = cachedData.findIndex((attivita: AttivitaRicerca) => attivita.idAttivita === idAttivita);
+
+            if (index !== -1) {
+                // Se esiste, la rimuove
+                cachedData.splice(index, 1);
+                this.isFavorite = false;
+            } else {
+                // Se non esiste, la aggiunge
+                const attivitaRicerca: AttivitaRicerca = this.convertAttivitaToRicerca(this.attivita);
+                cachedData.push(attivitaRicerca);
+                this.isFavorite = true;
+            }
+
+            // Salva la cache aggiornata
+            await this.storageService.setItem(cacheKey, cachedData);
+        }
     }
-  }
+}
 
   private getDaysArray(validDays: string | undefined): number[] {
     const days: number[] = [];
@@ -188,4 +206,23 @@ export class DettaglioComponent  implements OnInit {
       console.error('Errore nella copia:', err);
     }
   }
+
+  private convertAttivitaToRicerca(attivita: Attivita): AttivitaRicerca {
+    return {
+        idAttivita: attivita.idAttivita,
+        nome: attivita.nome,
+        indirizzo: attivita.indirizzo,
+        citta: attivita.citta,
+        provincia: attivita.provincia,
+        civico: attivita.citta,
+        cap: attivita.cap,
+        latitudine: attivita.latitudine,
+        longitudine: attivita.longitudine,
+        isPromoPresente: attivita.isPromoPresente,
+        listaTipoAttivita: attivita.listaTipoAttivita,
+        immagini: attivita.immagini,
+        isVerificata: attivita.isVerificata,
+        esitoVerifica: attivita.esitoVerifica
+    };
+}
 }
