@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { GalleriaDettaglioComponent } from '../galleria dettaglio/galleria-dettaglio/galleria-dettaglio.component';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { ModalController } from '@ionic/angular';
@@ -20,7 +20,7 @@ import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-se
 export class DettaglioComponent  implements OnInit {
 
   isProva:boolean = false;
-
+  @ViewChild('mapContainer') mapContainer!: ElementRef;
   attivita!: Attivita;
   listaPromo: Promo[] | undefined;
   id:number | undefined;
@@ -48,7 +48,7 @@ export class DettaglioComponent  implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
     if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
       this.idSoggetto = userSession.idSoggetto;
     } else {
@@ -126,7 +126,7 @@ export class DettaglioComponent  implements OnInit {
   }
 
   async AddRemoveFavorite(idAttivita: number | undefined): Promise<void> {
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
 
     if (userSession && idAttivita) {
         this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, idAttivita);
@@ -224,5 +224,11 @@ export class DettaglioComponent  implements OnInit {
         isVerificata: attivita.isVerificata,
         esitoVerifica: attivita.esitoVerifica
     };
-}
+  }
+
+  scrollToMap(): void {
+    if (this.mapContainer) {
+      this.mapContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
 }

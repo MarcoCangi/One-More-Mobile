@@ -8,6 +8,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { lastValueFrom } from 'rxjs';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 
 @Component({
   selector: 'app-dati-struttura',
@@ -61,6 +62,7 @@ export class DatiStrutturaComponent  implements OnInit {
     private attivitaService: GetApiAttivitaService,
     private comuniService: GetApiComuniService,
     private authService: AuthService,
+    private storageService: StorageService
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
@@ -71,7 +73,7 @@ export class DatiStrutturaComponent  implements OnInit {
     this.attivita = undefined;
     await this.InitRequestAtt();
     const user = await this.authService.getCurrentUserFromAuth();
-    this.sessioneString = this.authService.getUserSessionFromCookie();
+    this.sessioneString = this.authService.getUserSession();
     if((user && user?.emailVerified == true && this.sessioneString?.typeLog == 1) || (this.sessioneString?.typeLog == 2 || this.sessioneString?.typeLog == 3))
        this.isVerificato = true;
 
@@ -127,7 +129,7 @@ export class DatiStrutturaComponent  implements OnInit {
     await this.controlValidator(this.requestAttivita);
     
     if (!this.isError) {
-      const sessioneString = this.authService.getUserSessionFromCookie();
+      const sessioneString = this.authService.getUserSession();
   
       if (sessioneString) {
         if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.requestAttivita != undefined) {
@@ -181,7 +183,7 @@ export class DatiStrutturaComponent  implements OnInit {
     await this.controlValidator(this.requestAttivita);
   
     if (!this.isError) {
-      const sessioneString = this.authService.getUserSessionFromCookie();
+      const sessioneString = this.authService.getUserSession();
   
       if (sessioneString) {
         if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
@@ -360,40 +362,32 @@ export class DatiStrutturaComponent  implements OnInit {
     }
   }
 
-  async eliminaAttivita() {
-    this.isLoadingDelete = true;
-    try {
-
-      const utente = this.authService.getUser(); // Ottieni l'utente attuale
-
-      await this.attivitaService.deleteSession();
-      
-      // Chiama l'API per eliminare l'account
-      if(this.attivita && this.attivita.idAttivita && utente?.idSoggetto)
-      {
-        await this.attivitaService.apiDeleteAttivita(this.attivita?.idAttivita, utente?.idSoggetto).toPromise();
-        
-        const sessioneString = this.authService.getUserSessionFromCookie();
-
-        if(sessioneString && sessioneString.idAttivita)
-        {
-          sessioneString.idAttivita = 0;
-          this.authService.saveUserSessionToCookie(sessioneString);
-        }
-        this.isEliminazioneOK = true;
-      }
-
-      this.isLoadingDelete = false;
-
-    } catch (error) {
-      console.error('Errore durante l\'eliminazione dell\'attivita:', error);
-      this.isLoadingDelete = false;
-    }
-  }
-
   async getAttivita(idSoggetto: number, idAttivita:number) {
     this.isLoading = true;
+
     try {
+      const cacheKey = `attivita_${idAttivita}`; // Chiave generica per la cache
+  
+      const cachedData = await this.storageService.getItem(cacheKey);
+      if (cachedData) {
+      this.attivita = cachedData;
+      if (this.attivita && this.attivita.idAttivita && this.attivita.idSoggetto) {
+        this.idAttivita = this.attivita.idAttivita;
+        await this.InitRequestAtt();
+        if (this.attivita.orari) {
+          this.orari = this.attivita.orari;
+        }
+        if (this.attivita.listaTipoAttivita) {
+          this.listaTipoAttivita = this.attivita.listaTipoAttivita;
+        }
+        if (this.attivita.provincia) {
+          this.provincia = this.attivita.provincia;
+        }
+      }
+        this.isLoading = false;
+        return;
+      }
+      
       const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggettoAndAtt(idSoggetto, idAttivita));
       if (data) {
         this.attivita = data;
@@ -409,6 +403,7 @@ export class DatiStrutturaComponent  implements OnInit {
           if (this.attivita.provincia) {
             this.provincia = this.attivita.provincia;
           }
+          this.storageService.setItem(cacheKey, this.attivita);
         }
       }
     } catch (error) {
@@ -418,25 +413,37 @@ export class DatiStrutturaComponent  implements OnInit {
   }
 
   async getListaAttivita(idSoggetto: number) {
+    const cacheKey = `lista_attivita`; // Chiave generica per la cache
+  
     try {
+      const cachedData = await this.storageService.getItem(cacheKey);
+      if (cachedData) {
+        this.listaAttivita = cachedData;
+        return;
+      }
+  
       const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(idSoggetto));
       if (data) {
         this.listaAttivita = data;
+        await this.storageService.setItem(cacheKey, data);
       }
     } catch (error) {
       console.error('Errore durante il recupero dell\'attività:', error);
     }
   }
-
+  
   async insertAttivita() {
     if (this.requestAttivita) {
       try {
         const response = await lastValueFrom(
           this.attivitaService.apiInsertAttivita(this.requestAttivita).pipe(
-            tap((response) => {
+            tap(async (response) => {
               this.authService.setIdAttivitaUserSession(response.idAttivita);
               this.isSalvataggioOK = true;
               this.isDetailModalOpen = true;
+
+              const cacheKey = `lista_attivita`; //svuoto la cache con la vecchia lista delle attività
+              localStorage.removeItem(cacheKey);
             }),
             catchError((error) => {
               console.error(error.error);
@@ -451,7 +458,7 @@ export class DatiStrutturaComponent  implements OnInit {
       }
     }
   }
-
+  
   async updateAttivita() {
     if (this.requestAttivita) {
       try {
@@ -460,6 +467,10 @@ export class DatiStrutturaComponent  implements OnInit {
             tap(() => {
               this.isSalvataggioOK = true;
               this.isDetailModalOpen = true;
+              const cacheKey = `lista_attivita`;
+              const cacheKeyAtt = `attivita_${this.requestAttivita?.idAttivita}`; // Chiave generica per la cache
+              localStorage.removeItem(cacheKey); //svuoto la cache con la vecchia lista delle attività
+              localStorage.removeItem(cacheKeyAtt) //rimuovo dalla cache l'attività modificata
             }),
             catchError((error) => {
               console.error(error.error);
@@ -472,6 +483,41 @@ export class DatiStrutturaComponent  implements OnInit {
       } catch (error) {
         console.error('Errore durante la modifica dell\'attività:', error);
       }
+    }
+  }
+
+  async eliminaAttivita() {
+    this.isLoadingDelete = true;
+    try {
+
+      const utente = this.authService.getUser(); // Ottieni l'utente attuale
+
+      await this.attivitaService.deleteSession();
+      
+      // Chiama l'API per eliminare l'account
+      if(this.attivita && this.attivita.idAttivita && utente?.idSoggetto)
+      {
+        await this.attivitaService.apiDeleteAttivita(this.attivita?.idAttivita, utente?.idSoggetto).toPromise();
+        
+        const sessioneString = this.authService.getUserSession();
+
+        if(sessioneString && sessioneString.idAttivita)
+        {
+          sessioneString.idAttivita = 0;
+          this.authService.saveUserSession(sessioneString);
+        }
+        this.isEliminazioneOK = true;
+        const cacheKey = `lista_attivita`;
+        const cacheKeyAtt = `attivita_${this.requestAttivita?.idAttivita}`; // Chiave generica per la cache
+        localStorage.removeItem(cacheKey); //svuoto la cache con la vecchia lista delle attività
+        localStorage.removeItem(cacheKeyAtt) //rimuovo dalla cache l'attività modificata
+      }
+
+      this.isLoadingDelete = false;
+
+    } catch (error) {
+      console.error('Errore durante l\'eliminazione dell\'attivita:', error);
+      this.isLoadingDelete = false;
     }
   }
 

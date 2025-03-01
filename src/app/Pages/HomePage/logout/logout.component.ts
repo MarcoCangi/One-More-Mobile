@@ -1,7 +1,7 @@
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
-
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
@@ -17,11 +17,13 @@ export class LogoutComponent {
   @Output() setIdFooterEvent = new EventEmitter<number>();
 
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private storageService: StorageService) {}
 
   LogOut(): void {
     this.authService.logOut(); 
     this.authService.deleteUserSession();
+    this.storageService.clearAll();
     this.openPageEvent.emit(1);
     this.setIdFooterEvent.emit(undefined);
   }

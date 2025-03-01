@@ -42,11 +42,11 @@
     <ion-card-header>
       <ion-card-title *ngIf="!isLoading" class="nome">{{attivita.nome}}</ion-card-title>
       <ion-skeleton-text *ngIf="isLoading" [animated]="true" style="height: 25px;"></ion-skeleton-text>
-      <ion-card-subtitle style="margin-top: 20px;" (click)="callPhoneNumber(attivita.telefono)">
-        <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;">
+      <ion-card-subtitle style="margin-top: 20px;">
+        <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" (click)="callPhoneNumber(attivita.telefono)">
           <ion-icon name="call-outline"></ion-icon>
         </ion-button>
-        <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;">
+        <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" (click)="scrollToMap()">
           <ion-icon name="location-outline"></ion-icon>
         </ion-button>
     </ion-card-subtitle>
@@ -113,14 +113,16 @@
             </ion-grid>
       </ion-item>
 
-      <div class="map-container">
-          <google-map [center]="center" 
-                      [zoom]="17" id="mapElement" (mapReady)="onMapReady($event)" 
-                      [width]="350" 
-                      [height]="280">
-            <map-marker [position]="center"></map-marker>
-          </google-map>
-      </div>
+      <div class="map-container" #mapContainer>
+        <google-map [center]="center" 
+                    [zoom]="17" id="mapElement" 
+                    (mapReady)="onMapReady($event)" 
+                    [width]="350" 
+                    [height]="280">
+          <map-marker [position]="center"></map-marker>
+        </google-map>
+    </div>
+    
       <div style="display: flex; justify-content: center; align-items: center; margin-top: 3%;">
         <ion-button (click)="copyAddress(attivita.indirizzo, attivita.civico, attivita.cap, attivita.citta)" size="small" fill="clear" color="dark"><ion-icon name="copy-outline" style="margin-right: 5px;" ></ion-icon>  COPIA INDIRIZZO</ion-button>
       </div>

@@ -39,7 +39,7 @@ export class PannelloPromoComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     const user = this.authService.getCurrentUserFromAuth();
-    const usersession = this.authService.getUserSessionFromCookie();
+    const usersession = this.authService.getUserSession();
     if((user && user?.emailVerified == true && usersession?.typeLog == 1) || (usersession?.typeLog == 2 || usersession?.typeLog == 3))
        this.isVerificato = true;
   }
@@ -49,7 +49,7 @@ export class PannelloPromoComponent implements OnInit {
     this.isLoading = true;
 
     this.requestPromo = new InsertPromoUserAttiva();
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
     if (userSession && userSession.idSoggetto) {
       this.requestPromo.idSoggetto = userSession.idSoggetto;
       this.requestPromo.idPromo = this.riepilogoPromo?.idPromo;
@@ -103,7 +103,7 @@ export class PannelloPromoComponent implements OnInit {
       return;
     }
     
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
     if (userSession && userSession.idSoggetto){
       this.riepilogoPromo = promo;
       this.isModalConfirmOpen = true;

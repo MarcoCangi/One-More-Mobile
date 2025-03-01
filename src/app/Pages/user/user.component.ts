@@ -69,7 +69,7 @@ export class UserComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit(): Promise<void> {
-    this.user = this.authService.getUserSessionFromCookie();
+    this.user = this.authService.getUserSession();
     const userForAuth = await this.authService.getCurrentUserFromAuth();
 
     if((userForAuth && userForAuth?.emailVerified == true && this.user?.typeLog == 1) || (this.user?.typeLog == 2 || this.user?.typeLog == 3))

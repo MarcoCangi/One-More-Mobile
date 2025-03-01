@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 @Component({
   selector: 'app-elenco-consigli',
   templateUrl: './elenco-consigli.component.html',
@@ -22,21 +22,33 @@ export class ElencoConsigliComponent {
   listaElencoNuove : Attivita[] | undefined;
   isLoading: boolean = false;
   
-  constructor(private attivitaService: GetApiAttivitaService) {}
+  constructor(private attivitaService: GetApiAttivitaService,
+              private storageService: StorageService) {}
 
   ngOnInit(): void {
           this.loadData();
     }
 
-    async loadData(){
-      if(this.latitudine && this.longitudine){
+    async loadData() {
+      if (this.latitudine && this.longitudine) {
         this.isLoading = true;
-        (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
-          this.listaElencoNuove = data;
+        const cacheKey = `attivita_vicini`; // Chiave generica senza coordinate
+        const cachedData = await this.storageService.getItem(cacheKey);
+    
+        if (cachedData) {
+          this.listaElencoNuove = cachedData; // Usa i dati dalla cache
           this.isLoading = false;
-         });
+        } else {
+          (await this.attivitaService.apiGetListaAttivitaJustSigned(this.latitudine, this.longitudine))
+            .subscribe(async (data: Attivita[]) => {
+              this.listaElencoNuove = data;
+              await this.storageService.setItem(cacheKey, data, 60); // Salva in cache per 1 minuto
+              this.isLoading = false;
+            });
+        }
       }
     }
+    
 
 
   getImmaginePrincipale(attivita: Attivita): string {

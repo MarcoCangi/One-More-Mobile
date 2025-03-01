@@ -185,7 +185,7 @@ export class NavComponent implements OnInit {
     }
 
   idAttivitaIsValorizzato(): boolean { 
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
 
     if (userSession && userSession.idAttivita && userSession.idAttivita > 0) {  
       return true;  

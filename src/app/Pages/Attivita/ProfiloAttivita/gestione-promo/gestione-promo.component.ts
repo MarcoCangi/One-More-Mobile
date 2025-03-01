@@ -62,7 +62,7 @@ export class GestionePromoComponent  implements OnInit {
       this.requestPromo.days = [];
       this.idAttivita = 0;
       this.giorni = new GiorniSettimanaPromo();
-      this.sessioneString = this.authService.getUserSessionFromCookie();
+      this.sessioneString = this.authService.getUserSession();
       this.attivita = undefined;
       if (this.sessioneString !== null) {
         if(this.sessioneString.idSoggetto !== null && this.sessioneString.idSoggetto !== undefined && this.sessioneString.idSoggetto > 0)
@@ -142,7 +142,7 @@ export class GestionePromoComponent  implements OnInit {
     if(this.isError)
       return;
 
-    const sessioneString = this.authService.getUserSessionFromCookie();
+    const sessioneString = this.authService.getUserSession();
   
     if (sessioneString !== null) {
       
@@ -186,7 +186,7 @@ export class GestionePromoComponent  implements OnInit {
     if(this.isError)
       return;
 
-    const sessioneString = this.authService.getUserSessionFromCookie();
+    const sessioneString = this.authService.getUserSession();
   
     if (sessioneString !== null) {
       

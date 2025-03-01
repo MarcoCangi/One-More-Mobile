@@ -2,6 +2,7 @@
 import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 
 @Component({
   selector: 'app-elenco-vicini',
@@ -21,19 +22,30 @@ export class ElencoViciniComponent {
   elencoVicini: Attivita[] | undefined;
   isLoading: boolean = false;
 
-   constructor(private attivitaService: GetApiAttivitaService) { }
+   constructor(private attivitaService: GetApiAttivitaService,
+               private storageService: StorageService) { }
   
     ngOnInit(): void {
       this.loadData();
   }
-  
-  async loadData(){
-    if(this.latitudine && this.longitudine){
+
+  async loadData() {
+    if (this.latitudine && this.longitudine) {
       this.isLoading = true;
-      (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine)).subscribe((data: Attivita[]) => {
-        this.elencoVicini = data;
+      const cacheKey = `attivita_near`;
+      const cachedData = await this.storageService.getItem(cacheKey);
+  
+      if (cachedData) {
+        this.elencoVicini = cachedData; // Usa i dati dalla cache
         this.isLoading = false;
-       });
+      } else {
+        (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine))
+          .subscribe(async (data: Attivita[]) => {
+            this.elencoVicini = data;
+            await this.storageService.setItem(cacheKey, data, 60); // Salva in cache per 1 minuto
+            this.isLoading = false;
+          });
+      }
     }
   }
 

@@ -5,7 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { lastValueFrom } from 'rxjs';
 import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { TipologiaOfferta } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 
 @Component({
   selector: 'app-ricerca',
@@ -43,6 +43,7 @@ export class RicercaComponent implements OnInit {
   isLoadingRicerca : boolean = false;
 
   constructor(private formBuilder: FormBuilder,
+              private locationService: LocationService,
               private attivitaService: GetApiAttivitaService) 
             {
               this.searchForm = this.formBuilder.group({
@@ -171,21 +172,9 @@ export class RicercaComponent implements OnInit {
       this.filtro.citta = citta;
     }
     else{
-      const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
-        return new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject);
-        });
-      };
-    
-      if (navigator.geolocation) {
-        try {
-          const position = await getCurrentPositionPromise();
-          this.filtro.latitudine = position.coords.latitude;
-          this.filtro.longitudine = position.coords.longitude;
-        } catch (error) {
-          console.log(error);
-        }
-      }
+      const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
+      this.filtro.latitudine = latitudine;
+      this.filtro.longitudine = longitudine;
     }
 
     if (codTipoAttivita != null && codTipoAttivita.trim() !== '') {

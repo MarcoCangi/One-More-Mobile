@@ -55,42 +55,41 @@ export class MappaComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.isRicerca = false;
     this.isLoading = true;
-    this.filter= new FiltriAttivita();
+    this.filter = new FiltriAttivita();
     this.attivitaFiltrate = this.service.getListaAttivita();
-    if (this.attivitaFiltrate == undefined || this.attivitaFiltrate == null) {
-      
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            this.position = position;
-            await this.setCenterPosition(position.coords.latitude, position.coords.longitude);
-            this.filter.latitudine = this.center.lat;
-            this.filter.longitudine = this.center.lng;
-            setTimeout(async () => {
-              await this.initMap();
-            }, 200);
-          },
-          async (error) => {
-            await this.setCenterPosition(41.9028, 12.4964);
-            this.filter.latitudine = this.center.lat;
-            this.filter.longitudine = this.center.lng;
   
-            setTimeout(async () => {
-              await this.initMap();
-            }, 200);
-          }
-        );
-      }
-    }
-    else {
+    if (this.attivitaFiltrate) {
       await this.setCenterPosition(this.attivitaFiltrate.latitudine, this.attivitaFiltrate.longitudine);
       this.isListModalOpen = this.service.getIsListaModalOpen();
-      if(this.isListModalOpen)
+      if (this.isListModalOpen) {
         this.service.setIsListaAttModalOpen(false);
-      setTimeout(async () => {
-        await this.initMap();
-      }, 200);
+      }
+    } else {
+      await this.getUserLocation();
     }
+    setTimeout(async () => {
+      await this.initMap();
+    }, 200);
+    this.isLoading = false;
+  }
+  
+  /**
+   * Recupera la posizione dell'utente, se possibile, altrimenti usa una posizione di default
+   */
+  private async getUserLocation(): Promise<void> {
+    try {
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+  
+      this.position = position;
+      await this.setCenterPosition(position.coords.latitude, position.coords.longitude);
+    } catch (error) {
+      await this.setCenterPosition(41.9028, 12.4964); // Roma come fallback
+    }
+  
+    this.filter.latitudine = this.center.lat;
+    this.filter.longitudine = this.center.lng;
   }
 
   setCenterPosition(latitudine: number, longitudine:number){
@@ -190,90 +189,73 @@ export class MappaComponent implements OnInit {
 
   async updateVisibleActivities(map: google.maps.Map): Promise<void> {
     this.isLoading = true;
-    
-    if(this.filter && this.filter.isMovingMap){
-      if(this.attivitaFiltrate && this.attivitaFiltrate.listaAttivita)
-        this.attivitaFiltrate = null;
-      const sessionfilter = this.service.getFilter();
-      if(sessionfilter){
-        this.filter.citta = sessionfilter.citta ? sessionfilter.citta : undefined;
-        this.filter.nome = sessionfilter.nome ? sessionfilter.nome : undefined;
-        this.filter.codTipoPromo = sessionfilter.codTipoPromo ? sessionfilter.codTipoPromo : undefined;
-        this.filter.codTipoAttivita = sessionfilter.codTipoAttivita ? sessionfilter.codTipoAttivita : undefined;
-      }
-    }
-
-    const bounds = map.getBounds();
+  
     try {
-      if (this.attivitaFiltrate &&
-          this.attivitaFiltrate.listaAttivita &&
-          this.attivitaFiltrate.latitudine &&
-          this.attivitaFiltrate.longitudine) {
-          
-          this.attivitaFiltrate.listaAttivita.forEach(e => {
-            if (e.latitudine != undefined && e.longitudine != undefined) {
-              const marker = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
-              this.markerPositions.push(marker.toJSON());
-            }
-          });
-
-          this.attivitas = this.attivitaFiltrate.listaAttivita;
-          this.isRicerca = true;
-          this.service.resetListaAttivitaFiltrate();
+      // Se l'utente sta muovendo la mappa, aggiorniamo i filtri
+      if (this.filter?.isMovingMap) {
+        if (this.attivitaFiltrate?.listaAttivita) this.attivitaFiltrate = null;
+  
+        // Recuperiamo il filtro dalla sessione, se disponibile
+        const sessionFilter = this.service.getFilter();
+        if (sessionFilter) {
+          this.filter.citta = sessionFilter.citta ?? undefined;
+          this.filter.nome = sessionFilter.nome ?? undefined;
+          this.filter.codTipoPromo = sessionFilter.codTipoPromo ?? undefined;
+          this.filter.codTipoAttivita = sessionFilter.codTipoAttivita ?? undefined;
         }
-      else{
-
-        if(this.filter && !this.filter.latitudine && !this.filter.longitudine){
-          const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
-            return new Promise((resolve, reject) => {
-              navigator.geolocation.getCurrentPosition(resolve, reject);
-            });
-          };
-        
-          if (navigator.geolocation) {
-            try {
-              const position = await getCurrentPositionPromise();
-              this.filter.latitudine = position.coords.latitude;
-              this.filter.longitudine = position.coords.longitude;
-            } catch (error) {
-              console.log(error);
-            }
-          }
-        }
-
-        this.filter.typeFilterHomePage = 2;
-        const observable = await this.service.apiGetListaAttivitaFiltrate(this.filter);
-        const data = await firstValueFrom(observable);
-        const allAttivitas = data.listaAttivita;
-        if (bounds) {
-          const filterAttivita = allAttivitas.filter(e => {
-            if (e.latitudine !== undefined && e.longitudine !== undefined) {
-                const position = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
-                if (bounds.contains(position)) {
-                    this.markerPositions.push(position.toJSON());
-                    return true; // Include l'attività se è visibile nella mappa
-                }
-            }
-            return false;
-        });
-
-
-        this.attivitas = filterAttivita;
-        this.markerPositions = [];
-        this.attivitas.forEach(e => {
-                if (e.latitudine !== undefined && e.longitudine !== undefined) {
-                    const position = new google.maps.LatLng({ lat: e.latitudine, lng: e.longitudine });
-                    this.markerPositions.push(position.toJSON());
-                }
-            });
-          }
       }
+  
+      const bounds = map.getBounds();
+  
+      // Se ci sono già dati filtrati, aggiorniamo la UI
+      if (this.attivitaFiltrate?.listaAttivita) {
+        this.updateMarkerPositions(this.attivitaFiltrate.listaAttivita);
+        this.attivitas = this.attivitaFiltrate.listaAttivita;
+        this.isRicerca = true;
+        this.service.resetListaAttivitaFiltrate();
+        return;
+      }
+  
+      // Se latitudine e longitudine non sono definite, otteniamo la posizione con il tuo metodo esistente
+      if (!this.filter?.latitudine || !this.filter?.longitudine) {
+        await this.getUserLocation();
+      }
+  
+      // Imposta il tipo di filtro
+      this.filter.typeFilterHomePage = 2;
+  
+      // Chiamata API per ottenere la lista di attività
+      const observable = await this.service.apiGetListaAttivitaFiltrate(this.filter);
+      const data = await firstValueFrom(observable);
+  
+      // Filtriamo le attività visibili sulla mappa
+      const allAttivitas = data.listaAttivita;
+      const filteredAttivitas = bounds
+        ? allAttivitas.filter(e => this.isWithinBounds(e, bounds))
+        : allAttivitas;
+  
+      // Aggiorniamo i marker e la lista delle attività visibili
+      this.attivitas = filteredAttivitas;
+      this.updateMarkerPositions(filteredAttivitas);
+      
     } catch (error) {
-        console.error("Errore durante la chiamata API:", error);
+      console.error("Errore durante la chiamata API:", error);
     } finally {
-        this.isLoading = false;
+      this.isLoading = false;
     }
-}
+  }
+  
+  private isWithinBounds(e: any, bounds: google.maps.LatLngBounds): boolean {
+    if (!e.latitudine || !e.longitudine) return false;
+    const position = new google.maps.LatLng(e.latitudine, e.longitudine);
+    return bounds.contains(position);
+  }
+  
+  private updateMarkerPositions(attivitas: any[]): void {
+    this.markerPositions = attivitas
+      .filter(e => e.latitudine !== undefined && e.longitudine !== undefined)
+      .map(e => new google.maps.LatLng(e.latitudine, e.longitudine).toJSON());
+  }
 
   getImmaginePrincipale(attivita: Attivita | undefined): string {
     if (attivita && attivita.immagini != undefined) {

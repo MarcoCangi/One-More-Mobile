@@ -15,7 +15,7 @@ export class FooterComponent  implements OnInit {
   constructor( private authService: AuthService) { }
 
   ngOnInit() {
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
     if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
       this.idSoggetto = userSession.idSoggetto;
     } else {

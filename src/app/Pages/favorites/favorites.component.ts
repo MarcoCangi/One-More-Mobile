@@ -37,7 +37,7 @@ export class FavoritesComponent  implements OnInit {
   ngOnInit() {
     this.isLoading = true
 
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
     if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
       this.idSoggetto = userSession.idSoggetto;
     } else {
@@ -167,7 +167,7 @@ export class FavoritesComponent  implements OnInit {
     this.isLoading = true;
     
     try {
-      const userSession = this.authService.getUserSessionFromCookie();
+      const userSession = this.authService.getUserSession();
       
       if (userSession && this.idAttivitaSelezionata && this.idSoggetto) {
         this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, this.idAttivitaSelezionata);

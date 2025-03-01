@@ -5,7 +5,6 @@ import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { Attivita, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Geolocation } from '@capacitor/geolocation';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 
@@ -27,23 +26,15 @@ export class AppComponent implements OnInit {
   idPage!: number;
   showSplash = true;
   IsShowSplashVisible : boolean = false;
-  showCookiePanel = true;
 
   constructor(private authService: AuthService, 
               private attivitaService: GetApiAttivitaService,
-              private cookieService: CookieService,
               private messagingService: MessagingService) { }
 
   async ngOnInit(): Promise<void> {
     this.checkAndRefreshToken();
 
     await this.requestGeolocationPermission();
-
-    const cookieConsent = this.cookieService.get('cookieConsent');
-    if (cookieConsent === 'true') {
-      this.enableTrackingServices();
-      //this.showCookiePanel = false;
-    }
 
     this.IsShowSplashVisible = this.authService.getIsShowedSplash();
     if (this.showSplash && !this.IsShowSplashVisible) {
@@ -90,7 +81,7 @@ export class AppComponent implements OnInit {
 
   async checkAndRefreshToken(): Promise<void> {
     try {
-      const userSession = this.authService.getUserSessionFromCookie();
+      const userSession = this.authService.getUserSession();
       if (userSession && userSession.uid) {
         const isTokenValid = await this.authService.refreshToken(userSession);
         if (!isTokenValid) {
@@ -126,13 +117,5 @@ export class AppComponent implements OnInit {
 
   updateIdFooterEvent(id: number | undefined) {
     this.idSoggetto = id;
-  }
-  
-  enableTrackingServices() {
-    // Abilita qui eventuali servizi che dipendono dal consenso dei cookie
-  }
-
-  dismissCookiePanel(){
-    this.showCookiePanel = false;
   }
 }

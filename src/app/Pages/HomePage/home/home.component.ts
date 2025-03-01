@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Attivita, AttivitaFiltrate, AttivitaHomePageResponse, FiltriAttivita, Immagini, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { catchError, firstValueFrom, retry } from 'rxjs';
+import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { DettaglioComponent } from '../../Attivita/ProfiloAttivita/dettaglio/dettaglio.component';
 import { LogoutComponent } from '../logout/logout.component';
 import { DatiStrutturaComponent } from '../../Attivita/RegistraAttivita/dati-struttura/dati-struttura.component';
@@ -61,12 +61,13 @@ export class HomeComponent  implements OnInit {
 
   constructor(
     private attivitaService: GetApiAttivitaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private locationService: LocationService
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    const userSession = this.authService.getUserSessionFromCookie();
+    const userSession = this.authService.getUserSession();
           if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
             this.idSoggetto = userSession.idSoggetto;
           } else {
@@ -167,25 +168,16 @@ export class HomeComponent  implements OnInit {
     this.RicercaCitta(citta);
   }
 
+  openPageRicercaTipoAttEvent(tipoAtt:string) {
+    this.RicercaTipoAtt(tipoAtt);
+  }
+
   async RicercaPromo(id:number): Promise<void> {
     this.filtro = new FiltriAttivita();
 
-    const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-    };
-  
-    if (navigator.geolocation) {
-      try {
-        const position = await getCurrentPositionPromise();
-        this.filtro.latitudine = position.coords.latitude;
-        this.filtro.longitudine = position.coords.longitude;
-      } catch (error) {
-        this.filtro.latitudine = 41.9028;
-        this.filtro.longitudine = 12.4964;
-      }
-    }
+    const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
+    this.filtro.latitudine = latitudine;
+    this.filtro.longitudine = longitudine;
 
     if(id)
     {
@@ -240,29 +232,12 @@ export class HomeComponent  implements OnInit {
     }
   }
 
-  openPageRicercaTipoAttEvent(tipoAtt:string) {
-    this.RicercaTipoAtt(tipoAtt);
-  }
-
   async RicercaTipoAtt(tipoAtt:string): Promise<void> {
     this.filtro = new FiltriAttivita();
 
-    const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-    };
-  
-    if (navigator.geolocation) {
-      try {
-        const position = await getCurrentPositionPromise();
-        this.filtro.latitudine = position.coords.latitude;
-        this.filtro.longitudine = position.coords.longitude;
-      } catch (error) {
-        this.filtro.latitudine = 41.9028;
-        this.filtro.longitudine = 12.4964;
-      }
-    }
+    const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
+    this.filtro.latitudine = latitudine;
+    this.filtro.longitudine = longitudine;
 
     if(tipoAtt)
     {
@@ -310,26 +285,9 @@ export class HomeComponent  implements OnInit {
       this.isCaricamentoOk = false;
       this.isLoading = true;
       
-        const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
-          return new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject);
-          });
-        };
-      
-        if (navigator.geolocation) {
-          try {
-            const position = await getCurrentPositionPromise();
-            this.latitudine = position.coords.latitude;
-            this.longitudine = position.coords.longitude;
-          } catch (error) {
-            this.latitudine = 41.9028;
-            this.longitudine = 12.4964;
-          }
-        }
-        else{
-          this.latitudine = 41.9028;
-          this.longitudine = 12.4964;
-        }
+      const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
+      this.latitudine = latitudine;
+      this.longitudine = longitudine;
       }
     
     this.isCaricamentoOk = true;
@@ -355,22 +313,9 @@ export class HomeComponent  implements OnInit {
   async getListAttivita(idTypeRicerca:number){
     this.filtro = new FiltriAttivita();
 
-    const getCurrentPositionPromise = (): Promise<GeolocationPosition> => {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-    };
-  
-    if (navigator.geolocation) {
-      try {
-        const position = await getCurrentPositionPromise();
-        this.filtro.latitudine = position.coords.latitude;
-        this.filtro.longitudine = position.coords.longitude;
-      } catch (error) {
-        this.filtro.latitudine = 41.9028;
-        this.filtro.longitudine = 12.4964;
-      }
-    }
+    const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
+    this.filtro.latitudine = latitudine;
+    this.filtro.longitudine = longitudine;
 
     if(idTypeRicerca)
     {

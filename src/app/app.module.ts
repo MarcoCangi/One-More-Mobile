@@ -28,7 +28,6 @@ import { AppCheckInterceptor } from 'one-more-frontend-common/projects/one-more-
 
 import { AppComponent } from './app.component';
 import { provideFirebaseApp } from '@angular/fire/app';
-import { CookieService } from 'ngx-cookie-service';
 import { NavComponent } from './Pages/HomePage/nav/nav.component';
 import { RegistrazioneComponent } from './Pages/HomePage/registrazione/registrazione.component';
 import { LoginComponent } from './Pages/HomePage/login/login.component';
@@ -91,7 +90,6 @@ import { DettaglioCouponComponent } from './Pages/coupon/dettaglio-coupon/dettag
 import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-modal.component'
 import { DettaglioCouponNonAttComponent } from './Pages/coupon/dettaglio-coupon-non-att/dettaglio-coupon-non-att.component';
 import { UserComponent } from './Pages/user/user.component';
-import { CookieConsentComponent } from './Pages/cookie-consent/cookie-consent.component';
 import { InfoRegistrazioneAttivitaComponent } from './Pages/Attivita/info-registrazione-attivita/info-registrazione-attivita.component';
 import { ConfermaDisattivazionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-disattivazione-promo/conferma-disattivazione-promo.component';
 import { ElencoViciniComponent } from './Pages/HomePage/elenco-vicini/elenco-vicini.component';
@@ -178,7 +176,6 @@ const appRoute: Routes = [
                  ConfirmModalComponent,
                  DettaglioCouponNonAttComponent,
                  UserComponent,
-                 CookieConsentComponent,
                  InfoRegistrazioneAttivitaComponent,
                  ConfermaDisattivazionePromoComponent,
                  ElencoViciniComponent,
@@ -265,8 +262,7 @@ const appRoute: Routes = [
               useClass: MomentDateAdapter,
               deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
             },
-            {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-            CookieService
+            {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
           ],
           bootstrap: [AppComponent],
           schemas: [CUSTOM_ELEMENTS_SCHEMA]
