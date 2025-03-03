@@ -7,10 +7,10 @@
               (centerChanged)="centerChanged()" 
               (zoomChanged)="zoomChanged()" 
               (mapClick)="move($event)">
-  <map-marker *ngFor="let markerPosition of markerPositions" 
-              [position]="markerPosition" 
-              [options]="markerOptions"
-              (mapClick)="markerClicked(markerPosition)">
+  <map-marker *ngFor="let marker of markerPositions let i = index" 
+              [position]="marker" 
+              [options]="markerOptionsList[i]"
+              (mapClick)="markerClicked(marker)">
   </map-marker>
 </google-map>
   <ion-button class="btnListaAttivita" shape="round" expand="block" (click)="openListModal()">Lista completa</ion-button>

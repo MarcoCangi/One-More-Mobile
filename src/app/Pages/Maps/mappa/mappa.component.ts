@@ -29,17 +29,17 @@ export class MappaComponent implements OnInit {
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
   display: any; // Dichiarazione della proprietà display
-  markerOptions: google.maps.MarkerOptions = {
-    draggable: false,
-    icon: {
-      url:"assets/Img/posizione one more_def.png",
-      scaledSize: new google.maps.Size(90, 85), // Regola le dimensioni come necessario
-      fillColor: '#FF0000', // Colore di riempimento
-      fillOpacity: 0.8, // Opacità del riempimento
-      strokeWeight: 2, // Spessore del bordo
-      strokeColor: '#000000' // Colore del bordo
-    }
-  };
+  // markerOptions: google.maps.MarkerOptions = {
+  //   draggable: false,
+  //   icon: {
+  //     url:"assets/Img/posizione one more_def.png",
+  //     scaledSize: new google.maps.Size(90, 85), // Regola le dimensioni come necessario
+  //     fillColor: '#FF0000', // Colore di riempimento
+  //     fillOpacity: 0.8, // Opacità del riempimento
+  //     strokeWeight: 2, // Spessore del bordo
+  //     strokeColor: '#000000' // Colore del bordo
+  //   }
+  // };
   filter!: FiltriAttivita;
   // Modal states
   isDetailModalOpen = false;
@@ -49,6 +49,7 @@ export class MappaComponent implements OnInit {
   isLimitEnabled: boolean = false;
   isPositionLoaded: boolean = false;
   isMooving: boolean = false;
+  markerOptionsList: google.maps.MarkerOptions[] = [];
 
   constructor(private service: GetApiAttivitaService) {}
 
@@ -251,12 +252,45 @@ export class MappaComponent implements OnInit {
     return bounds.contains(position);
   }
   
-  private updateMarkerPositions(attivitas: any[]): void {
+  private updateMarkerPositions(attivitas: Attivita[]): void {
     this.markerPositions = attivitas
       .filter(e => e.latitudine !== undefined && e.longitudine !== undefined)
-      .map(e => new google.maps.LatLng(e.latitudine, e.longitudine).toJSON());
+      .map(e => ({ lat: e.latitudine, lng: e.longitudine }));
+  
+    this.markerOptionsList = attivitas.map(e => {
+      const imageUrl = this.getImmaginePrincipale(e); // Ottieni immagine principale
+  
+      return {
+        draggable: false,
+        icon: {
+          url: this.createCircularMarker(imageUrl || 'assets/Img/default-marker.png'), // Crea un marker circolare
+          scaledSize: new google.maps.Size(50, 50),
+          anchor: new google.maps.Point(25, 25)
+        },
+        title: e.nome
+      };
+    });
   }
-
+  
+  private createCircularMarker(imageUrl: string): string {
+    const svg = `
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bordo blu chiaro spesso -->
+        <circle cx="50" cy="50" r="45" stroke="#4DA6FF" stroke-width="8" fill="white"/>
+  
+        <!-- Ritaglio circolare -->
+        <clipPath id="circleClip">
+          <circle cx="50" cy="50" r="42"/>
+        </clipPath>
+  
+        <!-- Immagine che riempie il cerchio -->
+        <image x="4" y="4" width="92" height="92" href="${imageUrl}" clip-path="url(#circleClip)" preserveAspectRatio="xMidYMid slice"/>
+      </svg>
+    `;
+  
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+  }
+  
   getImmaginePrincipale(attivita: Attivita | undefined): string {
     if (attivita && attivita.immagini != undefined) {
       const immaginePrincipale = attivita.immagini.find(img => img.isImmaginePrincipale || img.isImmaginePrincipaleTemp);
