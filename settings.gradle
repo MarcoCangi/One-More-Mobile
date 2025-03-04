@@ -1,0 +1,25 @@
+pluginManagement {
+    repositories {
+        google() // Per il supporto ai plugin Android
+        mavenCentral()
+        gradlePluginPortal() // Necessario per trovare il plugin 'com.android.application'
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" } // JitPack per librerie di terze parti
+    }
+}
+
+rootProject.name = "1More"
+
+// Includi il modulo Android
+include ":android"
+project(":android").projectDir = file("android")
+
+// Altri moduli
+include "app", "list", "utilities", "one-more-frontend-common"
