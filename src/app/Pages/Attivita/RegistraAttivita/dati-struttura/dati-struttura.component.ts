@@ -443,7 +443,7 @@ export class DatiStrutturaComponent  implements OnInit {
               this.isDetailModalOpen = true;
 
               const cacheKey = `lista_attivita`; //svuoto la cache con la vecchia lista delle attività
-              localStorage.removeItem(cacheKey);
+              this.storageService.removeItem(cacheKey);
             }),
             catchError((error) => {
               console.error(error.error);
@@ -469,8 +469,8 @@ export class DatiStrutturaComponent  implements OnInit {
               this.isDetailModalOpen = true;
               const cacheKey = `lista_attivita`;
               const cacheKeyAtt = `attivita_${this.requestAttivita?.idAttivita}`; // Chiave generica per la cache
-              localStorage.removeItem(cacheKey); //svuoto la cache con la vecchia lista delle attività
-              localStorage.removeItem(cacheKeyAtt) //rimuovo dalla cache l'attività modificata
+              this.storageService.removeItem(cacheKey); //svuoto la cache con la vecchia lista delle attività
+              this.storageService.removeItem(cacheKeyAtt) //rimuovo dalla cache l'attività modificata
             }),
             catchError((error) => {
               console.error(error.error);
@@ -509,8 +509,8 @@ export class DatiStrutturaComponent  implements OnInit {
         this.isEliminazioneOK = true;
         const cacheKey = `lista_attivita`;
         const cacheKeyAtt = `attivita_${this.requestAttivita?.idAttivita}`; // Chiave generica per la cache
-        localStorage.removeItem(cacheKey); //svuoto la cache con la vecchia lista delle attività
-        localStorage.removeItem(cacheKeyAtt) //rimuovo dalla cache l'attività modificata
+        this.storageService.removeItem(cacheKey); //svuoto la cache con la vecchia lista delle attività
+        this.storageService.removeItem(cacheKeyAtt) //rimuovo dalla cache l'attività modificata
       }
 
       this.isLoadingDelete = false;
