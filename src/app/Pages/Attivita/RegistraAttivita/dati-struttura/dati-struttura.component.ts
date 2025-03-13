@@ -465,12 +465,12 @@ export class DatiStrutturaComponent  implements OnInit {
         const response = await lastValueFrom(
           this.attivitaService.apiUpdateAttivita(this.requestAttivita).pipe(
             tap(() => {
-              this.isSalvataggioOK = true;
-              this.isDetailModalOpen = true;
               const cacheKey = `lista_attivita`;
               const cacheKeyAtt = `attivita_${this.requestAttivita?.idAttivita}`; // Chiave generica per la cache
               this.storageService.removeItem(cacheKey); //svuoto la cache con la vecchia lista delle attività
-              this.storageService.removeItem(cacheKeyAtt) //rimuovo dalla cache l'attività modificata
+              this.storageService.removeItem(cacheKeyAtt); //rimuovo dalla cache l'attività modificata
+              this.isSalvataggioOK = true;
+              this.isDetailModalOpen = true;
             }),
             catchError((error) => {
               console.error(error.error);
