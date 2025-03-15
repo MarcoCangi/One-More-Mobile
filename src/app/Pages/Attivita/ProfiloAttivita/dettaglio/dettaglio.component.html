@@ -87,33 +87,29 @@
     </ion-card-header>
   </ion-item>
   <ion-item>
-      <div class="chip-container">
+      <div class="chip-container" *ngIf="!isLoading && (attivita.listaTipoAttivita && attivita.listaTipoAttivita.length > 0)">
           <ion-chip [outline]="true" *ngFor="let tipo of attivita.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
       </div>
+      <div *ngIf="isLoading && (attivita.listaTipoAttivita === undefined || attivita.listaTipoAttivita.length === 0)">
+      <ion-card class="card-Skeleton">
+        <ion-skeleton-text [animated]="true" class="Skeletonimage"></ion-skeleton-text>
+      </ion-card>
+    </div>
   </ion-item>
     
   <ion-item>
     <ion-card-content>
       <ion-card-title class="subtitle">Chi siamo</ion-card-title>
-      <ion-label style="margin-top:2%;">{{attivita.descrizione}}</ion-label>
+      <div *ngIf="isLoading && attivita.description === null">
+        <ion-card class="desc-Skeleton">
+          <ion-skeleton-text [animated]="true" class="Skeletonimage"></ion-skeleton-text>
+        </ion-card>
+      </div>
+      <ion-label style="margin-top:2%;">{{attivita.description}}</ion-label>
     </ion-card-content>
   </ion-item>
 
     <ion-card-content>
-  
-      <div class="descOfferta">
-        <ion-accordion-group expand="inset">
-          <ion-accordion value="first">
-            <ion-item slot="header" color="light">
-              <h3 class="lbl-title">Le nostre offerte</h3>
-            </ion-item>
-            <div class="ion-padding" slot="content">
-              <ion-label>{{attivita.descrizioneOfferta}}</ion-label>
-            </div>
-          </ion-accordion>
-        </ion-accordion-group>
-      </div>
-
       <ion-item *ngIf="attivita.isOffertaNoGlutine || attivita.isOffertaVegana || attivita.isOffertaVegetariana">
             <ion-grid style="margin-top: 15px;">
               <ion-row>

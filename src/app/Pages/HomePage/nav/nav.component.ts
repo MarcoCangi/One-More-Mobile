@@ -19,6 +19,8 @@ export class NavComponent implements OnInit {
 
   @Input() listaTipoAttivita: TipoAttivita[] = [];
   @ViewChild(HomeComponent) childComponent!: HomeComponent;
+  isIta = true;
+  lblFlag : string | undefined;
   faMap = faMap;
   searchForm: FormGroup | undefined;
   inputControl = new FormControl();
@@ -58,6 +60,17 @@ export class NavComponent implements OnInit {
               private formBuilder: FormBuilder ) {}
 
     ngOnInit(): void { 
+        this.lblFlag = this.authService.getLanguageSession();
+
+        if(this.lblFlag == undefined){
+          this.isIta = true;
+          this.lblFlag = "IT"
+        }
+        else if(this.lblFlag != undefined && this.lblFlag == "EN")
+          this.isIta = false;
+        else
+          this.isIta = true;  
+
         this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
         this.mostraLoginButton = !isLoggedIn;
         this.mostraRegistraAttivita = isLoggedIn;
@@ -204,6 +217,22 @@ export class NavComponent implements OnInit {
       this.isHomeOpen = false;
       this.isModalLoginOpen = true;
     }
+  }
+
+  SetLenguage(){
+    if(this.isIta)
+    {
+      this.authService.saveLanguageSession("EN");
+      this.lblFlag = "EN";
+      this.isIta = false;
+    }
+    else
+    {
+      this.authService.saveLanguageSession("IT");
+      this.lblFlag = "IT";
+      this.isIta = true;
+    }
+    window.location.reload();
   }
 
   closeLogin() {

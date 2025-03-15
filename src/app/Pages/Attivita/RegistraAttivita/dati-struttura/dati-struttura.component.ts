@@ -260,17 +260,7 @@ export class DatiStrutturaComponent  implements OnInit {
       this.errorTel = "Formato non valido";
       this.isError = true;
     }
-    
-    //CONTROLLO CELLULARE//
-    if(request.cellulare == undefined || request.cellulare == ""){
-      this.errorCell = "Numero di cellulare obbligatorio";
-      this.isError = true;
-    }
-    else if(request.cellulare && !telefonoPattern.test(request.cellulare)){
-      this.errorCell = "Formato non valido";
-      this.isError = true;
-    }
-    
+   
     //CONTROLLO TIPO ATTIVITA//
     if(request.listaTipoAttivita == undefined || request.listaTipoAttivita.length == 0){
       this.errorTipologia = "Indicare almeno una tipologia";
@@ -333,30 +323,20 @@ export class DatiStrutturaComponent  implements OnInit {
     }
 
     //CONTROLLO DESCRIZIONE//
-    if(request.descrizione == undefined || request.descrizione == ""){
+    if(request.description == undefined || request.description == ""){
       this.errorDesc = "Descrizione attivita obbligatoria";
       this.isError = true;
     }
-    else if(request.descrizione.length < 100){
+    else if(request.description.length < 100){
       this.errorDesc = "Lunghezza minima descrizione 100 caratteri";
       this.isError = true;
     }
-    else if(request.descrizione.length > 2000){
+    else if(request.description.length > 2000){
       this.errorDesc = "Lunghezza massima descrizione 2000 caratteri";
       this.isError = true;
     }
-    else if (!noSpecialCharsRegex.test(request.descrizione)) {
+    else if (!noSpecialCharsRegex.test(request.description)) {
       this.errorDesc = "La descrizione contiene caratteri non ammessi";
-      this.isError = true;
-    }
-
-    //CONTROLLO DESCRIZIONE OFFERTE//
-    else if(request.descrizioneOfferta.length > 2000){
-      this.errorDesc = "Lunghezza massima descrizione offerta 2000 caratteri";
-      this.isError = true;
-    }
-    else if (!noSpecialCharsRegex.test(request.descrizioneOfferta)) {
-      this.errorDesc = "La descrizione offerta contiene caratteri non ammessi";
       this.isError = true;
     }
     }
@@ -592,16 +572,6 @@ export class DatiStrutturaComponent  implements OnInit {
   if(this.requestAttivita)
     this.requestAttivita.listaTipoAttivita = this.listaTipoAttivita;
   }
-  
-  handleCellulareChange(newCellulare: string) {
-  if(this.requestAttivita)
-    this.requestAttivita.cellulare = newCellulare;
-  }
-  
-  handleIsCellPubblicoeChange(isPubblico: boolean) {
-    if(this.requestAttivita)
-      this.requestAttivita.isCellPubblico = isPubblico;
-  }
 
   handleIsOffertaVeganaChange(isVegano: boolean) {
     if(this.requestAttivita)
@@ -687,13 +657,7 @@ export class DatiStrutturaComponent  implements OnInit {
   handleDescChange(descrizione: string) {
     this.errorDesc = "";
     if(this.requestAttivita)
-      this.requestAttivita.descrizione = descrizione;
-  }
-  
-  handleDescOffertaChange(descrizioneOfferta: string) {
-    this.errorDescServ = "";
-    if(this.requestAttivita)
-      this.requestAttivita.descrizioneOfferta = descrizioneOfferta;
+      this.requestAttivita.description = descrizione;
   }
 
   dismissDetailModal() {
@@ -716,11 +680,8 @@ export class DatiStrutturaComponent  implements OnInit {
       this.attivita?.civico? this.attivita.civico : "",
       this.attivita?.cap? this.attivita.cap : "",
       this.attivita?.telefono? this.attivita.telefono : "",
-      this.attivita?.cellulare? this.attivita.cellulare : "",
-      this.attivita?.isCellPubblico? this.attivita.isCellPubblico : false,
       this.attivita?.email? this.attivita.email : "",
-      this.attivita?.descrizione? this.attivita.descrizione : "",
-      this.attivita?.descrizioneOfferta? this.attivita.descrizioneOfferta : "",
+      this.attivita?.description? this.attivita.description : "",
       this.attivita?.isPromoPresente? this.attivita.isPromoPresente : false,
       this.attivita?.isOffertaVegetariana? this.attivita.isOffertaVegetariana : false,
       this.attivita?.isOffertaVegana? this.attivita.isOffertaVegana : false,

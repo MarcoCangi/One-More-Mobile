@@ -50,3 +50,12 @@ ion-icon {
 ion-content {
   height: 100%;
 }
+
+.custom-button {
+  --background: #e9540a !important;
+  --box-shadow: none !important; /* Rimuove l'ombreggiatura */
+  --border-radius: 20px; /* Opzionale, per un arrotondamento più definito */
+  --background-activated: #c13d08 !important; /* Colore quando premuto */
+  --border-color: white;
+  --color: white; /* Colore del testo */
+}

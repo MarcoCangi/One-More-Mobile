@@ -81,7 +81,7 @@ export class FavoritesComponent  implements OnInit {
 
     if (idAttivita) {
         try {
-            const data = await this.attivitaService.apiGetAttivitaByIdAttivita(idAttivita).toPromise();
+            const data = await this.attivitaService.apiGetAttivitaByIdAttivita(idAttivita);
             this.attivita = data;
             this.ricercaAttiviaSelezionataEvent.emit(this.attivita);
             this.openPage(3);

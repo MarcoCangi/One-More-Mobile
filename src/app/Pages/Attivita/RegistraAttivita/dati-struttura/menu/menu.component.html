@@ -5,22 +5,7 @@
       labelPlacement="stacked"
       type="text"
       formControlName="descFormControl"
-      value={{descrizioneOfferta}}
-      [counter]="true"
-      maxlength="2000"
-      [autoGrow]="true">
-    </ion-textarea>
-  </ion-item>
-</form>
-
-<form [formGroup]="exampleFormDesc" style="margin-top: 15%;">
-  <ion-item>
-    <ion-textarea
-      label="Cosa offri" 
-      labelPlacement="stacked"
-      type="text"
-      formControlName="descOffertaFormControl"
-      value={{descrizioneOfferta}}
+      value={{description}}
       [counter]="true"
       maxlength="2000"
       [autoGrow]="true">

@@ -118,12 +118,16 @@ export class HomeComponent  implements OnInit {
   }
 
   onAttivitaSelezionata(attivita: Attivita): void {
-    this.attivitaService.apiGetListaTop3ImmaginiById(attivita.idAttivita).subscribe((data: Immagini[]) => {
-      attivita.immagini = data;
-     });
-     this.attivitaService.apiGetOrariById(attivita.idAttivita).subscribe((data: Orari) => {
-      attivita.orari = data;
-     });
+    // this.attivitaService.apiGetListaTop3ImmaginiById(attivita.idAttivita).subscribe((data: Immagini[]) => {
+    //   attivita.immagini = data;
+    //  });
+    //  this.attivitaService.apiGetOrariById(attivita.idAttivita).subscribe((data: Orari) => {
+    //   attivita.orari = data;
+    //  });
+    //  this.attivitaService.apiGetAttivitaByIdAttivita(attivita.idAttivita).subscribe((data: Attivita) => {
+    //   attivita = data;
+    //   console.log(this.attivita);
+    //  });
     this.attivita = attivita;
     this.idPage = 3;
     this.authService.setLastIdPageInSession(this.idPage);

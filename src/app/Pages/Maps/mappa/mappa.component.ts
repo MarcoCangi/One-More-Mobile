@@ -348,7 +348,7 @@ export class MappaComponent implements OnInit {
 
     if (idAttivita) {
         try {
-            const data = await this.service.apiGetAttivitaByIdAttivita(idAttivita).toPromise();
+            const data = await this.service.apiGetAttivitaByIdAttivita(idAttivita);
             this.dettaglioAttivita = data;
             this.ricercaAttiviaSelezionataEvent.emit(this.dettaglioAttivita);
         } catch (error) {

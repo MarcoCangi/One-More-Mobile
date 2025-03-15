@@ -75,6 +75,10 @@ export class DettaglioComponent  implements OnInit {
           if (this.idSoggetto > 0 && this.attivita.idAttivita) {
             this.isFavorite = await this.userService.apiCheckIsFavorite(this.idSoggetto, this.attivita.idAttivita).toPromise();
         }
+        const data = await this.attivitaService.apiGetAttivitaByIdAttivita(this.attivita.idAttivita);
+          if (this.attivita && data) {
+              this.attivita = data;
+          }
 
           const immaginiData = await this.attivitaService.apiGetListaTop3ImmaginiById(this.attivita.idAttivita).toPromise();
           if (this.attivita && immaginiData) {

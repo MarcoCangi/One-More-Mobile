@@ -45,7 +45,6 @@ import { DialogAttivitaComponent } from './Pages/Maps/dialog-attivita/dialog-att
 import { CapComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/cap/cap.component';
 import { DatiStrutturaComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/dati-struttura.component';
 import { CittaComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/citta/citta.component';
-import { CellulareComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/cellulare/cellulare.component';
 import { CivicoComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/civico/civico.component';
 import { EmailComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/email/email.component';
 import { IndirizzoComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/indirizzo/indirizzo.component';
@@ -131,7 +130,6 @@ const appRoute: Routes = [
                  CapComponent,
                  DatiStrutturaComponent,
                  CittaComponent,
-                 CellulareComponent,
                  CivicoComponent,
                  EmailComponent,
                  IndirizzoComponent,

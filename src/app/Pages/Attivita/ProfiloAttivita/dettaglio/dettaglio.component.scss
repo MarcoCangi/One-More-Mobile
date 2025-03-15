@@ -253,3 +253,10 @@ ion-col {
   flex: 1; // ✅ Fa sì che ogni colonna si adatti allo spazio disponibile
   text-align: center;
 }
+
+.desc-Skeleton {
+  flex: 0 0 auto;
+  width: 150%;
+  height: 150px;
+  flex-wrap: nowrap; /* Impedisce il wrapping del contenuto nella card */
+}
