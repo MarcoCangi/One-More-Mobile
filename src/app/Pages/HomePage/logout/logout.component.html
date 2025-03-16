@@ -5,16 +5,16 @@
 
   <ion-content scroll-y="false">
     <div class="content-wrapper">
-      <h2 class="title">Sicuro di voler uscire?</h2>
+      <h2 class="title">{{ 'Sure you want to leave' | translate }}</h2>
 
       <div class="contentButton">
         <ion-button shape="round" color="danger" (click)="LogOut()">
           <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
-          <ion-label>Esci</ion-label>
+          <ion-label>{{ 'Logout' | translate }}</ion-label>
         </ion-button>
 
         <ion-button shape="round" color="success" (click)="Annulla()">
-          <ion-label>Annulla</ion-label>
+          <ion-label>{{ 'Cancel' | translate }}</ion-label>
         </ion-button>
       </div>
     </div>

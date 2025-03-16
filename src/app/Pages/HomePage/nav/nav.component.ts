@@ -9,6 +9,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { HomeComponent } from '../home/home.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav',
@@ -19,8 +20,8 @@ export class NavComponent implements OnInit {
 
   @Input() listaTipoAttivita: TipoAttivita[] = [];
   @ViewChild(HomeComponent) childComponent!: HomeComponent;
-  isIta = true;
-  lblFlag : string | undefined;
+  isIta: boolean = true;
+  lblFlag: string = "it";
   faMap = faMap;
   searchForm: FormGroup | undefined;
   inputControl = new FormControl();
@@ -57,19 +58,15 @@ export class NavComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private attivitaService: GetApiAttivitaService,
-              private formBuilder: FormBuilder ) {}
+              private formBuilder: FormBuilder,
+              private translate: TranslateService ) {}
 
     ngOnInit(): void { 
-        this.lblFlag = this.authService.getLanguageSession();
-
-        if(this.lblFlag == undefined){
-          this.isIta = true;
-          this.lblFlag = "IT"
-        }
-        else if(this.lblFlag != undefined && this.lblFlag == "EN")
-          this.isIta = false;
-        else
-          this.isIta = true;  
+      this.authService.language$.subscribe((lang) => {
+        this.lblFlag = lang;
+        this.isIta = lang === "it";
+        this.translate.use(lang);
+      });
 
         this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
         this.mostraLoginButton = !isLoggedIn;
@@ -219,19 +216,9 @@ export class NavComponent implements OnInit {
     }
   }
 
-  SetLenguage(){
-    if(this.isIta)
-    {
-      this.authService.saveLanguageSession("EN");
-      this.lblFlag = "EN";
-      this.isIta = false;
-    }
-    else
-    {
-      this.authService.saveLanguageSession("IT");
-      this.lblFlag = "IT";
-      this.isIta = true;
-    }
+  setLanguage() {
+    const newLang = this.isIta ? "en" : "it";
+    this.authService.saveLanguageSession(newLang);
     window.location.reload();
   }
 

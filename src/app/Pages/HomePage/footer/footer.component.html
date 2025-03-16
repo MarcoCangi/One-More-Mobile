@@ -9,12 +9,12 @@
 
         <ion-tab-button (click)="openPage(2)">
           <ion-icon name="map-outline"></ion-icon>
-          <ion-label>Mappa</ion-label>
+          <ion-label>{{ 'Map' | translate }}</ion-label>
         </ion-tab-button>
 
         <ion-tab-button (click)="openPage(8)">
           <ion-icon name="search-outline"></ion-icon>
-          <ion-label>Cerca</ion-label>
+          <ion-label>{{ 'Search' | translate }}</ion-label>
         </ion-tab-button>
 
         <ion-tab-button (click)="openPage(11)">
@@ -24,7 +24,7 @@
 
         <ion-tab-button *ngIf="idSoggetto" (click)="openPage(9)">
           <ion-icon name="heart-outline"></ion-icon>
-          <ion-label>Preferiti</ion-label>
+          <ion-label>{{ 'Favorites' | translate }}</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>

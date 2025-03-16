@@ -1,5 +1,6 @@
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component, HostListener, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Attivita, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
@@ -14,6 +15,8 @@ import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  lblFlag: string = "it";
+  isIta: boolean = true;
   faMap = faMap;
   datiAttivita: Attivita | undefined;
   listaAttivitaDDL: TipoAttivita[] = [];
@@ -29,10 +32,17 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, 
               private attivitaService: GetApiAttivitaService,
-              private messagingService: MessagingService) { }
+              private messagingService: MessagingService,
+              private translate: TranslateService) { }
 
   async ngOnInit(): Promise<void> {
     this.checkAndRefreshToken();
+
+    this.authService.language$.subscribe((lang) => {
+      this.lblFlag = lang;
+      this.isIta = lang === "it";
+      this.translate.use(lang);
+    });
 
     await this.requestGeolocationPermission();
 
@@ -63,6 +73,11 @@ export class AppComponent implements OnInit {
         this.listaAttivitaDDL = listaAttivitaDDL;
       }
     });
+  }
+
+  setLanguage() {
+    const newLang = this.isIta ? "en" : "it";
+    this.authService.saveLanguageSession(newLang);
   }
 
   async requestGeolocationPermission() {

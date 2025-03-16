@@ -19,7 +19,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPT
 import { GoogleMapsModule } from '@angular/google-maps';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -93,6 +93,8 @@ import { InfoRegistrazioneAttivitaComponent } from './Pages/Attivita/info-regist
 import { ConfermaDisattivazionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-disattivazione-promo/conferma-disattivazione-promo.component';
 import { ElencoViciniComponent } from './Pages/HomePage/elenco-vicini/elenco-vicini.component';
 import { IconCittaComponent } from './Pages/HomePage/icon-citta/icon-citta.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
@@ -110,6 +112,10 @@ const appRoute: Routes = [
   { path: "", component:HomeComponent },
   { path: "mappa", component:MappaComponent },
 ];
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [AppComponent,
@@ -205,6 +211,15 @@ const appRoute: Routes = [
             //     isTokenAutoRefreshEnabled: true,
             //   });
             // }),
+            BrowserModule,
+            HttpClientModule,
+            TranslateModule.forRoot({
+              loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+              }
+            }),
             AngularFireAuthModule,
             AngularFirestoreModule,
             FontAwesomeModule,

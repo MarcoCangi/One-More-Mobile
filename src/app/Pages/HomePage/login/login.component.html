@@ -5,7 +5,7 @@
       <ion-card>
         <ion-card-header>
           <ion-toolbar>
-            <ion-card-title class="title">Esegui l'accesso</ion-card-title>
+            <ion-card-title class="title">{{ 'Log in' | translate }}</ion-card-title>
             <ion-icon slot="end"  name="close-outline" class="close" (click)="closeLogin()"></ion-icon>
           </ion-toolbar>
         </ion-card-header>
@@ -27,11 +27,11 @@
                 </ion-item>
             
                 <br>
-                <ion-button shape="round" type="input" [disabled]="!homeForm.valid">Accedi</ion-button>
-                <ion-button fill="clear" (click)="openRegister()">Registrati</ion-button>
+                <ion-button shape="round" type="input" [disabled]="!homeForm.valid">{{ 'Login' | translate }}</ion-button>
+                <ion-button fill="clear" (click)="openRegister()">{{ 'Register' | translate }}</ion-button>
                 <br>
                 <br>
-                <label>oppure accedi tramite</label>
+                <label>{{ 'or log with' | translate }}</label>
                 <br>
                 <br>
                 <div class="divIcon">
@@ -42,7 +42,7 @@
                 <br>
                 <div>
             
-                  <ion-button fill="clear" (click)="resetPassword()">Password dimenticata?</ion-button>
+                  <ion-button fill="clear" (click)="resetPassword()">{{ 'Forgot your password' | translate }}</ion-button>
             
                 </div>
             </form>

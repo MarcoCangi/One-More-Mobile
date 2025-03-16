@@ -5,8 +5,8 @@
       <ion-card>
         <ion-card-header>
           <ion-toolbar>
-            <ion-card-title *ngIf="!isRegistered" class="title">Registrati</ion-card-title>
-            <ion-card-title *ngIf="isRegistered" class="title">Benvenuto!</ion-card-title>
+            <ion-card-title *ngIf="!isRegistered" class="title">{{ 'Register' | translate }}</ion-card-title>
+            <ion-card-title *ngIf="isRegistered" class="title">{{ 'Welcome' | translate }}</ion-card-title>
             <ion-icon slot="end"  name="close-outline" class="close" (click)="closeRegister()"></ion-icon>
           </ion-toolbar>
         </ion-card-header>
@@ -16,12 +16,12 @@
           <form *ngIf="!isRegistered" class="login-container" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="text-align: center;">
                 <ion-item>
                   <ion-input labelPlacement="floating" formControlName="nomeRegistrazione" type="text">
-                    <div slot="label">Nome</div>
+                    <div slot="label">{{ 'Name' | translate }}</div>
                   </ion-input>
                 </ion-item>
               <ion-item>
                 <ion-input labelPlacement="floating" formControlName="cognomeRegistrazione" type="text">
-                  <div slot="label">Cognome</div>
+                  <div slot="label">{{ 'Surname' | translate }}</div>
                 </ion-input>
               </ion-item>
             <ion-item>
@@ -36,18 +36,18 @@
             </ion-item>
             <ion-item>
               <ion-input labelPlacement="floating" formControlName="ConfermaPasswordRegistrazione" type="password" (input)="onPasswordInput()">
-                <div slot="label">Conferma Password</div>
+                <div slot="label">{{ 'Confirm' | translate }} Password</div>
               </ion-input>
             </ion-item>
             <ion-note style="margin-left: 5%;" *ngIf="passwordsDoNotMatch" color="danger">
-              Le password non coincidono
+              {{ 'Passwords dont match' | translate }}
             </ion-note>
               <br>
               <br>
-              <ion-button style="--height: 40px;" shape="round" type="input" [disabled]="!formRegistrazione.valid">Registrati</ion-button>
+              <ion-button style="--height: 40px;" shape="round" type="input" [disabled]="!formRegistrazione.valid">{{ 'Register' | translate }}</ion-button>
               
               <div class="divIcon">
-                <label>oppure registrati tramite</label>
+                <label>{{ 'or sign up with' | translate }}</label>
                 <br>
                 <img class="card-img-google" (click)="signInWithGoogle()" style="cursor: pointer;" src="assets/Img/google.png">
                   <img class="card-img-facebook" (click)="signInWithFacebook()" style="cursor: pointer;" src="assets/Img/facebook.png">
@@ -55,18 +55,18 @@
           </form>
 
           <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center; margin-top: 10%;">
-            <ion-button shape="round" color="success" (click)="closeRegister()">Chiudi</ion-button>
+            <ion-button shape="round" color="success" (click)="closeRegister()">{{ 'Close' | translate }}</ion-button>
           </div>
           <br>
           <br>
           <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center;">
-            <ion-label *ngIf="!esitoResendVerification">(Non ti è arrivata nessuna mail?)</ion-label>
+            <ion-label *ngIf="!esitoResendVerification">({{ 'Didnt get the email' | translate }})</ion-label>
             <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{esitoResendVerification}}</ion-label>
           </div>
           <br>
           <br>
           <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center;">
-            <ion-label color="primary" (click)="resendVerificationEmail()">Reinvia la mail di verifica</ion-label>
+            <ion-label color="primary" (click)="resendVerificationEmail()">{{ 'Resend verification email' | translate }}</ion-label>
           </div>
         </ion-card-content>
       </ion-card>
