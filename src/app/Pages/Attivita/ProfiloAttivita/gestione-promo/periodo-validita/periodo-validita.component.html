@@ -1,21 +1,21 @@
 <form class="data-form">
-  <ion-label class="title">Periodo*</ion-label>
+  <ion-label class="title">{{ 'PERIOD' | translate }}*</ion-label>
   <ion-item class="form">
     <ion-input
       [value]="dataDalFormControl.value ? (dataDalFormControl.value | date: 'dd/MM/yyyy') : ''"
-      placeholder="A partire da"
+      placeholder="{{ 'STARTING_FROM' | translate }}"
       readonly>
     </ion-input>
-    <ion-button fill="clear" slot="end" (click)="openDataDalPicker()">Seleziona</ion-button>
+    <ion-button fill="clear" slot="end" (click)="openDataDalPicker()">{{ 'SELCT' | translate }}</ion-button>
   </ion-item>
 
   <ion-item class="form">
     <ion-input
       [value]="dataAlFormControl.value ? (dataAlFormControl.value | date: 'dd/MM/yyyy') : ''"
-      placeholder="Fino a"
+      placeholder="{{ 'UNTIL' | translate }}"
       readonly>
     </ion-input>
-    <ion-button fill="clear" slot="end" (click)="openDataAlPicker()">Seleziona</ion-button>
+    <ion-button fill="clear" slot="end" (click)="openDataAlPicker()">{{ 'SELCT' | translate }}</ion-button>
   </ion-item>
 
   <!-- Modal per la selezione della data iniziale -->
@@ -28,7 +28,7 @@
           presentation="date"
           firstDayOfWeek="1">
         </ion-datetime>
-        <ion-button (click)="closeDataDalPicker()">Chiudi</ion-button>
+        <ion-button (click)="closeDataDalPicker()">{{ 'Close' | translate }}</ion-button>
       </div>
     </ng-template>
   </ion-modal>
@@ -42,7 +42,7 @@
           (ionChange)="onDataAlSelected($event)"
           presentation="date">
         </ion-datetime>
-        <ion-button (click)="closeDataAlPicker()">Chiudi</ion-button>
+        <ion-button (click)="closeDataAlPicker()">{{ 'Close' | translate }}</ion-button>
       </div>
     </ng-template>
   </ion-modal>

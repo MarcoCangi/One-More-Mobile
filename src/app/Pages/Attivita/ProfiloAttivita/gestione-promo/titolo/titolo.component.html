@@ -9,12 +9,12 @@
     </ion-input>
   </ion-item>
   <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
-    Lunghezza minima 5 caratteri
+    {{ 'MIN_LENGTH_5' | translate }}
   </ion-note>
   <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
-    Lunghezza massima 50 caratteri
+    {{ 'MAX_LENGTH_50' | translate }}
   </ion-note>
   <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
-    Titolo della promo obbligatoria
+    {{ 'PROMO_TITLE_REQUIRED' | translate }}
   </ion-note>
 </form>

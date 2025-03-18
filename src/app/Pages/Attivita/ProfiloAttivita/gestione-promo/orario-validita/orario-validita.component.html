@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-label>Indica il periodo della giornata</ion-label>
+        <ion-label>{{ 'SELECT_TIME_PERIOD' | translate }}</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -11,12 +11,12 @@
                       class="chkGiorno" 
                       formControlName="isAllDayValiditaFormControl" 
                       [checked]="isAllDayValidita === true"
-                      color="primary">Tutto il giorno</ion-checkbox>
+                      color="primary">{{ 'ALL_DAY' | translate }}</ion-checkbox>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="lbl-col">
-        <ion-label class="centered-label">Dalle</ion-label>
+        <ion-label class="centered-label">{{ 'FROM' | translate }}</ion-label>
       </ion-col>
       <ion-col>
         <ion-input class="time" type="time" formControlName="orarioValiditaDaFormControl" value={{orarioValiditaDa}}></ion-input>
@@ -24,7 +24,7 @@
     </ion-row>
     <ion-row>
       <ion-col class="lbl-col">
-        <ion-label class="centered-label">Alle</ion-label>
+        <ion-label class="centered-label">{{ 'TO' | translate }}</ion-label>
       </ion-col>
       <ion-col>
         <ion-input class="time" type="time" formControlName="orarioValiditaAlFormControl" value={{orarioValiditaAl}}></ion-input>
