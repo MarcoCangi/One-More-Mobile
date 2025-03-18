@@ -19,7 +19,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card-title class="title">Le nostre Promozioni</ion-card-title>
+          <ion-card-title class="title">{{ 'Special Offers' | translate }}</ion-card-title>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -74,13 +74,13 @@
           </ion-row>
           <ion-row>
             <ion-col size="4" class="column ion-text-center ion-align-items-center"> 
-              <ion-label>CHIAMA</ion-label>
+              <ion-label>{{ 'CALL' | translate }}</ion-label>
             </ion-col>
             <ion-col size="4" class="column ion-text-center ion-align-items-center">
-              <ion-label>INDIRIZZO</ion-label>
+              <ion-label>{{ 'ADDRESS' | translate }}</ion-label>
             </ion-col>
             <ion-col size="4" class="column ion-text-center ion-align-items-center">
-              <ion-label>PREFERITI</ion-label>
+              <ion-label>{{ 'FAVORITES' | translate }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -99,7 +99,7 @@
     
   <ion-item>
     <ion-card-content>
-      <ion-card-title class="subtitle">Chi siamo</ion-card-title>
+      <ion-card-title class="subtitle">{{ 'ABOUT_US' | translate }}</ion-card-title>
       <div *ngIf="isLoading && attivita.description === null">
         <ion-card class="desc-Skeleton">
           <ion-skeleton-text [animated]="true" class="Skeletonimage"></ion-skeleton-text>
@@ -114,7 +114,7 @@
             <ion-grid style="margin-top: 15px;">
               <ion-row>
                 <ion-col size="12" class="column ion-text-center ion-align-items-center">
-                  <ion-card-title class="nome">Da noi potete trovare prodotti</ion-card-title>
+                  <ion-card-title class="nome">{{ 'PRODUCTS_AVAILABLE' | translate }}</ion-card-title>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -130,13 +130,13 @@
               </ion-row>
               <ion-row>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center" *ngIf="attivita.isOffertaVegetariana">
-                  <ion-label style="font-size: 0.6rem;">GLUTEN FREE</ion-label>
+                  <ion-label style="font-size: 0.6rem;">{{ 'GLUTEN_FREE' | translate }}</ion-label>
                 </ion-col>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center" *ngIf="attivita.isOffertaVegana">
-                  <ion-label style="font-size: 0.6rem;">VEGANI</ion-label>
+                  <ion-label style="font-size: 0.6rem;">{{ 'VEGAN' | translate }}</ion-label>
                 </ion-col>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center" *ngIf="attivita.isOffertaVegetariana">
-                  <ion-label style="font-size: 0.65rem;">VEGETARIANI</ion-label>
+                  <ion-label style="font-size: 0.65rem;">{{ 'VEGETARIAN' | translate }}</ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -153,33 +153,33 @@
     </div>
     
       <div style="display: flex; justify-content: center; align-items: center; margin-top: 3%;">
-        <ion-button (click)="copyAddress(attivita.indirizzo, attivita.civico, attivita.cap, attivita.citta)" size="small" fill="clear" color="dark"><ion-icon name="copy-outline" style="margin-right: 5px;" ></ion-icon>  COPIA INDIRIZZO</ion-button>
+        <ion-button (click)="copyAddress(attivita.indirizzo, attivita.civico, attivita.cap, attivita.citta)" size="small" fill="clear" color="dark"><ion-icon name="copy-outline" style="margin-right: 5px;" ></ion-icon>  {{ 'COPY_ADDRESS' | translate }}</ion-button>
       </div>
 
       <ion-card class="card-orari" style="margin-top: 5%;">
         <ion-grid style="margin-top: 3%;">
           <ion-row>
             <ion-col>
-              <ion-card-title class="nome" style="margin-left: 10%;">Orari</ion-card-title>
+              <ion-card-title class="nome" style="margin-left: 10%;">{{ 'HOURS' | translate }}</ion-card-title>
             </ion-col>
             <ion-col>
-              <ion-card-subtitle>Mattina</ion-card-subtitle>
+              <ion-card-subtitle>{{ 'MORNING' | translate }}</ion-card-subtitle>
             </ion-col>
             <ion-col>
-              <ion-card-subtitle>Sera</ion-card-subtitle>
+              <ion-card-subtitle>{{ 'EVENING' | translate }}</ion-card-subtitle>
             </ion-col>
           </ion-row>
         </ion-grid>
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col><p>Lunedì</p></ion-col>
+              <ion-col><p>{{ 'MONDAY' | translate }}</p></ion-col>
               <ion-col>
                   <p *ngIf="attivita.orari !== undefined && attivita.orari.lunediMatDa !== undefined && attivita.orari.lunediMatDa.trim() !== '' && attivita.orari.lunediMatAl !== undefined && attivita.orari.lunediMatAl.trim() !== '' ; else chiusoTemplate">
                       {{ attivita.orari.lunediMatDa }} - {{ attivita.orari.lunediMatAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
                 </ion-col>
                 <ion-col>
@@ -187,19 +187,19 @@
                       {{ attivita.orari.lunediPomDa }} - {{ attivita.orari.lunediPomAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
               </ion-col>
             </ion-row>
   
             <ion-row>
-              <ion-col><p>Martedì</p></ion-col>
+              <ion-col><p>{{ 'TUESDAY' | translate }}</p></ion-col>
               <ion-col>
                 <p *ngIf="attivita.orari && attivita.orari.martediMatDa !== undefined && attivita.orari.martediMatDa.trim() !== '' && attivita.orari.martediMatAl !== undefined && attivita.orari.martediMatAl.trim() !== '' ; else chiusoTemplate">
                   {{ attivita.orari.martediMatDa }} - {{ attivita.orari.martediMatAl }}
                 </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
                 </ion-col>
                 <ion-col>
@@ -207,19 +207,19 @@
                     {{ attivita.orari.martediPomDa }} - {{ attivita.orari.martediPomAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
               </ion-col>
             </ion-row>
   
             <ion-row>
-              <ion-col><p>Mercoledì</p></ion-col>
+              <ion-col><p>{{ 'WEDNESDAY' | translate }}</p></ion-col>
               <ion-col>
                 <p *ngIf="attivita.orari && attivita.orari.mercolediMatDa !== undefined && attivita.orari.mercolediMatDa.trim() !== '' && attivita.orari.mercolediMatAl !== undefined && attivita.orari.mercolediMatAl.trim() !== '' ; else chiusoTemplate">
                   {{ attivita.orari.mercolediMatDa }} - {{ attivita.orari.mercolediMatAl }}
                 </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
                 </ion-col>
                 <ion-col>
@@ -227,19 +227,19 @@
                     {{ attivita.orari.mercolediPomDa }} - {{ attivita.orari.mercolediPomAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
               </ion-col>
             </ion-row>
   
             <ion-row>
-              <ion-col><p>Giovedì</p></ion-col>
+              <ion-col><p>{{ 'THURSDAY' | translate }}</p></ion-col>
               <ion-col>
                 <p *ngIf="attivita.orari && attivita.orari.giovediMatDa !== undefined && attivita.orari.giovediMatDa.trim() !== '' && attivita.orari.giovediMatAl !== undefined && attivita.orari.giovediMatAl.trim() !== '' ; else chiusoTemplate">
                   {{ attivita.orari.giovediMatDa }} - {{ attivita.orari.giovediMatAl }}
                 </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
                 </ion-col>
                 <ion-col>
@@ -247,19 +247,19 @@
                     {{ attivita.orari.giovediPomDa }} - {{ attivita.orari.giovediPomAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
               </ion-col>
             </ion-row>
   
             <ion-row>
-              <ion-col><p>Venerdì</p></ion-col>
+              <ion-col><p>{{ 'FRIDAY' | translate }}</p></ion-col>
               <ion-col>
                 <p *ngIf="attivita.orari && attivita.orari.venerdiMatDa !== undefined && attivita.orari.venerdiMatDa.trim() !== '' && attivita.orari.venerdiMatAl !== undefined && attivita.orari.venerdiMatAl.trim() !== '' ; else chiusoTemplate">
                   {{ attivita.orari.venerdiMatDa }} - {{ attivita.orari.venerdiMatAl }}
                 </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
                 </ion-col>
                 <ion-col>
@@ -267,19 +267,19 @@
                     {{ attivita.orari.venerdiPomDa }} - {{ attivita.orari.venerdiPomAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
               </ion-col>
             </ion-row>
   
             <ion-row>
-              <ion-col><p>Sabato</p></ion-col>
+              <ion-col><p>{{ 'SATURDAY' | translate }}</p></ion-col>
               <ion-col>
                 <p *ngIf="attivita.orari && attivita.orari.sabatoMatDa !== undefined && attivita.orari.sabatoMatDa.trim() !== '' && attivita.orari.sabatoMatAl !== undefined && attivita.orari.sabatoMatAl.trim() !== '' ; else chiusoTemplate">
                   {{ attivita.orari.sabatoMatDa }} - {{ attivita.orari.sabatoMatAl }}
                 </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
                 </ion-col>
                 <ion-col>
@@ -287,19 +287,19 @@
                     {{ attivita.orari.sabatoPomDa }} - {{ attivita.orari.sabatoPomAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
               </ion-col>
             </ion-row>
   
             <ion-row>
-              <ion-col><p>Domenica</p></ion-col>
+              <ion-col><p>{{ 'SUNDAY' | translate }}</p></ion-col>
               <ion-col>
                 <p *ngIf="attivita.orari && attivita.orari.domenicaMatDa !== undefined && attivita.orari.domenicaMatDa.trim() !== '' && attivita.orari.domenicaMatAl !== undefined && attivita.orari.domenicaMatAl.trim() !== '' ; else chiusoTemplate">
                   {{ attivita.orari.domenicaMatDa }} - {{ attivita.orari.domenicaMatAl }}
                 </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
                 </ion-col>
                 <ion-col>
@@ -307,7 +307,7 @@
                     {{ attivita.orari.domenicaPomDa }} - {{ attivita.orari.domenicaPomAl }}
                   </p>
                   <ng-template #chiusoTemplate>
-                      Chiuso
+                    {{ 'CLOSED' | translate }}
                   </ng-template>
               </ion-col>
             </ion-row>
