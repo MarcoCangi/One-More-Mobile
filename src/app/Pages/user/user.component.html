@@ -2,7 +2,7 @@
   <ion-row>
     <ion-col size="12" class="column ion-text-center ion-align-items-center">
       <ion-item class="column ion-text-center ion-align-items-center">
-        <ion-label class="title">Il mio profilo</ion-label>
+        <ion-label class="title">{ 'my_profile' | translate }</ion-label>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -26,24 +26,24 @@
   <ion-item></ion-item>
   <ion-row style="margin-top: 5%;">
     <ion-col size="12" style="margin-left: -5%;">
-      <ion-button fill="clear" (click)="OpenModalModificaPassword()">Modifica Password</ion-button>
+      <ion-button fill="clear" (click)="OpenModalModificaPassword()">{ 'edit_psw' | translate }</ion-button>
       <br>
       <br>
-      <ion-button fill="clear" color="danger" (click)="OpenModalEliminaAccount()">Elimina Account</ion-button>
+      <ion-button fill="clear" color="danger" (click)="OpenModalEliminaAccount()">{ 'delete_account' | translate }</ion-button>
     </ion-col>
   </ion-row>
   <ion-row style="margin-top: 5%;" *ngIf="!isVerificato">
     <ion-col size="12" style="margin-left: -5%;">
       <div class="divCenter">
-        <ion-label>Completa la verifica del tuo account aprendo il link che ti abbiamo inviato via mail</ion-label>
+        <ion-label>{ 'complete_account_verify' | translate }</ion-label>
       </div>
       <br>
       <br>
       <div class="divCenter">
-        <ion-label>Non ti è arrivata nessuna mail?</ion-label>
+        <ion-label>{ 'no_mail_arrived_question' | translate }</ion-label>
       </div>
       <div class="divCenter">
-        <ion-label color="primary" (click)="resendVerificationEmail()">Clicca qui per richiederla di nuovo</ion-label>
+        <ion-label color="primary" (click)="resendVerificationEmail()">{ '{ 'complete_account_verify' | translate }' | translate }</ion-label>
       </div>
       <br>
       <div class="divCenter">
@@ -58,7 +58,7 @@
   <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-card-title class="title">Modifica Password</ion-card-title>
+          <ion-card-title class="title">{ 'edit_psw' | translate }</ion-card-title>
           <ion-buttons slot="end">
             <ion-button (click)="DimsissModalModificaPassword()"><ion-icon name="close-outline"></ion-icon></ion-button>
           </ion-buttons>
@@ -68,7 +68,7 @@
       <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
       <ion-card *ngIf="!isLoading">
         <ion-card-header>
-          <ion-card-subtitle>Per cambiare la password, inserire la vecchia ed impostare la propria, oppure richiederne una nuova</ion-card-subtitle>
+          <ion-card-subtitle>{ 'change_password_message' | translate }</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <ion-label style="font-size: large;" *ngIf="this.errore && (!this.notificaInvio || this.notificaInvio === '')" color="danger">{{this.errore}}</ion-label>
@@ -78,25 +78,25 @@
           <form style="margin-top: 5%;" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="text-align: center;">
             <ion-item style="margin-bottom: 5%;">
               <ion-input labelPlacement="floating" formControlName="vecchiaPassword" type="text">
-                <div slot="label">Vecchia Password</div>
+                <div slot="label">{ 'old_password' | translate }</div>
               </ion-input>
             </ion-item>
             <ion-item style="margin-bottom: 5%;">
               <ion-input labelPlacement="floating" formControlName="newPasswordRegistrazione" type="text">
-                <div slot="label">Nuova Password</div>
+                <div slot="label">{ 'new_password' | translate }</div>
               </ion-input>
             </ion-item>
             <ion-item style="margin-bottom: 5%;">
               <ion-input labelPlacement="floating" formControlName="ConfermaNewPasswordRegistrazione" type="text">
-                <div slot="label">Conferma nuova Password</div>
+                <div slot="label">{ 'new_password_confirm' | translate }</div>
               </ion-input>
             </ion-item>
             <br>
-            <ion-button shape="round" type="input" [disabled]="!formRegistrazione.valid">Modifica Password</ion-button>
+            <ion-button shape="round" type="input" [disabled]="!formRegistrazione.valid">{ 'edit_psw' | translate }</ion-button>
           </form>
           <br>
           <div style="display: flex; justify-content: center; align-items: center;">
-            <ion-button fill="clear" (click)="resetPassword()">Password dimenticata?</ion-button>
+            <ion-button fill="clear" (click)="resetPassword()">{ 'forget_password_question' | translate }</ion-button>
           </div>
         </ion-card-content>
       </ion-card>
@@ -119,20 +119,20 @@
     <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
     <ion-card *ngIf="!isLoading">
       <ion-card-header>
-        <ion-card-title class="title" *ngIf="!this.isDeleted">Sicuro di voler eliminare il tuo account?</ion-card-title>
+        <ion-card-title class="title" *ngIf="!this.isDeleted">{ 'delete_account_confirm_question' | translate }</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <div *ngIf="!this.isDeleted">
-          <ion-label style="margin-top: 1rem; margin-bottom: 1rem; font-weight: bold;">Puoi dirci perchè al fine di poter migliorare il nostro servizio? </ion-label> <br>
+          <ion-label style="margin-top: 1rem; margin-bottom: 1rem; font-weight: bold;">{ 'delete_account_suggesiton_for_us' | translate }</ion-label> <br>
           <ion-radio-group [(ngModel)]="selectedReason" value="custom-checked"> <br>
-            <ion-radio value="L'app non ha soddisfatto le mie aspettative" labelPlacement="end" style="font-size: smaller;">L'app non ha soddisfatto le mie aspettative</ion-radio> <br>
-            <ion-radio value="Le promozioni non erano coerenti" labelPlacement="end" style="font-size: smaller;">Le promozioni non erano coerenti</ion-radio> <br>
-            <ion-radio value="Le attività non hanno fornito il servizio offerto" labelPlacement="end" style="font-size: smaller;">Le attività non hanno fornito il servizio</ion-radio> <br>
-            <ion-radio value="no-answer" labelPlacement="end" style="font-size: smaller;">Preferisco non rispondere</ion-radio> <br>
+            <ion-radio value="L'app non ha soddisfatto le mie aspettative" labelPlacement="end" style="font-size: smaller;">{ 'delete_account_suggesiton_1' | translate }</ion-radio> <br>
+            <ion-radio value="Le promozioni non erano coerenti" labelPlacement="end" style="font-size: smaller;">{ 'delete_account_suggesiton_2' | translate }</ion-radio> <br>
+            <ion-radio value="Le attività non hanno fornito il servizio offerto" labelPlacement="end" style="font-size: smaller;">{ 'delete_account_suggesiton_3' | translate }</ion-radio> <br>
+            <ion-radio value="no-answer" labelPlacement="end" style="font-size: smaller;">{ 'delete_account_suggesiton_4' | translate }</ion-radio> <br>
           </ion-radio-group>
 
           <div>
-            <ion-card-title class="title2">Inserire la password per l'eliminazione</ion-card-title>
+            <ion-card-title class="title2">{ 'enter_password_to_delete' | translate }</ion-card-title>
             <form [formGroup]="passwordForm">
               <ion-item>
                 <ion-input
@@ -143,10 +143,10 @@
                 </ion-input>
               </ion-item>
               <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
-                Inserire la password per l'eliminazione
+                { 'enter_password_to_delete' | translate }
               </ion-note>
               <ion-note style="margin-left: 5%;" *ngIf="passwordError" color="danger">
-                La password non è valida o non è stata inserita correttamente.
+                { 'Passwords dont match' | translate }
               </ion-note>
             </form>
           </div>
@@ -156,15 +156,15 @@
             <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason && !this.passwordEliminazione">Elimina Account</ion-button>
           </div>
           <div style="display: flex; justify-content: center; align-items: center;">
-            <ion-button fill="clear" (click)="resetPassword()">Password dimenticata?</ion-button>
+            <ion-button fill="clear" (click)="resetPassword()"> { 'Forgot your password' | translate }</ion-button>
           </div>
         </div>
         <div *ngIf="this.isDeleted">
           <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%; margin-bottom: 3%;">
-            <ion-label style="font-weight: bold;">Eliminazione eseguita correttamente</ion-label>
+            <ion-label style="font-weight: bold;">{ 'deletion_successful' | translate }</ion-label>
          </div>
           <div style="display: flex; justify-content: center; align-items: center; margin-top: 10%;">
-            <ion-button shape="round" color="success" (click)="openPage(1)">Chiudi</ion-button>
+            <ion-button shape="round" color="success" (click)="openPage(1)">{ 'deletion_successful' | translate }</ion-button>
           </div>
         </div>
       </ion-card-content>
