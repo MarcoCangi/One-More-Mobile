@@ -6,6 +6,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-favorites',
@@ -107,20 +108,26 @@ export class FavoritesComponent  implements OnInit {
 
   async openPromoModal(idAttivita: number | undefined) {
     this.isLoading = true;
-    if (idAttivita && idAttivita > 0 && this.idSoggetto) {
-      const promoData = await this.promoService.apiGetListaPromoByIdAttivitaAndUser(idAttivita, this.idSoggetto).toPromise();
-        if (promoData) {
-          this.listaPromo = promoData.filter(item => item.isAttiva === true);
-          if (this.listaPromo) {
-            this.listaPromo.forEach(item => {
-              item.days = this.getDaysArray(item.validDays);
-            });
-          }
+    try {
+        if (idAttivita && idAttivita > 0 && this.idSoggetto) {
+            const promoData = await firstValueFrom(
+                this.promoService.apiGetListaPromoByIdAttivitaAndUser(idAttivita, this.idSoggetto)
+            );
+
+            if (promoData && promoData.length > 0) {
+                this.listaPromo = promoData.filter(item => item.isAttiva === true);
+                this.listaPromo.forEach(item => {
+                    item.days = this.getDaysArray(item.validDays);
+                });
+            }
         }
+    } catch (error) {
+        console.error('Errore nel caricamento delle promozioni:', error);
+    } finally {
+        this.isLoading = false;
+        this.isModalPromoOpen = true;
     }
-    this.isLoading = false;
-    this.isModalPromoOpen = true;
-  }
+}
 
   private getDaysArray(validDays: string | undefined): number[] {
     const days: number[] = [];

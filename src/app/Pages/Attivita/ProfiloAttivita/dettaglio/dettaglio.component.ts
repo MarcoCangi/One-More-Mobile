@@ -11,6 +11,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { GoogleMap } from '@angular/google-maps';
 import { Clipboard } from '@capacitor/clipboard';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-dettaglio',
@@ -61,7 +62,9 @@ export class DettaglioComponent  implements OnInit {
         {
           await this.setCenterPosition(this.attivita.latitudine, this.attivita.longitudine);
           if (this.attivita.idAttivita && this.attivita.idAttivita > 0 && this.attivita.isPromoPresente) {
-            const promoData = await this.promoService.apiGetListaPromoByIdAttivitaAndUser(this.attivita.idAttivita, this.idSoggetto).toPromise();
+            const promoData = await lastValueFrom(
+              this.promoService.apiGetListaPromoByIdAttivitaAndUser(this.attivita.idAttivita, this.idSoggetto)
+          );
             if (promoData) {
                 this.listaPromo = promoData.filter(item => item.isAttiva === true);
                 if (this.listaPromo) {
