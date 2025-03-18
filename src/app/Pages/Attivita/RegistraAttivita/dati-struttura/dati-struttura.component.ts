@@ -529,7 +529,9 @@ export class DatiStrutturaComponent  implements OnInit {
 }
   
   getImmaginePrincipale(): string {
-    const immaginePrincipale = this.requestAttivita?.immagini?.find(i => i.isImmaginePrincipale);
+    let immaginePrincipale = this.requestAttivita?.immagini?.find(i => i.isImmaginePrincipale && i.isVerificata);
+    if(immaginePrincipale == undefined)
+      immaginePrincipale = this.requestAttivita?.immagini?.find(i => i.isImmaginePrincipaleTemp);
     return immaginePrincipale ? immaginePrincipale.upload : 'default-image.jpg';
   }
 
