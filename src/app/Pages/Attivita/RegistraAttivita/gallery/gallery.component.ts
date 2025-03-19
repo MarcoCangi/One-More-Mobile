@@ -25,9 +25,15 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit() {
     if (this.immagini && this.immagini.length > 0) {
-      const immaginePrincipale = this.immagini.find(img => img.isImmaginePrincipale === true);
+      const immaginePrincipale = this.immagini.find(img => img.isImmaginePrincipale === true && img.isVerificata === true);
       if (immaginePrincipale) {
         this.urlPrincipale = immaginePrincipale.upload;
+      }
+      else{
+        const immaginePrincipaleTemp = this.immagini.find(img => img.isImmaginePrincipaleTemp === true);
+        if (immaginePrincipaleTemp) {
+          this.urlPrincipale = immaginePrincipaleTemp.upload;
+        }
       }
       this.urls = this.immagini
       .filter(img => img.isImmaginePrincipale === false)
@@ -36,6 +42,7 @@ export class GalleryComponent implements OnInit {
       this.immaginiArray = this.immagini;
     }
   }
+  
 
   async selectImage(source: CameraSource, isProfile: boolean) {
     const image = await Camera.getPhoto({
@@ -121,5 +128,13 @@ export class GalleryComponent implements OnInit {
         this.immaginiChange.emit(this.immaginiArray);
       }
     }
+  }
+  getImmaginePrincipaleIsTemp(): boolean{
+    if(this.immagini && this.immagini.find(i => i.isImmaginePrincipale && i.isVerificata))
+      return false;
+    else if (this.immagini && this.immagini.find(i => i.isImmaginePrincipaleTemp))
+      return true;
+    else 
+      return false;
   }
 }
