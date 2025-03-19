@@ -3,15 +3,15 @@
   <ion-toolbar>
     <ion-buttons slot="start" *ngIf="coupon?.idStatus === 2">
       <ion-icon color="success" name="checkmark-circle-outline" style="width: 45px; height: 45px;"></ion-icon>
-      <ion-label style="margin-left: 10px;">UTILIZZATO IL {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
+      <ion-label style="margin-left: 10px;">{{ 'USED_ON' | translate }} {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
     </ion-buttons>
     <ion-buttons slot="start" *ngIf="coupon?.idStatus === 3 || coupon?.idStatus === 4">
       <ion-icon color="danger" name="close-circle-outline" style="width: 45px; height: 45px;"></ion-icon>
-      <ion-label style="margin-left: 10px;">ANNULLATO IL {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
+      <ion-label style="margin-left: 10px;">{{ 'CANCELED_ON' | translate }} {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
     </ion-buttons>
     <ion-buttons slot="start" *ngIf="coupon?.idStatus === 5">
       <ion-icon color="danger" name="alert-circle-outline" style="width: 45px; height: 45px;"></ion-icon>
-      <ion-label style="margin-left: 10px;">SCADUTO IL {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
+      <ion-label style="margin-left: 10px;">{{ 'EXPIRED_ON' | translate }} {{ coupon?.timestamp | date:'dd/MM/yyyy' }}</ion-label>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="CloseModalNonAttDetail()"><ion-icon name="close-outline"></ion-icon></ion-button>
@@ -57,16 +57,16 @@
     <ion-grid>
       <ion-row style="margin-bottom: 2%;">
         <ion-col size="5" >
-          <ion-label style="font-weight: bold;">ORARIO VALIDITÀ:</ion-label>
+          <ion-label style="font-weight: bold;">{{ 'VALIDITY_TIME' | translate }}:</ion-label>
         </ion-col>
         <ion-col size="7">
-          <ion-label *ngIf="!coupon?.isAllDayValidita">Dalle {{coupon?.orarioValiditaDa}}, alle {{coupon?.orarioValiditaAl}}</ion-label>
-          <ion-label *ngIf="coupon?.isAllDayValidita">Tutto il giorno</ion-label>
+          <ion-label *ngIf="!coupon?.isAllDayValidita">{{ 'FROM' | translate }} {{coupon?.orarioValiditaDa}}, {{ 'TO' | translate }} {{coupon?.orarioValiditaAl}}</ion-label>
+          <ion-label *ngIf="coupon?.isAllDayValidita">{{ 'ALL_DAY' | translate }}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row style="margin-bottom: 2%;">
         <ion-col size="5" >
-          <ion-label style="font-weight: bold;">ACQUISIZIONE:</ion-label>
+          <ion-label style="font-weight: bold;">{{ 'ACQUISITION' | translate }}:</ion-label>
         </ion-col>
         <ion-col size="7" >
           {{ coupon?.timestamp| date:'dd/MM/yyyy' }}
@@ -74,28 +74,28 @@
       </ion-row>
       <ion-row style="margin-bottom: 2%;">
         <ion-col size="5" >
-          <ion-label style="font-weight: bold;">GIORNI:</ion-label>
+          <ion-label style="font-weight: bold;">{{ 'DAYS' | translate }}:</ion-label>
         </ion-col>
         <ion-col size="7" >
-          <ion-label *ngIf="coupon?.days?.includes(0)" class="lbl">Tutti i giorni</ion-label>
-          <ion-label *ngIf="coupon?.days?.includes(1)">Lunedì</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(0)" class="lbl">{{ 'ALL_DAYS' | translate }}</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(1)">{{ 'MONDAY' | translate }}</ion-label>
           <ion-label *ngIf="coupon?.days?.includes(1) && coupon?.days?.includes(2)">-</ion-label>
-          <ion-label *ngIf="coupon?.days?.includes(2)">Martedì</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(2)">{{ 'TUESDAY' | translate }}</ion-label>
           <ion-label *ngIf="coupon?.days?.includes(2) && coupon?.days?.includes(3)">-</ion-label>
-          <ion-label *ngIf="coupon?.days?.includes(3)">Mercoledì</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(3)">{{ 'WEDNESDAY' | translate }}</ion-label>
           <ion-label *ngIf="coupon?.days?.includes(3) && coupon?.days?.includes(4)">-</ion-label>
-          <ion-label *ngIf="coupon?.days?.includes(4)">Giovedì</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(4)">{{ 'THURSDAY' | translate }}</ion-label>
           <ion-label *ngIf="coupon?.days?.includes(4) && coupon?.days?.includes(5)">-</ion-label>
-          <ion-label *ngIf="coupon?.days?.includes(5)">Venerdì</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(5)">{{ 'FRIDAY' | translate }}</ion-label>
           <ion-label *ngIf="coupon?.days?.includes(5) && coupon?.days?.includes(6)">-</ion-label>
-          <ion-label *ngIf="coupon?.days?.includes(6)">Sabato</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(6)">{{ 'SATURDAY' | translate }}</ion-label>
           <ion-label *ngIf="coupon?.days?.includes(6) && coupon?.days?.includes(7)">-</ion-label>
-          <ion-label *ngIf="coupon?.days?.includes(7)">Domenica</ion-label>
+          <ion-label *ngIf="coupon?.days?.includes(7)">{{ 'SUNDAY' | translate }}</ion-label>
         </ion-col>
       </ion-row>
     </ion-grid>
     <div style="margin-bottom: 5%;" class="column ion-text-center ion-align-items-center">
-      <ion-button shape="round" color="primary">VAI ALLA STRUTTURA <ion-icon style="margin-left: 10px;" name="business-outline"></ion-icon></ion-button>
+      <ion-button shape="round" color="primary">{{ 'GO_TO_VENUE' | translate }} <ion-icon style="margin-left: 10px;" name="business-outline"></ion-icon></ion-button>
     </div>
 
 

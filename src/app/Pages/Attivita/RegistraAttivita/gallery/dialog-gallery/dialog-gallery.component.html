@@ -4,7 +4,7 @@
   <img class="dialog-photo" [src]="img" alt="Immagine">
 </div>
 <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%;">
-  <ion-button (click)="onBackClick()">INDIETRO</ion-button>
-  <ion-button color="danger" (click)="onDeleteClick()">ELIMINA</ion-button>
+  <ion-button (click)="onBackClick()">{{ 'GO_BACK' | translate }}</ion-button>
+  <ion-button color="danger" (click)="onDeleteClick()">{{ 'DELETE' | translate }}</ion-button>
 </div>
 

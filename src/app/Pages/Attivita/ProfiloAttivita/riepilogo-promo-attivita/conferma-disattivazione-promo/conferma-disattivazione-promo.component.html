@@ -1,21 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <ion-card-title class="title">Disattiva Promo</ion-card-title>
+    <ion-card-title class="title">{{ 'DISABLE_PROMO' | translate }}</ion-card-title>
     <ion-buttons slot="end">
       <ion-button (click)="Annulla()"><ion-icon name="close-outline"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title class="title">Sicuro di voler disattivare la promo?</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-label *ngIf="!this.couponRichiesti">Attualmente nessun coupon è stato richiesto e non ancora utilizzato</ion-label>
-      <ion-label *ngIf="this.couponRichiesti">Attualmente sono stati richiesti {{this.couponRichiesti}} coupon non ancora utilizzati. Disattivando la Promozione, annullerai i coupon degli utenti influendo sul tuo punteggio Affidabilità. Sicuro di voler disattivare la Promozione?</ion-label>
-      <div class="container" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5%; margin-top: 5%;">
-        <ion-button color="danger" shape="round" (click)="Disattiva()">Disattiva</ion-button>
-        <ion-button color="primary" shape="round" (click)="Annulla()">Torna indietro</ion-button>
-      </div>
-    </ion-card-content>
-  </ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title class="title">{{ 'CONFIRM_DISABLE_PROMO' | translate }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-label *ngIf="!this.couponRichiesti">{{ 'NO_COUPONS_REQUESTED' | translate }}</ion-label>
+    
+    <ion-label *ngIf="this.couponRichiesti">
+      {{ 'COUPONS_REQUESTED' | translate }} {{this.couponRichiesti}} {{ 'COUPONS_NOT_USED' | translate }} 
+      {{ 'CONFIRM_DISABLE_PROMO_WARNING' | translate }}
+    </ion-label>
+
+    <div class="container" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5%; margin-top: 5%;">
+      <ion-button color="danger" shape="round" (click)="Disattiva()">{{ 'DISABLE' | translate }}</ion-button>
+      <ion-button color="primary" shape="round" (click)="Annulla()">{{ 'GO_BACK' | translate }}</ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>

@@ -5,7 +5,7 @@
   
     <div class="contentListAtt" *ngIf="!isLoading && isVerificato && this.listaAttivita && !this.attivita">
       <ion-toolbar style="background-color: white;">
-        <ion-title class="title">Le tue attività</ion-title>
+        <ion-title class="title">{{ 'YOUR_ACTIVITIES' | translate }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="addNewAtt()" style="background-color: #007bff; border-radius: 50%; width: 45px; height: 45px;"><ion-icon style="color: white; height: 35px; width: 35px;" name="add-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -31,8 +31,8 @@
       <div class="column ion-text-center ion-align-items-center">
         <!-- <ion-icon *ngIf="attivita?.esitoVerifica" style="color: green; margin-right: 1%; width: 25px; height: 25px;" name="checkmark-outline"></ion-icon>
         <ion-icon *ngIf="!attivita?.esitoVerifica" style="color: red; margin-right: 1%; width: 25px; height: 25px;" name="close-circle-outline"></ion-icon> -->
-        <ion-label *ngIf="attivita?.esitoVerifica" style="color: #008000; font-family:Helvetica; font-size: large;">Attivita verificata</ion-label>
-        <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-family:Helvetica; font-size: large;">Verifica non andata a buon fine</ion-label>
+        <ion-label *ngIf="attivita?.esitoVerifica" style="color: #008000; font-family:Helvetica; font-size: large;">{{ 'ACTIVITY_VERIFIED' | translate }}</ion-label>
+        <ion-label *ngIf="!attivita?.esitoVerifica" style="color: hsl(34, 77%, 46%); font-family:Helvetica; font-size: large;">{{ 'VERIFICATION_FAILED' | translate }}</ion-label>
       </div> 
       <ion-grid>
         <ion-row>
@@ -50,13 +50,13 @@
             <ion-icon style="color: hsl(34, 77%, 46%); margin-right: 5%; width: 30px; height: 30px; margin-top: 1%;" name="information-circle-outline"></ion-icon>
           </ion-col>
           <ion-col size="11" class="column ion-text-center ion-align-items-center">
-            <ion-label style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">Stiamo verificando i dati della tua attivita</ion-label>
+            <ion-label style="color: hsl(34, 77%, 46%); font-weight: bold; font-size: large;">{{ 'VERIFICATION_IN_PROGRESS' | translate }}</ion-label>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div> 
   
-    <h4 class="ion-title" *ngIf="!this.attivita">Inserisci i dati della tua attività</h4>
+    <h4 class="ion-title" *ngIf="!this.attivita">{{ 'ENTER_ACTIVITY_DETAILS' | translate }}</h4>
     
     <form>
       <div class="row">
@@ -153,18 +153,18 @@
     </form>
     
     <div class="prosegui" style="display: flex; justify-content: center; align-items: center;">
-      <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="conferma()">Prosegui</ion-button>
-      <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="conferma()">Modifica</ion-button>
+      <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="conferma()">{{ 'PROCEED' | translate }}</ion-button>
+      <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="conferma()">{{ 'EDIT' | translate }}</ion-button>
     </div>
     <div class="elimina" style="display: flex; justify-content: center; align-items: center;">
-      <ion-button fill="clear" color="danger" *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="openEliminaModal()">ELIMINA ATTIVITA</ion-button>
+      <ion-button fill="clear" color="danger" *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="openEliminaModal()">{{ 'DELETE_ACTIVITY' | translate }}</ion-button>
     </div>
   </div>
 
   <ion-alert
     [isOpen]="isError"
-    header="Attenzione"
-    subHeader="Sono stati riscontrati i seguenti errori nella compilazione"
+    header="{{ 'WARNING' | translate }}"
+    subHeader="{{ 'FORM_ERRORS' | translate }}"
     [message]="getErrorMessage()"
     [buttons]="alertButtons"
     cssClass="custom-alert"
@@ -175,18 +175,18 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title class="subTitle">
-            Per poter registrare un'attività, completa la verifica dell' account controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.
+            {{ 'COMPLETE_VERIFICATION_MESSAGE' | translate }}
           </ion-card-title>
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center">
-          <ion-button (click)="reloadHome()">CHIUDI</ion-button>
+          <ion-button (click)="reloadHome()">{{ 'Close' | translate }}</ion-button>
           <br>
           <br>
-          <ion-label *ngIf="!esitoResendVerification">(Non ti è arrivata nessuna mail?)</ion-label>
+          <ion-label *ngIf="!esitoResendVerification">({{ 'Didnt get the email' | translate }})</ion-label>
           <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{esitoResendVerification}}</ion-label>
           <br>
           <br>
-          <ion-label color="primary" (click)="resendVerificationEmail()">Reinvia la mail di verifica</ion-label>
+          <ion-label color="primary" (click)="resendVerificationEmail()">{{ 'Resend verification email' | translate }}</ion-label>
         </ion-card-content>
       </ion-card>
   </div>
@@ -195,18 +195,18 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-card-title class="title">Esito</ion-card-title>
+            <ion-card-title class="title">{{ 'RESULT' | translate }}</ion-card-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
           <ion-card>
             <ion-card-header>
-              <ion-card-title class="title" *ngIf="this.isEliminazioneOK"> Attivita eliminata </ion-card-title>
-              <ion-card-title class="title" *ngIf="this.isSalvataggioOK"> Salvataggio eseguito correttamente </ion-card-title>
-              <ion-card-title class="title" *ngIf="!this.isSalvataggioOK"> OPS qualcosa è andato storto </ion-card-title>
+              <ion-card-title class="title" *ngIf="this.isEliminazioneOK"> {{ 'ACTIVITY_DELETED' | translate }} </ion-card-title>
+              <ion-card-title class="title" *ngIf="this.isSalvataggioOK"> {{ 'SAVE_SUCCESS' | translate }} </ion-card-title>
+              <ion-card-title class="title" *ngIf="!this.isSalvataggioOK"> {{ 'SAVE_ERROR' | translate }} </ion-card-title>
             </ion-card-header>
             <ion-card-content style="display: flex; justify-content: center; align-items: center; margin-top: 1%;">
-              <ion-button shape="round" (click)="dismissDetailModal()">CHIUDI</ion-button>
+              <ion-button shape="round" (click)="dismissDetailModal()">{{ 'Close' | translate }}</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-content>
@@ -217,8 +217,8 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-card-title class="title" style="margin-left: 3%;" *ngIf="!idAttivita">Salva</ion-card-title>
-            <ion-card-title class="title" style="margin-left: 3%;" *ngIf="idAttivita">Modifica</ion-card-title>
+            <ion-card-title class="title" style="margin-left: 3%;" *ngIf="!idAttivita">{{ 'SAVE' | translate }}</ion-card-title>
+            <ion-card-title class="title" style="margin-left: 3%;" *ngIf="idAttivita">{{ 'EDIT' | translate }}</ion-card-title>
             <ion-buttons slot="end">
               <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
             </ion-buttons>
@@ -235,14 +235,14 @@
           <ion-grid style="margin-top: 10px;"  >
             <ion-row>
               <ion-col class="column ion-text-center ion-align-items-center">
-                <ion-card-title class="subTitle" >Riepilogo</ion-card-title>
+                <ion-card-title class="subTitle" >{{ 'SUMMARY' | translate }}</ion-card-title>
                 <br>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-label class="subTitle">Nome:</ion-label> <br><br>
+                  <ion-label class="subTitle">{{ 'Name' | translate }}:</ion-label> <br><br>
                   <ion-label>{{this.requestAttivita?.nome}}</ion-label>
                 </ion-item>
               </ion-col>
@@ -250,7 +250,7 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                <ion-label class="subTitle">Indirizzo:</ion-label> <br>
+                <ion-label class="subTitle">{{ 'ADDRESS' | translate }}:</ion-label> <br>
                 <ion-label>{{this.requestAttivita?.indirizzo}}, {{this.requestAttivita?.civico}}, {{this.requestAttivita?.cap}}, {{this.requestAttivita?.citta}} </ion-label>
               </ion-item>
               </ion-col>
@@ -258,7 +258,7 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                <ion-label class="subTitle">Email:</ion-label> <br>
+                <ion-label class="subTitle">{{ 'EMAIL' | translate }}:</ion-label> <br>
                 <ion-label>{{this.requestAttivita?.email}}</ion-label>
               </ion-item>
               </ion-col>
@@ -266,7 +266,7 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-label class="subTitle">Numero di telefono:</ion-label> <br>
+                  <ion-label class="subTitle">{{ 'PHONE_NUMBER' | translate }}:</ion-label> <br>
                   <ion-label>{{this.requestAttivita?.telefono}}</ion-label>
                 </ion-item>
               </ion-col>
@@ -274,7 +274,7 @@
             <ion-row>
               <ion-col style="margin-bottom: 4%;">
                 <ion-item>
-                  <ion-label class="subTitle">Tipo di attività:</ion-label> <br>
+                  <ion-label class="subTitle">{{ 'ACTIVITY_TYPE' | translate }}:</ion-label> <br>
                   <ion-list>
                     <ion-item *ngFor="let item of this.requestAttivita?.listaTipoAttivita">
                       <ion-label>{{item.descrizione}}</ion-label>
@@ -286,16 +286,16 @@
             <ion-row>
               <ion-col style="margin-bottom: 4%;">
                 <ion-item>
-                  <ion-label class="subTitle">Offri:</ion-label> <br>
+                  <ion-label class="subTitle">{{ 'OFFER' | translate }}:</ion-label> <br>
                   <ion-list>
                     <ion-item *ngIf="this.requestAttivita?.isOffertaNoGlutine">
-                      <ion-label>Prodotti senza glutine</ion-label>
+                      <ion-label>{{ 'GLUTEN_FREE_PRODUCTS' | translate }}</ion-label>
                     </ion-item>
                     <ion-item *ngIf="this.requestAttivita?.isOffertaVegana">
-                      <ion-label>Prodotti vegani</ion-label>
+                      <ion-label>{{ 'VEGAN_PRODUCTS' | translate }}</ion-label>
                     </ion-item>
                     <ion-item *ngIf="this.requestAttivita?.isOffertaVegetariana">
-                      <ion-label>Prodotti vegetariani</ion-label>
+                      <ion-label>{{ 'VEGETARIAN_PRODUCTS' | translate }}</ion-label>
                     </ion-item>
                   </ion-list>
                 </ion-item>
@@ -303,131 +303,131 @@
             </ion-row>
             <ion-row>
                 <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                  <ion-label class="subTitle">Orari:</ion-label>
+                  <ion-label class="subTitle">{{ 'HOURS' | translate }}:</ion-label>
                 </ion-col>
                 <ion-col size="5" class="column ion-text-center ion-align-items-center">
-                  <ion-label>MATTINA</ion-label>
+                  <ion-label>{{ 'MORNING' | translate }}</ion-label>
                 </ion-col>
                 <ion-col size="5" class="column ion-text-center ion-align-items-center">
-                  <ion-label>SERA</ion-label>
+                  <ion-label>{{ 'EVENING' | translate }}</ion-label>
                 </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label>LUN.</ion-label>
+                <ion-label>{{ 'MON' | translate }}.</ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.lunediMatDa && this.requestAttivita?.orari?.lunediMatAl">
                 {{this.requestAttivita?.orari?.lunediMatDa}} - {{this.requestAttivita?.orari?.lunediMatAl}}</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.lunediMatDa && !this.requestAttivita?.orari?.lunediMatAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.lunediMatDa && !this.requestAttivita?.orari?.lunediMatAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.lunediPomDa && this.requestAttivita?.orari?.lunediPomAl">
                   {{this.requestAttivita?.orari?.lunediPomDa}} - {{this.requestAttivita?.orari?.lunediPomAl}}
                 </ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.lunediPomDa && !this.requestAttivita?.orari?.lunediPomAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.lunediPomDa && !this.requestAttivita?.orari?.lunediPomAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label>MAR.</ion-label>
+                <ion-label>{{ 'TUE' | translate }}.</ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.martediMatDa && this.requestAttivita?.orari?.martediMatAl">
                 {{this.requestAttivita?.orari?.martediMatDa}} - {{this.requestAttivita?.orari?.martediMatAl}}</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.martediMatDa && !this.requestAttivita?.orari?.martediMatAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.martediMatDa && !this.requestAttivita?.orari?.martediMatAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.martediPomDa && this.requestAttivita?.orari?.martediPomAl">
                   {{this.requestAttivita?.orari?.martediPomDa}} - {{this.requestAttivita?.orari?.martediPomAl}}
                 </ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.martediPomDa && !this.requestAttivita?.orari?.martediPomAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.martediPomDa && !this.requestAttivita?.orari?.martediPomAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label>MER.</ion-label>
+                <ion-label>{{ 'WED' | translate }}.</ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.mercolediMatDa && this.requestAttivita?.orari?.mercolediMatAl">
                 {{this.requestAttivita?.orari?.mercolediMatDa}} - {{this.requestAttivita?.orari?.mercolediMatAl}}</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.mercolediMatDa && !this.requestAttivita?.orari?.mercolediMatAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.mercolediMatDa && !this.requestAttivita?.orari?.mercolediMatAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.mercolediPomDa && this.requestAttivita?.orari?.mercolediPomAl">
                   {{this.requestAttivita?.orari?.mercolediPomDa}} - {{this.requestAttivita?.orari?.mercolediPomAl}}
                 </ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.mercolediPomDa && !this.requestAttivita?.orari?.mercolediPomAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.mercolediPomDa && !this.requestAttivita?.orari?.mercolediPomAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label>GIO.</ion-label>
+                <ion-label>{{ 'THU' | translate }}.</ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.giovediMatDa && this.requestAttivita?.orari?.giovediMatAl">
                 {{this.requestAttivita?.orari?.giovediMatDa}} - {{this.requestAttivita?.orari?.giovediMatAl}}</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.giovediMatDa && !this.requestAttivita?.orari?.giovediMatAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.giovediMatDa && !this.requestAttivita?.orari?.giovediMatAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.giovediPomDa && this.requestAttivita?.orari?.giovediPomAl">
                   {{this.requestAttivita?.orari?.giovediPomDa}} - {{this.requestAttivita?.orari?.giovediPomAl}}
                 </ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.giovediPomDa && !this.requestAttivita?.orari?.giovediPomAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.giovediPomDa && !this.requestAttivita?.orari?.giovediPomAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label>VEN.</ion-label>
+                <ion-label>{{ 'FRI' | translate }}.</ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.venerdiMatDa && this.requestAttivita?.orari?.venerdiMatAl">
                 {{this.requestAttivita?.orari?.venerdiMatDa}} - {{this.requestAttivita?.orari?.venerdiMatAl}}</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.venerdiMatDa && !this.requestAttivita?.orari?.venerdiMatAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.venerdiMatDa && !this.requestAttivita?.orari?.venerdiMatAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.venerdiPomDa && this.requestAttivita?.orari?.venerdiPomAl">
                   {{this.requestAttivita?.orari?.venerdiPomDa}} - {{this.requestAttivita?.orari?.venerdiPomAl}}
                 </ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.venerdiPomDa && !this.requestAttivita?.orari?.venerdiPomAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.venerdiPomDa && !this.requestAttivita?.orari?.venerdiPomAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label>SAB.</ion-label>
+                <ion-label>{{ 'SAT' | translate }}.</ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.sabatoMatDa && this.requestAttivita?.orari?.sabatoMatAl">
                 {{this.requestAttivita?.orari?.sabatoMatDa}} - {{this.requestAttivita?.orari?.sabatoMatAl}}</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.sabatoMatDa && !this.requestAttivita?.orari?.sabatoMatAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.sabatoMatDa && !this.requestAttivita?.orari?.sabatoMatAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.sabatoPomDa && this.requestAttivita?.orari?.sabatoPomAl">
                   {{this.requestAttivita?.orari?.sabatoPomDa}} - {{this.requestAttivita?.orari?.sabatoPomAl}}
                 </ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.sabatoPomDa && !this.requestAttivita?.orari?.sabatoPomAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.sabatoPomDa && !this.requestAttivita?.orari?.sabatoPomAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="2" class="column ion-text-center ion-align-items-center">
-                <ion-label>DOM.</ion-label>
+                <ion-label>{{ 'SUN' | translate }}.</ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.domenicaMatDa && this.requestAttivita?.orari?.domenicaMatAl">
                 {{this.requestAttivita?.orari?.domenicaMatDa}} - {{this.requestAttivita?.orari?.domenicaMatAl}}</ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.domenicaMatDa && !this.requestAttivita?.orari?.domenicaMatAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.domenicaMatDa && !this.requestAttivita?.orari?.domenicaMatAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
               <ion-col size="5" class="column ion-text-center ion-align-items-center">
                 <ion-label *ngIf="this.requestAttivita?.orari?.domenicaPomDa && this.requestAttivita?.orari?.domenicaPomAl">
                   {{this.requestAttivita?.orari?.domenicaPomDa}} - {{this.requestAttivita?.orari?.domenicaPomAl}}
                 </ion-label>
-                <ion-label *ngIf="!this.requestAttivita?.orari?.domenicaPomDa && !this.requestAttivita?.orari?.domenicaPomAl"> Chiuso </ion-label>
+                <ion-label *ngIf="!this.requestAttivita?.orari?.domenicaPomDa && !this.requestAttivita?.orari?.domenicaPomAl"> {{ 'CLOSED' | translate }} </ion-label>
               </ion-col>
             </ion-row>
             <ion-item style="margin-bottom: 20px;"></ion-item>
             <ion-row>
               <ion-col>
-                  <ion-label class="subTitle">Descrizione:</ion-label> <br>
+                  <ion-label class="subTitle">{{ 'DESCRIPTION' | translate }}:</ion-label> <br>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -438,14 +438,14 @@
             <ion-item style="margin-bottom: 20px;"></ion-item>
             <ion-row>
               <ion-col>
-                <ion-label class="subTitle">Immagine profilo:</ion-label> <br>
+                <ion-label class="subTitle">{{ 'PROFILE_IMAGE' | translate }}:</ion-label> <br>
                 <ion-img [src]="getImmaginePrincipale()" class="photo"></ion-img>
               </ion-col>
             </ion-row>
             <ion-item style="margin-bottom: 20px;"></ion-item>
             <ion-row>
               <ion-col>
-                <ion-label class="subTitle">Gallery:</ion-label> <br>
+                <ion-label class="subTitle">{{ 'GALLERY' | translate }}:</ion-label> <br>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -457,10 +457,10 @@
             <ion-row style="flex-wrap: wrap;" *ngIf="!this.idAttivita">
               <ion-card>
                 <ion-card-header>
-                  <ion-label>Dichiaro di essere consapevole che una volta eseguito il salvataggio dell'attività, questa verrà sottoposta a verifica. Finché questa non verrà validata, non sarà visibile agli utenti.</ion-label>
+                  <ion-label>{{ 'DECLARATION_VERIFICATION' | translate }}</ion-label>
                 </ion-card-header>
                 <ion-card-content>
-                  <ion-checkbox labelPlacement="end" (ionChange)="onCheckboxChange($event)" style="margin-top: 10px;"> Accetta <ion-label style="color: #007bff;">termini e condizioni</ion-label> </ion-checkbox>
+                  <ion-checkbox labelPlacement="end" (ionChange)="onCheckboxChange($event)" style="margin-top: 10px;"> {{ 'ACCEPT' | translate }} <ion-label style="color: #007bff;">{{ 'TERMS_CONDITIONS' | translate }}</ion-label> </ion-checkbox>
                 </ion-card-content>
               </ion-card>
             </ion-row>
@@ -468,8 +468,8 @@
           
   
           <div class="prosegui" style="display: flex; justify-content: center; align-items: center;">
-            <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="prosegui()" [disabled]="!isCheckboxChecked">Salva</ion-button>
-            <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="modifica()">Modifica</ion-button>
+            <ion-button *ngIf="!this.idAttivita || this.idAttivita === 0" (click)="prosegui()" [disabled]="!isCheckboxChecked">{{ 'SAVE' | translate }}</ion-button>
+            <ion-button *ngIf="this.idAttivita || (this.idAttivita !== undefined && this.idAttivita > 0)" (click)="modifica()">{{ 'EDIT' | translate }}</ion-button>
           </div>
         </div>
         </ion-content>
@@ -480,7 +480,7 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-card-title class="title"style="margin-left: 3%;">Elimina</ion-card-title>
+            <ion-card-title class="title"style="margin-left: 3%;">{{ 'DELETE' | translate }}</ion-card-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -489,16 +489,16 @@
           </div>
           <ion-card *ngIf="!isLoadingDelete">
             <ion-card-header class="cardContainer">
-              <ion-card-title class="title" *ngIf="!this.isEliminazioneOK"> Sicuro di voler eliminare l'attivita? </ion-card-title>
-              <ion-card-title class="title" *ngIf="this.isEliminazioneOK"> Attivita eliminata</ion-card-title>
+              <ion-card-title class="title" *ngIf="!this.isEliminazioneOK"> {{ 'CONFIRM_DELETE_ACTIVITY' | translate }} </ion-card-title>
+              <ion-card-title class="title" *ngIf="this.isEliminazioneOK"> {{ 'ACTIVITY_DELETED' | translate }}</ion-card-title>
             </ion-card-header>
             <ion-card-content class="cardContainer">
-              <ion-card-title class="title2" *ngIf="!this.isEliminazioneOK"> L'eliminazione comporterà anche la rimozione di eventuali promo legate all'attività </ion-card-title>
+              <ion-card-title class="title2" *ngIf="!this.isEliminazioneOK"> {{ 'DELETE_WARNING' | translate }} </ion-card-title>
             </ion-card-content>
             <ion-card-content class="cardContainer">
-              <ion-button shape="round" color="danger" *ngIf="!this.isEliminazioneOK" (click)="eliminaAttivita()">ELIMINA</ion-button>
-              <ion-button shape="round" *ngIf="!this.isEliminazioneOK" (click)="dismissEliminaModal()">ANNULLA</ion-button>
-              <ion-button shape="round" *ngIf="this.isEliminazioneOK" (click)="reloadHome()">CHIUDI</ion-button>
+              <ion-button shape="round" color="danger" *ngIf="!this.isEliminazioneOK" (click)="eliminaAttivita()">{{ 'DELETE' | translate }}</ion-button>
+              <ion-button shape="round" *ngIf="!this.isEliminazioneOK" (click)="dismissEliminaModal()">{{ 'Cancel' | translate }}</ion-button>
+              <ion-button shape="round" *ngIf="this.isEliminazioneOK" (click)="reloadHome()">{{ 'Close' | translate }}</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-content>

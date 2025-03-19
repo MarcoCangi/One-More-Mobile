@@ -1,6 +1,14 @@
 <form>
-  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isVegano" [formControl]="isVeganoFormControl"><ion-label style="color: black;">Hai Prodotti vegani?</ion-label></ion-checkbox>
-  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isVegetariano" [formControl]="isVegetarianoFormControl"><ion-label style="color: black;">Hai Prodotti vegetariani?</ion-label></ion-checkbox>
-  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isNoGlutine" [formControl]="isNoGlutineFormControl"><ion-label style="color: black;">Prodotti senza glutine?</ion-label></ion-checkbox>
+  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isVegano" [formControl]="isVeganoFormControl">
+    <ion-label style="color: black;">{{ 'HAS_VEGAN_PRODUCTS' | translate }}</ion-label>
+  </ion-checkbox>
+  
+  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isVegetariano" [formControl]="isVegetarianoFormControl">
+    <ion-label style="color: black;">{{ 'HAS_VEGETARIAN_PRODUCTS' | translate }}</ion-label>
+  </ion-checkbox>
+  
+  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isNoGlutine" [formControl]="isNoGlutineFormControl">
+    <ion-label style="color: black;">{{ 'HAS_GLUTEN_FREE_PRODUCTS' | translate }}</ion-label>
+  </ion-checkbox>
 </form>
 

@@ -8,22 +8,22 @@
     <ion-card>
       <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
       <ion-card-content *ngIf="this.isAdd && !this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
-        <ion-card-title class="title" *ngIf="isUtilizzabile"> Vuoi utilizzare il coupon?</ion-card-title>
-        <ion-card-title class="title" *ngIf="!isUtilizzabile"> Coupon non utilizzabile ora </ion-card-title>
+        <ion-card-title class="title" *ngIf="isUtilizzabile"> {{ 'USE_COUPON' | translate }}</ion-card-title>
+        <ion-card-title class="title" *ngIf="!isUtilizzabile"> {{ 'COUPON_NOT_AVAILABLE' | translate }} </ion-card-title>
       <ion-grid *ngIf="isUtilizzabile" style="margin-top:15px;">
         <ion-row>
           <ion-col size="6" class="column ion-text-center ion-align-items-center">
-            <ion-button shape="round" color="light" (click)="CloseModalConfirm()">ANNULLA</ion-button>
+            <ion-button shape="round" color="light" (click)="CloseModalConfirm()">{{ 'Cancel' | translate }}</ion-button>
           </ion-col>
           <ion-col size="6" class="column ion-text-center ion-align-items-center">
-            <ion-button shape="round" color="success" (click)="Confirm(2)">CONFERMA</ion-button>
+            <ion-button shape="round" color="success" (click)="Confirm(2)">{{ 'Confirm' | translate }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
       <ion-grid *ngIf="!isUtilizzabile" style="margin-top:15px;">
         <ion-row>
           <ion-col size="6">
-            <ion-label>Valido fino al:</ion-label>
+            <ion-label>{{ 'VALID_UNTIL' | translate }}:</ion-label>
           </ion-col>
           <ion-col size="6">
             <ion-label>{{coupon?.dataAl | date:'dd/MM/yyyy' }}</ion-label>
@@ -31,23 +31,23 @@
         </ion-row>
         <ion-row>
           <ion-col size="6">
-            <ion-label>Nei giorni:</ion-label>
+            <ion-label>{{ 'ON_DAYS' | translate }}:</ion-label>
           </ion-col>
           <ion-col size="6">
-            <ion-label *ngIf="coupon?.days?.includes(0)" class="lbl">Tutti i giorni</ion-label>
-            <ion-label *ngIf="coupon?.days?.includes(1)">Lunedì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(0)" class="lbl">{{ 'ALL_DAYS' | translate }}</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(1)">{{ 'MONDAY' | translate }}</ion-label>
             <ion-label *ngIf="coupon?.days?.includes(1) && coupon?.days?.includes(2)">-</ion-label>
-            <ion-label *ngIf="coupon?.days?.includes(2)">Martedì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(2)">{{ 'TUESDAY' | translate }}</ion-label>
             <ion-label *ngIf="coupon?.days?.includes(2) && coupon?.days?.includes(3)">-</ion-label>
-            <ion-label *ngIf="coupon?.days?.includes(3)">Mercoledì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(3)">{{ 'WEDNESDAY' | translate }}</ion-label>
             <ion-label *ngIf="coupon?.days?.includes(3) && coupon?.days?.includes(4)">-</ion-label>
-            <ion-label *ngIf="coupon?.days?.includes(4)">Giovedì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(4)">{{ 'THURSDAY' | translate }}</ion-label>
             <ion-label *ngIf="coupon?.days?.includes(4) && coupon?.days?.includes(5)">-</ion-label>
-            <ion-label *ngIf="coupon?.days?.includes(5)">Venerdì</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(5)">{{ 'FRIDAY' | translate }}</ion-label>
             <ion-label *ngIf="coupon?.days?.includes(5) && coupon?.days?.includes(6)">-</ion-label>
-            <ion-label *ngIf="coupon?.days?.includes(6)">Sabato</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(6)">{{ 'SATURDAY' | translate }}</ion-label>
             <ion-label *ngIf="coupon?.days?.includes(6) && coupon?.days?.includes(7)">-</ion-label>
-            <ion-label *ngIf="coupon?.days?.includes(7)">Domenica</ion-label>
+            <ion-label *ngIf="coupon?.days?.includes(7)">{{ 'SUNDAY' | translate }}</ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -55,36 +55,36 @@
             <ion-label>Orario:</ion-label>
           </ion-col>
           <ion-col size="6">
-            <ion-label *ngIf="coupon?.isAllDayValidita">Tutto il giorno</ion-label>
+            <ion-label *ngIf="coupon?.isAllDayValidita">{{ 'ALL_DAY' | translate }}</ion-label>
             <ion-label *ngIf="!coupon?.isAllDayValidita">{{coupon?.orarioValiditaDa}} - {{coupon?.orarioValiditaAl}}</ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-button shape="round" color="primary" (click)="CloseModalConfirm()">TORNA INDIETRO</ion-button>
+            <ion-button shape="round" color="primary" (click)="CloseModalConfirm()">{{ 'GO_BACK' | translate }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid >
       </ion-card-content>
       
       <ion-card-content *ngIf="!this.isAdd && !this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
-        <ion-card-title class="title"> Sicuro di voler eliminare il coupon?</ion-card-title>
+        <ion-card-title class="title"> {{ 'CONFIRM_DELETE_COUPON' | translate }}</ion-card-title>
       <ion-grid>
         <ion-row style="margin-top:15px;">
           <ion-col size="6" class="column ion-text-center ion-align-items-center">
-            <ion-button shape="round" color="light" (click)="CloseModalConfirm()">ANNULLA</ion-button>
+            <ion-button shape="round" color="light" (click)="CloseModalConfirm()">{{ 'GO_BACK' | translate }}</ion-button>
           </ion-col>
           <ion-col size="6" class="column ion-text-center ion-align-items-center">
-            <ion-button shape="round" color="danger" (click)="Confirm(3)">ELIMINA</ion-button>
+            <ion-button shape="round" color="danger" (click)="Confirm(3)">{{ 'DELETE' | translate }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   
       <ion-card-content *ngIf="this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px; height: 400px;">
-        <ion-card-title class="title" *ngIf="this.isConfirmed && this.typeUtilizzo === 2">COUPON UTILIZZATO</ion-card-title>
-        <ion-card-title class="title" *ngIf="this.isConfirmed && this.typeUtilizzo === 3">COUPON ELIMINATO</ion-card-title>
-        <ion-card-title class="title" *ngIf="!this.isConfirmed">ATTENZIONE</ion-card-title>
+        <ion-card-title class="title" *ngIf="this.isConfirmed && this.typeUtilizzo === 2">{{ 'COUPON_USED' | translate }}</ion-card-title>
+        <ion-card-title class="title" *ngIf="this.isConfirmed && this.typeUtilizzo === 3">{{ 'COUPON_DELETED' | translate }}</ion-card-title>
+        <ion-card-title class="title" *ngIf="!this.isConfirmed">{{ 'WARNING' | translate }}</ion-card-title>
   
         <ion-grid>
           <ion-row>
@@ -95,20 +95,20 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label *ngIf="this.isConfirmed && this.typeUtilizzo === 2" class="lbl"> Il coupon è stato utilizzato con successo </ion-label>
-              <ion-label *ngIf="this.isConfirmed && this.typeUtilizzo === 3" class="lbl"> Il coupon è stato eliminato con successo </ion-label>
+              <ion-label *ngIf="this.isConfirmed && this.typeUtilizzo === 2" class="lbl"> {{ 'COUPON_SUCCESSFULLY_USED' | translate }} </ion-label>
+              <ion-label *ngIf="this.isConfirmed && this.typeUtilizzo === 3" class="lbl"> {{ 'COUPON_SUCCESSFULLY_DELETED' | translate }} </ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>
   
-        <ion-button *ngIf="this.isConfirmed" shape="round" color="success" (click)="ChiudiWithEsito()">CHIUDI</ion-button>
+        <ion-button *ngIf="this.isConfirmed" shape="round" color="success" (click)="ChiudiWithEsito()">{{ 'Close' | translate }}</ion-button>
         <ion-grid *ngIf="!this.isConfirmed">
           <ion-row style="margin-top:15px;">
             <ion-col size="6" class="column ion-text-center ion-align-items-center">
-              <ion-button shape="round" color="light" (click)="Chiudi()">CHIUDI</ion-button>
+              <ion-button shape="round" color="light" (click)="Chiudi()">{{ 'Close' | translate }}</ion-button>
             </ion-col>
             <ion-col size="6" class="column ion-text-center ion-align-items-center">
-              <ion-button shape="round" color="light" (click)="Retry()">RIPROVA</ion-button>
+              <ion-button shape="round" color="light" (click)="Retry()">{{ 'RETRY' | translate }}</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

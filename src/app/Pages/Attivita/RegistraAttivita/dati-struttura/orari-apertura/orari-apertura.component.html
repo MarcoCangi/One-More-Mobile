@@ -1,5 +1,5 @@
  <div style="margin-left: 4%; margin-top: 5%; width: 240px;">
-    <h4 class="lbl">Orari</h4>
+    <h4 class="lbl">{{ 'HOURS' | translate }}</h4>
     <ion-label style="margin-left: 18%; color:black">Mattina</ion-label>
     <ion-label style="margin-left: 40%; color:black">Sera</ion-label>
   </div>
@@ -9,7 +9,7 @@
 
     <div class="divContainer">
       <div class="divLbl">
-        <ion-label class="lbl">LUN.</ion-label>
+        <ion-label class="lbl">{{ 'MON' | translate }}.</ion-label>
       </div>  
       <div class="divInput">
         <ion-input class="time" type="time" formControlName="lunediMatDa"  name="lunediMatDa" value={{orari?.lunediMatDa}}></ion-input>
@@ -27,7 +27,7 @@
     <!-- MARTEDI -->
     <div class="divContainer">
       <div class="divLbl">
-        <label class="lbl">MAR.</label>
+        <label class="lbl">{{ 'TUE' | translate }}.</label>
       </div>
       <div class="divInput">
          <ion-input class="time" type="time" formControlName="martediMatDa" name="martediMatDa" value={{orari?.martediMatDa}}></ion-input>
@@ -45,7 +45,7 @@
       <!-- MERCOLEDI -->
       <div class="divContainer">
         <div class="divLbl">
-          <label class="lbl">MER.</label>
+          <label class="lbl">{{ 'WED' | translate }}.</label>
         </div>
         <div class="divInput">
           <ion-input class="time" type="time" formControlName="mercolediMatDa" name="mercolediMatDa" value={{orari?.mercolediMatDa}}></ion-input>
@@ -64,7 +64,7 @@
       <!-- GIOVEDI -->
       <div class="divContainer">
         <div class="divLbl">
-          <label class="lbl">GIO.</label>
+          <label class="lbl">{{ 'THU' | translate }}.</label>
         </div>
         <div class="divInput">
           <ion-input class="time" type="time" formControlName="giovediMatDa" name="giovediMatDa" value={{orari?.giovediMatDa}}></ion-input>
@@ -83,7 +83,7 @@
       <!-- VENERDI -->
       <div class="divContainer">
         <div class="divLbl">
-          <label class="lbl">VEN.</label>
+          <label class="lbl">{{ 'FRI' | translate }}.</label>
         </div>
         <div class="divInput">
           <ion-input class="time" type="time" formControlName="venerdiMatDa" name="venerdiMatDa" value={{orari?.venerdiMatDa}}></ion-input>
@@ -102,7 +102,7 @@
       <!-- SABATO -->
       <div class="divContainer">
         <div class="divLbl">
-          <label class="lbl">SAB.</label>
+          <label class="lbl">{{ 'SAT' | translate }}.</label>
         </div>
         <div class="divInput">
           <ion-input class="time" type="time" formControlName="sabatoMatDa" name="sabatoMatDa" value={{orari?.sabatoMatDa}}></ion-input>
@@ -121,7 +121,7 @@
       <!-- DOMENICA -->
       <div class="divContainer">
         <div class="divLbl">
-          <label class="lbl">DOM.</label>
+          <label class="lbl">{{ 'SUN' | translate }}.</label>
         </div>
         <div class="divInput">
           <ion-input class="time" type="time" formControlName="domenicaMatDa" name="domenicaMatDa" value={{orari?.domenicaMatDa}}></ion-input>

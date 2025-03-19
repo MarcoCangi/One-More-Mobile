@@ -1,13 +1,13 @@
 <form [formGroup]="exampleForm" style="margin-top: 15%;">
   <ion-item>
     <ion-textarea
-      label="Descrizione del locale*" 
+      label="{{ 'PLACE_DESCRIPTION' | translate }}*" 
       labelPlacement="stacked"
       type="text"
       formControlName="descFormControl"
       value={{description}}
       [counter]="true"
-      maxlength="2000"
+      maxlength="800"
       [autoGrow]="true">
     </ion-textarea>
   </ion-item>
