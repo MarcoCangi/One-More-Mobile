@@ -95,7 +95,7 @@ export class FavoritesComponent  implements OnInit {
 
   getImmaginePrincipale(attivita: AttivitaRicerca | undefined): string {
     if (attivita && attivita.immagini != undefined) {
-      const immaginePrincipale = attivita.immagini.find(img => img.isImmaginePrincipale);
+      const immaginePrincipale = attivita.immagini.find(img => (img.isImmaginePrincipale && img.isVerificata) || img.isImmaginePrincipaleTemp);
       if (immaginePrincipale) {
         return immaginePrincipale.upload;
       } else {

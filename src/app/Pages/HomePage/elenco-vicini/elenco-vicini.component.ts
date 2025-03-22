@@ -3,7 +3,7 @@ import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
-
+import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 @Component({
   selector: 'app-elenco-vicini',
   templateUrl: './elenco-vicini.component.html',
@@ -51,7 +51,7 @@ export class ElencoViciniComponent {
 
 
   getImmaginePrincipale(attivita: Attivita): string {
-    const immaginePrincipale = attivita.immagini?.find(img => img.isImmaginePrincipale);
+    const immaginePrincipale = attivita.immagini?.find(img => (img.isImmaginePrincipale && img.isVerificata) || img.isImmaginePrincipaleTemp);
     // Controlla se è presente un'immagine principale nell'array delle immagini
     if (immaginePrincipale && immaginePrincipale.upload) {
       return immaginePrincipale.upload; // Restituisci l'URL dell'immagine principale
@@ -87,7 +87,7 @@ export class ElencoViciniComponent {
   }
 
   RicercaAttivitaEvent(){
-    this.ricercaAttivitaEvent.emit(2);
+    this.ricercaAttivitaEvent.emit(TipoRicercaAttivita.AttivitaVicine);
   }
 
 }

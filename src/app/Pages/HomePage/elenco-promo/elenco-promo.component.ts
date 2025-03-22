@@ -3,6 +3,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 @Component({
   selector: 'app-elenco-promo',
   templateUrl: './elenco-promo.component.html',
@@ -50,7 +51,7 @@ async loadData() {
 }
 
   getImmaginePrincipale(attivita: Attivita): string {
-    const immaginePrincipale = attivita.immagini?.find(img => img.isImmaginePrincipale);
+    const immaginePrincipale = attivita.immagini?.find(img => (img.isImmaginePrincipale && img.isVerificata)||img.isImmaginePrincipaleTemp);
     // Controlla se è presente un'immagine principale nell'array delle immagini
     if (immaginePrincipale) {
       return immaginePrincipale.upload; // Restituisci l'URL dell'immagine principale
@@ -86,6 +87,6 @@ async loadData() {
   }
 
   RicercaAttivitaEvent(){
-    this.ricercaAttivitaEvent.emit(1);
+    this.ricercaAttivitaEvent.emit(TipoRicercaAttivita.AttivitaConPromo);
   }
 }

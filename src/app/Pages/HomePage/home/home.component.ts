@@ -12,7 +12,7 @@ import { FavoritesComponent } from '../../favorites/favorites.component';
 import { CouponComponent } from '../../coupon/coupon.component';
 import { UserComponent } from '../../user/user.component';
 import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
-
+import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -314,13 +314,13 @@ export class HomeComponent  implements OnInit {
     location.reload();
   }
 
-  async getListAttivita(idTypeRicerca:number){
+  async getListAttivita(idTypeRicerca:TipoRicercaAttivita){
     this.filtro = new FiltriAttivita();
 
     const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
     this.filtro.latitudine = latitudine;
     this.filtro.longitudine = longitudine;
-
+    this.filtro.tipoRicercaAttivita = idTypeRicerca;
     if(idTypeRicerca)
     {
       this.isLoading = true;

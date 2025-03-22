@@ -25,15 +25,9 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit() {
     if (this.immagini && this.immagini.length > 0) {
-      const immaginePrincipale = this.immagini.find(img => img.isImmaginePrincipale === true && img.isVerificata === true);
+      const immaginePrincipale = this.immagini.find(img => img.isImmaginePrincipale === true);
       if (immaginePrincipale) {
         this.urlPrincipale = immaginePrincipale.upload;
-      }
-      else{
-        const immaginePrincipaleTemp = this.immagini.find(img => img.isImmaginePrincipaleTemp === true);
-        if (immaginePrincipaleTemp) {
-          this.urlPrincipale = immaginePrincipaleTemp.upload;
-        }
       }
       this.urls = this.immagini
       .filter(img => img.isImmaginePrincipale === false)
