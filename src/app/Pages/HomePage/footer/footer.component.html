@@ -4,7 +4,7 @@
       <ion-tab-bar slot="bottom">
         <ion-tab-button (click)="openPage(1)">
           <ion-icon name="home-outline"></ion-icon>
-          <ion-label>Home</ion-label>
+          <ion-label>{{'Home'|translate}}</ion-label>
         </ion-tab-button>
 
         <ion-tab-button (click)="openPage(2)">
@@ -19,7 +19,7 @@
 
         <ion-tab-button (click)="openPage(11)">
           <ion-icon name="ticket-outline"></ion-icon>
-          <ion-label>Coupon</ion-label>
+          <ion-label>{{'Coupon'|translate}}</ion-label>
         </ion-tab-button>
 
         <ion-tab-button *ngIf="idSoggetto" (click)="openPage(9)">

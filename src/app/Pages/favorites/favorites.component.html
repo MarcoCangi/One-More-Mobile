@@ -21,7 +21,7 @@
               <br>
               <ion-label (click)="VisualizzaAttivita(attivita.idAttivita)">{{ attivita.citta }}</ion-label>
               <br>
-              <ion-button *ngIf="attivita.isPromoPresente" size="small" color="success" (click)="openPromoModal(attivita.idAttivita)">PROMO</ion-button>
+              <ion-button *ngIf="attivita.isPromoPresente" size="small" color="success" (click)="openPromoModal(attivita.idAttivita)">{{'Promo'|translate}}</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -29,7 +29,7 @@
     </ion-card>
   </div>
   <div class="column ion-text-center ion-align-items-center">
-    <ion-label class="labelTitle" *ngIf="!isLoading && listaAttivitaFavoriti && listaAttivitaFavoriti.length === 0" >Non sono presenti Attività</ion-label>
+    <ion-label class="labelTitle" *ngIf="!isLoading && listaAttivitaFavoriti && listaAttivitaFavoriti.length === 0" >{{'NOACTIVITIES'|translate}}</ion-label>
   </div>
 </div>
 
@@ -39,7 +39,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-card-title class="title">Promozioni</ion-card-title>
+        <ion-card-title class="title">{{'Promo'|translate}}</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissPromoModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -60,7 +60,7 @@
   <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-card-title class="title" style="margin-left: 3%;">Rimuovi dai Preferiti</ion-card-title>
+          <ion-card-title class="title" style="margin-left: 3%;">{{'REMOVEFAVORITES'|translate}}</ion-card-title>
           <ion-buttons slot="end">
             <ion-button (click)="dismissConfirmModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
           </ion-buttons>
@@ -69,12 +69,12 @@
         <ion-card>
           <ion-card-header class="column ion-text-center ion-align-items-center">
             <ion-card-title class="title">
-              Vuoi rimuoverla dai preferiti?
+              {{'CHECKREMOVEFAVORITES'|translate}} 
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="column ion-text-center ion-align-items-center">
-              <ion-button shape="round" color="danger" (click)="AddRemoveFavorite()">ELIMINA</ion-button>
-              <ion-button shape="round" color="light" (click)="dismissConfirmModal()">ANNULLA</ion-button>
+              <ion-button shape="round" color="danger" (click)="AddRemoveFavorite()">{{'DELETE'|translate}}</ion-button>
+              <ion-button shape="round" color="light" (click)="dismissConfirmModal()">{{'Cancel'|translate}}</ion-button>
           </ion-card-content>
         </ion-card>
     </ng-template>

@@ -2,7 +2,7 @@
   <ion-grid style="margin-left: 5%;">
       <ion-row>
         <ion-col>
-          <ion-label>Indica una o più tipologie di offerta</ion-label>
+          <ion-label>{{'SELECT_OFFER_TYPES'|translate}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -17,42 +17,42 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-checkbox labelPlacement="end" [formControl]="isOmaggioFormControl" [checked]=isOmaggio>Omaggio</ion-checkbox>
+          <ion-checkbox labelPlacement="end" [formControl]="isOmaggioFormControl" [checked]=isOmaggio>{{'SingleGift'|translate}}</ion-checkbox>
         </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isPacchettoFormControl" [checked]=isPacchetto>Pacchetto/Bundle</ion-checkbox>
+            <ion-checkbox labelPlacement="end" [formControl]="isPacchettoFormControl" [checked]=isPacchetto>{{'Bundle'|translate}}</ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isScontoFormControl" [checked]=isSconto>Sconto</ion-checkbox>
+            <ion-checkbox labelPlacement="end" [formControl]="isScontoFormControl" [checked]=isSconto>{{'Discount'|translate}}</ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isBambiniFormControl" [checked]=isBambini>Per Bambini</ion-checkbox>
+            <ion-checkbox labelPlacement="end" [formControl]="isBambiniFormControl" [checked]=isBambini>{{'Child'|translate}}</ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isFamiglieFormControl" [checked]=isFamiglie>Per Famiglie</ion-checkbox>
+            <ion-checkbox labelPlacement="end" [formControl]="isFamiglieFormControl" [checked]=isFamiglie>{{'Families'|translate}}</ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isCoppieFormControl" [checked]=isCoppie>Per Coppie</ion-checkbox>
+            <ion-checkbox labelPlacement="end" [formControl]="isCoppieFormControl" [checked]=isCoppie>{{'Couples'|translate}}</ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isVeganiFormControl" [checked]=isVegani>Per Vegani</ion-checkbox>
+            <ion-checkbox labelPlacement="end" [formControl]="isVeganiFormControl" [checked]=isVegani>{{'ForVegans'|translate}}</ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isVegetarianiFormControl" [checked]=isVegetariani>Per Vegetariani</ion-checkbox>
+            <ion-checkbox labelPlacement="end" [formControl]="isVegetarianiFormControl" [checked]=isVegetariani>{{'ForVegetarians'|translate}}</ion-checkbox>
           </ion-col>
         </ion-row>
     </ion-grid>

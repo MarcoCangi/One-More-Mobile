@@ -7,9 +7,9 @@
     <div class="card-wrapper" *ngIf="!isLoading">
       <ion-card class="card-consigli" *ngFor="let attivita of elencoVicini" (click)="VisualizzaAttivita(attivita)">
         <div class="label-overlay" *ngIf="attivita.isPromoPresente">
-          <label>Promo</label>
+          <label>{{'Promo'|translate}}</label>
         </div>
-        <img mat-card-image [src]="getImmaginePrincipale(attivita)" class="imgAtt" alt="Immagine dell'attività"/>
+        <img mat-card-image [src]="getImmaginePrincipale(attivita)" class="imgAtt" alt="{{'ACTIVITYPHOTO'|translate}}"/>
         <ion-grid>
           <ion-row>
             <ion-col size="8">

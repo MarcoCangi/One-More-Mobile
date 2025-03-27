@@ -10,7 +10,7 @@
         <div class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
           <ion-card-title class="title">{{coupon?.nome}}</ion-card-title>
         </div>
-      <img [src]="coupon?.imgPrincipale?.upload" class="imgAtt" alt="Immagine dell'attività" style="border-radius: 10px;"/>
+      <img [src]="coupon?.imgPrincipale?.upload" class="imgAtt" alt="{{'ACTIVITYPHOTO'|translate}}" style="border-radius: 10px;"/>
       <ion-card-content>
         <div style="margin-bottom: 4%;">
           <ion-label>{{coupon?.indirizzo}}, {{coupon?.civico}}, {{coupon?.cap}}, {{coupon?.citta}}</ion-label>

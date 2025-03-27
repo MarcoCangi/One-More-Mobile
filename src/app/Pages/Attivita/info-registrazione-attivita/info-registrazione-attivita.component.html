@@ -2,8 +2,8 @@
   <ion-row>
     <ion-col size="8">
       <ion-title class="title">
-        Hai un'attività? <br>
-        Fatti notare ora!
+        {{ 'HAVESHOP' | translate }} <br>
+        {{ 'NOTICENOW' | translate }}
       </ion-title>
     </ion-col>
     <ion-col size="4">
@@ -15,7 +15,7 @@
 
 <div style="width: 90%; display: flex; align-items: center; justify-content: center; margin: auto;">
   <ion-label class="lblDescription">
-    Sei un'attività nel settore food & beverage? Unisciti a One More e fai conoscere le tue offerte! Con la nostra app, hai la libertà di creare promozioni su misura per i tuoi clienti: sconti, 2x1, pacchetti bundle e molto altro ancora! Mostra il meglio della tua attività e attira nuovi clienti in modo semplice e diretto. Registrati ora e sfrutta la nostra piattaforma per aumentare la tua visibilità e incentivare le vendite!
+    {{ 'DESCRIPTIONTOREGISTER' | translate }}
   </ion-label>
 </div>
 
@@ -27,10 +27,10 @@
         <img src="assets/Img/one more blu.png"/>
       </ion-col>
       <ion-col size="8">
-        <ion-label class="lblSubtitle">Registrazione facile e veloce</ion-label>
+        <ion-label class="lblSubtitle">{{ 'FASTREGISTRATION' | translate }}</ion-label>
           <br>
           <ion-label class="lblDescription">
-            In pochi passi, la tua attività sarà visibile su One More.
+            {{ 'VISIBLEONREADEAL' | translate}}
           </ion-label>
       </ion-col>
     </ion-row>
@@ -39,10 +39,10 @@
   <ion-item>
     <ion-row style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
       <ion-col size="8">
-        <ion-label class="lblSubtitle">Promozioni personalizzabili</ion-label>
+        <ion-label class="lblSubtitle">{{'CUSTOMPROMOTIONS'|translate}}</ion-label>
         <br>
         <ion-label class="lblDescription">
-          Offri pacchetti, sconti, promozioni 2x1 e altro ancora, scegliendo durata, giorni e orari.
+          {{'OFFERDISCOUNTS'|translate}}
         </ion-label>
       </ion-col>
       <ion-col size="4">
@@ -57,10 +57,10 @@
         <img src="assets/Img/target_mirato.png" alt="Icona di promozioni per target specifici"/>
       </ion-col>
       <ion-col size="8">
-        <ion-label class="lblSubtitle">Target mirato</ion-label>
+        <ion-label class="lblSubtitle">{{'AUDIENCE'|translate}}</ion-label>
         <br>
         <ion-label class="lblDescription">
-          Crea promozioni per vegani, vegetariani, famiglie, coppie e molto altro.
+          {{'CREATEPROMOTION'|translate}}
         </ion-label>
       </ion-col>
     </ion-row>
@@ -69,10 +69,10 @@
   <ion-item>
     <ion-row style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
       <ion-col size="8">
-        <ion-label class="lblSubtitle">Zero commissioni</ion-label>
+        <ion-label class="lblSubtitle">{{'NOCOMMISSIONS'|translate}}</ion-label>
         <br>
         <ion-label class="lblDescription">
-          Non addebitiamo commissioni per i coupon prenotati, tutto il guadagno è tuo.
+          {{'NOCOMMISSIONSDESCRIPTION'|translate}}
         </ion-label>
       </ion-col>
       <ion-col size="4">
@@ -84,7 +84,7 @@
   <ion-item>
     <ion-row style="margin-top: 1.5rem;">
       <ion-col size="12">
-        <ion-label class="lblSubtitle">Le risposte alle tue domande</ion-label>
+        <ion-label class="lblSubtitle">{{'ANSWERS'|translate}}</ion-label>
       </ion-col>
     </ion-row>
   </ion-item>
@@ -97,16 +97,16 @@
         <ion-accordion-group>
           <ion-accordion value="first">
             <ion-item slot="header" class="contentFaq">
-              <ion-label class="lblTitleFaq">Quando sarà online la mia attività?</ion-label>
+              <ion-label class="lblTitleFaq">{{'SHOPONLINE'|translate}}</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content">
-              <ion-label class="lblDescription">Una volta completata la registrazione, potrai attivarla sulla nostra app. Verranno eseguite poi delle verifiche e, una volta terminate, sarà online.</ion-label>
+              <ion-label class="lblDescription">{{'SHOPONLINEDESCRIPTION'|translate}}</ion-label>
             </div>
           </ion-accordion>
         
           <ion-accordion value="second">
             <ion-item slot="header" class="contentFaq">
-              <ion-label class="lblTitleFaq">Come creo le mie promozioni?</ion-label>
+              <ion-label class="lblTitleFaq">{{'HOWCREATEPROMOTION'|translate}}</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content">
               <ion-label class="lblDescription">Second Content</ion-label>
@@ -115,7 +115,7 @@
         
           <ion-accordion value="third">
             <ion-item slot="header" class="contentFaq">
-              <ion-label class="lblTitleFaq">Come funziona la prenotazione di una promo?</ion-label>
+              <ion-label class="lblTitleFaq">{{'PROMOBOOKINGWORK'|translate}}</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content">
               <ion-label class="lblDescription">Second Content</ion-label>

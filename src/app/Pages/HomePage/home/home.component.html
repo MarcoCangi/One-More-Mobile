@@ -46,12 +46,13 @@
                         <ion-col size="7" class="column ion-text-center ion-align-items-center">
                             <ion-card-title class="title2">
                                 Hai un'attività? registrati con noi!
+                                {{'HAVEBUSINESS'|translate}}
                             </ion-card-title>
                             <br>
-                            <ion-card-subtitle>Scopri tutti i vantaggi e vedi come fare</ion-card-subtitle>
+                            <ion-card-subtitle>{{'LEARNBENEFITS'|translate}}</ion-card-subtitle>
                             <br>
                             <div style="display: flex; justify-content: center; align-items: center;">
-                                <ion-button fill="outline" shape="round" (click)="openPageEvent(13)"> SCOPRI DI PIÙ</ion-button>
+                                <ion-button fill="outline" shape="round" (click)="openPageEvent(13)"> {{'DISCOVERMORE'|translate}}</ion-button>
                             </div>
                         </ion-col>
                     </ion-row>
@@ -63,7 +64,7 @@
 
     <ion-alert
         [isOpen]="!isLoading && !isCaricamentoOk && (idPage === 1 || idPage === undefined)"
-        header="Ops, qualcosa è andato storto"
+        header="{{'SAVE_ERROR'|translate}}"
         [message]="getErrorMessage()"
         [buttons]="alertButtons"
         cssClass="custom-alert"

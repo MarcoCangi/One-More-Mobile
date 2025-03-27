@@ -26,17 +26,17 @@
               </ion-item>
             <ion-item>
               <ion-input labelPlacement="floating" formControlName="emailRegistrazione" type="email">
-                <div slot="label">Email</div>
+                <div slot="label">{{'Email'|translate}}</div>
               </ion-input>
             </ion-item>
             <ion-item>
               <ion-input labelPlacement="floating" formControlName="passwordRegistrazione" type="password" (input)="onPasswordInput()">
-                <div slot="label">Password</div>
+                <div slot="label">{{'Password'|translate}}</div>
               </ion-input>
             </ion-item>
             <ion-item>
               <ion-input labelPlacement="floating" formControlName="ConfermaPasswordRegistrazione" type="password" (input)="onPasswordInput()">
-                <div slot="label">{{ 'Confirm' | translate }} Password</div>
+                <div slot="label">{{ 'Confirm' | translate }} {{'Password'|translate}}</div>
               </ion-input>
             </ion-item>
             <ion-note style="margin-left: 5%;" *ngIf="passwordsDoNotMatch" color="danger">

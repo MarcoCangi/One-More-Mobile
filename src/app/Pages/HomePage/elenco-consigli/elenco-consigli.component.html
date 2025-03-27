@@ -8,9 +8,9 @@
     <div class="card-wrapper" *ngIf="!isLoading">
       <ion-card class="card-consigli" *ngFor="let attivita of listaElencoNuove" (click)="VisualizzaAttivita(attivita)">
         <div class="label-overlay" *ngIf="attivita.isPromoPresente">
-          <label>Promo</label>
+          <label>{{'Promo'|translate}}</label>
         </div>
-        <img mat-card-image [src]="getImmaginePrincipale(attivita)" class="imgAtt" alt="Immagine dell'attività"/>
+        <img mat-card-image [src]="getImmaginePrincipale(attivita)" class="imgAtt" alt="{{'ACTIVITYPHOTO'|translate}}"/>
         <ion-card-header>
           <ion-card-title class="title2">{{attivita.nome}}</ion-card-title>
           <ion-card-subtitle style="font-weight: normal;">{{attivita.indirizzo}}, {{attivita.civico}}</ion-card-subtitle>
