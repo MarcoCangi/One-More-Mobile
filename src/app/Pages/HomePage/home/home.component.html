@@ -7,15 +7,24 @@
         
         <app-icon-promo (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-icon-promo>
 
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <div class="slider">
-                <div class="slides" [ngStyle]="{'transform': 'translateX(-' + (currentSlide * 100) + '%)'}">
-                  <img src="assets/Img/Slider1.avif" class="imgSlider"/>
-                  <img src="assets/Img/Attivita.avif" class="imgSlider"/>
-                  <!-- Aggiungi altre immagini qui -->
+        <!-- <div style="display: flex; justify-content: center; align-items: center;">
+            <div class="image">
+                <div class="images">
+                  <img src="assets/Img/cell.avif" class="img1"/>
                 </div>
               </div>
-        </div>
+        </div> -->
+
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div class="image-container">
+              <div class="slogan-box">
+                <div class="slogan-text">{{ 'IMG_HOME' | translate }}</div>
+              </div>
+              <div class="images">
+                <img src="assets/Img/cell.avif" class="img1" />
+              </div>
+            </div>
+          </div>
 
         <app-elenco-promo [latitudine]="latitudine" [longitudine]="longitudine"  (ricercaAttivitaEvent)="getListAttivita($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
 

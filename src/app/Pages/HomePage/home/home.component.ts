@@ -76,7 +76,6 @@ export class HomeComponent  implements OnInit {
           this.setiIdSogggetto(this.idSoggetto);
 
           this.loadData();
-          this.startSlider();
   }
 
   reloadComponent(): void {
@@ -105,12 +104,6 @@ export class HomeComponent  implements OnInit {
           }
           
         }
-  }
-
-  startSlider() {
-      setInterval(() => {
-        this.showNextSlide();
-      }, 6000); // Cambia ogni 3 secondi
   }
 
   showNextSlide() {
