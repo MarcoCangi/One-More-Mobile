@@ -243,5 +243,32 @@
     "CONFIRM": "CONFIRM",
     "CANCEL": "CANCEL",
     "CLOSE": "CLOSE",
-    "CompleteVerificationToCoupon":"In order to claim a coupon, complete verification by checking your inbox and clicking on the link we sent you."
+    "CompleteVerificationToCoupon":"In order to claim a coupon, complete verification by checking your inbox and clicking on the link we sent you.",
+    "ERRORS":{
+    "PROFILE_IMAGE_REQUIRED": "Insert a profile picture",
+    "ACTIVITY_NAME_REQUIRED":"Required activity name",
+    "MINIMUM_LENGTH_2":"Minimum length 2 characters",
+    "MAX_LENGTH_50":"Maximum length 50 characters",
+    "NAME_CHAR_NOT_ALLOWED":"Name contains characters not allowed",
+    "PHONE_NUMBER_REQUIRED":"Phone number required",
+    "INVALID_FORMAT":"Invalid format",
+    "LEAST_ONE_TYPE":"Indicate at least one type",
+    "CITY_OR_MUNICIPALITY":"Enter City or Municipality",
+    "VALID_MUNICIPALITY":"Enter a valid municipality",
+    "MUNICIPALITY_CHAR_NOT_ALLOWED":"The Municipality field contains characters that are not allowed",
+    "MAIL_REQUIRED":"Email required",
+    "VALID_EMAIL":"Insert a valid email",
+    "ADDRESS_REQUIRED":"Address required",
+    "CIVIC_REQUIRED":"Civic required",
+    "ZIP_CODE_REQUIRED":"ZIP code required",
+    "ONE_OR_MORE_IMAGES":"Insert one or more images",
+    "DESCR_ACTIVITY_REQUIRED":"Required activity description",
+    "MINIMUM_LENGTH_DESC_100":"Minimum description length 100 characters",
+    "MAX_LENGTH_DESC_2000":"Maximum description length 2000 characters",
+    "DESCR_CHAR_NOT_ALLOWED":"Description contains characters not allowed",
+    "REFERENCE_TIME":"Enter at least one reference time",
+    "INSERT_CLOSING_TIME":"Where an opening time has been entered, also enter a closing time",
+    "INSERT_OPENING_TIME":"Where a closing time has been entered, also enter an opening time",
+    "START_NOT_GREATER_END":"The start time cannot be greater than the end time"    
+  }
   }

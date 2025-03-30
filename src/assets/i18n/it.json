@@ -278,5 +278,32 @@
     "CONFIRM": "CONFERMA",
     "CANCEL": "ANNULLA",
     "CLOSE": "CHIUDI",
-    "CompleteVerificationToCoupon":"Per poter richiedere un coupon, completa la verifica controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato."
+    "CompleteVerificationToCoupon":"Per poter richiedere un coupon, completa la verifica controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.",
+    "ERRORS":{
+    "PROFILE_IMAGE_REQUIRED": "Inserire una immagine profilo",
+    "ACTIVITY_NAME_REQUIRED":"Nome attività obbligatorio",
+    "MINIMUM_LENGTH_2":"Lunghezza minima 2 caratteri",
+    "MAX_LENGTH_50":"Lunghezza massima 50 caratteri",
+    "NAME_CHAR_NOT_ALLOWED":"Il nome contiene caratteri non ammessi",
+    "PHONE_NUMBER_REQUIRED":"Numero di telefono obbligatorio",
+    "INVALID_FORMAT":"Formato non valido",
+    "LEAST_ONE_TYPE":"Indicare almeno una tipologia",
+    "CITY_OR_MUNICIPALITY":"Inserire Città o Comune",
+    "VALID_MUNICIPALITY":"Inserire un comune valido",
+    "MUNICIPALITY_CHAR_NOT_ALLOWED":"Il campo Comune contiene caratteri non ammessi",
+    "MAIL_REQUIRED":"Email obbligatoria",
+    "VALID_EMAIL":"Inserire una email valida",
+    "ADDRESS_REQUIRED":"Indirizzo obbligatorio",
+    "CIVIC_REQUIRED":"Civico obbligatorio",
+    "ZIP_CODE_REQUIRED":"CAP obbligatorio",
+    "ONE_OR_MORE_IMAGES":"Inserire una o più immagini",
+    "DESCR_ACTIVITY_REQUIRED":"Descrizione attività obbligatoria",
+    "MINIMUM_LENGTH_DESC_100":"Lunghezza minima descrizione 100 caratteri",
+    "MAX_LENGTH_DESC_2000":"Lunghezza massima descrizione 2000 caratteri",
+    "DESCR_CHAR_NOT_ALLOWED":"La descrizione contiene caratteri non ammessi",
+    "REFERENCE_TIME":"Inserire almeno un orario di riferimento",
+    "INSERT_CLOSING_TIME":"Dove è stato inserito un orario di apertura, inserire anche uno di chiusura",
+    "INSERT_OPENING_TIME":"Dove è stato inserito un orario di chiusura, inserire anche uno di apertura",
+    "START_NOT_GREATER_END":"L'orario di inizio non può essere maggiore dell'orario di fine"
+    }
   }

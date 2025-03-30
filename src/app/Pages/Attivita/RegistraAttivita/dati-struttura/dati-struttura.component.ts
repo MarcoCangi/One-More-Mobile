@@ -9,6 +9,7 @@ import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { lastValueFrom } from 'rxjs';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dati-struttura',
@@ -62,8 +63,11 @@ export class DatiStrutturaComponent  implements OnInit {
     private attivitaService: GetApiAttivitaService,
     private comuniService: GetApiComuniService,
     private authService: AuthService,
-    private storageService: StorageService
-  ) {}
+    private storageService: StorageService,
+    private translate: TranslateService
+  ) {
+    // translate.setDefaultLang('it');
+  }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit(): Promise<void> {
@@ -235,78 +239,108 @@ export class DatiStrutturaComponent  implements OnInit {
     {
     //CONTROLLO NOME//
     if(request.nome == undefined || request.nome == ""){
-      this.errorNome = "Nome attivita obbligatoria";
-      this.isError = true;
+      this.translate.get('ERRORS.ACTIVITY_NAME_REQUIRED').subscribe((translatedText: string) => {
+        this.errorNome = translatedText;
+        this.isError = true;
+      });
     }
     else if(request.nome.length < 2){
-      this.errorNome = "Lunghezza minima 2 caratteri";
-      this.isError = true;
+      this.translate.get('ERRORS.MINIMUM_LENGTH_2').subscribe((translatedText: string) => {
+        this.errorNome = translatedText;
+        this.isError = true;
+      });
     }
     else if(request.nome.length > 50){
-      this.errorNome = "Lunghezza massima 50 caratteri";
-      this.isError = true;
+      this.translate.get('ERRORS.MAX_LENGTH_50').subscribe((translatedText: string) => {
+        this.errorNome = translatedText;
+        this.isError = true;
+      });
     }
     else if (!noSpecialCharsRegex.test(request.nome)) {
-      this.errorNome = "Il nome contiene caratteri non ammessi";
-      this.isError = true;
+      this.translate.get('ERRORS.NAME_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
+        this.errorNome = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO TELEFONO//
     if(request.telefono == undefined || request.telefono == ""){
-      this.errorTel = "Numero di telefono obbligatorio";
-      this.isError = true;
+      this.translate.get('ERRORS.PHONE_NUMBER_REQUIRED').subscribe((translatedText: string) => {
+        this.errorTel = translatedText;
+        this.isError = true;
+      });
     }
     else if(!telefonoPattern.test(request.telefono)){
-      this.errorTel = "Formato non valido";
-      this.isError = true;
+      this.translate.get('ERRORS.INVALID_FORMAT').subscribe((translatedText: string) => {
+        this.errorTel = translatedText;
+        this.isError = true;
+      });
     }
    
     //CONTROLLO TIPO ATTIVITA//
     if(request.listaTipoAttivita == undefined || request.listaTipoAttivita.length == 0){
-      this.errorTipologia = "Indicare almeno una tipologia";
-      this.isError = true;
+      this.translate.get('ERRORS.LEAST_ONE_TYPE').subscribe((translatedText: string) => {
+        this.errorTipologia = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO CITTA'//
     if(request.citta == undefined || request.citta == ""){
-      this.errorCitta = "Inserire Città o Comune";
-      this.isError = true;
+      this.translate.get('ERRORS.CITY_OR_MUNICIPALITY').subscribe((translatedText: string) => {
+        this.errorCitta = translatedText;
+        this.isError = true;
+      });
     }
     else if(this.listaComuni && !this.listaComuni.some(comune => comune.descComune === request.citta)){
-      this.errorCitta = "Inserire un comune valido";
-      this.isError = true;
+      this.translate.get('ERRORS.VALID_MUNICIPALITY').subscribe((translatedText: string) => {
+        this.errorCitta = translatedText;
+        this.isError = true;
+      });
     }
     else if (!noSpecialCharsRegexCitta.test(request.citta)) {
-      this.errorCitta = "Il campo Comune contiene caratteri non ammessi";
-      this.isError = true;
+      this.translate.get('ERRORS.MUNICIPALITY_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
+        this.errorCitta = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO EMAIL//
     if(request.email == undefined || request.email == ""){
-      this.errorEmail = "Mail obbligatoria";
-      this.isError = true;
+      this.translate.get('ERRORS.MAIL_REQUIRED').subscribe((translatedText: string) => {
+        this.errorEmail = translatedText;
+        this.isError = true;
+      });
     }
     else if (!emailRegex.test(request.email)) {
-      this.errorEmail = "Inserire un'email valida";
-      this.isError = true;
+      this.translate.get('ERRORS.VALID_EMAIL').subscribe((translatedText: string) => {
+        this.errorEmail = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO INDIRIZZO//
     if(request.indirizzo == undefined || request.indirizzo == ""){
-      this.errorIndirizzo = "Indirizzo obbligatorio";
-      this.isError = true;
+      this.translate.get('ERRORS.ADDRESS_REQUIRED').subscribe((translatedText: string) => {
+        this.errorIndirizzo = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO CIVICO//
     if(request.civico == undefined || request.civico == ""){
-      this.errorCivico = "Civico obbligatorio";
-      this.isError = true;
+      this.translate.get('ERRORS.CIVIC_REQUIRED').subscribe((translatedText: string) => {
+        this.errorCivico = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO CAP//
     if(request.cap == undefined || request.cap == ""){
-      this.errorCAP = "CAP obbligatorio";
-      this.isError = true;
+      this.translate.get('ERRORS.ZIP_CODE_REQUIRED').subscribe((translatedText: string) => {
+        this.errorCAP = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO ORARI//
@@ -314,30 +348,42 @@ export class DatiStrutturaComponent  implements OnInit {
 
     //CONTROLLO IMMAGINI//
     if(request.immagini == undefined || request.immagini.length == 0){
-      this.errorImg = "Inserire una o più immagini";
-      this.isError = true;
+      this.translate.get('ERRORS.ONE_OR_MORE_IMAGES').subscribe((translatedText: string) => {
+        this.errorImg = translatedText;
+        this.isError = true;
+      });
     }
     if(!request.immagini.find(i => i.isImmaginePrincipale)){
-      this.errorImg = "Inserire una immagine profilo";
-      this.isError = true;
+      this.translate.get('ERRORS.PROFILE_IMAGE_REQUIRED').subscribe((translatedText: string) => {
+        this.errorImg = translatedText;
+        this.isError = true;
+      });
     }
 
     //CONTROLLO DESCRIZIONE//
     if(request.description == undefined || request.description == ""){
-      this.errorDesc = "Descrizione attivita obbligatoria";
-      this.isError = true;
+      this.translate.get('ERRORS.DESCR_ACTIVITY_REQUIRED').subscribe((translatedText: string) => {
+        this.errorDesc = translatedText;
+        this.isError = true;
+      });
     }
     else if(request.description.length < 100){
-      this.errorDesc = "Lunghezza minima descrizione 100 caratteri";
-      this.isError = true;
+      this.translate.get('ERRORS.MINIMUM_LENGTH_DESC_100').subscribe((translatedText: string) => {
+        this.errorDesc = translatedText;
+        this.isError = true;
+      });
     }
     else if(request.description.length > 2000){
-      this.errorDesc = "Lunghezza massima descrizione 2000 caratteri";
-      this.isError = true;
+      this.translate.get('ERRORS.MAX_LENGTH_DESC_2000').subscribe((translatedText: string) => {
+        this.errorDesc = translatedText;
+        this.isError = true;
+      });
     }
     else if (!noSpecialCharsRegex.test(request.description)) {
-      this.errorDesc = "La descrizione contiene caratteri non ammessi";
-      this.isError = true;
+      this.translate.get('ERRORS.DESCR_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
+        this.errorDesc = translatedText;
+        this.isError = true;
+      });
     }
     }
   }
@@ -712,8 +758,10 @@ export class DatiStrutturaComponent  implements OnInit {
        !request.orari.domenicaPomDa && !request.orari.domenicaPomAl
     )
       {
-        this.errorOrari = "Inserire almeno un orario di riferimento";
-        this.isError = true;
+        this.translate.get('ERRORS.REFERENCE_TIME').subscribe((translatedText: string) => {
+          this.errorOrari = translatedText;
+          this.isError = true;
+        });
       }
     else  if((request.orari.lunediMatDa && !request.orari.lunediMatAl) ||
              (request.orari.lunediPomDa && !request.orari.lunediPomAl) ||
@@ -730,8 +778,10 @@ export class DatiStrutturaComponent  implements OnInit {
              (request.orari.domenicaMatDa && !request.orari.domenicaMatAl) ||
              (request.orari.domenicaPomDa && !request.orari.domenicaPomAl))
             {
-              this.errorOrari = "Dove è stato inserito un orario di apertura, inserire anche uno di chiusura";
-              this.isError = true;
+              this.translate.get('ERRORS.INSERT_CLOSING_TIME').subscribe((translatedText: string) => {
+                this.errorOrari = translatedText;
+                this.isError = true;
+              });
             }
    else  if((request.orari.lunediMatAl && !request.orari.lunediMatDa) ||
             (request.orari.lunediPomAl && !request.orari.lunediPomDa) ||
@@ -748,8 +798,10 @@ export class DatiStrutturaComponent  implements OnInit {
             (request.orari.domenicaMatAl && !request.orari.domenicaMatDa) ||
             (request.orari.domenicaPomAl && !request.orari.domenicaPomDa))
             {
-              this.errorOrari = "Dove è stato inserito un orario di chiusura, inserire anche uno di apertura";
-              this.isError = true;
+              this.translate.get('ERRORS.INSERT_OPENING_TIME').subscribe((translatedText: string) => {
+                this.errorOrari = translatedText;
+                this.isError = true;
+              });
             }
 
    else  if((request.orari.lunediMatDa && request.orari.lunediMatAl && request.orari.lunediMatDa.trim() > request.orari.lunediMatAl.trim()) ||
@@ -760,8 +812,10 @@ export class DatiStrutturaComponent  implements OnInit {
             (request.orari.sabatoMatDa && request.orari.sabatoMatAl && request.orari.sabatoMatDa.trim() > request.orari.sabatoMatAl.trim()) ||
             (request.orari.domenicaMatDa && request.orari.domenicaMatAl && request.orari.domenicaMatDa.trim() > request.orari.domenicaMatAl.trim()) )
             {
-              this.errorOrari = "L'orario di inizio non può essere maggiore dell'orario di fine";
-              this.isError = true;
+              this.translate.get('ERRORS.START_NOT_GREATER_END').subscribe((translatedText: string) => {
+                this.errorOrari = translatedText;
+                this.isError = true;
+              });
             }
   }
 
