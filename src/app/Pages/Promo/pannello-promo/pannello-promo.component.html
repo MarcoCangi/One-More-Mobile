@@ -8,7 +8,7 @@
       <div class="ion-padding" slot="content" *ngIf="promo.isAbilitataForUser">
         <ion-card>
           <ion-card-content>
-            <ion-note slot="end" style="color: black; font-size: 0.8rem;">Termina il {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-note>
+            <ion-note slot="end" style="color: black; font-size: 0.8rem;">{{'EndsOn'|translate}} {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-note>
             <br>
             <br>
           <ion-label>{{ promo.descPromo }}</ion-label>
@@ -19,29 +19,29 @@
         </ion-chip>
         <br>
         <br>
-          <ion-label class="lbl">Valido nei giorni</ion-label>
+          <ion-label class="lbl">{{'ValidOnDays'|translate}}</ion-label>
             <ion-grid>
               <ion-row>
                   <ion-col class="column ion-text-center ion-align-items-center">
-                    <ion-label class="labelDays">LUN</ion-label>
+                    <ion-label class="labelDays">{{'MON'|translate}}</ion-label>
                   </ion-col>
                   <ion-col class="column ion-text-center ion-align-items-center">
-                    <ion-label class="labelDays">MAR</ion-label>
+                    <ion-label class="labelDays">{{'TUE'|translate}}</ion-label>
                   </ion-col>
                   <ion-col class="column ion-text-center ion-align-items-center">
-                    <ion-label class="labelDays">MER</ion-label>
+                    <ion-label class="labelDays">{{'WED'|translate}}</ion-label>
                   </ion-col>
                   <ion-col class="column ion-text-center ion-align-items-center">
-                    <ion-label class="labelDays">GIO</ion-label>
+                    <ion-label class="labelDays">{{'THU'|translate}}</ion-label>
                   </ion-col>
                   <ion-col class="column ion-text-center ion-align-items-center">
-                    <ion-label class="labelDays">VEN</ion-label>
+                    <ion-label class="labelDays">{{'FRI'|translate}}</ion-label>
                   </ion-col>
                   <ion-col class="column ion-text-center ion-align-items-center">
-                    <ion-label class="labelDays">SAB</ion-label>
+                    <ion-label class="labelDays">{{'SAT'|translate}}</ion-label>
                   </ion-col>
                   <ion-col class="column ion-text-center ion-align-items-center">
-                    <ion-label class="labelDays">DOM</ion-label>
+                    <ion-label class="labelDays">{{'SUN'|translate}}</ion-label>
                   </ion-col>
               </ion-row>
               <ion-row>
@@ -76,22 +76,22 @@
                 </ion-col>
             </ion-row>
             </ion-grid>
-            <ion-label class="lbl" *ngIf="promo.isAllDayValidita"> Valido tutto il giorno</ion-label>
+            <ion-label class="lbl" *ngIf="promo.isAllDayValidita"> {{'ValidAllDay'|translate}}</ion-label>
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <ion-label class="lbl" *ngIf="!promo.isAllDayValidita">Orario</ion-label>
+                  <ion-label class="lbl" *ngIf="!promo.isAllDayValidita">{{'TIME'|translate}}</ion-label>
                 </ion-col>
                 <ion-col>
-                  <ion-label *ngIf="promo.orarioValiditaDa">Dalle {{ promo.orarioValiditaDa }} - </ion-label>
+                  <ion-label *ngIf="promo.orarioValiditaDa">{{'FROM'|translate}} {{ promo.orarioValiditaDa }} - </ion-label>
                 </ion-col>
                 <ion-col>
-                  <ion-label style="margin-left: 0.5%;" *ngIf="promo.orarioValiditaAl">alle {{ promo.orarioValiditaAl }}</ion-label>
+                  <ion-label style="margin-left: 0.5%;" *ngIf="promo.orarioValiditaAl">{{'TO'|translate}} {{ promo.orarioValiditaAl }}</ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
         <div>
-          <ion-button expand="block" (click)="openConfirmModal(promo)">Prenota</ion-button>
+          <ion-button expand="block" (click)="openConfirmModal(promo)">{{'Reserve'|translate}}</ion-button>
         </div>
       </ion-card-content>
         </ion-card>
@@ -102,7 +102,7 @@
             <ion-label style="color: red;">{{ promo.motivazioneDisabilitata }}</ion-label>
           </ion-card-header>
           <ion-card-content class="column ion-text-center ion-align-items-center" >
-            <ion-button (click)="dismissConfirmModal(1)" color="primary" shape="round" style="margin-bottom: 5px;">I MIEI COUPON <ion-icon style="margin-left: 5px;" name="ticket-outline"></ion-icon></ion-button>
+            <ion-button (click)="dismissConfirmModal(1)" color="primary" shape="round" style="margin-bottom: 5px;">{{'MYCOUPONS'|translate}} <ion-icon style="margin-left: 5px;" name="ticket-outline"></ion-icon></ion-button>
           </ion-card-content>
         </ion-card>
       </div>
@@ -129,44 +129,43 @@
         <ion-card *ngIf="!isLoading && !isConfirmed">
           <ion-card-header class="column ion-text-center ion-align-items-center">
             <ion-card-title class="titleConfirm">
-              Ci sei quasi!
+              {{'AlmostThere'|translate}}
             </ion-card-title>
             <br>
             <ion-card-title class="subtitleConfirm">
-              Stai per acquisire il coupon
+              {{'AboutAcquireCoupon'|translate}}
             </ion-card-title>
             <img class="img" src="assets/Img/spunta_vicino.png">
             
           </ion-card-header>
           <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
-            <ion-button shape="round" (click)="Prenota()">CONFERMA</ion-button>
-            <ion-button shape="round" color="light" (click)="dismissConfirmModal(0)">ANNULLA</ion-button>
+            <ion-button shape="round" (click)="Prenota()">{{'CONFIRM'|translate}}</ion-button>
+            <ion-button shape="round" color="light" (click)="dismissConfirmModal(0)">{{'CANCEL'|translate}}</ion-button>
           </ion-card-content>
           <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && isError">
-            <ion-label>Ops, qualcosa è andato storto</ion-label>
+            <ion-label>{{'SAVE_ERROR'|translate}}</ion-label>
             <br>
-            <ion-button shape="round" color="light" style="margin-left: 10px;" (click)="dismissConfirmModal(2)">CHIUDI</ion-button>
+            <ion-button shape="round" color="light" style="margin-left: 10px;" (click)="dismissConfirmModal(2)">{{'CLOSE'|translate}}</ion-button>
           </ion-card-content>
         </ion-card>
         <ion-card *ngIf="!isLoading && isConfirmed">
           <ion-card-header class="column ion-text-center ion-align-items-center">
             <ion-card-title class="title2">
-              LA TUA PROMO È ORA ATTIVA <ion-icon name="alert-circle-outline"></ion-icon>
+              {{'PROMOISUP'|translate}} <ion-icon name="alert-circle-outline"></ion-icon>
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="column ion-text-center ion-align-items-center">
             <img class="img" src="assets/Img/spunta_okay.png">
             <br>
-            <ion-label class="lbl-info">Per poterla utilizzare, presentati presso l'attività e mostragli il coupon nella sezione "PROMO ATTIVE" così che possano confermarne l'utilizzo.
-              Per maggiorni informazioni visionare le condizioni di utilizzo nelle info.
+            <ion-label class="lbl-info">{{'PromoIsUpDetail'|translate}}
           </ion-label>
           <ion-grid>
             <ion-row>
               <ion-col size="6">
-                <ion-button shape="round" (click)="dismissConfirmModal(1)"> <ion-icon name="ticket-outline" ></ion-icon> Coupon</ion-button>
+                <ion-button shape="round" (click)="dismissConfirmModal(1)"> <ion-icon name="ticket-outline" ></ion-icon> {{'Coupon'|translate}}</ion-button>
               </ion-col>
               <ion-col size="6">
-                <ion-button shape="round" (click)="dismissConfirmModal(2)"> <ion-icon name="home-outline" ></ion-icon> Home</ion-button>
+                <ion-button shape="round" (click)="dismissConfirmModal(2)"> <ion-icon name="home-outline" ></ion-icon> {{'Home'|translate}}</ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -181,7 +180,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-card-title class="title">Attenzione</ion-card-title>
+        <ion-card-title class="title">{{'WARNING'|translate}}</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissisModalVerified()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -191,18 +190,18 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title class="subTitle">
-            Per poter richiedere un coupon, completa la verifica controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.
+            {{'CompleteVerificationToCoupon'|translate}}
           </ion-card-title>
         </ion-card-header>
         <ion-card-content class="column ion-text-center ion-align-items-center">
-          <ion-button (click)="dismissisModalVerified()">CHIUDI</ion-button>
+          <ion-button (click)="dismissisModalVerified()">{{'CLOSE'|translate}}</ion-button>
           <br>
           <br>
-          <ion-label *ngIf="!esitoResendVerification">(Non ti è arrivata nessuna mail?)</ion-label>
+          <ion-label *ngIf="!esitoResendVerification">({{'Didnt get the email'|translate}})</ion-label>
           <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{esitoResendVerification}}</ion-label>
           <br>
           <br>
-          <ion-label color="primary" (click)="resendVerificationEmail()">Reinvia la mail di verifica</ion-label>
+          <ion-label color="primary" (click)="resendVerificationEmail()">{{'Resend verification email'|translate}}</ion-label>
         </ion-card-content>
       </ion-card>
     </ion-content>

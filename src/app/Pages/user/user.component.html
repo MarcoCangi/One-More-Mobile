@@ -17,7 +17,7 @@
   </ion-row>
   <ion-row *ngIf="this.user?.typeLog === 1" style="margin-top: 10%;">
     <ion-col size="4">
-      <ion-label style="font-size: large;">Email</ion-label>
+      <ion-label style="font-size: large;">{{'EMAIL'|translate}}</ion-label>
     </ion-col>
     <ion-col size="8">
       <ion-label style="font-size: medium;">{{this.user?.email}}</ion-label>
@@ -108,7 +108,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-card-title class="title">Elimina Account</ion-card-title>
+        <ion-card-title class="title">{{'delete_account'|translate}}</ion-card-title>
         <ion-buttons slot="end">
           <ion-button *ngIf="this.isDeleted" (click)="openPage(1)"><ion-icon name="close-outline"></ion-icon></ion-button>
           <ion-button *ngIf="!this.isDeleted" (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline"></ion-icon></ion-button>
@@ -136,7 +136,7 @@
             <form [formGroup]="passwordForm">
               <ion-item>
                 <ion-input
-                  label="Password*" 
+                  label="{{'Password'|translate}}*" 
                   labelPlacement="stacked"
                   type="password"
                   formControlName="passwordFormControl">
@@ -152,8 +152,8 @@
           </div>
           
           <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%;">
-            <ion-button shape="round" color="success" (click)="DimsissModalEliminaAccount()">Annulla</ion-button>
-            <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason && !this.passwordEliminazione">Elimina Account</ion-button>
+            <ion-button shape="round" color="success" (click)="DimsissModalEliminaAccount()">{{'Cancel'|translate}}</ion-button>
+            <ion-button fill="clear" color="danger" (click)="eliminaAccount()" [disabled]="!selectedReason && !this.passwordEliminazione">{{'delete_account'|translate}}</ion-button>
           </div>
           <div style="display: flex; justify-content: center; align-items: center;">
             <ion-button fill="clear" (click)="resetPassword()"> {{ 'Forgot your password' | translate }}</ion-button>

@@ -1,28 +1,27 @@
 
-<ion-card-title class="title">LA TUA PROMO E' ORA ATTIVA</ion-card-title>
+<ion-card-title class="title">{{'PROMOISUP'|translate}}</ion-card-title>
 
 <div class="container">
     <img class="img" src="assets/Img/spunta_okay.png">
 
-    <label class="lbl-info">Per poterla utilizzare, presentati presso l'attività e mostragli il coupon nella sezione "PROMO ATTIVE" così che possano confermarne l'utilizzo.
-        Per maggiorni informazioni visionare le condizioni di utilizzo nelle info.
+    <label class="lbl-info">{{'PromoIsUpDetail'|translate'}}
     </label>
 
     <div class="row container-btn">
         <div class="col-md-3">
-            <button mat-button (click)="RedirectInfo()">Info</button>
+            <button mat-button (click)="RedirectInfo()">{{'Info'|translate}}</button>
         </div>
         <div class="col-md-1 divider">
             <label>|</label>
         </div>
         <div class="col-md-3">
-            <button mat-button>Promo</button>
+            <button mat-button>{{'Promo'|translate}}</button>
         </div>
         <div class="col-md-1 divider">
             <label>|</label>
         </div>
         <div class="col-md-3">
-            <button mat-button (click)="Home()">Home</button>
+            <button mat-button (click)="Home()">{{'Home'|translate}}</button>
         </div>
         <div class="col-md-1 divider">
         </div>

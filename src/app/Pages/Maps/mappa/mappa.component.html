@@ -2,7 +2,7 @@
 
 <div class="map">
   <ion-spinner style="background-color: white; border-radius: 25%;" *ngIf="isLoading" name="dots" color="primary"></ion-spinner>
-  <ion-button class="btnsearch" color="light" shape="round" style="margin-top: 5rem; z-index: 10000;" *ngIf="this.isMooving" (click)="cerca()">CERCA QUI</ion-button>
+  <ion-button class="btnsearch" color="light" shape="round" style="margin-top: 5rem; z-index: 10000;" *ngIf="this.isMooving" (click)="cerca()">{{'SEARCHHERE'|translate}}</ion-button>
   <google-map *ngIf="isPositionLoaded" [zoom]="12" id="mapElement" #googleMap height="100%" width="100%" [center]="center" 
               (centerChanged)="centerChanged()" 
               (zoomChanged)="zoomChanged()" 
@@ -13,13 +13,13 @@
               (mapClick)="markerClicked(marker)">
   </map-marker>
 </google-map>
-  <ion-button class="btnListaAttivita" shape="round" expand="block" (click)="openListModal()">Lista completa</ion-button>
+  <ion-button class="btnListaAttivita" shape="round" expand="block" (click)="openListModal()">{{'FullList'|translate}}</ion-button>
 </div>
   
 
 <ion-popover style="width: 100%;" [trigger]="null" [isOpen]="isDetailModalOpen" side="top" alignment="center" (didDismiss)="popoverDismissed()">
   <ng-template>
-        <img [src]="getImmaginePrincipale(selectedAttivita)" class="imgAttDetail" alt="Immagine dell'attività" />
+        <img [src]="getImmaginePrincipale(selectedAttivita)" class="imgAttDetail" alt="{{'ACTIVITYPHOTO'|translate}}" />
         <ion-card-header>
           <ion-card-title class="title">{{ selectedAttivita?.nome }}</ion-card-title>
           <ion-card-subtitle>{{ selectedAttivita?.indirizzo }}, {{ selectedAttivita?.civico }}</ion-card-subtitle>
@@ -29,7 +29,7 @@
             <ion-chip style="font-size: x-small;" [outline]="true" *ngFor="let tipo of selectedAttivita?.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
           </div>
           <div class="btnContent" style="display: flex; justify-content: center; margin-top: 10px;">
-            <ion-button class="btnDettaglio" shape="round" (click)="VisualizzaAttivita(selectedAttivita?.idAttivita, 1)">Dettaglio</ion-button>
+            <ion-button class="btnDettaglio" shape="round" (click)="VisualizzaAttivita(selectedAttivita?.idAttivita, 1)">{{'Detail'|translate}}</ion-button>
           </div>
         </ion-card-content>
   </ng-template>
@@ -50,7 +50,7 @@
         <div style="display: flex; justify-content: center; margin-top: 10px;">
           <ion-button shape="round" color="primary" (click)="dismissListModal()">
 
-            <ion-icon name="map-outline"></ion-icon> <ion-label style="margin-left: 10px;">Mappa</ion-label> 
+            <ion-icon name="map-outline"></ion-icon> <ion-label style="margin-left: 10px;">{{'Map'|translate}}</ion-label> 
           </ion-button>
         </div>
         <ion-card *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">

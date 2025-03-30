@@ -7,11 +7,11 @@
                  placeholder="Nome del locale/attività" 
                  formControlName="nomeLocale"></ion-searchbar>
       <br>
-      <ion-searchbar style="margin-top: -5%;" type="text" placeholder="Città" formControlName="citta"></ion-searchbar>
+      <ion-searchbar style="margin-top: -5%;" type="text" placeholder="{{'SearchCity'|translate}}" formControlName="citta"></ion-searchbar>
       <br>
       <ion-searchbar style="margin-top: -5%;" id="inputAttivita"
         class="form-control form input custom-input mt-1"
-        placeholder="Tipo di locale"
+        placeholder="{{'TYPEACTIVITY'|translate}}"
         [formControl]="inputControl"
         (click)="showDropdown = !showDropdown"></ion-searchbar>
       <ion-list lines="inset" class="suggestion-list" *ngIf="showDropdown">
@@ -20,7 +20,7 @@
         </ion-item>
       </ion-list>
       <br>
-      <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}" >Ricerca per tipologia di promo</ion-toggle>
+      <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}" >{{'SEARCHPROMOTYPE'| translate}}</ion-toggle>
       <div class="formInput divNumMaxCoupon" *ngIf="isModalOpen" >
         <app-tipo-offerte (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipo-offerte>
       </div>
@@ -28,7 +28,7 @@
       <br>
       <div style="text-align: center; margin-top: -5%;">
         <ion-button shape="round" (click)="Ricerca()">
-          <ion-label>CERCA</ion-label>
+          <ion-label>{{'Search'|translate}}</ion-label>
         </ion-button>
       </div>
     </form>
@@ -48,7 +48,7 @@
         </ion-col>
         <ion-col size="3" class="colIcon">
           <div *ngIf="option.isPromoPresente" class="label-overlay">
-            <label style="font-size: 1.1rem;">Promo</label>
+            <label style="font-size: 1.1rem;">{{'Promo'|translate}}</label>
           </div>
         </ion-col>
       </ion-row>
