@@ -5,7 +5,7 @@ import { IonModal } from '@ionic/angular';
 import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { firstValueFrom } from 'rxjs';
-
+import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 @Component({
   selector: 'app-mappa',
   templateUrl: './mappa.component.html',
@@ -19,7 +19,6 @@ export class MappaComponent implements OnInit {
   attivitaFiltrate!: AttivitaFiltrate | null | undefined;
   isLoading: boolean | undefined;
   isRicerca: boolean | undefined;
-  position: GeolocationPosition | undefined;
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   showMap: boolean = true;
   markerPositions: google.maps.LatLngLiteral[] = [];
@@ -28,18 +27,7 @@ export class MappaComponent implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
-  display: any; // Dichiarazione della proprietà display
-  // markerOptions: google.maps.MarkerOptions = {
-  //   draggable: false,
-  //   icon: {
-  //     url:"assets/Img/posizione one more_def.png",
-  //     scaledSize: new google.maps.Size(90, 85), // Regola le dimensioni come necessario
-  //     fillColor: '#FF0000', // Colore di riempimento
-  //     fillOpacity: 0.8, // Opacità del riempimento
-  //     strokeWeight: 2, // Spessore del bordo
-  //     strokeColor: '#000000' // Colore del bordo
-  //   }
-  // };
+  display: any;
   filter!: FiltriAttivita;
   // Modal states
   isDetailModalOpen = false;
@@ -51,7 +39,9 @@ export class MappaComponent implements OnInit {
   isMooving: boolean = false;
   markerOptionsList: google.maps.MarkerOptions[] = [];
 
-  constructor(private service: GetApiAttivitaService) {}
+  constructor(private service: GetApiAttivitaService,
+              private locationService: LocationService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.isRicerca = false;
@@ -79,12 +69,8 @@ export class MappaComponent implements OnInit {
    */
   private async getUserLocation(): Promise<void> {
     try {
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-  
-      this.position = position;
-      await this.setCenterPosition(position.coords.latitude, position.coords.longitude);
+      const position = await this.locationService.getCurrentLocation()
+      await this.setCenterPosition(position.latitudine, position.longitudine);
     } catch (error) {
       await this.setCenterPosition(41.9028, 12.4964); // Roma come fallback
     }

@@ -8,7 +8,7 @@ import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
-
+import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -33,7 +33,8 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, 
               private attivitaService: GetApiAttivitaService,
               private messagingService: MessagingService,
-              private translate: TranslateService) { }
+              private translate: TranslateService,
+              private locationService: LocationService) { }
 
   async ngOnInit(): Promise<void> {
     this.checkAndRefreshToken();
@@ -44,7 +45,7 @@ export class AppComponent implements OnInit {
       this.translate.use(lang);
     });
 
-    await this.requestGeolocationPermission();
+    await this.locationService.getCurrentLocation();
 
     this.IsShowSplashVisible = this.authService.getIsShowedSplash();
     if (this.showSplash && !this.IsShowSplashVisible) {
@@ -80,19 +81,6 @@ export class AppComponent implements OnInit {
     this.authService.saveLanguageSession(newLang);
   }
 
-  async requestGeolocationPermission() {
-    try {
-      const permission = await Geolocation.requestPermissions();
-      if (permission.location === 'granted') {
-        // Il permesso è stato concesso
-        const position = await Geolocation.getCurrentPosition();
-      } else {
-        console.log('Permesso negato per la geolocalizzazione');
-      }
-    } catch (error) {
-      console.error('Errore durante la richiesta dei permessi di geolocalizzazione:', error);
-    }
-  }
 
   async checkAndRefreshToken(): Promise<void> {
     try {

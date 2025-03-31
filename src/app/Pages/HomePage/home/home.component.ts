@@ -13,6 +13,8 @@ import { CouponComponent } from '../../coupon/coupon.component';
 import { UserComponent } from '../../user/user.component';
 import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
 import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
+import { firstValueFrom } from 'rxjs';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -26,8 +28,6 @@ export class HomeComponent  implements OnInit {
     }, 1000);
   }
 
-  currentSlide = 0;
-  totalSlides = 2; // Modifica in base al numero di immagini
   @ViewChild(DettaglioComponent) dettaglioComponent!: DettaglioComponent;
   @ViewChild(LogoutComponent) logoutComponent!: LogoutComponent;
   @ViewChild(DatiStrutturaComponent) datiStrutturaComponent!: DatiStrutturaComponent;
@@ -106,21 +106,7 @@ export class HomeComponent  implements OnInit {
         }
   }
 
-  showNextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-  }
-
   onAttivitaSelezionata(attivita: Attivita): void {
-    // this.attivitaService.apiGetListaTop3ImmaginiById(attivita.idAttivita).subscribe((data: Immagini[]) => {
-    //   attivita.immagini = data;
-    //  });
-    //  this.attivitaService.apiGetOrariById(attivita.idAttivita).subscribe((data: Orari) => {
-    //   attivita.orari = data;
-    //  });
-    //  this.attivitaService.apiGetAttivitaByIdAttivita(attivita.idAttivita).subscribe((data: Attivita) => {
-    //   attivita = data;
-    //   console.log(this.attivita);
-    //  });
     this.attivita = attivita;
     this.idPage = 3;
     this.authService.setLastIdPageInSession(this.idPage);
@@ -143,7 +129,6 @@ export class HomeComponent  implements OnInit {
     this.openPageEvent(this.idPage)
   }
   
-
   openPageEvent(idPage:number) {
     this.idPage = idPage;
     this.openPageEventNav.emit(this.idPage);
@@ -157,121 +142,41 @@ export class HomeComponent  implements OnInit {
     this.updateIdFooter.emit(id);
   }
 
-  openPageRicercaPromoEvent(idTipoPromo:number) {
-    this.RicercaPromo(idTipoPromo);
+  async openPageRicercaPromoEvent(id: number): Promise<void> {
+    if (!id) return;
+    const filtro = new FiltriAttivita();
+    filtro.codTipoPromo = [id];
+    await this.ricercaGenerica(filtro);
   }
 
-  openPageRicercaCittaEvent(citta:string) {
-    this.RicercaCitta(citta);
+  async openPageRicercaCittaEvent(citta: string): Promise<void> {
+    if (!citta) return;
+    const filtro = new FiltriAttivita();
+    filtro.citta = citta;
+    await this.ricercaGenerica(filtro);
   }
 
-  openPageRicercaTipoAttEvent(tipoAtt:string) {
-    this.RicercaTipoAtt(tipoAtt);
+  async openPageRicercaTipoAttEvent(tipoAtt: string): Promise<void> {
+    if (!tipoAtt) return;
+    const filtro = new FiltriAttivita();
+    filtro.codTipoAttivita = tipoAtt;
+    await this.ricercaGenerica(filtro);
   }
 
-  async RicercaPromo(id:number): Promise<void> {
-    this.filtro = new FiltriAttivita();
-
-    const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
-    this.filtro.latitudine = latitudine;
-    this.filtro.longitudine = longitudine;
-
-    if(id)
-    {
-      this.filtro.codTipoPromo = [];
-      this.isLoading = true;
-      this.filtro.codTipoPromo?.push(id);
-      (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
-        (data: AttivitaFiltrate) => {
-          this.listaAttivitaRicerca = data;
-        },
-        (error: any) => {
-          console.error("Errore durante la chiamata API:", error);
-        },
-        () => {
-
-          if(this.listaAttivitaRicerca){
-            this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
-            this.attivitaService.setIsListaAttModalOpen(true);
-          }
-          this.isLoading = false;
-          this.openPageEvent(2);
-        }
-      );
-    }
-  }
-
-  async RicercaCitta(citta:string): Promise<void> {
-    this.filtro = new FiltriAttivita();
-
-    if(citta)
-    {
-      this.filtro.citta = citta;
-      this.isLoading = true;
+  private async ricercaGenerica(filtro: FiltriAttivita): Promise<void> {
+    this.isLoading = true;
+    try {
+      const result = await firstValueFrom(await this.attivitaService.apiGetListaAttivitaFiltrate(filtro));
       
-      (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
-        (data: AttivitaFiltrate) => {
-          this.listaAttivitaRicerca = data;
-        },
-        (error: any) => {
-          console.error("Errore durante la chiamata API:", error);
-        },
-        () => {
-
-          if(this.listaAttivitaRicerca){
-            this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
-            this.attivitaService.setIsListaAttModalOpen(true);
-          }
-          this.isLoading = false;
-          this.openPageEvent(2);
-        }
-      );
+      this.listaAttivitaRicerca = result;
+      this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+      this.attivitaService.setIsListaAttModalOpen(true);
+      this.openPageEvent(2);
+    } catch (error) {
+      console.error("Errore durante la chiamata API:", error);
+    } finally {
+      this.isLoading = false;
     }
-  }
-
-  async RicercaTipoAtt(tipoAtt:string): Promise<void> {
-    this.filtro = new FiltriAttivita();
-
-    const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
-    this.filtro.latitudine = latitudine;
-    this.filtro.longitudine = longitudine;
-
-    if(tipoAtt)
-    {
-      this.isLoading = true;
-      this.filtro.codTipoAttivita = tipoAtt;
-      (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
-        (data: AttivitaFiltrate) => {
-          this.listaAttivitaRicerca = data;
-        },
-        (error: any) => {
-          console.error("Errore durante la chiamata API:", error);
-        },
-        () => {
-          if(this.listaAttivitaRicerca){
-            this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
-            this.attivitaService.setIsListaAttModalOpen(true);
-          }
-          this.isLoading = false;
-          this.openPageEvent(2);
-        }
-      );
-    }
-  }
-
-  handleLocationError(error: GeolocationPositionError): void {
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        console.error('Accesso alla geolocalizzazione negato.');
-        break;
-      case error.POSITION_UNAVAILABLE:
-        console.error('Informazioni sulla posizione non disponibili.');
-        break;
-      case error.TIMEOUT:
-        console.error('Richiesta di geolocalizzazione scaduta.');
-        break;
-    }
-    this.isLoading = false;
   }
 
   async loadData() {
