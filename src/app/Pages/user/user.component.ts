@@ -5,6 +5,7 @@ import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { getFireBaseErrorMessage } from '../../Utilities/auth-error'
 import { asyncValidator } from 'src/app/Utilities/asyncValidator';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -12,7 +13,7 @@ import { asyncValidator } from 'src/app/Utilities/asyncValidator';
 })
 export class UserComponent  implements OnInit {
   
-  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef, private fb: FormBuilder) {
+  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef, private fb: FormBuilder,private translate: TranslateService) {
     this.formRegistrazione = new FormGroup({
       vecchiaPassword: new FormControl('', [Validators.required]),
       newPasswordRegistrazione: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(15),this.customPasswordValidator()]),
@@ -157,24 +158,30 @@ export class UserComponent  implements OnInit {
     if(email){
       try{
         if (!emailRegex.test(email)) {
-          this.errore = "Inserire una mail valida per richiedere il reset della password";
-          this.isLoading = false;
+          this.translate.get('ERRORS.EMAIL_FOR_RESET').subscribe((translatedText: string) => {
+            this.errore = translatedText;
+            this.isLoading = false;
+          });
           return;
         }
         this.isLoading = true;
         await this.authService.passwordReset(email);
-        this.notificaInvio = "Controlla la tua mail per reimpostare la password";
-        this.errore = "";
+        this.translate.get('ERRORS.CHECK_EMAIL').subscribe((translatedText: string) => {
+          this.notificaInvio = translatedText;
+          this.errore = "";
+        });
       }
       catch(err: any){
-        this.errore = getFireBaseErrorMessage(err);
+        this.errore = getFireBaseErrorMessage(err,this.translate);
       }
       finally{
         this.isLoading = false;
       }
     }
     else{
-      this.errore = "Inserire una mail valida per richiedere il reset della password";
+      this.translate.get('ERRORS.EMAIL_FOR_RESET').subscribe((translatedText: string) => {
+        this.errore = translatedText;
+      });
     }
     this.isLoading = false;
   }
@@ -187,31 +194,41 @@ export class UserComponent  implements OnInit {
     this.isLoading = true;
     if (this.formRegistrazione.valid){
       if(!this.formRegistrazione.value.vecchiaPassword){
-        this.errore = "inserire la vecchia password";
+        this.translate.get('ERRORS.OLD_PASSWORD').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+        });
         this.notificaInvio = "";
         this.isLoading = false;
         return;
       }
       if(!this.formRegistrazione.value.newPasswordRegistrazione){
-        this.errore = "Inserire la nuova password";
+        this.translate.get('ERRORS.NEW_PASSWORD').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+        });
         this.notificaInvio = "";
         this.isLoading = false;
         return;
       }
       if(!this.formRegistrazione.value.ConfermaNewPasswordRegistrazione){
-        this.errore = "Confermare la nuova password";
+        this.translate.get('ERRORS.NEW_PASSWORD_CONFIRM').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+        });
         this.notificaInvio = "";
         this.isLoading = false;
         return;
       }
       if(this.formRegistrazione.value.newPasswordRegistrazione != this.formRegistrazione.value.ConfermaNewPasswordRegistrazione){
-        this.errore = "Le password non coincidono";
+        this.translate.get('Passwords dont match').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+        });
         this.notificaInvio = "";
         this.isLoading = false;
         return;
       }
       if(this.formRegistrazione.value.newPasswordRegistrazione == this.formRegistrazione.value.vecchiaPassword){
-        this.errore = "La nuova password non può essere uguale a quella vecchia";
+        this.translate.get('ERRORS.NEW_PASS_NOT_BE_OLD').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+        });
         this.notificaInvio = "";
         this.isLoading = false;
         return;
@@ -233,21 +250,29 @@ export class UserComponent  implements OnInit {
   
             // Imposta la nuova password
             await updatePassword(user, newPassword);
-            this.notificaInvio = "Password modificata con successo!";
+            this.translate.get('MESSAGES.PASSWORD_CHANGED').subscribe((translatedText: string) => {
+              this.notificaInvio = translatedText;
+            });
             this.errore = "";
             } else {
-              this.errore = "Errore utente non autenticato.";
+              this.translate.get('ERRORS.USER_UNAUTHENTICATED').subscribe((translatedText: string) => {
+                this.errore = translatedText;
+              });
               this.notificaInvio = "";
             }
         } catch (err: any) {
-          this.errore = getFireBaseErrorMessage(err);
-          this.errore = "Errore utente non autenticato.";
+          this.errore = getFireBaseErrorMessage(err,this.translate);
+          this.translate.get('ERRORS.USER_UNAUTHENTICATED').subscribe((translatedText: string) => {
+            this.errore = translatedText;
+          });
           this.notificaInvio = "";
         } finally {
           this.isLoading = false;
         }
       } else {
-        this.errore = "Compila correttamente tutti i campi.";
+        this.translate.get('ERRORS.FILL_FIELDS').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+        });
         this.notificaInvio = "";
         this.isLoading = false;
       }

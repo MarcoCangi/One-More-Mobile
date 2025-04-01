@@ -8,6 +8,7 @@ import { GiorniSettimanaPromo, InsertPromoReqDto, Promo, TipologiaOfferta } from
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gestione-promo',
@@ -53,7 +54,8 @@ export class GestionePromoComponent  implements OnInit {
       private promoService : GetApiPromoService,
       private authService : AuthService,
       private attivitaService: GetApiAttivitaService,
-      public datePipe: DatePipe
+      public datePipe: DatePipe,
+      private translate: TranslateService
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -425,122 +427,172 @@ export class GestionePromoComponent  implements OnInit {
 
     //TITOLO
     if(!promo.titoloPromo || promo.titoloPromo == ''){
-      this.errTitolo = 'Titolo obbligatorio'
-      this.isError = true;
+      this.translate.get('ERRORS.TITLE_REQUIRED').subscribe((translatedText: string) => {
+        this.errTitolo = translatedText;
+        this.isError = true;
+      });
     }
     else if(promo.titoloPromo && promo.titoloPromo.length > 50){
-      this.errTitolo = 'La lunghezza massima per il titolo è di 50 caratteri'
-      this.isError = true;
+      this.translate.get('ERRORS.TITLE_MAX_LENGTH').subscribe((translatedText: string) => {
+        this.errTitolo = translatedText;
+        this.isError = true;
+      });
     }
     else if(promo.titoloPromo && promo.titoloPromo.length < 5){
-      this.errTitolo = 'La lunghezza minima per il titolo è di 5 caratteri'
-      this.isError = true;
+      this.translate.get('ERRORS.TITLE_MIN_LENGTH').subscribe((translatedText: string) => {
+        this.errTitolo = translatedText;
+        this.isError = true;
+      });
     }
     else if (!noSpecialCharsRegex.test(promo.titoloPromo)) {
-      this.errTitolo = "Il titolo contiene caratteri non ammessi";
-      this.isError = true;
+      this.translate.get('ERRORS.TITLE_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
+        this.errTitolo = translatedText;
+        this.isError = true;
+      });
     }
     else if (onlyNumbersRegex.test(promo.titoloPromo) && !/[a-zA-Z]/.test(promo.titoloPromo)) {
-      this.errTitolo = 'Il titolo non può contenere solo numeri';
-      this.isError = true;
+      this.translate.get('ERRORS.TITLE_NOT_ONLY_NUMBERS').subscribe((translatedText: string) => {
+        this.errTitolo = translatedText;
+        this.isError = true;
+      });
     }
 
     //PERIODO
     if(promo.dataDal == undefined || promo.dataDal == null){
-      this.errPeriodo = 'Inserire una data inizio validità'
-      this.isError = true;
+      this.translate.get('ERRORS.START_DATE_REQUIRED').subscribe((translatedText: string) => {
+        this.errPeriodo = translatedText;
+        this.isError = true;
+      });
     }
     else if(promo.dataAl == undefined || promo.dataAl == null){
-      this.errPeriodo = 'Inserire una data di fine validità'
-      this.isError = true;
+      this.translate.get('ERRORS.END_DATE_REQUIRED').subscribe((translatedText: string) => {
+        this.errPeriodo = translatedText;
+        this.isError = true;
+      });
     }
     else{
       const dataDal = promo.dataDal instanceof Date ? promo.dataDal : new Date(promo.dataDal);
       const dataAl = promo.dataAl instanceof Date ? promo.dataAl : new Date(promo.dataAl);
       if(dataDal.setHours(0, 0, 0, 0) < today){
-        this.errPeriodo = 'La data di inizio validità non può essere inferiore ad oggi'
-        this.isError = true;
+        this.translate.get('ERRORS.START_DATE_LESS_TODAY').subscribe((translatedText: string) => {
+          this.errPeriodo = translatedText;
+          this.isError = true;
+        });
       }
       else if(dataAl.setHours(0, 0, 0, 0) < today){
-        this.errPeriodo = 'La data di fine validità non può essere inferiore alla data di oggi'
-        this.isError = true;
+        this.translate.get('ERRORS.END_DATE_LESS_TODAY').subscribe((translatedText: string) => {
+          this.errPeriodo = translatedText;
+          this.isError = true;
+        });
       }
       else if(dataAl.setHours(0, 0, 0, 0) < dataDal.setHours(0, 0, 0, 0)){
-        this.errPeriodo = 'La data di fine validità non può essere inferiore alla data inizio'
-        this.isError = true;
+        this.translate.get('ERRORS.END_DATE_LESS_START').subscribe((translatedText: string) => {
+          this.errPeriodo = translatedText;
+          this.isError = true;
+        });
       }
     }
     
     //DESCRIZIONE
     if(!promo.descPromo || promo.descPromo == ''){
-      this.errDescrizione = 'Inserire una breve descrizione';
-      this.isError = true;
+      this.translate.get('ERRORS.DESCRIPTION_REQUIRED').subscribe((translatedText: string) => {
+        this.errDescrizione = translatedText;
+        this.isError = true;
+      });
     }
     else if(promo.descPromo.length > 200){
-      this.errDescrizione = 'La lunghezza massima per la descrizione è di 200 caratteri';
-      this.isError = true;
+      this.translate.get('ERRORS.DESCRIPTION_MAX_LENGTH_200').subscribe((translatedText: string) => {
+        this.errDescrizione = translatedText;
+        this.isError = true;
+      });
     }
     else if(promo.descPromo.length < 5){
-      this.errDescrizione = 'La lunghezza minima per la descrizione è di 5 caratteri'
-      this.isError = true;
+      this.translate.get('ERRORS.DESCRIPTION_MIN_LENGTH_5').subscribe((translatedText: string) => {
+        this.errDescrizione = translatedText;
+        this.isError = true;
+      });
     }
     else if (!noSpecialCharsRegex.test(promo.descPromo)) {
-      this.errDescrizione = "Il nome contiene caratteri non ammessi";
-      this.isError = true;
+      this.translate.get('ERRORS.DESCR_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
+        this.errDescrizione = translatedText;
+        this.isError = true;
+      });
     }
     else if (onlyNumbersRegex.test(promo.descPromo) && !/[a-zA-Z]/.test(promo.descPromo)) {
-      this.errDescrizione = 'Il titolo non può contenere solo numeri';
-      this.isError = true;
+      this.translate.get('ERRORS.DESCRIPTION_NOT_ONLY_NUMBERS').subscribe((translatedText: string) => {
+        this.errDescrizione = translatedText;
+        this.isError = true;
+      });
     }
 
     //GIORNI
     if(promo.days == undefined || promo.days == null || promo.days.length == 0){
-        this.errGiorni = "Indicare i giorni della settimana";
-        this.isError = true;
+        this.translate.get('ERRORS.DAYS_OF_WEEK').subscribe((translatedText: string) => {
+          this.errGiorni = translatedText;
+          this.isError = true;
+        });
     }
 
     //ORARI
     if(!promo.isAllDayValidita && !promo.orarioValiditaDa && !promo.orarioValiditaAl){
-       this.errOrari = "Indicare il periodo della giornata";
-       this.isError = true;
+       this.translate.get('ERRORS.TIME_OF_DAY').subscribe((translatedText: string) => {
+        this.errOrari = translatedText;
+        this.isError = true;
+      });
     }
     else if(!promo.isAllDayValidita && (!promo.orarioValiditaAl && promo.orarioValiditaDa)){
-         this.errOrari = "Indicare l'orario di inizio validità";
-         this.isError = true;
+         this.translate.get('ERRORS.START_TIME_REQUIRED').subscribe((translatedText: string) => {
+          this.errOrari = translatedText;
+          this.isError = true;
+        });
     }
     else if(!promo.isAllDayValidita && (promo.orarioValiditaAl && !promo.orarioValiditaDa)){
-          this.errOrari = "Indicare l'orario di fine validità";
-          this.isError = true;
+          this.translate.get('ERRORS.END_TIME_REQUIRED').subscribe((translatedText: string) => {
+            this.errOrari = translatedText;
+            this.isError = true;
+          });
     }
 
     //TIPOLOGIE
     if(!promo.listaTipologie){
-     this.errTipologia = "Indicare una o più tipologie di offerta";
-     this.isError = true;
+     this.translate.get('ERRORS.TYPES_OF_OFFER_REQUIRED').subscribe((translatedText: string) => {
+      this.errTipologia = translatedText;
+      this.isError = true;
+    });
     }
     else if(promo.listaTipologie.length > 5){
-      this.errTipologia = "È possibile inserire un massimo di 5 tipologie";
-      this.isError = true;
+      this.translate.get('ERRORS.MAXIMUM_TYPES').subscribe((translatedText: string) => {
+        this.errTipologia = translatedText;
+        this.isError = true;
+      });
     }
 
     //NUM COUPON MAX
     if(promo.numCouponMax !== null && promo.numCouponMax !== undefined && promo.numCouponMax < 1) {
-      this.errNumUtilizzi = "Deve essere maggiore di 0";
-      this.isError = true;
+      this.translate.get('ERRORS.MUST_GREATER_0').subscribe((translatedText: string) => {
+        this.errNumUtilizzi = translatedText;
+        this.isError = true;
+      });
     }
     else if(promo.numCouponMax && promo.numCouponMax > 9999){
-      this.errNumUtilizzi = "Non è possibile inserire oltre 9999 coupon massimi";
-      this.isError = true;
+      this.translate.get('ERRORS.MAX_COUPONS_9999').subscribe((translatedText: string) => {
+        this.errNumUtilizzi = translatedText;
+        this.isError = true;
+      });
      }
 
     //NUM COUPON MAX PER PERSONA
     if(promo.numUtilizziPerPersonaMax !== null && promo.numUtilizziPerPersonaMax !== undefined && promo.numUtilizziPerPersonaMax < 1){
-      this.errNumUtilizziPersona = "Deve essere maggiore di 0";
-      this.isError = true;
+      this.translate.get('ERRORS.MUST_GREATER_0').subscribe((translatedText: string) => {
+        this.errNumUtilizziPersona = translatedText;
+        this.isError = true;
+      });
      }
     else if(promo.numUtilizziPerPersonaMax && promo.numUtilizziPerPersonaMax > 9999){
-      this.errNumUtilizziPersona = "Non è possibile inserire oltre 9999 coupon massimi per persona";
-      this.isError = true;
+      this.translate.get('ERRORS.MAX_COUPONS_9999_PER_PERSON').subscribe((translatedText: string) => {
+        this.errNumUtilizziPersona = translatedText;
+        this.isError = true;
+      });
      }
   }
 

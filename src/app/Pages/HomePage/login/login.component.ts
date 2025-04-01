@@ -8,6 +8,7 @@ import { firstValueFrom, of } from 'rxjs';
 import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 import { Capacitor } from '@capacitor/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent {
   @Output() closeLoginEvent = new EventEmitter<void>();
   @Output() openRegisterEvent = new EventEmitter<void>();
 
-  constructor(private afAuth: AngularFireAuth, private authService: AuthService, private messagingService: MessagingService) {
+  constructor(private afAuth: AngularFireAuth, private authService: AuthService, private messagingService: MessagingService,private translate: TranslateService) {
     this.homeForm = new FormGroup({
       emailLogin: new FormControl('', [Validators.required, Validators.email]),
       passwordLogin: new FormControl('', Validators.required)
@@ -85,7 +86,7 @@ export class LoginComponent {
         this.isLoading = false;
       } 
       catch(error:any) {
-        this.errore = getFireBaseErrorMessage(error);
+        this.errore = getFireBaseErrorMessage(error,this.translate);
         this.isLoading = false;
       }
     }
@@ -131,7 +132,7 @@ export class LoginComponent {
       }
     } catch (error: any) {
       this.isLoading = false;
-      this.errore = getFireBaseErrorMessage(error);
+      this.errore = getFireBaseErrorMessage(error,this.translate);
     }
   }
 
@@ -175,7 +176,7 @@ export class LoginComponent {
       }
     } catch (error: any) {
       this.isLoading = false;
-      this.errore = getFireBaseErrorMessage(error);
+      this.errore = getFireBaseErrorMessage(error,this.translate);
     }
   }
 
@@ -187,22 +188,28 @@ export class LoginComponent {
     if(email){
       try{
         if (!emailRegex.test(email)) {
-          this.errore = "Inserire una mail valida per richiedere il reset della password";
-          this.isLoading = false;
+          this.translate.get('ERRORS.EMAIL_FOR_RESET').subscribe((translatedText: string) => {
+            this.errore = translatedText;
+            this.isLoading = false;
+          });
           return;
         }
         await this.authService.passwordReset(email);
-        this.notificaInvio = "Controlla la tua mail per reimpostare la password"
+        this.translate.get('ERRORS.CHECK_EMAIL').subscribe((translatedText: string) => {
+          this.notificaInvio = translatedText;
+        });
       }
       catch(err: any){
-        this.errore = getFireBaseErrorMessage(err);
+        this.errore = getFireBaseErrorMessage(err,this.translate);
       }
       finally{
         this.isLoading = false;
       }
     }
     else{
-      this.errore = "Inserire una mail valida per richiedere il reset della password";
+      this.translate.get('ERRORS.EMAIL_FOR_RESET').subscribe((translatedText: string) => {
+        this.errore = translatedText;
+      });
     }
     this.isLoading = false;
   }

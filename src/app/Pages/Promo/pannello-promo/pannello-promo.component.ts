@@ -5,6 +5,8 @@ import { Coupon } from 'one-more-frontend-common/projects/one-more-fe-service/sr
 import { InsertPromoUserAttiva, Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 import { lastValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pannello-promo',
@@ -33,7 +35,8 @@ export class PannelloPromoComponent implements OnInit {
   constructor( 
     private authService: AuthService,
     private couponService: CouponService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
+    private translate: TranslateService
   ) {}
   
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
@@ -60,8 +63,11 @@ export class PannelloPromoComponent implements OnInit {
           await this.couponService.AddCoupon(this.Coupon).toPromise();
           this.isConfirmed = true;
           const fcmToken = await lastValueFrom(this.messagingService.apiGetFCMToken(this.idAttivita)); // Tratta il token come stringa
-          if(fcmToken)
-            await this.messagingService.sendNotification(fcmToken, 'Prenotazione effettuata', 'È stato prenotato un coupon.');
+          if(fcmToken){
+            const title = await firstValueFrom(this.translate.get('MESSAGES.RESERVATION_MADE'));
+            const message = await firstValueFrom(this.translate.get('MESSAGES.COUPON_RESERVED'));
+            await this.messagingService.sendNotification(fcmToken, title, message);
+          }
         }
       } catch (error) {
         console.log(error);

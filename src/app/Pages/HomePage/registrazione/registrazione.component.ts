@@ -9,6 +9,7 @@ import { Utente } from 'one-more-frontend-common/projects/one-more-fe-service/sr
 import { sendEmailVerification } from 'firebase/auth';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 import { Capacitor } from '@capacitor/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-registrazione',
@@ -30,7 +31,7 @@ export class RegistrazioneComponent {
   esitoResendVerification: string | undefined;
   @Output() closeRegisterEvent = new EventEmitter<void>();
 
-  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef, private messagingService: MessagingService) {
+  constructor(private authService: AuthService, private cd: ChangeDetectorRef, private el: ElementRef, private messagingService: MessagingService, private translate: TranslateService) {
     this.formRegistrazione = new FormGroup({
       emailRegistrazione: new FormControl('', [Validators.required, Validators.email]),
       passwordRegistrazione: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(15),this.customPasswordValidator()]),
@@ -85,16 +86,22 @@ export class RegistrazioneComponent {
     if (this.formRegistrazione.valid){
 
       if(!this.formRegistrazione.value.passwordRegistrazione){
-        this.errore = "inserire una password";
-        this.updateLabelVisibility();
+        this.translate.get('ERRORS.INSERT_PASSWORD').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+          this.updateLabelVisibility();
+        });
       };
       if(!this.formRegistrazione.value.ConfermaPasswordRegistrazione){
-        this.errore = "Confermare la password";
-        this.updateLabelVisibility();
+        this.translate.get('ERRORS.CONFIRM_PASSWORD').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+          this.updateLabelVisibility();
+        });
       }
       if(this.formRegistrazione.value.passwordRegistrazione != this.formRegistrazione.value.ConfermaPasswordRegistrazione){
-        this.errore = "Le password non coincidono";
-        this.updateLabelVisibility();
+        this.translate.get('Passwords dont match').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+          this.updateLabelVisibility();
+        });
       }
 
       try{
@@ -156,12 +163,14 @@ export class RegistrazioneComponent {
         ).subscribe();
 
         // Notifica l'utente che deve verificare la sua email
-        this.errore = "Registrazione completata. Controlla la tua email per verificare l'account.";
-        this.updateLabelVisibility();
+        this.translate.get('MESSAGES.REGISTRATION_COMPLETE').subscribe((translatedText: string) => {
+          this.errore = translatedText;
+          this.updateLabelVisibility();
+        });
       }
       catch(error: any)
       {
-        this.errore = getFireBaseErrorMessage(error);
+        this.errore = getFireBaseErrorMessage(error,this.translate);
         this.updateLabelVisibility();
         this.isLoading = false;
       }
@@ -208,7 +217,7 @@ export class RegistrazioneComponent {
       }
     } catch (error: any) {
       this.isLoading = false;
-      this.errore = getFireBaseErrorMessage(error);
+      this.errore = getFireBaseErrorMessage(error,this.translate);
     }
   }
 
@@ -252,7 +261,7 @@ export class RegistrazioneComponent {
       }
     } catch (error: any) {
       this.isLoading = false;
-      this.errore = getFireBaseErrorMessage(error);
+      this.errore = getFireBaseErrorMessage(error,this.translate);
     }
   }
 
