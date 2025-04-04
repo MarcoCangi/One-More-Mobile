@@ -14,7 +14,6 @@ export class ElencoViciniComponent {
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
   @Output() ricercaAttivitaEvent = new EventEmitter<number>();
-  // @Input() elencoVicini:Attivita[] | undefined;
   @Input() latitudine:number | undefined;
   @Input() longitudine:number | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
@@ -36,13 +35,13 @@ export class ElencoViciniComponent {
       const cachedData = await this.storageService.getItem(cacheKey);
   
       if (cachedData) {
-        this.elencoVicini = cachedData; // Usa i dati dalla cache
+        this.elencoVicini = cachedData;
         this.isLoading = false;
       } else {
         (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine))
           .subscribe(async (data: Attivita[]) => {
             this.elencoVicini = data;
-            await this.storageService.setItem(cacheKey, data, 60); // Salva in cache per 1 minuto
+            await this.storageService.setItem(cacheKey, data, 240); 
             this.isLoading = false;
           });
       }

@@ -14,7 +14,6 @@ export class ElencoPromoComponent{
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
 
-  // @Input() elencoPromo:Attivita[] | undefined;
   @Input() latitudine:number | undefined;
   @Input() longitudine:number | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
@@ -33,7 +32,7 @@ export class ElencoPromoComponent{
 async loadData() {
   if (this.latitudine && this.longitudine) {
     this.isLoading = true;
-    const cacheKey = `attivita_promo`; // Chiave generica senza coordinate
+    const cacheKey = `attivita_promo`;
     const cachedData = await this.storageService.getItem(cacheKey);
 
     if (cachedData) {
@@ -43,7 +42,7 @@ async loadData() {
       (await this.attivitaService.apiGetListaAttivitaWhitPromo(this.latitudine, this.longitudine))
         .subscribe(async (data: Attivita[]) => {
           this.elencoPromo = data;
-          await this.storageService.setItem(cacheKey, data, 60); // Salva in cache per 1 minuto
+          await this.storageService.setItem(cacheKey, data, 240);
           this.isLoading = false;
         });
     }

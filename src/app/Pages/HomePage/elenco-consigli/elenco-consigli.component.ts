@@ -37,13 +37,13 @@ export class ElencoConsigliComponent {
         const cachedData = await this.storageService.getItem(cacheKey);
     
         if (cachedData) {
-          this.listaElencoNuove = cachedData; // Usa i dati dalla cache
+          this.listaElencoNuove = cachedData;
           this.isLoading = false;
         } else {
           (await this.attivitaService.apiGetListaAttivitaJustSigned(this.latitudine, this.longitudine))
             .subscribe(async (data: Attivita[]) => {
               this.listaElencoNuove = data;
-              await this.storageService.setItem(cacheKey, data, 60); // Salva in cache per 1 minuto
+              await this.storageService.setItem(cacheKey, data, 240); 
               this.isLoading = false;
             });
         }
