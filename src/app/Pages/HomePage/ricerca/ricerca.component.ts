@@ -161,6 +161,8 @@ export class RicercaComponent implements OnInit {
     const codTipoAttivita = this.selectedOption?.codTipoAttivita;
     this.filtro = new FiltriAttivita();
 
+    this.filtro.tipoRicercaAttivita = 3;
+
     if (nomeLocale != null && nomeLocale.trim() !== '') {
       this.filtro.nome = nomeLocale;
       this.filtro.range = 1000;
@@ -169,7 +171,7 @@ export class RicercaComponent implements OnInit {
       this.filtro.range = 100;
     }
     if (citta != null && citta.trim() !== '') {
-      this.filtro.citta = citta;
+      this.filtro.citta = citta.toUpperCase();
     }
     else{
       const { latitudine, longitudine } = await this.locationService.getCurrentLocation();

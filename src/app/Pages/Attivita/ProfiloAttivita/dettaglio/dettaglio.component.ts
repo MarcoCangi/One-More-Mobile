@@ -11,7 +11,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { GoogleMap } from '@angular/google-maps';
 import { Clipboard } from '@capacitor/clipboard';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-dettaglio',
@@ -78,23 +78,13 @@ export class DettaglioComponent  implements OnInit {
           }
 
           if (this.idSoggetto > 0 && this.attivita.idAttivita) {
-            this.isFavorite = await this.userService.apiCheckIsFavorite(this.idSoggetto, this.attivita.idAttivita).toPromise();
+            this.isFavorite = await firstValueFrom(
+              await this.userService.apiCheckIsFavorite(this.idSoggetto, this.attivita.idAttivita)
+            );
         }
         const data = await this.attivitaService.apiGetAttivitaByIdAttivita(this.attivita.idAttivita);
           if (this.attivita && data) {
               this.attivita = data;
-          }
-
-          const immaginiData = await this.attivitaService.apiGetListaTop3ImmaginiById(this.attivita.idAttivita).toPromise();
-          if (this.attivita && immaginiData) {
-              this.attivita.immagini = immaginiData;
-          }
-          
-          if(!this.attivita.orari)
-          {
-            const orariData = await this.attivitaService.apiGetOrariById(this.attivita.idAttivita).toPromise();
-              if(this.attivita && orariData)
-                this.attivita.orari = orariData;
           }
         }  
     } else {
@@ -136,33 +126,29 @@ export class DettaglioComponent  implements OnInit {
 
   async AddRemoveFavorite(idAttivita: number | undefined): Promise<void> {
     const userSession = this.authService.getUserSession();
-
-    if (userSession && idAttivita) {
-        this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, idAttivita);
-        
-        if (this.isOk) {
-            const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
-            let cachedData: AttivitaRicerca[] = await this.storageService.getItem(cacheKey) || [];
-
-            // Verifica se l'attività è già nei preferiti
-            const index = cachedData.findIndex((attivita: AttivitaRicerca) => attivita.idAttivita === idAttivita);
-
-            if (index !== -1) {
-                // Se esiste, la rimuove
-                cachedData.splice(index, 1);
-                this.isFavorite = false;
-            } else {
-                // Se non esiste, la aggiunge
-                const attivitaRicerca: AttivitaRicerca = this.convertAttivitaToRicerca(this.attivita);
-                cachedData.push(attivitaRicerca);
-                this.isFavorite = true;
-            }
-
-            // Salva la cache aggiornata
-            await this.storageService.setItem(cacheKey, cachedData);
-        }
+  
+    if (!userSession || !idAttivita) return;
+  
+    const isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, idAttivita);
+  
+    if (!isOk) return;
+  
+    const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
+    let cachedData: AttivitaRicerca[] = await this.storageService.getItem(cacheKey) || [];
+  
+    const index = cachedData.findIndex(att => att.idAttivita === idAttivita);
+  
+    if (index !== -1) {
+      cachedData.splice(index, 1);
+      this.isFavorite = false;
+    } else {
+      const nuovaAttivita = this.convertAttivitaToRicerca(this.attivita);
+      cachedData.push(nuovaAttivita);
+      this.isFavorite = true;
     }
-}
+  
+    await this.storageService.setItem(cacheKey, cachedData);
+  }
 
   private getDaysArray(validDays: string | undefined): number[] {
     const days: number[] = [];

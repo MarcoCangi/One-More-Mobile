@@ -144,7 +144,7 @@
       </mat-error>
     </ng-container>
     <div class="col-md-16 formInput">
-    <app-menu name="descMenu" [descrizione]="this.attivita?.description" 
+    <app-menu name="descMenu" [description]="this.attivita?.description" 
                               (descrizioneChange)="handleDescChange($event)"></app-menu>
     <mat-error *ngIf="this.errorDesc" class="err">
       {{this.errorDesc}}

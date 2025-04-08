@@ -75,6 +75,7 @@ export class FavoritesComponent  implements OnInit {
     } else {
       this.isLoading = false;
     }
+    console.log(this.listaAttivitaFavoriti);
   }
 
   async VisualizzaAttivita(idAttivita: number | undefined): Promise<void> {
@@ -95,8 +96,10 @@ export class FavoritesComponent  implements OnInit {
 
   getImmaginePrincipale(attivita: AttivitaRicerca | undefined): string {
     if (attivita && attivita.immagini != undefined) {
-      const immaginePrincipale = attivita.immagini.find(img => (img.isImmaginePrincipale && img.isVerificata) || img.isImmaginePrincipaleTemp);
+      console.log(attivita.immagini.find(img => (img.isImmaginePrincipale) || img.isImmaginePrincipaleTemp));
+      const immaginePrincipale = attivita.immagini.find(img => (img.isImmaginePrincipale) || img.isImmaginePrincipaleTemp);
       if (immaginePrincipale) {
+        console.log("provolone");
         return immaginePrincipale.upload;
       } else {
         return 'URL_IMMAGINE_FALLBACK';
