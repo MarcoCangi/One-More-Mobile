@@ -135,7 +135,8 @@
             <ion-card-title class="subtitleConfirm">
               {{'AboutAcquireCoupon'|translate}}
             </ion-card-title>
-            <img class="img" src="assets/Img/spunta_vicino.png">
+            <img class="img" src="assets/Img/spunta_vicino.png" *ngIf="!isError">
+            <img class="img" src="assets/Img/not_okay.png" *ngIf="!isLoading && isError">
             
           </ion-card-header>
           <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
