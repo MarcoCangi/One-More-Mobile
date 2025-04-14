@@ -77,7 +77,7 @@ export class RicercaComponent implements OnInit {
         this.listaAttivitaPerRicerca = this.attivitaService.GetListaAttivitaPerRicercaSession();
       if(!this.listaAttivitaPerRicerca || this.listaAttivitaPerRicerca.length == 0){
         try {
-          const listaAttivita = await lastValueFrom(this.attivitaService.apiGetListaAttivitaPreSearch());
+          const listaAttivita = await this.attivitaService.apiGetListaAttivitaPreSearch();
           if (listaAttivita) {
               this.listaAttivitaPerRicerca = listaAttivita;
               this.attivitaService.createListaAttivitaPerRicercaSession(this.listaAttivitaPerRicerca);

@@ -9,6 +9,7 @@ import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { TranslateService } from '@ngx-translate/core';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 
 @Component({
   selector: 'app-gestione-promo',
@@ -55,7 +56,8 @@ export class GestionePromoComponent  implements OnInit {
       private authService : AuthService,
       private attivitaService: GetApiAttivitaService,
       public datePipe: DatePipe,
-      private translate: TranslateService
+      private translate: TranslateService,
+      private localStorage: StorageService
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -169,16 +171,15 @@ export class GestionePromoComponent  implements OnInit {
       if (dataAl) {
         this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
       }
+      
+      await this.localStorage.removeItem(`attivita_promo`);
 
-      this.promoService.apiInsertPromo(this.requestPromo).pipe(
-        tap((response: any) => {
-          this.openPage(7);
-        }),
-        catchError((error) => {
-          console.error(error.error);
-          return of(null);
-        })
-      ).subscribe();
+      try {
+        await this.promoService.apiInsertPromo(this.requestPromo);
+        this.openPageEventUpd.emit(7);
+      } catch (error: any) {
+        console.error(error?.error || error);
+      }
     }
   }
 
@@ -229,16 +230,15 @@ export class GestionePromoComponent  implements OnInit {
       if (dataAl) {
         this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
       }
-      this.promoService.apiUpdatePromo(this.requestPromo).pipe(
-        tap((response: any) => {
-          this.openPageEventUpd.emit(7);
-        }),
-        catchError((error) => {
-          return throwError(() => error);
-          console.error(error.error); 
-          return of(null);
-        })
-      ).subscribe();
+
+      await this.localStorage.removeItem(`attivita_promo`);
+
+      try {
+        await this.promoService.apiUpdatePromo(this.requestPromo);
+        this.openPageEventUpd.emit(7);
+      } catch (error: any) {
+        console.error(error?.error || error);
+      }
     }
   }
 

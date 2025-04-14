@@ -48,14 +48,16 @@ export class AppComponent implements OnInit {
     await this.locationService.getCurrentLocation();
 
     this.IsShowSplashVisible = this.authService.getIsShowedSplash();
-    if (this.showSplash && !this.IsShowSplashVisible) {
+
+    if (!this.IsShowSplashVisible) {
+      this.showSplash = true;
+    
       setTimeout(() => {
         this.showSplash = false;
-        localStorage.setItem('splashShown', 'true');
-        this.authService.setIsShowedSplash(true);
-      }, 3000);
+        this.authService.setIsShowedSplash(); // segna che lo splash è stato già mostrato
+      }, 2500); // durata splash
     } else {
-      this.showSplash = false;
+      this.showSplash = false; // salta splash se è già stato mostrato
     }
 
     //GET LISTA DEC TIPO ATTIVITA
@@ -113,9 +115,23 @@ export class AppComponent implements OnInit {
   }
 
   async openPageEvent(idPage: number) {
+    if (idPage === 1) {
+      // Se siamo già sulla Home e viene ricliccato, forziamo il reload
+      this.reloadHomePage();
+    } else {
       this.idPage = idPage;
       if(this.idPage != 2)
         this.attivitaService.setFilter(undefined);
+    }
+  }
+
+  reloadHomePage() {
+    // Rimuovi eventuali filtri o stato temporaneo
+    this.attivitaService.setFilter(undefined);
+  
+    // Ricarica i dati iniziali della Home (puoi richiamare metodi specifici se vuoi un refresh parziale)
+    // Oppure, se preferisci, forzare un reload dell'intera route (dipende da come è fatta la Home)
+    location.reload(); // Ricarica la pagina intera senza passare dallo splash (perché è già stato settato a true)
   }
 
   updateIdFooterEvent(id: number | undefined) {

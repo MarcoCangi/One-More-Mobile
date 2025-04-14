@@ -120,7 +120,7 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
 
     if (this.idAttivita != null && this.idAttivita > 0) {
         try {
-            const data = await firstValueFrom(this.promoService.apiGetListaPromoByIdAttivita(this.idAttivita));
+          const data = await this.promoService.apiGetListaPromoByIdAttivita(this.idAttivita);
 
             if (data != undefined) {
                 data.forEach(item => {
