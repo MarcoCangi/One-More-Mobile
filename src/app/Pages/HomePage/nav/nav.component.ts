@@ -1,5 +1,4 @@
-/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Input, OnInit, output, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
 import { Observable } from 'rxjs';
@@ -10,6 +9,7 @@ import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-mo
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { HomeComponent } from '../home/home.component';
 import { TranslateService } from '@ngx-translate/core';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service'; 
 
 @Component({
   selector: 'app-nav',
@@ -17,234 +17,133 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-
   @Input() listaTipoAttivita: TipoAttivita[] = [];
-  @ViewChild(HomeComponent) childComponent!: HomeComponent;
-  isIta: boolean = true;
-  lblFlag: string = "it";
-  faMap = faMap;
-  searchForm: FormGroup | undefined;
-  inputControl = new FormControl();
-  filteredOptions: Observable<TipoAttivita[]> | null = null;
-  showDropdown = true;
-  private _filterValue = '';
-  selectedOption: TipoAttivita | null = null;
-  position: GeolocationPosition | undefined;
-  center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
-  filtro: FiltriAttivita | undefined;
-  listaAttivitaRicerca: AttivitaFiltrate | undefined;
-  mostraRegistraAttivita : boolean = false;
-  mostraLoginButton : boolean = true;
-  mostraIcona : boolean = false;
-  sessione : string | null | undefined;
-  idAttivita : number | undefined;
-  isIdAttValorizzato : boolean | undefined;
-  isModalLoginOpen = false;
-  isModalRegisterOpen = false;
-  isHomeOpen = true;
-  listaElencoNuove: Attivita[] | undefined;
-  listaElencoPromo: Attivita[] | undefined;
-  listaElencoVicine: Attivita[] | undefined;
-  @ViewChild(IonModal) modal: IonModal | undefined;
+  @Input() idPage!: number;
   @Output() openMappaEvent = new EventEmitter<void>();
   @Output() openPageEvent = new EventEmitter<number>();
   @Output() updateIdFooterEvent = new EventEmitter<number>();
 
-  @Input() idPage!: number;
+  @ViewChild(HomeComponent) childComponent!: HomeComponent;
+  @ViewChild(IonModal) modal: IonModal | undefined;
 
-  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
-  name: string | undefined;
+  faMap = faMap;
+  lblFlag: string = 'it';
+  isIta = true;
+  isHomeOpen = true;
+  isModalLoginOpen = false;
+  isModalRegisterOpen = false;
+  mostraLoginButton = true;
+  mostraRegistraAttivita = false;
+  mostraIcona = false;
 
+  searchForm: FormGroup | undefined;
+  inputControl = new FormControl();
+  filteredOptions: Observable<TipoAttivita[]> | null = null;
+  selectedOption: TipoAttivita | null = null;
 
-  constructor(private authService: AuthService,
-              private attivitaService: GetApiAttivitaService,
-              private formBuilder: FormBuilder,
-              private translate: TranslateService ) {}
+  message = '';
+  listaElencoNuove: Attivita[] | undefined;
+  listaElencoPromo: Attivita[] | undefined;
+  listaElencoVicine: Attivita[] | undefined;
+  filtro: FiltriAttivita | undefined;
+  listaAttivitaRicerca: AttivitaFiltrate | undefined;
 
-    ngOnInit(): void { 
-      this.authService.language$.subscribe((lang) => {
-        this.lblFlag = lang;
-        this.isIta = lang === "it";
-        this.translate.use(lang);
-      });
+  constructor(
+    private authService: AuthService,
+    private attivitaService: GetApiAttivitaService,
+    private formBuilder: FormBuilder,
+    private translate: TranslateService,
+    private storageService: StorageService
+  ) {}
 
-        this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
-        this.mostraLoginButton = !isLoggedIn;
-        this.mostraRegistraAttivita = isLoggedIn;
-        this.mostraIcona = isLoggedIn;
-      });
+  async ngOnInit(): Promise<void> {
+    this.authService.language$.subscribe((lang) => {
+      this.lblFlag = lang;
+      this.isIta = lang === 'it';
+      this.translate.use(lang);
+    });
 
-      if(this.idPage)
-        this.openPage(this.idPage);
-  
-      this.searchForm = this.formBuilder.group({
-        nomeLocale: [''],
-        citta: [''],
-        tipoLocale: ['']
-      });
-    }
+    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+      this.mostraLoginButton = !isLoggedIn;
+      this.mostraRegistraAttivita = isLoggedIn;
+      this.mostraIcona = isLoggedIn;
+    });
 
-    cancel() {
-      if(this.modal)
-        this.modal.dismiss(null, 'cancel');
-    }
+    if (this.idPage) this.openPage(this.idPage);
 
-    callChildMethod() {
-      // Verifica se il componente figlio è stato caricato
-      if (this.childComponent) {
-        this.childComponent.reloadComponent();  // Chiama il metodo del figlio
-      }
-    }
-
-    openLogOut(){
-      this.idPage = 4;
-      const id = this.authService.getLastIdPageFromSession();
-      if (this.idPage == id) {
-        this.openPageEventNav(this.idPage);
-        this.callChildMethod();
-      } else {
-        this.authService.setLastIdPageInSession(this.idPage);
-        this.openPageEventNav(this.idPage);
-      }
-      this.cancel();
-    }
-
-    openProfile(){
-      this.idPage = 12;
-      const id = this.authService.getLastIdPageFromSession();
-      if (this.idPage == id) {
-        this.openPageEventNav(this.idPage);
-        this.callChildMethod();
-      } else {
-        this.authService.setLastIdPageInSession(this.idPage);
-        this.openPageEventNav(this.idPage);
-      }
-      this.cancel();
-    }
-
-    openCoupon(){
-      this.idPage = 11;
-      const id = this.authService.getLastIdPageFromSession();
-      if (this.idPage == id) {
-        this.openPageEventNav(this.idPage);
-        this.callChildMethod();
-      } else {
-        this.authService.setLastIdPageInSession(this.idPage);
-        this.openPageEventNav(this.idPage);
-      }
-      this.cancel();
-    }
-
-    openRegistraAttivita(){
-      this.idPage = 5;
-      const id = this.authService.getLastIdPageFromSession();
-      if (this.idPage == id) {
-        this.openPageEventNav(this.idPage);
-        this.callChildMethod();
-      } else {
-        this.authService.setLastIdPageInSession(this.idPage);
-        this.openPageEventNav(this.idPage);
-      }
-      this.cancel();
-    }
-
-    openNewPromo(){
-      this.idPage = 6;
-      const id = this.authService.getLastIdPageFromSession();
-      if (this.idPage == id) {
-        this.openPageEventNav(this.idPage);
-        this.callChildMethod();
-      } else {
-        this.authService.setLastIdPageInSession(this.idPage);
-        this.openPageEventNav(this.idPage);
-      }
-      this.cancel();
-    }
-
-    openRiepilogoPromoAtt(){
-      this.idPage = 7;
-      const id = this.authService.getLastIdPageFromSession();
-      if (this.idPage == id) {
-        this.openPageEventNav(this.idPage);
-        this.callChildMethod();
-      } else {
-        this.authService.setLastIdPageInSession(this.idPage);
-        this.openPageEventNav(this.idPage);
-      }
-      this.cancel();
-    }
-
-    openPreferiti(){
-      this.idPage = 9;
-      const id = this.authService.getLastIdPageFromSession();
-      if (this.idPage == id) {
-        this.openPageEventNav(this.idPage);
-        this.callChildMethod();
-      } else {
-        this.authService.setLastIdPageInSession(this.idPage);
-        this.openPageEventNav(this.idPage);
-      }
-      this.cancel();
-    }
-    
-    onWillDismiss(event: Event) {
-      const ev = event as CustomEvent<OverlayEventDetail<string>>;
-      if (ev.detail.role === 'confirm') {
-        this.message = `Hello, ${ev.detail.data}!`;
-      }
-    }
-
-  idAttivitaIsValorizzato(): boolean { 
-    const userSession = this.authService.getUserSession();
-
-    if (userSession && userSession.idAttivita && userSession.idAttivita > 0) {  
-      return true;  
-    }
-    return false;
+    this.searchForm = this.formBuilder.group({
+      nomeLocale: [''],
+      citta: [''],
+      tipoLocale: [''],
+    });
   }
 
-  ShowLogin(){
-    if(this.isModalLoginOpen){
-        this.isModalRegisterOpen = false;
-        this.isModalLoginOpen = false;
-        this.isHomeOpen = true;
-      }
-    else{
-      this.isModalRegisterOpen = false;
-      this.isHomeOpen = false;
-      this.isModalLoginOpen = true;
+  cancel() {
+    if (this.modal) this.modal.dismiss(null, 'cancel');
+  }
+
+  callChildMethod() {
+    if (this.childComponent) {
+      this.childComponent.reloadComponent();
     }
   }
 
-  setLanguage() {
-    const newLang = this.isIta ? "en" : "it";
-    this.authService.saveLanguageSession(newLang);
-    window.location.reload();
+  // ✅ Metodo riutilizzabile per aprire una pagina e richiamare il figlio
+  goToPage(idPage: number) {
+    this.idPage = idPage;
+      const id = this.authService.getLastIdPageFromSession();
+      if (this.idPage == id) {
+        this.openPageEventNav(this.idPage);
+        this.callChildMethod();
+      } else {
+        this.authService.setLastIdPageInSession(this.idPage);
+        this.openPageEventNav(this.idPage);
+      }
+      this.cancel();
+  }
+
+  openPageEventNav(idPage: number) {
+    this.openPage(idPage);
+    this.idPage = idPage;
+  }
+
+  openPage(idPage: number) {
+    this.openPageEvent.emit(idPage);
+  }
+
+  updateIdFooter(id: number | undefined) {
+    this.updateIdFooterEvent.emit(id);
+  }
+
+  isOpenPageLoginEvent(isOpen: boolean) {
+    if (isOpen) {
+      this.ShowLogin();
+    }
+  }
+
+  ShowLogin() {
+    this.isModalRegisterOpen = false;
+    this.isModalLoginOpen = true;
+    this.isHomeOpen = false;
+  }
+
+  ShowRegister() {
+    this.isModalLoginOpen = false;
+    this.isModalRegisterOpen = true;
+    this.isHomeOpen = false;
   }
 
   closeLogin() {
     this.listaElencoNuove = this.attivitaService.getListAttivitaNewSession();
     this.listaElencoPromo = this.attivitaService.getListAttivitaPromoHomeSession();
     this.listaElencoVicine = this.attivitaService.getListAttivitaVicineHomeSession();
-    if(!this.listaElencoNuove || !this.listaElencoPromo || !this.listaElencoVicine)
+
+    if (!this.listaElencoNuove || !this.listaElencoPromo || !this.listaElencoVicine) {
       window.location.reload();
-    
+    }
+
     this.isModalLoginOpen = false;
     this.isHomeOpen = true;
-  }
-
-  ShowRegister(){
-    if(this.isModalRegisterOpen){
-        this.isModalLoginOpen = false;
-        this.isModalRegisterOpen = false;
-        this.isHomeOpen = true;
-      }
-      
-    else{
-      this.isModalLoginOpen = false;
-      this.isHomeOpen = false;
-      this.isModalRegisterOpen = true;
-    }
   }
 
   closeRegister() {
@@ -252,29 +151,25 @@ export class NavComponent implements OnInit {
     this.isHomeOpen = true;
   }
 
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      this.message = `Hello, ${ev.detail.data}!`;
+    }
+  }
+
+  idAttivitaIsValorizzato(): boolean {
+    const userSession = this.authService.getUserSession();
+    return !!(userSession && userSession.idAttivita && userSession.idAttivita > 0);
+  }
+
+  setLanguage() {
+    const newLang = this.isIta ? 'en' : 'it';
+    this.authService.saveLanguageSession(newLang);
+    window.location.reload();
+  }
+
   openModal() {
-    if (this.modal) {
-      this.modal.present();
-    }
-  }
-
-  async openPageEventNav(idPage:number) {
-    this.openPage(idPage);
-    this.idPage = idPage;
-  }
-
-
-  openPage(idPage:number){
-    this.openPageEvent.emit(idPage);
-  }
-  
-  updateIdFooter(id:number | undefined){
-    this.updateIdFooterEvent.emit(id);
-  }
-
-  isOpenPageLoginEvent(isOpen:boolean){
-    if(isOpen){
-      this.ShowLogin();
-    }
+    if (this.modal) this.modal.present();
   }
 }

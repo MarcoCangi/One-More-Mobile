@@ -4,7 +4,7 @@
   <ion-toolbar>
     <ion-card-title class="title">{{ 'SELECT_ACTIVITY' | translate }}</ion-card-title>
   </ion-toolbar> 
-      <ion-card *ngFor="let att of listaAttivita" (click)="getPromoAttivita(att)">
+      <ion-card *ngFor="let att of listaAttivita" (click)="getPromoAttivita(att.idAttivita)">
         <ion-card-header>
           <ion-card-title class="title">
             {{ att.nome }}
@@ -387,6 +387,7 @@
     <app-conferma-disattivazione-promo [idPromo]="this.idPromoDisable" 
                                        [idAttivita]="this.idAttivitaDisable"
                                        [couponRichiesti]="this.numCouponRichiesti"
-                                       (dismissDisattivazioneEvent)="dismissDisattivaPromo()"></app-conferma-disattivazione-promo>
+                                       (dismissDisattivazioneEvent)="dismissDisattivaPromo($event)"
+></app-conferma-disattivazione-promo>
   </ng-template>
 </ion-modal>

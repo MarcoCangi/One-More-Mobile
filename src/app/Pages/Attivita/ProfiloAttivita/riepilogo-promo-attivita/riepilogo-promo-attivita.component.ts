@@ -18,7 +18,6 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   sessioneString!:UserSession | null;
   listaPromoAttive: Promo[] | undefined;
   listaPromoNonAttive: Promo[] | undefined;
-  attivita: Attivita | undefined;
   idAttivita!: number;
   idSoggetto!: number;
   isLoading : boolean = false;
@@ -43,7 +42,6 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     this.isLoading = true;
     this.idAttivita = 0;
     this.idSoggetto = 0;
-    this.attivita = undefined;
     this.isModifica = false;
     this.sessioneString =  this.authService.getUserSession();
 
@@ -67,21 +65,33 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     }
   }
 
-  dismissDisattivaPromo(): void {
-      this.idPromoDisable = undefined;
-      this.idAttivitaDisable = undefined;
-      this.isConfirmOpen = false;
+  async dismissDisattivaPromo(event: { idPromo: number, isDisattivata: boolean }): Promise<void> {
+    this.isLoading = true;
+    if (event.idPromo && event.isDisattivata) {
+      if (this.idAttivita) {
+        await this.getPromoAttivita(this.idAttivita); // Ricarica le due liste
+      }
+    }
+  
+    this.idPromoDisable = undefined;
+    this.idAttivitaDisable = undefined;
+    this.isConfirmOpen = false;
+  
+    this.isLoading = false;
   }
 
   openPage(){
     this.openPageEvent.emit(6);
   }
 
-  ModificaPromo(promo: Promo): void {
+  async ModificaPromo(promo: Promo): Promise<void> {
+
+    this.isLoading = true;
     if (promo) {
       this.promoSelezionata = promo;
       this.isModifica = true;
     }
+    this.isLoading = false;
   }
 
   private getDaysArray(validDays: string): number[] {
@@ -112,10 +122,10 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     }
   }
 
-  async getPromoAttivita(attivita: Attivita) {
+  async getPromoAttivita(idAttivita: number) {
     this.isLoading = true;
-    if (attivita && attivita.idAttivita) {
-        this.idAttivita = attivita.idAttivita;
+    if (idAttivita) {
+        this.idAttivita = idAttivita;
     }
 
     if (this.idAttivita != null && this.idAttivita > 0) {

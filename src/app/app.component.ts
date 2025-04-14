@@ -9,6 +9,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { Geolocation } from '@capacitor/geolocation';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -34,7 +35,8 @@ export class AppComponent implements OnInit {
               private attivitaService: GetApiAttivitaService,
               private messagingService: MessagingService,
               private translate: TranslateService,
-              private locationService: LocationService) { }
+              private locationService: LocationService,
+              private storageService: StorageService) { }
 
   async ngOnInit(): Promise<void> {
     this.checkAndRefreshToken();
@@ -46,6 +48,8 @@ export class AppComponent implements OnInit {
     });
 
     await this.locationService.getCurrentLocation();
+
+    this.checkIsPromo();
 
     this.IsShowSplashVisible = this.authService.getIsShowedSplash();
 
@@ -115,6 +119,7 @@ export class AppComponent implements OnInit {
   }
 
   async openPageEvent(idPage: number) {
+    
     if (idPage === 1) {
       // Se siamo già sulla Home e viene ricliccato, forziamo il reload
       this.reloadHomePage();
@@ -122,6 +127,17 @@ export class AppComponent implements OnInit {
       this.idPage = idPage;
       if(this.idPage != 2)
         this.attivitaService.setFilter(undefined);
+    }
+  }
+
+  async checkIsPromo(){
+    const isPromoUpdateOrSaved = await this.storageService.getItem(`isSavedUpdatePromo`);
+    console.log(isPromoUpdateOrSaved);
+
+    if(isPromoUpdateOrSaved == true){
+      console.log("prova");
+      await this.openPageEvent(7);
+      this.storageService.removeItem(`isSavedUpdatePromo`);
     }
   }
 

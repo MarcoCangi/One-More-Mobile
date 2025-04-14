@@ -56,6 +56,7 @@ export class HomeComponent  implements OnInit {
   latitudine: number = 0;
   longitudine: number = 0;
   @Output() openPageEventNav = new EventEmitter<number>();
+  @Output() openPageEventNavUpdPromo = new EventEmitter<void>();
   @Output() updateIdFooter = new EventEmitter<number>();
   @Output() isModalLoginOpenEvent = new EventEmitter<boolean>();
 
@@ -132,6 +133,12 @@ export class HomeComponent  implements OnInit {
   openPageEvent(idPage:number) {
     this.idPage = idPage;
     this.openPageEventNav.emit(this.idPage);
+  }
+
+  openPageEventUpd(idPage: number) {
+    console.log("prova2", idPage);
+    this.openPageEventNavUpdPromo.emit(); // questo va al padre: NAV
+    this.idPage = idPage;
   }
 
   openPageEventLogin() {

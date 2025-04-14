@@ -21,36 +21,36 @@
       </ion-header>
       <ion-content class="ion-padding">
         <ion-item *ngIf="!idAttivitaIsValorizzato()">
-          <ion-icon name="reader-outline" (click)="openRegistraAttivita()"></ion-icon>
-          <ion-label (click)="openRegistraAttivita()">{{ 'Sign up your business' | translate }}</ion-label>
+          <ion-icon name="reader-outline" (click)="goToPage(5)"></ion-icon>
+          <ion-label (click)="goToPage(5)">{{ 'Sign up your business' | translate }}</ion-label>
         </ion-item>
         <ion-item *ngIf="idAttivitaIsValorizzato()">
-          <ion-icon name="reader-outline" (click)="openRegistraAttivita()"></ion-icon>
-          <ion-label (click)="openRegistraAttivita()">{{ 'Manage your business' | translate }}</ion-label>
+          <ion-icon name="reader-outline" (click)="goToPage(5)"></ion-icon>
+          <ion-label (click)="goToPage(5)">{{ 'Manage your business' | translate }}</ion-label>
         </ion-item>
         <ion-item *ngIf="idAttivitaIsValorizzato()">
-          <ion-icon name="add-outline" (click)="openNewPromo()"></ion-icon>
-          <ion-label (click)="openNewPromo()">{{ 'Add Promo' | translate }}</ion-label>
+          <ion-icon name="add-outline" (click)="goToPage(6)"></ion-icon>
+          <ion-label (click)="goToPage(6)">{{ 'Add Promo' | translate }}</ion-label>
         </ion-item>
         <ion-item *ngIf="idAttivitaIsValorizzato()">
-          <ion-icon name="cog-outline" (click)="openRiepilogoPromoAtt()"></ion-icon>
-          <ion-label (click)="openRiepilogoPromoAtt()">{{ 'Manage Promo' | translate }}</ion-label>
+          <ion-icon name="cog-outline" (click)="goToPage(7)"></ion-icon>
+          <ion-label (click)="goToPage(7)">{{ 'Manage Promo' | translate }}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-icon name="ticket-outline" (click)="openCoupon()"></ion-icon>
-          <ion-label (click)="openCoupon()">{{ 'My coupon' | translate }}</ion-label>
+          <ion-icon name="ticket-outline" (click)="goToPage(11)"></ion-icon>
+          <ion-label (click)="goToPage(11)">{{ 'My coupon' | translate }}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-icon name="heart-outline" (click)="openPreferiti()"></ion-icon>
-          <ion-label (click)="openPreferiti()">{{ 'Favorites' | translate }}</ion-label>
+          <ion-icon name="heart-outline" (click)="goToPage(9)"></ion-icon>
+          <ion-label (click)="goToPage(9)">{{ 'Favorites' | translate }}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-icon name="person-outline" (click)="openProfile()"></ion-icon>
-          <ion-label (click)="openProfile()">{{ 'My profile' | translate }}</ion-label>
+          <ion-icon name="person-outline" (click)="goToPage(12)"></ion-icon>
+          <ion-label (click)="goToPage(12)">{{ 'My profile' | translate }}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-icon name="log-out-outline" (click)="openLogOut()"></ion-icon>
-          <ion-label (click)="openLogOut()">Logout</ion-label>
+          <ion-icon name="log-out-outline" (click)="goToPage(4)"></ion-icon>
+          <ion-label (click)="goToPage(4)">Logout</ion-label>
         </ion-item>
       </ion-content>
     </ng-template>
@@ -64,7 +64,8 @@
             [listaTipoAttivita]="this.listaTipoAttivita"
             (openPageEventNav)="openPageEventNav($event)"
             (updateIdFooter)="updateIdFooter($event)"
-            (isModalLoginOpenEvent)="isOpenPageLoginEvent($event)"></app-home>
+            (isModalLoginOpenEvent)="isOpenPageLoginEvent($event)"
+            (openPageEventNavUpdPromo)="goToPage(7)"></app-home>
 
   <app-login *ngIf="isModalLoginOpen" class="scroll" (closeLoginEvent)="closeLogin()" (openRegisterEvent)="ShowRegister()"></app-login>
   <app-registrazione *ngIf="isModalRegisterOpen" class="scroll" (closeRegisterEvent)="closeRegister()"></app-registrazione>

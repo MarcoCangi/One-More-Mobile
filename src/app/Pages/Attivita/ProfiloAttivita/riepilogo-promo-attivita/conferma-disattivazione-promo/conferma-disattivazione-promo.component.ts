@@ -13,7 +13,7 @@ export class ConfermaDisattivazionePromoComponent  implements OnInit {
   @Input() idPromo : number | undefined;
   @Input() idAttivita : number | undefined;
   @Input() couponRichiesti : number | undefined;
-  @Output() dismissDisattivazioneEvent = new EventEmitter<void>();
+  @Output() dismissDisattivazioneEvent = new EventEmitter<{ idPromo: number, isDisattivata: boolean }>();
   isLoading! : boolean;
   isDisattivata! : boolean;
   constructor(private promoService: GetApiPromoService,
@@ -33,9 +33,9 @@ export class ConfermaDisattivazionePromoComponent  implements OnInit {
   
         await this.promoService.apiDeletePromoByIdPromo(this.idPromo, this.idAttivita);
 
-        this.isLoading = false;
         this.isDisattivata = true;
-        this.dismissDisattivazioneEvent.emit();
+        this.dismissDisattivazioneEvent.emit({ idPromo: this.idPromo!, isDisattivata: this.isDisattivata });
+        this.isLoading = false;
   
       } catch (error) {
         this.isLoading = false;

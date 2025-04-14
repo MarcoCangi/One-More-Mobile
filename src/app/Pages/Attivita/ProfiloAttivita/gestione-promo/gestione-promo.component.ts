@@ -10,6 +10,7 @@ import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-f
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-gestione-promo',
@@ -44,7 +45,6 @@ export class GestionePromoComponent  implements OnInit {
     alertButtons = ['Chiudi'];
     errorList: string[] = [];
 
-    isLoadingSalvataggio: boolean = false;
     @Input() modificaPromo!: Promo;
     @Output() openPageEvent = new EventEmitter<number>();
     @Output() openPageEventUpd = new EventEmitter<number>();
@@ -57,7 +57,8 @@ export class GestionePromoComponent  implements OnInit {
       private attivitaService: GetApiAttivitaService,
       public datePipe: DatePipe,
       private translate: TranslateService,
-      private localStorage: StorageService
+      private localStorage: StorageService,
+     private ngZone: NgZone 
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -141,6 +142,7 @@ export class GestionePromoComponent  implements OnInit {
   }
 
   async salva() {
+    this.isLoading = true;
     this.isConfirmOpen = false;
     await this.ControlPromo(this.requestPromo);
     if(this.isError)
@@ -176,15 +178,23 @@ export class GestionePromoComponent  implements OnInit {
 
       try {
         await this.promoService.apiInsertPromo(this.requestPromo);
-        this.openPageEventUpd.emit(7);
+        setTimeout(() => {
+          this.requestPromo
+          this.openPageEventUpd.emit(7);
+        }, 500);
       } catch (error: any) {
         console.error(error?.error || error);
       }
     }
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);
   }
 
   async modifica() {
+    this.isLoading = true;
     this.isConfirmOpen = false;
+
     await this.ControlPromo(this.requestPromo);
     if(this.isError)
       return;
@@ -235,11 +245,23 @@ export class GestionePromoComponent  implements OnInit {
 
       try {
         await this.promoService.apiUpdatePromo(this.requestPromo);
-        this.openPageEventUpd.emit(7);
+
+        await this.localStorage.setItem(`isSavedUpdatePromo`, true);
+        this.authService.setIsShowedSplashFalse();
+        location.reload();
       } catch (error: any) {
         console.error(error?.error || error);
+        this.isLoading = false;
       }
     }
+    else{
+      location.reload();
+    }
+  }
+
+  ChangePage(){
+    this.isConfirmOpen = false;
+    this.openPageEventUpd.emit(7);
   }
 
   

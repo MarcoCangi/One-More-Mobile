@@ -145,12 +145,6 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-
-      <div class="container content">
-        <ion-spinner *ngIf="isLoadingSalvataggio" name="crescent" color="primary"></ion-spinner>
-      </div>
-      <div *ngIf="!isLoadingSalvataggio">
-
       
       <ion-grid style="margin-top: 10px;"  >
         <ion-row>
@@ -265,7 +259,6 @@
         <ion-button *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo" (click)="salva()">{{ 'SAVE' | translate }}</ion-button>
         <ion-button *ngIf="this.modificaPromo && modificaPromo.idPromo" (click)="modifica()">{{ 'EDIT' | translate }}</ion-button>
       </div>
-    </div>
     </ion-content>
   </ng-template>
 </ion-modal>
