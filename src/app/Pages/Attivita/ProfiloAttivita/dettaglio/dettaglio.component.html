@@ -68,6 +68,7 @@
               </ion-button>
             </ion-col>
             <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" *ngIf="!this.idSoggetto" (click)="isOpenPageLoginEvent(true)" shape="round"><ion-icon slot="icon-only" name="heart-outline"></ion-icon></ion-button>
                 <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" *ngIf="this.idSoggetto && !this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart-outline"></ion-icon></ion-button>
                 <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" *ngIf="this.idSoggetto && this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart"></ion-icon></ion-button>
             </ion-col>
