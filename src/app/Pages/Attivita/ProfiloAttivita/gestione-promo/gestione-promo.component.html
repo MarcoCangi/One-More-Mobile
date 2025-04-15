@@ -135,130 +135,134 @@
 
 <ion-modal [isOpen]="isConfirmOpen" class="full-modal">
   <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-card-title class="title" *ngIf="!idAttivita">{{ 'SAVE' | translate }}</ion-card-title>
-        <ion-card-title class="title" *ngIf="idAttivita">{{ 'EDIT' | translate }}</ion-card-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      
-      <ion-grid style="margin-top: 10px;"  >
-        <ion-row>
-          <ion-col class="column ion-text-center ion-align-items-center">
-            <ion-card-title class="title">{{ 'SUMMARY' | translate }}</ion-card-title>
-            <br>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'TITLE' | translate }}:</ion-label> <br>
-            <ion-label>{{this.requestPromo.titoloPromo}}</ion-label>
-            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'PERIOD' | translate }}:</ion-label> <br>
-            <ion-label> 
-              {{ 'FROM_2' | translate }} {{ datePipe.transform(this.requestPromo.dataDal, 'dd/MM/yyyy') }} 
-              - {{ 'TO_2' | translate }} {{ datePipe.transform(this.requestPromo.dataAl, 'dd/MM/yyyy') }}
-            </ion-label>
-            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'DESCRIPTION' | translate }}</ion-label> <br>
-            <ion-label>{{this.requestPromo.descPromo}}</ion-label>
-            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'VALID_DAYS' | translate }}:</ion-label> <br>
-            <ion-list>
-              <ion-item *ngIf="this.requestPromo.days?.includes(0)">
-                <ion-label>{{ 'ALL_DAYS' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo.days?.includes(1)">
-                <ion-label>{{ 'MONDAY' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo.days?.includes(2)">
-                <ion-label>{{ 'TUESDAY' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo.days?.includes(3)">
-                <ion-label>{{ 'WEDNESDAY' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo.days?.includes(4)">
-                <ion-label>{{ 'THURSDAY' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo.days?.includes(5)">
-                <ion-label>{{ 'FRIDAY' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo.days?.includes(6)">
-                <ion-label>{{ 'SATURDAY' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo.days?.includes(7)">
-                <ion-label>{{ 'SUNDAY' | translate }}</ion-label>
-              </ion-item>
-            </ion-list>
-            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'VALID_TIME' | translate }}:</ion-label> <br>
-            <ion-label *ngIf="this.requestPromo.isAllDayValidita">{{ 'ALL_DAY' | translate }}</ion-label>
-            <ion-label *ngIf="this.requestPromo?.orarioValiditaDa && this.requestPromo?.orarioValiditaAl">{{ 'FROM' | translate }} {{this.requestPromo.orarioValiditaDa}} - {{ 'TO' | translate }} {{this.requestPromo.orarioValiditaAl}}</ion-label>
-            <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col style="margin-bottom: 4%;">
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'OFFER_TYPES' | translate }}:</ion-label> <br>
-            <ion-list>
-              <ion-item *ngFor="let item of this.requestPromo?.listaTipologie">
-                <ion-label>{{item.descrizione}}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col style="margin-bottom: 4%;">
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'MAX_COUPONS_AVAILABLE' | translate }}:</ion-label> <br>
-            <ion-list>
-              <ion-item *ngIf="!this.requestPromo?.numCouponMax || this.requestPromo.numCouponMax === 0">
-                <ion-label>{{ 'NO_LIMIT' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo?.numCouponMax">
-                <ion-label>{{this.requestPromo.numCouponMax}}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col style="margin-bottom: 4%;">
-            <ion-label style="font-size: larger; font-weight: bold;">{{ 'MAX_COUPONS_PER_PERSON' | translate }}:</ion-label> <br>
-            <ion-list>
-              <ion-item *ngIf="!this.requestPromo?.numUtilizziPerPersonaMax || this.requestPromo.numUtilizziPerPersonaMax === 0">
-                <ion-label>{{ 'NO_LIMIT' | translate }}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="this.requestPromo?.numUtilizziPerPersonaMax">
-                <ion-label>{{this.requestPromo.numUtilizziPerPersonaMax}}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      
-      <div class="prosegui" style="display: flex; justify-content: center; align-items: center;">
-        <ion-button *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo" (click)="salva()">{{ 'SAVE' | translate }}</ion-button>
-        <ion-button *ngIf="this.modificaPromo && modificaPromo.idPromo" (click)="modifica()">{{ 'EDIT' | translate }}</ion-button>
-      </div>
-    </ion-content>
+      <ion-header *ngIf="!this.isEsitoOpen">
+        <ion-toolbar>
+          <ion-card-title class="title" *ngIf="!idAttivita">{{ 'SAVE' | translate }}</ion-card-title>
+          <ion-card-title class="title" *ngIf="idAttivita">{{ 'EDIT' | translate }}</ion-card-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content *ngIf="!this.isEsitoOpen">
+        
+        <ion-grid style="margin-top: 10px;"  >
+          <ion-row>
+            <ion-col class="column ion-text-center ion-align-items-center">
+              <ion-card-title class="title">{{ 'SUMMARY' | translate }}</ion-card-title>
+              <br>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'TITLE' | translate }}:</ion-label> <br>
+              <ion-label>{{this.requestPromo.titoloPromo}}</ion-label>
+              <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'PERIOD' | translate }}:</ion-label> <br>
+              <ion-label> 
+                {{ 'FROM_2' | translate }} {{ datePipe.transform(this.requestPromo.dataDal, 'dd/MM/yyyy') }} 
+                - {{ 'TO_2' | translate }} {{ datePipe.transform(this.requestPromo.dataAl, 'dd/MM/yyyy') }}
+              </ion-label>
+              <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'DESCRIPTION' | translate }}</ion-label> <br>
+              <ion-label>{{this.requestPromo.descPromo}}</ion-label>
+              <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'VALID_DAYS' | translate }}:</ion-label> <br>
+              <ion-list>
+                <ion-item *ngIf="this.requestPromo.days?.includes(0)">
+                  <ion-label>{{ 'ALL_DAYS' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo.days?.includes(1)">
+                  <ion-label>{{ 'MONDAY' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo.days?.includes(2)">
+                  <ion-label>{{ 'TUESDAY' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo.days?.includes(3)">
+                  <ion-label>{{ 'WEDNESDAY' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo.days?.includes(4)">
+                  <ion-label>{{ 'THURSDAY' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo.days?.includes(5)">
+                  <ion-label>{{ 'FRIDAY' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo.days?.includes(6)">
+                  <ion-label>{{ 'SATURDAY' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo.days?.includes(7)">
+                  <ion-label>{{ 'SUNDAY' | translate }}</ion-label>
+                </ion-item>
+              </ion-list>
+              <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'VALID_TIME' | translate }}:</ion-label> <br>
+              <ion-label *ngIf="this.requestPromo.isAllDayValidita">{{ 'ALL_DAY' | translate }}</ion-label>
+              <ion-label *ngIf="this.requestPromo?.orarioValiditaDa && this.requestPromo?.orarioValiditaAl">{{ 'FROM' | translate }} {{this.requestPromo.orarioValiditaDa}} - {{ 'TO' | translate }} {{this.requestPromo.orarioValiditaAl}}</ion-label>
+              <ion-item-divider style="margin-bottom: 4%;"></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="margin-bottom: 4%;">
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'OFFER_TYPES' | translate }}:</ion-label> <br>
+              <ion-list>
+                <ion-item *ngFor="let item of this.requestPromo?.listaTipologie">
+                  <ion-label>{{item.descrizione}}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="margin-bottom: 4%;">
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'MAX_COUPONS_AVAILABLE' | translate }}:</ion-label> <br>
+              <ion-list>
+                <ion-item *ngIf="!this.requestPromo?.numCouponMax || this.requestPromo.numCouponMax === 0">
+                  <ion-label>{{ 'NO_LIMIT' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo?.numCouponMax">
+                  <ion-label>{{this.requestPromo.numCouponMax}}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="margin-bottom: 4%;">
+              <ion-label style="font-size: larger; font-weight: bold;">{{ 'MAX_COUPONS_PER_PERSON' | translate }}:</ion-label> <br>
+              <ion-list>
+                <ion-item *ngIf="!this.requestPromo?.numUtilizziPerPersonaMax || this.requestPromo.numUtilizziPerPersonaMax === 0">
+                  <ion-label>{{ 'NO_LIMIT' | translate }}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="this.requestPromo?.numUtilizziPerPersonaMax">
+                  <ion-label>{{this.requestPromo.numUtilizziPerPersonaMax}}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
+        <div class="prosegui" style="display: flex; justify-content: center; align-items: center;">
+          <ion-button *ngIf="!this.modificaPromo || !this.modificaPromo.idPromo" (click)="salva()">{{ 'SAVE' | translate }}</ion-button>
+          <ion-button *ngIf="this.modificaPromo && modificaPromo.idPromo" (click)="modifica()">{{ 'EDIT' | translate }}</ion-button>
+        </div>
+      </ion-content>
+      <app-esito-gestione-promo *ngIf="this.isEsitoOpen" [isEsitoOK]="this.isEsitoOK" 
+                                [isSaved]="this.isSaved"
+                                (CloseConfirmEvent)="this.isConfirmOpen = false">
+    </app-esito-gestione-promo>
   </ng-template>
 </ion-modal>

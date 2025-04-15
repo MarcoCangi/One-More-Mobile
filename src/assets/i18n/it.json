@@ -278,6 +278,9 @@
     "CONFIRM": "CONFERMA",
     "CANCEL": "ANNULLA",
     "CLOSE": "CHIUDI",
+    "SOMETHING_WRONG":"Oops, qualcosa è andato storto.",
+    "PROMO_ADD_SUCCESS":"La tua promozione è stata inserita con successo!",
+    "PROMO_UPD_SUCCESS":"La tua promozione è stata modificata con successo!",
     "CompleteVerificationToCoupon":"Per poter richiedere un coupon, completa la verifica controllando la tua casella di posta e cliccando sul link che ti abbiamo inviato.",
     "ERRORS":{
     "PROFILE_IMAGE_REQUIRED": "Inserire una immagine profilo",

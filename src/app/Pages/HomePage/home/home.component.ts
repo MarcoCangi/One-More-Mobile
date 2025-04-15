@@ -153,6 +153,7 @@ export class HomeComponent  implements OnInit {
     if (!id) return;
     const filtro = new FiltriAttivita();
     filtro.codTipoPromo = [id];
+    filtro.tipoRicercaAttivita = 3;
     await this.ricercaGenerica(filtro);
   }
 

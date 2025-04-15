@@ -1,5 +1,4 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { catchError, lastValueFrom, of, tap, throwError } from 'rxjs';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { DatePipe } from '@angular/common';
@@ -10,7 +9,6 @@ import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-f
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
-import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-gestione-promo',
@@ -41,9 +39,12 @@ export class GestionePromoComponent  implements OnInit {
     errTipologia:string | undefined;
     errNumUtilizzi:string | undefined;
     isError: boolean = false;
+    isEsitoOpen: boolean = false;
     errNumUtilizziPersona:string | undefined;
     alertButtons = ['Chiudi'];
     errorList: string[] = [];
+    isEsitoOK : boolean = false;
+    isSaved : boolean = false;
 
     @Input() modificaPromo!: Promo;
     @Output() openPageEvent = new EventEmitter<number>();
@@ -57,8 +58,7 @@ export class GestionePromoComponent  implements OnInit {
       private attivitaService: GetApiAttivitaService,
       public datePipe: DatePipe,
       private translate: TranslateService,
-      private localStorage: StorageService,
-     private ngZone: NgZone 
+      private localStorage: StorageService
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -143,7 +143,6 @@ export class GestionePromoComponent  implements OnInit {
 
   async salva() {
     this.isLoading = true;
-    this.isConfirmOpen = false;
     await this.ControlPromo(this.requestPromo);
     if(this.isError)
       return;
@@ -178,22 +177,20 @@ export class GestionePromoComponent  implements OnInit {
 
       try {
         await this.promoService.apiInsertPromo(this.requestPromo);
-        setTimeout(() => {
-          this.requestPromo
-          this.openPageEventUpd.emit(7);
-        }, 500);
+        this.setEsito(true, true);
       } catch (error: any) {
-        console.error(error?.error || error);
+        this.setEsito(false, true);
+        this.isLoading = false;
       }
     }
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 500);
+    else{
+      this.setEsito(false, true);
+    }
+    this.isLoading = false;
   }
 
   async modifica() {
     this.isLoading = true;
-    this.isConfirmOpen = false;
 
     await this.ControlPromo(this.requestPromo);
     if(this.isError)
@@ -245,18 +242,23 @@ export class GestionePromoComponent  implements OnInit {
 
       try {
         await this.promoService.apiUpdatePromo(this.requestPromo);
-
-        await this.localStorage.setItem(`isSavedUpdatePromo`, true);
-        this.authService.setIsShowedSplashFalse();
-        location.reload();
+        this.setEsito(true, false);
       } catch (error: any) {
-        console.error(error?.error || error);
+        this.setEsito(false, false);
         this.isLoading = false;
       }
     }
     else{
-      location.reload();
+      this.setEsito(false, false);
     }
+    this.isLoading = false;
+  }
+
+  setEsito(isOk: boolean, isSaved: boolean){
+    this.isEsitoOK = isOk;
+    this.isSaved = isSaved;
+    this.isEsitoOpen = true;
+    console.log(this.isEsitoOK, this.isSaved, this.isEsitoOpen)
   }
 
   ChangePage(){

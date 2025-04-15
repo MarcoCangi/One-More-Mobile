@@ -243,6 +243,9 @@
     "CONFIRM": "CONFIRM",
     "CANCEL": "CANCEL",
     "CLOSE": "CLOSE",
+    "SOMETHING_WRONG":"Oops, something went wrong.",
+    "PROMO_ADD_SUCCESS":"Your promo has been added!",
+    "PROMO_UPD_SUCCESS":"Your promo has been updated!",
     "CompleteVerificationToCoupon":"In order to claim a coupon, complete verification by checking your inbox and clicking on the link we sent you.",
     "ERRORS":{
     "PROFILE_IMAGE_REQUIRED": "Insert a profile picture",

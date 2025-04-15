@@ -1,0 +1,29 @@
+<ion-header style="width: 100%;">
+    <ion-grid style="margin-top: 10px;"  >
+        <ion-row>
+          <ion-col class="column ion-text-center ion-align-items-center">
+            <ion-card-title class="title">{{ 'RESULT' | translate }}</ion-card-title>
+            <br>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="column ion-text-center ion-align-items-center">
+             <img *ngIf="!this.isEsitoOK" src="/assets/Img/not_okay.png" class="imgError" alt="error img">
+             <img *ngIf="this.isEsitoOK"src="/assets/Img/spunta_vicino.png" class="imgError" alt="error img">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="column ion-text-center ion-align-items-center">
+            <ion-label *ngIf="!this.isEsitoOK">{{ 'SOMETHING_WRONG' | translate }}:</ion-label>
+            <ion-label *ngIf="this.isEsitoOK && this.isSaved">{{ 'PROMO_ADD_SUCCESS' | translate }}</ion-label>
+            <ion-label *ngIf="this.isEsitoOK && !this.isSaved">{{ 'PROMO_UPD_SUCCESS' | translate }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="column ion-text-center ion-align-items-center">
+                <ion-button *ngIf="!this.isEsitoOK" (click)="back()">{{ 'GO_BACK' | translate }}</ion-button>
+                <ion-button *ngIf="this.isEsitoOK" (click)="confirmAndClose()">{{ 'CLOSE' | translate }}</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</ion-header>
