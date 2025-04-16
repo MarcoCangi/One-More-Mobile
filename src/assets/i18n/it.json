@@ -114,6 +114,7 @@
     "SUMMARY": "Riepilogo",
     "TITLE": "Titolo",
     "DESCRIPTION": "Descrizione",
+    "DESCRIPTION_OFFER": "Descrizione dell' offerta",
     "VALID_DAYS": "Giorni validità",
     "VALID_TIME": "Orario validità",
     "OFFER_TYPES": "Tipologie di offerta",
