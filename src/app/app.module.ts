@@ -251,8 +251,10 @@ export function HttpLoaderFactory(http: HttpClient) {
                   provider: Capacitor.isNativePlatform()
                     ? new CustomProvider({
                         getToken: async () => {
+                          const AppCheckPlugin = await import('@capacitor-firebase/app-check');
+                          const result = await AppCheckPlugin.FirebaseAppCheck.getToken();
                           return {
-                            token: "REAL_ANDROID_TOKEN",
+                            token: result.token,
                             expireTimeMillis: Date.now() + 60 * 60 * 1000,
                           };
                         },
