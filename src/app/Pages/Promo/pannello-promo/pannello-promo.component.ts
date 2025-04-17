@@ -70,7 +70,6 @@ export class PannelloPromoComponent implements OnInit {
           }
         }
       } catch (error) {
-        console.log(error);
         this.isConfirmed = false;
         this.isError = true;
       }

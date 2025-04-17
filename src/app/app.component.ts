@@ -132,10 +132,7 @@ export class AppComponent implements OnInit {
 
   async checkIsPromo(){
     const isPromoUpdateOrSaved = await this.storageService.getItem(`isSavedUpdatePromo`);
-    console.log(isPromoUpdateOrSaved);
-
     if(isPromoUpdateOrSaved == true){
-      console.log("prova");
       await this.openPageEvent(7);
       this.storageService.removeItem(`isSavedUpdatePromo`);
     }

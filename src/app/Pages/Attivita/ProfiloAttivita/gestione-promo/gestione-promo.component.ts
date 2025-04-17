@@ -258,7 +258,6 @@ export class GestionePromoComponent  implements OnInit {
     this.isEsitoOK = isOk;
     this.isSaved = isSaved;
     this.isEsitoOpen = true;
-    console.log(this.isEsitoOK, this.isSaved, this.isEsitoOpen)
   }
 
   ChangePage(){

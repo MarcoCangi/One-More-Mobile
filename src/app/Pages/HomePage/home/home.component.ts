@@ -136,7 +136,6 @@ export class HomeComponent  implements OnInit {
   }
 
   openPageEventUpd(idPage: number) {
-    console.log("prova2", idPage);
     this.openPageEventNavUpdPromo.emit(); // questo va al padre: NAV
     this.idPage = idPage;
   }

@@ -96,7 +96,6 @@ export class DatiStrutturaComponent  implements OnInit {
         await this.getListaAttivita(this.id);
       }
     }
-    console.log(this.attivita);
     this.isLoading = false;
   }
 

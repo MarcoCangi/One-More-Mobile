@@ -3,7 +3,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, importProvidersFrom } from '@angular/
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule, provideRouter, RouteReuseStrategy } from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { getApp, initializeApp } from 'firebase/app';
 import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
@@ -96,6 +95,7 @@ import { EsitoGestionePromoComponent } from './Pages/Attivita/ProfiloAttivita/ri
 import { IconCittaComponent } from './Pages/HomePage/icon-citta/icon-citta.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideAppCheck, initializeAppCheck, ReCaptchaV3Provider, CustomProvider } from '@angular/fire/app-check';
 
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
@@ -107,7 +107,6 @@ import { FileUploadService } from 'one-more-frontend-common/projects/one-more-fe
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 import { Constants } from 'one-more-frontend-common/projects/one-more-fe-service/src/Constants';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
-import { provideAppCheck, initializeAppCheck, CustomProvider, ReCaptchaV3Provider, AppCheck } from '@angular/fire/app-check';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -187,33 +186,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                  IconCittaComponent,
                  EsitoGestionePromoComponent
   ],
-  imports: [BrowserModule, 
-            AngularFireModule.initializeApp(firebaseConfig),
-            // provideAppCheck(() => {
-            //   const isLocalhost = window.location.hostname === 'localhost';
-            //   return initializeAppCheck(undefined, {
-            //     provider: isLocalhost
-            //       ? new CustomProvider({
-            //           getToken: async () => {
-            //             return {
-            //               token: '53da5101-3f7f-4452-86bb-223ce58ce81c',
-            //               expireTimeMillis: Date.now() + 60 * 60 * 1000, // Valido per 1 ora
-            //             };
-            //           },
-            //         })
-            //       : new CustomProvider({
-            //           getToken: async () => {
-            //             // Logica per token reali in produzione
-            //             return {
-            //               token: 'real-token', // Ottieni un token reale in produzione
-            //               expireTimeMillis: Date.now() + 60 * 60 * 1000,
-            //             };
-            //           },
-            //         }),
-            //     isTokenAutoRefreshEnabled: true,
-            //   });
-            // }),
-            BrowserModule,
+  imports: [BrowserModule,
             HttpClientModule,
             TranslateModule.forRoot({
               loader: {
@@ -244,28 +217,9 @@ export function HttpLoaderFactory(http: HttpClient) {
             }),
           ],
           providers: [
-            {
-              provide: AppCheck,
-              useFactory: () =>
-                initializeAppCheck(undefined, {
-                  provider: Capacitor.isNativePlatform()
-                    ? new CustomProvider({
-                        getToken: async () => {
-                          const AppCheckPlugin = await import('@capacitor-firebase/app-check');
-                          const result = await AppCheckPlugin.FirebaseAppCheck.getToken();
-                          return {
-                            token: result.token,
-                            expireTimeMillis: Date.now() + 60 * 60 * 1000,
-                          };
-                        },
-                      })
-                    : new ReCaptchaV3Provider("auto"),
-                  isTokenAutoRefreshEnabled: true,
-                }),
-            },
             { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
             { provide: HTTP_INTERCEPTORS, useClass: AppCheckInterceptor, multi: true },
-            
+
             GetApiAttivitaService,
             InAppBrowser,
             GetApiPromoService,
@@ -278,18 +232,34 @@ export function HttpLoaderFactory(http: HttpClient) {
             provideAnimations(),
             importProvidersFrom([
               provideFirebaseApp(() => initializeApp(firebaseConfig)),
-              // provideAuth(() => getAuth()),
               provideAuth(() => {
-                if(Capacitor.isNativePlatform()) {
+                if (Capacitor.isNativePlatform()) {
                   return initializeAuth(getApp(), {
                     persistence: indexedDBLocalPersistence
-                  })
+                  });
                 } else {
-                  return getAuth()
+                  return getAuth();
                 }
               }),
               provideFirestore(() => getFirestore()),
-              provideStorage(() => getStorage())
+              provideStorage(() => getStorage()),
+              provideAppCheck(() =>
+                initializeAppCheck(undefined, {
+                  provider: Capacitor.isNativePlatform()
+                    ? new CustomProvider({
+                        getToken: async () => {
+                          const { FirebaseAppCheck } = await import('@capacitor-firebase/app-check');
+                          const result = await FirebaseAppCheck.getToken();
+                          return {
+                            token: result.token,
+                            expireTimeMillis: Date.now() + 60 * 60 * 1000,
+                          };
+                        }
+                      })
+                    : new ReCaptchaV3Provider('auto'),
+                  isTokenAutoRefreshEnabled: true
+                })
+              )
             ]),
             {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
             {

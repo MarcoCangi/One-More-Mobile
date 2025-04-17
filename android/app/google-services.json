@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "201102405242",
+    "project_id": "one-more-angular",
+    "storage_bucket": "one-more-angular.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201102405242:android:f7c7568ec53e3d4382d5c3",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201102405242-ph00q4cl4qjo6pnl3pd3enljg4gsgke4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBScCS77ftcj5AENyTg6C41JuHjhaNDjFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201102405242-ph00q4cl4qjo6pnl3pd3enljg4gsgke4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

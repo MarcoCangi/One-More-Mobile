@@ -57,7 +57,6 @@ export class DettaglioComponent  implements OnInit {
     }
 
     if (this.attivitaSelezionata) {
-      console.log(this.attivitaSelezionata);
         this.attivita = this.attivitaSelezionata;
         if(this.attivita)
         {
@@ -66,7 +65,6 @@ export class DettaglioComponent  implements OnInit {
             const promoData = await lastValueFrom(
               this.promoService.apiGetListaPromoByIdAttivitaAndUser(this.attivita.idAttivita, this.idSoggetto)
           );
-          console.log(promoData);
             if (promoData) {
                 this.listaPromo = promoData.filter(item => item.isAttiva === true);
                 if (this.listaPromo) {
@@ -196,7 +194,6 @@ export class DettaglioComponent  implements OnInit {
       await Clipboard.write({
         string: address
       });
-      console.log('Indirizzo copiato negli appunti!');
     } catch (err) {
       console.error('Errore nella copia:', err);
     }
