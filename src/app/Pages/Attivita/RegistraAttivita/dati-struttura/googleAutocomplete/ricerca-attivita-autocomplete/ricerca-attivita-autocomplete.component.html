@@ -1,0 +1,26 @@
+ <ion-header>
+    <ion-toolbar>
+      <ion-title>INSERISCI I DATI</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="this.closeEvent.emit()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+
+  <ion-content class="form" *ngIf="!isLoading && !this.attivita">
+    <ion-card class="formContent" >
+      <app-nome (nomeChange)="handleNomeChange($event)"></app-nome>
+      <app-citta (cittaChange)="handleCittaChange($event)" [listaComuni]="listaComuni">
+      </app-citta>
+      <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
+      <ion-button (click)="Search()">Avanti</ion-button>
+    </ion-card>
+  </ion-content>
+
+  <ion-content class="form" *ngIf="!isLoading && this.attivita">
+    <app-form-riepilogo [attivita]="this.attivita">
+
+    </app-form-riepilogo>
+  </ion-content>

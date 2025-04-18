@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup} from '@angular/forms';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Attivita, Immagini, InsertAttivitaReqDto, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./dati-struttura.component.scss'],
 })
 export class DatiStrutturaComponent  implements OnInit {
+  isAdd : boolean = false;
   listaAttivita: Attivita[] | undefined;
   formGroup: FormGroup | undefined;
   id: number | undefined;
@@ -107,6 +108,7 @@ export class DatiStrutturaComponent  implements OnInit {
   }
 
   addNewAtt(){
+    this.isAdd = true;
     this.listaAttivita = undefined;
   }
 
@@ -585,7 +587,7 @@ export class DatiStrutturaComponent  implements OnInit {
     }
     const immaginePrincipale = this.requestAttivita.immagini.find(i => i.isImmaginePrincipale);
     return this.requestAttivita.immagini.filter(i => i !== immaginePrincipale);
-}
+  }
 
   handleNomeChange(newNome: string) {
   this.errorNome = "";

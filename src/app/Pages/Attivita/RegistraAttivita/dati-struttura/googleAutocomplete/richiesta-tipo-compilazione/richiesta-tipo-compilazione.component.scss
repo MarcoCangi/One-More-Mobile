@@ -1,0 +1,15 @@
+.title{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.6rem;
+  }
+
+
+  .gridIntro {
+    height: 100vh; /* Occupa tutta l'altezza della pagina */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center;     /* Centra orizzontalmente */
+    text-align: center;
+  }

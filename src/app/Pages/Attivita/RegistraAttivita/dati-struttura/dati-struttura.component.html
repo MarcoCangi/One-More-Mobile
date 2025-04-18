@@ -3,7 +3,7 @@
     <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
   </div>
   
-    <div class="contentListAtt" *ngIf="!isLoading && isVerificato && this.listaAttivita && !this.attivita">
+  <div class="contentListAtt" *ngIf="!isLoading && isVerificato && this.listaAttivita">
       <ion-toolbar style="background-color: white;">
         <ion-title class="title">{{ 'YOUR_ACTIVITIES' | translate }}</ion-title>
         <ion-buttons slot="end">
@@ -22,10 +22,16 @@
               </ion-card-subtitle>
             </ion-card-content>
           </ion-card>
-    </div>
+  </div>
+
+  <div *ngIf="isAdd">
+    <app-richiesta-tipo-compilazione (inserimentoManualeEvent)="this.isAdd=false"
+                                     [listaComuni]="this.listaComuni">
+    </app-richiesta-tipo-compilazione>
+  </div>
   
   
-  <div *ngIf="!isLoading && isVerificato && (this.attivita || !listaAttivita)">
+  <div *ngIf="!isLoading && isVerificato && (this.attivita || !listaAttivita) && !isAdd">
   
     <div *ngIf="this.attivita && attivita?.isVerificata" class="ion-alert">
       <div class="column ion-text-center ion-align-items-center">
@@ -171,7 +177,7 @@
     (didDismiss)="isError = false">
     </ion-alert>
   
-  <div *ngIf="!isLoading && !isVerificato">
+  <div *ngIf="!isLoading && !isVerificato && !isAdd">
       <ion-card>
         <ion-card-header>
           <ion-card-title class="subTitle">

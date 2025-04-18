@@ -1,0 +1,43 @@
+<ion-card class="formContent" >
+  
+  <app-nome [nome]="this.attivita?.nome" 
+            (nomeChange)="handleNomeChange($event)"></app-nome>
+
+            <br>
+            <br>
+                <ion-label class="subTitle">{{ 'ADDRESS' | translate }}:</ion-label> <br>
+                <ion-label class="subTitle">{{this.attivita?.indirizzo}}, {{this.attivita?.civico}}, {{this.attivita?.cap}} </ion-label>
+            <br> 
+            <br>
+
+            <ion-label>{{this.attivita?.telefono}}</ion-label>
+
+            <br> 
+            <br>
+
+            <app-orari-apertura name="orari" [orari]="this.attivita?.orari"></app-orari-apertura>
+            <!-- <ion-item style="margin-bottom: 20px;"></ion-item>
+            <ion-row>
+              <ion-col>
+                <ion-label class="subTitle">{{ 'PROFILE_IMAGE' | translate }}:</ion-label> <br>
+                <ion-img [src]="getImmaginePrincipale()" class="photo"></ion-img>
+              </ion-col>
+            </ion-row>
+            <ion-item style="margin-bottom: 20px;"></ion-item>
+            <ion-row>
+              <ion-col>
+                <ion-label class="subTitle">{{ 'GALLERY' | translate }}:</ion-label> <br>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="4" *ngFor="let img of getGallery()">
+                <ion-img [src]="img.upload" class="photo"></ion-img>
+            </ion-col>
+            </ion-row> -->
+
+  <!-- <app-citta [listaComuni]="listaComuni"
+             (cittaChange)="handleCittaChange($event)" >
+  </app-citta>
+  <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo> -->
+  <ion-button>Avanti</ion-button>
+</ion-card>

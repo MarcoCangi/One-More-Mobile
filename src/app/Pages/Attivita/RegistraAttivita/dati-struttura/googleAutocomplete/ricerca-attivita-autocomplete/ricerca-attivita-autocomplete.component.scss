@@ -1,0 +1,18 @@
+.form {
+    height: 100vh; /* Occupa tutta l'altezza della pagina */
+    display: flex;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center;     /* Centra orizzontalmente */
+    text-align: center;
+  }
+
+  .formContent {
+    margin-top: 50%;
+    margin-left: 10%;
+    width: 80%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

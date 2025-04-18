@@ -3,14 +3,12 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, importProvidersFrom } from '@angular/
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule, provideRouter, RouteReuseStrategy } from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { getApp, initializeApp } from 'firebase/app';
 import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { environment, firebaseConfig } from '../environments/environment';
 import { Auth, GoogleAuthProvider, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore'
 import { getStorage, provideStorage } from '@angular/fire/storage'
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { HammerModule } from '@angular/platform-browser';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -96,6 +94,9 @@ import { IconCittaComponent } from './Pages/HomePage/icon-citta/icon-citta.compo
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideAppCheck, initializeAppCheck, ReCaptchaV3Provider, CustomProvider } from '@angular/fire/app-check';
+import { FormRiepilogoComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/form-riepilogo/form-riepilogo.component';
+import { RicercaAttivitaAutocompleteComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/ricerca-attivita-autocomplete/ricerca-attivita-autocomplete.component';
+import { RichiestaTipoCompilazioneComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/richiesta-tipo-compilazione/richiesta-tipo-compilazione.component';
 
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
@@ -184,7 +185,10 @@ export function HttpLoaderFactory(http: HttpClient) {
                  ConfermaDisattivazionePromoComponent,
                  ElencoViciniComponent,
                  IconCittaComponent,
-                 EsitoGestionePromoComponent
+                 EsitoGestionePromoComponent,
+                 RicercaAttivitaAutocompleteComponent,
+                 RichiestaTipoCompilazioneComponent,
+                 FormRiepilogoComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,
@@ -195,8 +199,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
               }
             }),
-            AngularFireAuthModule,
-            AngularFirestoreModule,
             FontAwesomeModule,
             RouterModule.forRoot(appRoute),
             IonicModule.forRoot(), 

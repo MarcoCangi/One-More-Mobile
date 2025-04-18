@@ -1,13 +1,10 @@
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import 'firebase/compat/auth';
 import { getFireBaseErrorMessage } from '../../../Utilities/auth-error'
 import { firstValueFrom, of } from 'rxjs';
 import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
-import { Capacitor } from '@capacitor/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -27,7 +24,7 @@ export class LoginComponent {
   @Output() closeLoginEvent = new EventEmitter<void>();
   @Output() openRegisterEvent = new EventEmitter<void>();
 
-  constructor(private afAuth: AngularFireAuth, private authService: AuthService, private messagingService: MessagingService,private translate: TranslateService) {
+  constructor(private authService: AuthService, private messagingService: MessagingService,private translate: TranslateService) {
     this.homeForm = new FormGroup({
       emailLogin: new FormControl('', [Validators.required, Validators.email]),
       passwordLogin: new FormControl('', Validators.required)
