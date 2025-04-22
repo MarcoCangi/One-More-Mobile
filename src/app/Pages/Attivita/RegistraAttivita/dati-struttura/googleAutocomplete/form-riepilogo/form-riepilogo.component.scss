@@ -1,18 +1,32 @@
-.subtitle{
-    font-family: Helvetica;
-    font-size: 1.3rem;
-  }
-
   .title {
     font-family: Helvetica;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     text-align: left;
     margin: 0;
   }
 
+  .btnNav {
+    width: 30px;
+    height: 30px;
+    --background: #e9540a;
+    border-radius: 50%;
+    padding: 0;
+    --padding-start: 2;
+    --padding-end: 2;
+    --box-shadow: none;
+  }
+
+  .titleMod{
+    font-family: Helvetica;
+    font-size: 1.1rem;
+    text-align: left;
+    margin-top: 2%;
+    margin-bottom: 5%;
+  }
+
   .subtitle {
     font-family: Helvetica;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-align: left;
     margin: 0;
   }
@@ -22,8 +36,8 @@
   }
 
   .iconAtt{
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
   }
 
   .allinea-verticale {
@@ -34,5 +48,29 @@
   .col-testo {
     display: flex;
     align-items: center;
+  }
+
+  .modifica-sezione {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 16px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .btnClose {
+    margin-top: 20px;
+    align-self: center;
+  }
+
+  .formContentModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; // centra tutto il contenuto nel card
   }
   

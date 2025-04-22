@@ -9,18 +9,32 @@
 
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
+  <ion-content class="formList" *ngIf="!isLoading && this.ListAttivita  && !this.attivita">
+    <ion-list style="margin-top: 2%;">
+      <ion-item *ngFor="let attivita of this.ListAttivita" (click)="SelectAttivita(attivita)">
+        <ion-icon name="business-outline" slot="start" class="iconAtt"></ion-icon>
+        <ion-label>
+          <h2 class="title">{{ attivita.nome }}</h2>
+          <p class="subtitle">{{ attivita.indirizzo }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
   <ion-content class="form" *ngIf="!isLoading && !this.attivita">
     <ion-card class="formContent" >
       <app-nome (nomeChange)="handleNomeChange($event)"></app-nome>
       <app-citta (cittaChange)="handleCittaChange($event)" [listaComuni]="listaComuni">
       </app-citta>
-      <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
+      <!-- <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo> -->
       <ion-button (click)="Search()">Avanti</ion-button>
     </ion-card>
   </ion-content>
 
   <ion-content class="form" *ngIf="!isLoading && this.attivita">
-    <app-form-riepilogo [attivita]="this.attivita">
+    <app-form-riepilogo [attivita]="this.attivita"
+                        [listaComuni]="this.listaComuni"
+                        [listaAttivitaDDL]="this.listaAttivitaDDL">
 
     </app-form-riepilogo>
   </ion-content>

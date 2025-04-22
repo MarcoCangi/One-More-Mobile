@@ -16,3 +16,32 @@
     justify-content: center;
     align-items: center;
   }
+
+  .listContent {
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 90%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .subtitle {
+    font-family: Helvetica;
+    font-size: 1rem;
+    text-align: left;
+    margin: 0;
+    color: gray;
+  }
+
+  .iconAtt{
+    height: 25px;
+    width: 25px;
+  }
+
+  .title {
+    font-family: Helvetica;
+    font-size: 1.3rem;
+    text-align: left;
+    margin: 0;
+  }

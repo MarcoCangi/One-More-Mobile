@@ -4,3 +4,14 @@
     margin-top: 5px;
     margin-left: 5px;
   }
+
+  .row-align {
+    display: flex;
+    align-items: center; /* Allineamento verticale */
+  }
+  
+  .col-center {
+    display: flex;
+    justify-content: center; /* Allineamento orizzontale */
+    align-items: center;     /* Allineamento verticale */
+  }

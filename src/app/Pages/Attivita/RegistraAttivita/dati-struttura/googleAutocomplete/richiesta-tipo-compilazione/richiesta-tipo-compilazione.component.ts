@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 
 @Component({
@@ -12,10 +13,13 @@ export class RichiestaTipoCompilazioneComponent  implements OnInit {
   constructor() { }
 
   @Input() listaComuni : Comuni[] | undefined;
+  @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Output() inserimentoManualeEvent = new EventEmitter<void>();
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.listaAttivitaDDL);
+  }
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;

@@ -26,7 +26,8 @@
 
   <div *ngIf="isAdd">
     <app-richiesta-tipo-compilazione (inserimentoManualeEvent)="this.isAdd=false"
-                                     [listaComuni]="this.listaComuni">
+                                     [listaComuni]="this.listaComuni"
+                                     [listaAttivitaDDL]="listaAttivitaDDL">
     </app-richiesta-tipo-compilazione>
   </div>
   

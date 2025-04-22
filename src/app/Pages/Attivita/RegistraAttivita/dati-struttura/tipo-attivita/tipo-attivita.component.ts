@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
@@ -10,7 +11,8 @@ import { TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-serv
 export class TipoAttivitaComponent  implements OnInit {
 
   listaTipoAttivita: FormControl;
-
+  filtro: string = '';
+  listaAttivitaFiltrate: TipoAttivita[] = [];
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Input() listaAttivitaSelezionate: TipoAttivita[] | undefined;
   @Output() listaAttivitaChanged = new EventEmitter<TipoAttivita[]>();
@@ -20,21 +22,45 @@ export class TipoAttivitaComponent  implements OnInit {
   }
 
   ngOnInit() {
+    // inizializza
+    this.listaAttivitaFiltrate = this.listaAttivitaDDL ?? [];
+  
     this.listaTipoAttivita.valueChanges.subscribe((value: any) => {
-      if(this.listaAttivitaDDL) {
+      if (this.listaAttivitaDDL) {
         const selectedTipoAttivita = this.listaAttivitaDDL
-          .filter(attivitaSelezionata => value.includes(attivitaSelezionata.codTipoAttivita))
-          .map(attivitaSelezionata => ({
-            codTipoAttivita: attivitaSelezionata.codTipoAttivita,
-            descrizione: attivitaSelezionata.descrizione
-          }));
+          .filter(attivita => value.includes(attivita.codTipoAttivita));
         this.listaAttivitaChanged.emit(selectedTipoAttivita);
       }
     });
-
-    if (this.listaAttivitaSelezionate && this.listaAttivitaSelezionate.length > 0) {
-      const preselectedValues = this.listaAttivitaSelezionate.map(attivita => attivita.codTipoAttivita);
-      this.listaTipoAttivita.setValue(preselectedValues);
+  
+    if (this.listaAttivitaSelezionate?.length) {
+      const preselected = this.listaAttivitaSelezionate.map(a => a.codTipoAttivita);
+      this.listaTipoAttivita.setValue(preselected);
     }
+  }
+  
+  // aggiorna la lista filtrata
+  ngDoCheck() {
+    if (this.listaAttivitaDDL) {
+      this.listaAttivitaFiltrate = this.listaAttivitaDDL.filter(a =>
+        a.descrizione.toLowerCase().includes(this.filtro.toLowerCase()));
+    }
+  }
+  
+  isSelected(cod: string): boolean {
+    return this.listaTipoAttivita.value.includes(cod);
+  }
+  
+  toggleSelection(attivita: TipoAttivita): void {
+    const selected = [...this.listaTipoAttivita.value];
+    const index = selected.indexOf(attivita.codTipoAttivita);
+  
+    if (index >= 0) {
+      selected.splice(index, 1);
+    } else {
+      selected.push(attivita.codTipoAttivita);
+    }
+  
+    this.listaTipoAttivita.setValue(selected);
   }
 }

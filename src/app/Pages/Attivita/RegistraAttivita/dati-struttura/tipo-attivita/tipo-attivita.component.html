@@ -1,9 +1,22 @@
-<ion-list class="limited-width">
+<!-- <ion-list class="limited-width">
   <ion-item>
     <ion-select [formControl]="listaTipoAttivita" placeholder="{{ 'ACTIVITY_TYPE' | translate }}*" multiple="true" >
       <ion-select-option *ngFor="let decAttivita of listaAttivitaDDL" [value]="decAttivita.codTipoAttivita">
         {{ decAttivita.descrizione }}
       </ion-select-option>
     </ion-select>
+  </ion-item>
+</ion-list> -->
+
+<ion-searchbar [(ngModel)]="filtro" placeholder="Cerca tipo attività"></ion-searchbar>
+
+<ion-list class="limited-width">
+  <ion-item *ngFor="let decAttivita of listaAttivitaFiltrate">
+    <ion-checkbox
+      slot="start"
+      [checked]="isSelected(decAttivita.codTipoAttivita)"
+      (ionChange)="toggleSelection(decAttivita)">
+    </ion-checkbox>
+    <ion-label>{{ decAttivita.descrizione }}</ion-label>
   </ion-item>
 </ion-list>

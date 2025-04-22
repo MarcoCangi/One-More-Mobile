@@ -19,7 +19,8 @@
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
     <app-ricerca-attivita-autocomplete (closeEvent)="this.isModalOpen = false;"
-                                        [listaComuni]="listaComuni">
+                                        [listaComuni]="listaComuni"
+                                        [listaAttivitaDDL]="listaAttivitaDDL">
   
     </app-ricerca-attivita-autocomplete>
   </ng-template>

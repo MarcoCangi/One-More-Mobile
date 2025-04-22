@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Attivita, ReqAttivitaAutocomplete } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { Attivita, ReqAttivitaAutocomplete, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
@@ -17,6 +17,8 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
   };
   isLoading : boolean | undefined;
   attivita : Attivita | undefined;
+  ListAttivita : Attivita [] | undefined;
+  @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Input() listaComuni : Comuni[] | undefined;
   @Output() closeEvent = new EventEmitter<void>();
 
@@ -42,13 +44,20 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
       this.requestAttivita.indirizzo = indirizzo;
   }
 
+  SelectAttivita(attivita : Attivita){
+    this.attivita = attivita;
+  }
+
+  RevomeAttivitaSelezionata(){
+    this.attivita = undefined;
+  }
+
   async Search(){
     this.isLoading = true;
     if(this.requestAttivita){
-      const data = await this.attivitaService.apiGetAttivitaAutocomplete(this.requestAttivita);
+      const data = await this.attivitaService.apiGetListaAttivitaAutocomplete(this.requestAttivita);
           if (data) {
-              this.attivita = data;
-              console.log(this.attivita);
+              this.ListAttivita = data;
           }
         }
         this.isLoading = false;  
