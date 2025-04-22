@@ -354,5 +354,7 @@
       "COUPON_RESERVED":"È stato prenotato un coupon.",
       "REGISTRATION_COMPLETE":"Registrazione completata. Controlla la tua email per verificare l'account.",
       "PASSWORD_CHANGED":"Password modificata con successo!"
-    }
+    },
+    "SUBSCRIBE_LANDING_LINE":"Iscriviti e fatti notare!",
+    "LET_S_START":"Iniziamo"
   }

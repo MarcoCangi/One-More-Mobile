@@ -103,6 +103,7 @@
     "STARTING_FROM": "Starting from",
     "UNTIL": "Until",
     "SELECT_OFFER_TYPES": "Select one or more offer types",
+    "SELECT_ACTIVITY": "Select the activity",
     "DISABLE_PROMO": "Disable Promo",
     "CONFIRM_DISABLE_PROMO": "Are you sure you want to disable the promo?",
     "NO_COUPONS_REQUESTED": "Currently, no coupons have been requested or used yet",
@@ -321,5 +322,7 @@
       "COUPON_RESERVED":"A coupon has been reserved",
       "REGISTRATION_COMPLETE":"Registration complete. Check your email to verify your account.",
       "PASSWORD_CHANGED":"Password changed successfully!"
-    }
+    },
+    "SUBSCRIBE_LANDING_LINE":"Sign up and get noticed",
+    "LET_S_START":"let's start"
   }

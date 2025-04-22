@@ -321,5 +321,7 @@
       "COUPON_RESERVED":"A coupon has been reserved",
       "REGISTRATION_COMPLETE":"Registration complete. Check your email to verify your account.",
       "PASSWORD_CHANGED":"Password changed successfully!"
-    }
+    },
+    "SUBSCRIBE_LANDING_LINE":"Sign up and get noticed",
+    "LET_S_START":"let's start"
   }
