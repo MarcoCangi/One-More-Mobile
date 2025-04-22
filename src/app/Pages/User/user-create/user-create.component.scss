@@ -1,0 +1,42 @@
+.close{
+    width: 30px;
+    height: 30px;
+  }
+  
+  .card-img-google{
+    width: 30px;
+    height: 30px;
+    margin-right: 2%;
+  }
+  
+  .card-img-facebook{
+    width: 30px;
+    height: 30px;
+    margin-left: 2%;
+  }
+  
+  .scroll-content {
+    overflow-y: auto;
+    max-height: 70vh; /* Altezza massima consentita, regola a tuo piacimento */
+  }
+  
+  ion-spinner {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .title{
+    font-family: Helvetica;
+    font-weight: lighter;
+    font-size: 1.1rem;
+  }
+  
+  ion-grid{
+    overflow-y: hidden;
+  }
+    
+    

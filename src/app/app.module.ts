@@ -25,15 +25,15 @@ import { AppCheckInterceptor } from 'one-more-frontend-common/projects/one-more-
 
 import { AppComponent } from './app.component';
 import { provideFirebaseApp } from '@angular/fire/app';
-import { NavComponent } from './Pages/HomePage/nav/nav.component';
-import { RegistrazioneComponent } from './Pages/HomePage/registrazione/registrazione.component';
+import { NavComponent } from './Pages/nav/nav.component';
+import { UserCreateComponent } from './Pages/User/user-create/user-create.component';
+import { UserDetailComponent } from './Pages/User/user-detail/user-detail.component';
 import { LoginComponent } from './Pages/HomePage/login/login.component';
 import { HomeComponent } from './Pages/HomePage/home/home.component';
-import { ElencoPromoComponent } from './Pages/HomePage/elenco-promo/elenco-promo.component';
-import { ElencoConsigliComponent } from './Pages/HomePage/elenco-consigli/elenco-consigli.component';
-import { CardTipoAttivitaComponent } from './Pages/HomePage/card-tipo-attivita/card-tipo-attivita.component';
-import { IconPromoComponent } from './Pages/HomePage/icon-promo/icon-promo.component';
-import { FooterComponent } from './Pages/HomePage/footer/footer.component';
+import { ElencoPromoComponent } from './Pages/HomePage/HomePageWidgets/elenco-promo/elenco-promo.component';
+import { ElencoConsigliComponent } from './Pages/HomePage/HomePageWidgets/elenco-consigli/elenco-consigli.component';
+import { CardTipoAttivitaComponent } from './Pages/HomePage/HomePageWidgets/card-tipo-attivita/card-tipo-attivita.component';
+import { FooterComponent } from './Pages/footer/footer.component';
 import { MappaComponent } from './Pages/Maps/mappa/mappa.component';
 import { DettaglioComponent } from './Pages/Attivita/ProfiloAttivita/dettaglio/dettaglio.component';
 import { GalleriaDettaglioComponent } from './Pages/Attivita/ProfiloAttivita/galleria dettaglio/galleria-dettaglio/galleria-dettaglio.component';
@@ -53,12 +53,6 @@ import { TipoAttivitaComponent } from './Pages/Attivita/RegistraAttivita/dati-st
 import { DialogEsitoRegistrazioneComponent } from './Pages/Attivita/RegistraAttivita/dialog-esito-registrazione/dialog-esito-registrazione.component';
 import { DialogGalleryComponent } from './Pages/Attivita/RegistraAttivita/gallery/dialog-gallery/dialog-gallery.component';
 import { GalleryComponent } from './Pages/Attivita/RegistraAttivita/gallery/gallery.component';
-import { AreaUtenteComponent } from './Pages/area-utente/area-utente.component';
-import { CognomeUtenteComponent } from './Pages/area-utente/cognome-utente/cognome-utente.component';
-import { EmailUtenteComponent } from './Pages/area-utente/email-utente/email-utente.component';
-import { NomeUtenteComponent } from './Pages/area-utente/nome-utente/nome-utente.component';
-import { PromoAttiveUtenteComponent } from './Pages/area-utente/promo-attive-utente/promo-attive-utente.component';
-import { PromoUtilizzateUtenteComponent } from './Pages/area-utente/promo-utilizzate-utente/promo-utilizzate-utente.component';
 import { ClosableAlertComponent } from './Pages/Common/closable-alert/closable-alert.component';
 import { ConfirmDialogComponent } from './Pages/Common/confirm-dialog/confirm-dialog.component';
 import { InfoComponent } from './Pages/info/info.component';
@@ -85,12 +79,11 @@ import { CouponComponent } from './Pages/coupon/coupon.component';
 import { DettaglioCouponComponent } from './Pages/coupon/dettaglio-coupon/dettaglio-coupon.component';
 import { ConfirmModalComponent } from './Pages/coupon/confirm-modal/confirm-modal.component'
 import { DettaglioCouponNonAttComponent } from './Pages/coupon/dettaglio-coupon-non-att/dettaglio-coupon-non-att.component';
-import { UserComponent } from './Pages/user/user.component';
 import { InfoRegistrazioneAttivitaComponent } from './Pages/Attivita/info-registrazione-attivita/info-registrazione-attivita.component';
 import { ConfermaDisattivazionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-disattivazione-promo/conferma-disattivazione-promo.component';
-import { ElencoViciniComponent } from './Pages/HomePage/elenco-vicini/elenco-vicini.component';
+import { ElencoViciniComponent } from './Pages/HomePage/HomePageWidgets/elenco-vicini/elenco-vicini.component';
 import { EsitoGestionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/esito-gestione-promo/esito-gestione-promo.component';
-import { IconCittaComponent } from './Pages/HomePage/icon-citta/icon-citta.component';
+import { IconCittaComponent } from './Pages/HomePage/HomePageWidgets/icon-citta/icon-citta.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideAppCheck, initializeAppCheck, ReCaptchaV3Provider, CustomProvider } from '@angular/fire/app-check';
@@ -108,6 +101,7 @@ import { FileUploadService } from 'one-more-frontend-common/projects/one-more-fe
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 import { Constants } from 'one-more-frontend-common/projects/one-more-fe-service/src/Constants';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import { SearchPromoByCategoryComponent } from './Pages/HomePage/HomePageWidgets/search-promo-by-category/search-promo-by-category.component';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -123,11 +117,12 @@ export function HttpLoaderFactory(http: HttpClient) {
                  NavComponent,
                  LoginComponent,
                  HomeComponent,
+                 SearchPromoByCategoryComponent,
                  ElencoPromoComponent,
                  ElencoConsigliComponent,
                  CardTipoAttivitaComponent,
-                 IconPromoComponent,
-                 RegistrazioneComponent,
+                 UserCreateComponent,
+                 UserDetailComponent,
                  FooterComponent,
                  MappaComponent,
                  DialogAttivitaComponent,
@@ -148,12 +143,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                  DialogEsitoRegistrazioneComponent,
                  DialogGalleryComponent,
                  GalleryComponent,
-                 AreaUtenteComponent,
-                 CognomeUtenteComponent,
-                 EmailUtenteComponent,
-                 NomeUtenteComponent,
-                 PromoAttiveUtenteComponent,
-                 PromoUtilizzateUtenteComponent,
                  ClosableAlertComponent,
                  ConfirmDialogComponent,
                  InfoComponent,
@@ -180,7 +169,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                  DettaglioCouponComponent,
                  ConfirmModalComponent,
                  DettaglioCouponNonAttComponent,
-                 UserComponent,
                  InfoRegistrazioneAttivitaComponent,
                  ConfermaDisattivazionePromoComponent,
                  ElencoViciniComponent,

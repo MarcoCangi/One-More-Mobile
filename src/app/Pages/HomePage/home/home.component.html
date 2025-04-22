@@ -5,7 +5,7 @@
         
     <div class="contentList" *ngIf="!isLoading && isCaricamentoOk && (idPage === 1 || idPage === undefined)">
         
-        <app-icon-promo (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-icon-promo>
+        <app-search-promo-by-category (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-search-promo-by-category>
 
         <div style="display: flex; justify-content: center; align-items: center;">
             <div class="image-container">
@@ -106,7 +106,7 @@
     </div>
 
     <div id="profile" *ngIf="idPage === 12" style="height: 100%">
-        <app-user (openPageEvent)="openPageEvent($event)"></app-user>
+        <app-user-detail (openPageEvent)="openPageEvent($event)"></app-user-detail>
     </div>
 
     <div id="infoAttivita" *ngIf="idPage === 13" style="height: 100%">

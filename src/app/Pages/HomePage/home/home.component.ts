@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
-import { Attivita, AttivitaFiltrate, AttivitaHomePageResponse, FiltriAttivita, Immagini, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { DettaglioComponent } from '../../Attivita/ProfiloAttivita/dettaglio/dettaglio.component';
@@ -10,10 +10,10 @@ import { GestionePromoComponent } from '../../Attivita/ProfiloAttivita/gestione-
 import { RicercaComponent } from '../ricerca/ricerca.component';
 import { FavoritesComponent } from '../../favorites/favorites.component';
 import { CouponComponent } from '../../coupon/coupon.component';
-import { UserComponent } from '../../user/user.component';
 import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
 import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 import { firstValueFrom } from 'rxjs';
+import { UserDetailComponent } from '../../User/user-detail/user-detail.component';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +36,7 @@ export class HomeComponent  implements OnInit {
   @ViewChild(RicercaComponent) ricercaComponent!: RicercaComponent;
   @ViewChild(FavoritesComponent) favoriteComponent!: FavoritesComponent;
   @ViewChild(CouponComponent) couponComponent!: CouponComponent;
-  @ViewChild(UserComponent) userComponent!: UserComponent;
+  @ViewChild(UserDetailComponent) userComponent!: UserDetailComponent;
   listaElencoNuove : Attivita[] | undefined;
   listaElencoPromo : Attivita[] | undefined;
   listaElencoVicini : Attivita[] | undefined;

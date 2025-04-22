@@ -12,7 +12,6 @@ export class ConfirmDialogComponent  implements OnInit {
                 public data : any,
                 public dialogRef: MatDialogRef<ConfirmDialogComponent>){}
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     
   }
