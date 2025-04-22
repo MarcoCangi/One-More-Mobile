@@ -1,21 +1,45 @@
 <ion-card class="formContent" >
+
+  <ion-grid class="gridForm">
+    <ion-row class="allinea-verticale">
+      <ion-col size="3">
+        <ion-icon class="iconAtt" name="business-outline"></ion-icon>
+      </ion-col>
+      <ion-col class="col-testo" size="9">
+        <ion-card-title class="title">{{ attivita.nome }}</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" class="column ion-text-center ion-align-items-center">
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="allinea-verticale">
+      <ion-col size="3">
+        <ion-icon class="iconAtt" name="call-outline"></ion-icon>
+      </ion-col>
+      <ion-col class="col-testo" size="9">
+        <ion-card-title class="subtitle">{{this.attivita.telefono}}</ion-card-title>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-row class="allinea-verticale">
+        <ion-col size="3">
+          <ion-icon class="iconAtt" name="location-outline"></ion-icon>
+        </ion-col>
+        <ion-col class="col-testo" size="9">
+          <ion-card-title class="subtitle">{{this.attivita.indirizzo}}, {{this.attivita.civico}}, {{this.attivita.cap}}, {{this.attivita.citta}}</ion-card-title>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-grid>
   
-  <app-nome [nome]="this.attivita?.nome" 
-            (nomeChange)="handleNomeChange($event)"></app-nome>
-
-            <br>
-            <br>
-                <ion-label class="subTitle">{{ 'ADDRESS' | translate }}:</ion-label> <br>
-                <ion-label class="subTitle">{{this.attivita?.indirizzo}}, {{this.attivita?.civico}}, {{this.attivita?.cap}} </ion-label>
-            <br> 
-            <br>
-
-            <ion-label>{{this.attivita?.telefono}}</ion-label>
 
             <br> 
             <br>
-
-            <app-orari-apertura name="orari" [orari]="this.attivita?.orari"></app-orari-apertura>
+            <app-orari-dettaglio [attivita]="this.attivita"></app-orari-dettaglio>
+            <!-- <app-orari-apertura name="orari" [orari]="this.attivita?.orari"></app-orari-apertura> -->
             <!-- <ion-item style="margin-bottom: 20px;"></ion-item>
             <ion-row>
               <ion-col>

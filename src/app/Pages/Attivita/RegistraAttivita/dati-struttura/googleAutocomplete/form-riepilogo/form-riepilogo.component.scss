@@ -2,3 +2,37 @@
     font-family: Helvetica;
     font-size: 1.3rem;
   }
+
+  .title {
+    font-family: Helvetica;
+    font-size: 1.5rem;
+    text-align: left;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-family: Helvetica;
+    font-size: 1rem;
+    text-align: left;
+    margin: 0;
+  }
+
+  .gridForm {
+    margin-top: 5%;
+  }
+
+  .iconAtt{
+    height: 40px;
+    width: 40px;
+  }
+
+  .allinea-verticale {
+    display: flex;
+    align-items: center;
+  }
+  
+  .col-testo {
+    display: flex;
+    align-items: center;
+  }
+  

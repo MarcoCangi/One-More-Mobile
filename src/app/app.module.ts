@@ -97,7 +97,7 @@ import { provideAppCheck, initializeAppCheck, ReCaptchaV3Provider, CustomProvide
 import { FormRiepilogoComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/form-riepilogo/form-riepilogo.component';
 import { RicercaAttivitaAutocompleteComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/ricerca-attivita-autocomplete/ricerca-attivita-autocomplete.component';
 import { RichiestaTipoCompilazioneComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/richiesta-tipo-compilazione/richiesta-tipo-compilazione.component';
-
+import { OrariDettaglioComponent } from './Pages/Attivita/ProfiloAttivita/dettaglio/orari-dettaglio/orari-dettaglio.component';
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
@@ -188,7 +188,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                  EsitoGestionePromoComponent,
                  RicercaAttivitaAutocompleteComponent,
                  RichiestaTipoCompilazioneComponent,
-                 FormRiepilogoComponent
+                 FormRiepilogoComponent,
+                 OrariDettaglioComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,

@@ -8,7 +8,7 @@ import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/
 })
 export class FormRiepilogoComponent  implements OnInit {
 
-  @Input() attivita : Attivita | undefined;
+  @Input() attivita! : Attivita;
   constructor() { }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
