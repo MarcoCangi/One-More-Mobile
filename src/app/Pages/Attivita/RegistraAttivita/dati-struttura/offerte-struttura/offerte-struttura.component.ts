@@ -11,6 +11,7 @@ export class OfferteStrutturaComponent implements OnInit {
   @Input() isVegano: boolean | undefined;
   @Input() isVegetariano: boolean | undefined;
   @Input() isNoGlutine: boolean | undefined;
+  @Input() isRiepilogo: boolean = false;
 
   @Output() offertaVeganaChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() offertaNoGlutineChange: EventEmitter<boolean> = new EventEmitter<boolean>();

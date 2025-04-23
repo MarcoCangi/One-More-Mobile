@@ -107,6 +107,7 @@ import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-f
 import { FileUploadService } from 'one-more-frontend-common/projects/one-more-fe-service/src/file-upload-service.service';
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 import { Constants } from 'one-more-frontend-common/projects/one-more-fe-service/src/Constants';
+import { RiepilogoComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/riepilogo/riepilogo.component';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 const appRoute: Routes = [
@@ -189,7 +190,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                  RicercaAttivitaAutocompleteComponent,
                  RichiestaTipoCompilazioneComponent,
                  FormRiepilogoComponent,
-                 OrariDettaglioComponent
+                 OrariDettaglioComponent,
+                 RiepilogoComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,

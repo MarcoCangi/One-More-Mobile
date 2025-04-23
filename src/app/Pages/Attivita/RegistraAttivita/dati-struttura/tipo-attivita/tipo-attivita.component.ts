@@ -13,6 +13,7 @@ export class TipoAttivitaComponent  implements OnInit {
   listaTipoAttivita: FormControl;
   filtro: string = '';
   listaAttivitaFiltrate: TipoAttivita[] = [];
+  selectedAttivita: TipoAttivita[] = [];
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Input() listaAttivitaSelezionate: TipoAttivita[] | undefined;
   @Output() listaAttivitaChanged = new EventEmitter<TipoAttivita[]>();
@@ -29,7 +30,8 @@ export class TipoAttivitaComponent  implements OnInit {
       if (this.listaAttivitaDDL) {
         const selectedTipoAttivita = this.listaAttivitaDDL
           .filter(attivita => value.includes(attivita.codTipoAttivita));
-        this.listaAttivitaChanged.emit(selectedTipoAttivita);
+          this.selectedAttivita = selectedTipoAttivita;
+          this.listaAttivitaChanged.emit(selectedTipoAttivita);
       }
     });
   
@@ -62,5 +64,14 @@ export class TipoAttivitaComponent  implements OnInit {
     }
   
     this.listaTipoAttivita.setValue(selected);
+  }
+
+  removeChip(chip: TipoAttivita): void {
+    const selected = [...this.listaTipoAttivita.value];
+    const index = selected.indexOf(chip.codTipoAttivita);
+    if (index >= 0) {
+      selected.splice(index, 1);
+      this.listaTipoAttivita.setValue(selected);
+    }
   }
 }

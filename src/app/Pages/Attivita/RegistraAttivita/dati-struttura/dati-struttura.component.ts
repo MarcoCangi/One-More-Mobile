@@ -112,10 +112,6 @@ export class DatiStrutturaComponent  implements OnInit {
     this.listaAttivita = undefined;
   }
 
-  onCheckboxChange(event: any) {
-    this.isCheckboxChecked = event.detail.checked;
-  }
-
   dismissConferma(){
     this.isConfirmOpen = false;
   }
@@ -574,20 +570,9 @@ export class DatiStrutturaComponent  implements OnInit {
             console.error('Errore nel recupero dei dati:', error);
         }
     }
-}
+  }
   
-  getImmaginePrincipale(): string {
-    const immaginePrincipale = this.requestAttivita?.immagini?.find(i => i.isImmaginePrincipale);
-    return immaginePrincipale ? immaginePrincipale.upload : 'default-image.jpg';
-  }
 
-  getGallery(): any[] {
-    if (!this.requestAttivita?.immagini) {
-        return [];
-    }
-    const immaginePrincipale = this.requestAttivita.immagini.find(i => i.isImmaginePrincipale);
-    return this.requestAttivita.immagini.filter(i => i !== immaginePrincipale);
-  }
 
   handleNomeChange(newNome: string) {
   this.errorNome = "";

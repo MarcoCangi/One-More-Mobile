@@ -8,6 +8,14 @@
   </ion-item>
 </ion-list> -->
 
+
+<ion-toolbar class="chip-toolbar">
+  <ion-chip *ngFor="let chip of selectedAttivita" [outline]="true">
+    <ion-label>{{chip.descrizione}}</ion-label>
+    <ion-icon name="close" (click)="removeChip(chip)"></ion-icon>
+  </ion-chip>
+</ion-toolbar>
+
 <ion-searchbar [(ngModel)]="filtro" placeholder="Cerca tipo attività"></ion-searchbar>
 
 <ion-list class="limited-width">

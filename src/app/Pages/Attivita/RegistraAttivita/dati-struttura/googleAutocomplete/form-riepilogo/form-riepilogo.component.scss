@@ -5,15 +5,22 @@
     margin: 0;
   }
 
+  .titleTypeCase {
+    font-family: Helvetica;
+    font-size: 1.3rem;
+    text-align: left;
+    margin: 0;
+  }
+
   .btnNav {
     width: 30px;
     height: 30px;
-    --background: #e9540a;
+    --background: #ffffff;
+    --color: #3880ff;
     border-radius: 50%;
     padding: 0;
     --padding-start: 2;
     --padding-end: 2;
-    --box-shadow: none;
   }
 
   .titleMod{
@@ -72,5 +79,18 @@
     justify-content: center;
     align-items: center;
     height: 100vh; // centra tutto il contenuto nel card
+  }
+
+  .col-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .titleTypeCase {
+    font-family: Helvetica;
+    font-size: 1.2rem;
+    margin: 0;
   }
   

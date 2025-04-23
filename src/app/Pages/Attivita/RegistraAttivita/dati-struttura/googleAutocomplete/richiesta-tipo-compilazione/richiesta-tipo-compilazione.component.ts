@@ -14,6 +14,7 @@ export class RichiestaTipoCompilazioneComponent  implements OnInit {
 
   @Input() listaComuni : Comuni[] | undefined;
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
+  @Input() listaAttivitaSelezionate: TipoAttivita[] | undefined;
   @Output() inserimentoManualeEvent = new EventEmitter<void>();
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method

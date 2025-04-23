@@ -1,14 +1,48 @@
-<form>
-  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isVegano" [formControl]="isVeganoFormControl">
-    <ion-label style="color: black;">{{ 'HAS_VEGAN_PRODUCTS' | translate }}</ion-label>
-  </ion-checkbox>
-  
-  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isVegetariano" [formControl]="isVegetarianoFormControl">
-    <ion-label style="color: black;">{{ 'HAS_VEGETARIAN_PRODUCTS' | translate }}</ion-label>
-  </ion-checkbox>
-  
-  <ion-checkbox labelPlacement="end" style="margin-top: 3%;" [checked]="isNoGlutine" [formControl]="isNoGlutineFormControl">
-    <ion-label style="color: black;">{{ 'HAS_GLUTEN_FREE_PRODUCTS' | translate }}</ion-label>
-  </ion-checkbox>
+<form style="min-width: 100%;">
+  <ion-grid style="min-width: 100%;">
+    <ion-row>
+      <ion-col size="12" class="column ion-text-center ion-align-items-center">
+        <h2>Hai prodotti</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!isRiepilogo">
+      <ion-col size="4" class="column ion-text-center ion-align-items-center">
+        <img class="imgOffer" src="assets/Img/gluten-free.png">
+      </ion-col>
+      <ion-col size="4" class="column ion-text-center ion-align-items-center">
+        <img class="imgOffer" src="assets/Img/vegan.png">
+      </ion-col>
+      <ion-col size="4" class="column ion-text-center ion-align-items-center">
+        <img class="imgOffer" src="assets/Img/vegetarian.png">
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!isRiepilogo">
+      <ion-col size="4" class="column ion-text-center ion-align-items-center">
+        <ion-checkbox [checked]="isNoGlutine" [formControl]="isNoGlutineFormControl" labelPlacement="stacked">Senza glutine</ion-checkbox>
+      </ion-col>
+      <ion-col size="4" class="column ion-text-center ion-align-items-center">
+        <ion-checkbox [checked]="isVegano" [formControl]="isVeganoFormControl" labelPlacement="stacked">Vegani</ion-checkbox>
+      </ion-col>
+      <ion-col size="4" class="column ion-text-center ion-align-items-center">
+        <ion-checkbox [checked]="isVegetariano" [formControl]="isVegetarianoFormControl" labelPlacement="stacked">Vegetariani</ion-checkbox>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isRiepilogo">
+      <ion-col *ngIf="isNoGlutine" size="4" class="column ion-text-center ion-align-items-center">
+        <img class="imgOffer" src="assets/Img/gluten-free.png">
+        <ion-label *ngIf="isRiepilogo">Senza glutine</ion-label>
+      </ion-col>
+      <ion-col *ngIf="isVegano" size="4" class="column ion-text-center ion-align-items-center">
+        <img class="imgOffer" src="assets/Img/vegan.png">
+        <ion-label *ngIf="isRiepilogo">Vegani</ion-label>
+      </ion-col>
+      <ion-col *ngIf="isVegetariano" size="4" class="column ion-text-center ion-align-items-center">
+        <img class="imgOffer" src="assets/Img/vegetarian.png">
+        <ion-label *ngIf="isRiepilogo">Vegetariani</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </form>
 

@@ -13,6 +13,7 @@ export class FormRiepilogoComponent  implements OnInit {
   @Input() attivita! : Attivita;
   @Input() listaComuni : Comuni[] | undefined;
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
+  @Input() listaAttivitaSelezionate: TipoAttivita[] | undefined;
   @Output() backEvent = new EventEmitter<void>();
   segmentValue: string = 'one';
   segmentSteps = ['one', 'two', 'three', 'four'];
@@ -131,7 +132,24 @@ export class FormRiepilogoComponent  implements OnInit {
     codTipoAttivita: attivitaSelezionate.codTipoAttivita,
     descrizione: attivitaSelezionate.descrizione
   }));
-  if(this.attivita)
+  if(this.attivita){
     this.attivita.listaTipoAttivita = this.listaTipoAttivita;
+    this.listaAttivitaSelezionate = this.listaTipoAttivita;
+    }
+  }
+
+  handleIsOffertaVeganaChange(isVegano: boolean) {
+    if(this.attivita)
+      this.attivita.isOffertaVegana = isVegano;
+  }
+  
+  handleIsOffertaVegetarianaChange(isVegetariano: boolean) {
+    if(this.attivita)
+      this.attivita.isOffertaVegetariana = isVegetariano;
+  }
+  
+  handleIsOffertaNoGlutineChange(isNoGlutine: boolean) {
+    if(this.attivita)
+      this.attivita.isOffertaNoGlutine = isNoGlutine;
   }
 }

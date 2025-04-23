@@ -20,6 +20,7 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
   ListAttivita : Attivita [] | undefined;
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Input() listaComuni : Comuni[] | undefined;
+  @Input() listaAttivitaSelezionate: TipoAttivita[] | undefined;
   @Output() closeEvent = new EventEmitter<void>();
 
   constructor(private attivitaService : GetApiAttivitaService) { }
