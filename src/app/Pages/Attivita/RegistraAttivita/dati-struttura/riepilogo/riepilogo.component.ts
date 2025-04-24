@@ -34,6 +34,7 @@ export class RiepilogoComponent  implements OnInit {
 
   onCheckboxChange(event: any) {
     const isChecked = event.detail.checked;
+    this.isCheckboxChecked = isChecked;
     this.isCheckedEvent.emit(isChecked);
   }
 

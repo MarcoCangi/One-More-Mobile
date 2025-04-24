@@ -68,6 +68,10 @@ export class FormRiepilogoComponent  implements OnInit {
       }
     }
   }
+
+  async setChecked(check: boolean){
+    this.isCheckboxChecked = check;
+  }
       
 
   returnList(){
@@ -279,7 +283,7 @@ export class FormRiepilogoComponent  implements OnInit {
         this.attivita?.idSoggetto? this.attivita.idSoggetto : 0,
         this.attivita?.nome? this.attivita.nome : "",
         this.attivita?.indirizzo? this.attivita.indirizzo : "",
-        this.attivita?.citta? this.attivita.citta : "",
+        this.attivita?.citta? this.attivita.citta.toUpperCase() : "",
         this.attivita?.provincia? this.attivita.provincia : "",
         this.attivita?.civico? this.attivita.civico : "",
         this.attivita?.cap? this.attivita.cap : "",

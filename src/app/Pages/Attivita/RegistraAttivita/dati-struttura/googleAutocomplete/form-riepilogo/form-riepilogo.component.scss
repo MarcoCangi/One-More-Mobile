@@ -5,13 +5,6 @@
     margin: 0;
   }
 
-  .titleTypeCase {
-    font-family: Helvetica;
-    font-size: 1.3rem;
-    text-align: left;
-    margin: 0;
-  }
-
   .btnNav {
     width: 30px;
     height: 30px;
@@ -36,10 +29,6 @@
     font-size: 0.9rem;
     text-align: left;
     margin: 0;
-  }
-
-  .gridForm {
-    margin-top: 5%;
   }
 
   .iconAtt{
@@ -101,23 +90,17 @@
     background-color: var(--ion-background-color);
   }
 
-  .card-content {
-    height: calc(100vh - 200px); // adatta se hai header o toolbar fissi
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+  .scrollable {
+    overflow-y: auto;
+    height: 100vh; // o calc(100vh - altezza header)
+    padding: 16px;
   }
 
-  .wrapper-scroll {
-    flex: 1;
-    overflow: hidden;
+  .switch-segment-content {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 20px; // per evitare che tocchi i bordi
   }
-
-  .component-scroll {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
+  

@@ -37,128 +37,127 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+
+
+<ion-content [fullscreen]="true">
   <ng-container [ngSwitch]="segmentValue">
-  
-    <ion-card class="formContent" >
-
-    <div *ngSwitchCase="'one'">
-      <ion-list style="margin-top: 2%;">
-        <ion-item>
-          <ion-icon slot="start" class="iconAtt" name="business-outline"></ion-icon>
-          <ion-label>
-            <h2 class="title">{{ this.attivita.nome }}</h2>
-          </ion-label>
-          <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(1)"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="start" class="iconAtt" name="call-outline"></ion-icon>
-          <ion-label>
-            <h2 class="subtitle">{{ this.attivita.telefono }}</h2>
-          </ion-label>
-          <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(2)"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="start" class="iconAtt" name="mail-outline"></ion-icon>
-          <ion-label>
-            <h2 class="subtitle">{{ this.attivita.email }}</h2>
-          </ion-label>
-          <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(3)"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="start" class="iconAtt" name="location-outline"></ion-icon>
-          <ion-label>
-            <h2 class="subtitle">{{this.attivita.indirizzo}}, {{this.attivita.civico}}, {{this.attivita.cap}}, {{this.attivita.citta}}</h2>
-          </ion-label>
-          <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(4)"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="start" class="iconAtt" name="reader-outline"></ion-icon>
-          <ion-label>
-            <h2 class="subtitle"> {{ this.attivita.description }} </h2>
-          </ion-label>
-          <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(5)"></ion-icon>
-        </ion-item>
-      </ion-list>
-      <div class="col-md-16 formInput">
-        <app-offerte-struttura 
-          [isVegano]="attivita.isOffertaVegana" 
-          [isVegetariano]="attivita.isOffertaVegetariana" 
-          [isNoGlutine]="attivita.isOffertaNoGlutine"
-          (offertaVeganaChange)="handleIsOffertaVeganaChange($any($event))"
-          (offertaNoGlutineChange)="handleIsOffertaNoGlutineChange($any($event))"
-          (offertaVegetarianaChange)="handleIsOffertaVegetarianaChange($any($event))">
-        </app-offerte-struttura>
-      </div>
-      <ion-card-content>
-        <ion-card class="card-orari" style="margin-top: 5%;">
-          <app-orari-dettaglio [attivita]="this.attivita"></app-orari-dettaglio>
-        </ion-card>
-      </ion-card-content>
-      </div>
-
-      <div *ngSwitchCase="'two'">
-        <app-gallery name="gallery" [immagini]="this.attivita.immagini" (immaginiChange)="handleImmaginiChange($event)"></app-gallery>
-      </div>
-
-      <div *ngSwitchCase="'three'">
-        <app-tipo-attivita [listaAttivitaDDL]="listaAttivitaDDL" 
-                           [listaAttivitaSelezionate]="listaAttivitaSelezionate" 
-                           (listaAttivitaChanged)="handleListaTipoAttivitaChange($event)"></app-tipo-attivita>
-      </div>
-
-      <div *ngSwitchCase="'four'">
-          <app-riepilogo [attivita]="this.attivita"
-                         (isCheckedEvent)="this.isCheckboxChecked"
-                         (SalvaEvent)="insertAttivita()">
-
-          </app-riepilogo>
-      </div>
-
+    <div *ngSwitchCase="'one'" class="switch-segment-content">
+  <ion-list style="margin-top: 2%;">
+    <ion-item>
+      <ion-icon slot="start" class="iconAtt" name="business-outline"></ion-icon>
+      <ion-label>
+        <h2 class="title">{{ this.attivita.nome }}</h2>
+      </ion-label>
+      <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(1)"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" class="iconAtt" name="call-outline"></ion-icon>
+      <ion-label>
+        <h2 class="subtitle">{{ this.attivita.telefono }}</h2>
+      </ion-label>
+      <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(2)"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" class="iconAtt" name="mail-outline"></ion-icon>
+      <ion-label>
+        <h2 class="subtitle">{{ this.attivita.email }}</h2>
+      </ion-label>
+      <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(3)"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" class="iconAtt" name="location-outline"></ion-icon>
+      <ion-label>
+        <h2 class="subtitle">{{this.attivita.indirizzo}}, {{this.attivita.civico}}, {{this.attivita.cap}}, {{this.attivita.citta}}</h2>
+      </ion-label>
+      <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(4)"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" class="iconAtt" name="reader-outline"></ion-icon>
+      <ion-label>
+        <h2 class="subtitle"> {{ this.attivita.description }} </h2>
+      </ion-label>
+      <ion-icon slot="end" class="iconAtt" color="primary"  name="create-outline" (click)="modifica(5)"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <div class="col-md-16 formInput">
+    <app-offerte-struttura 
+      [isVegano]="attivita.isOffertaVegana" 
+      [isVegetariano]="attivita.isOffertaVegetariana" 
+      [isNoGlutine]="attivita.isOffertaNoGlutine"
+      (offertaVeganaChange)="handleIsOffertaVeganaChange($any($event))"
+      (offertaNoGlutineChange)="handleIsOffertaNoGlutineChange($any($event))"
+      (offertaVegetarianaChange)="handleIsOffertaVegetarianaChange($any($event))">
+    </app-offerte-struttura>
+  </div>
+  <ion-card-content>
+    <ion-card class="card-orari" style="margin-top: 5%;">
+      <app-orari-dettaglio [attivita]="this.attivita"></app-orari-dettaglio>
     </ion-card>
-</ng-container>
+  </ion-card-content>
+    </div>
 
+    <div *ngSwitchCase="'two'" class="switch-segment-content">
+    <app-gallery name="gallery" [immagini]="this.attivita.immagini" (immaginiChange)="handleImmaginiChange($event)"></app-gallery>
+    </div>
 
+    <div *ngSwitchCase="'three'" class="switch-segment-content">
+    <app-tipo-attivita [listaAttivitaDDL]="listaAttivitaDDL" 
+                       [listaAttivitaSelezionate]="listaAttivitaSelezionate" 
+                       (listaAttivitaChanged)="handleListaTipoAttivitaChange($event)"></app-tipo-attivita>
+    </div>
 
-<ion-modal [isOpen]="IsModified" (didDismiss)="chiudi()">
-  <ng-template>
-    <ion-content>
+    <div *ngSwitchCase="'four'" class="switch-segment-content">
+    <app-riepilogo [attivita]="this.attivita"
+                   (isCheckedEvent)="setChecked($event)"
+                   (SalvaEvent)="prosegui()">
 
-      <ion-card class="formContentModal">
-        <div *ngIf="IsModifiedName" class="modifica-sezione">
-          <ion-title class="titleMod">Inserisci o modifica il nome della tua attività</ion-title>
-          <app-nome [nome]="attivita.nome" (nomeChange)="handleNomeChange($event)"></app-nome>
-          <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
-        </div>
-      
-        <div *ngIf="IsModifiedPhone" class="modifica-sezione">
-          <ion-title class="titleMod">Inserisci o modifica il numero di telefono</ion-title>
-          <app-telefono [telefono]="attivita.telefono" (telefonoChange)="handleTelefonoChange($event)"></app-telefono>
-          <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
-        </div>
-      
-        <div *ngIf="IsModifiedMail" class="modifica-sezione">
-          <ion-title class="titleMod">Inserisci o modifica la tua email</ion-title>
-          <app-email [email]="attivita.email" (emailChange)="handleEmailChange($event)"></app-email>
-          <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
-        </div>
-      
-        <div *ngIf="IsModifiedCitta" class="modifica-sezione">
-          <ion-title class="titleMod">Inserisci o modifica i dati relativi all'indirizzo della tua attività</ion-title>
-          <app-indirizzo [indirizzo]="attivita.indirizzo" (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
-          <app-civico [civico]="attivita.civico" (civicoChange)="handleCivicoChange($event)"></app-civico>
-          <app-cap [cap]="attivita.cap" (capChange)="handleCapChange($event)"></app-cap>
-          <app-citta [listaComuni]="listaComuni" [citta]="attivita.citta" (cittaChange)="handleCittaChange($event)"></app-citta>
-          <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
-        </div>
-      
-        <div *ngIf="IsModifiedDesc" class="modifica-sezione">
-          <ion-title class="titleMod">Inserisci o modifica la descrizione della tua attività</ion-title>
-          <app-menu [description]="attivita.description" (descrizioneChange)="handleDescChange($event)"></app-menu>
-          <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
-        </div>
-      </ion-card>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+    </app-riepilogo>
+    </div>
+  </ng-container>
 </ion-content>
+
+
+
+<!-- <ion-content class="sticky-Content">
+  <ion-modal [isOpen]="IsModified" (didDismiss)="chiudi()">
+    <ng-template>
+      <ion-content>
+  
+        <ion-card class="formContentModal">
+          <div *ngIf="IsModifiedName" class="modifica-sezione">
+            <ion-title class="titleMod">Inserisci o modifica il nome della tua attività</ion-title>
+            <app-nome [nome]="attivita.nome" (nomeChange)="handleNomeChange($event)"></app-nome>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+          </div>
+        
+          <div *ngIf="IsModifiedPhone" class="modifica-sezione">
+            <ion-title class="titleMod">Inserisci o modifica il numero di telefono</ion-title>
+            <app-telefono [telefono]="attivita.telefono" (telefonoChange)="handleTelefonoChange($event)"></app-telefono>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+          </div>
+        
+          <div *ngIf="IsModifiedMail" class="modifica-sezione">
+            <ion-title class="titleMod">Inserisci o modifica la tua email</ion-title>
+            <app-email [email]="attivita.email" (emailChange)="handleEmailChange($event)"></app-email>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+          </div>
+        
+          <div *ngIf="IsModifiedCitta" class="modifica-sezione">
+            <ion-title class="titleMod">Inserisci o modifica i dati relativi all'indirizzo della tua attività</ion-title>
+            <app-indirizzo [indirizzo]="attivita.indirizzo" (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
+            <app-civico [civico]="attivita.civico" (civicoChange)="handleCivicoChange($event)"></app-civico>
+            <app-cap [cap]="attivita.cap" (capChange)="handleCapChange($event)"></app-cap>
+            <app-citta [listaComuni]="listaComuni" [citta]="attivita.citta" (cittaChange)="handleCittaChange($event)"></app-citta>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+          </div>
+        
+          <div *ngIf="IsModifiedDesc" class="modifica-sezione">
+            <ion-title class="titleMod">Inserisci o modifica la descrizione della tua attività</ion-title>
+            <app-menu [description]="attivita.description" (descrizioneChange)="handleDescChange($event)"></app-menu>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+          </div>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content> -->
