@@ -10,12 +10,6 @@
   margin-bottom: 4%;
 }
 
-.formInput{
-  max-width: 70%;
-  margin-left: 5%;
-  margin-bottom: 5%;
-}
-
 .prosegui{
   margin-top: 10%;
   margin-bottom: 5%;
@@ -43,15 +37,6 @@ ion-spinner {
   transform: translate(-50%, -50%);
 }
 
-.full-modal::part(content) {
-  height: 100%;
-  width: 100%;
-}
-
-.custom-alert .alert-message {
-  white-space: pre-line;
-}
-
 .err{
   color: red;
   margin-left: 5%;
@@ -69,12 +54,6 @@ ion-spinner {
   font-size: 1rem;
 }
 
-.cardContainer{
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  margin-top: 1%;
-}
 
 .subTitle{
   font-family: Helvetica;

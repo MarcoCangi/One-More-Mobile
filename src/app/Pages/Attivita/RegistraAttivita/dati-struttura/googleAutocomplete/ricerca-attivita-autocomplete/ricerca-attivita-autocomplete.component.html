@@ -7,6 +7,7 @@
     </ion-toolbar>
   </ion-header>
 
+
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
   <ion-content class="formList" *ngIf="!isLoading && this.ListAttivita  && !this.attivita">
@@ -21,20 +22,32 @@
     </ion-list>
   </ion-content>
 
-  <ion-content class="form" *ngIf="!isLoading && !this.attivita">
-    <ion-card class="formContent" >
+  <ion-content class="form">
+    <ion-card class="formContent" *ngIf="!isLoading && !this.attivita">
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" class="column ion-text-center ion-align-items-center">
+              <ion-title class="title">
+                {{ 'SUBSCRIBE_LANDING_LINE' | translate }}
+              </ion-title>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
       <app-nome (nomeChange)="handleNomeChange($event)"></app-nome>
       <app-citta (cittaChange)="handleCittaChange($event)" [listaComuni]="listaComuni">
       </app-citta>
       <!-- <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo> -->
       <ion-button (click)="Search()">Avanti</ion-button>
     </ion-card>
-  </ion-content>
 
-  <ion-content class="form" *ngIf="!isLoading && this.attivita">
-    <app-form-riepilogo [attivita]="this.attivita"
+    <app-form-riepilogo *ngIf="!isLoading && this.attivita" 
+                        [attivita]="this.attivita"
                         [listaComuni]="this.listaComuni"
                         [listaAttivitaDDL]="this.listaAttivitaDDL"
                         [listaAttivitaSelezionate]="listaAttivitaSelezionate">
     </app-form-riepilogo>
   </ion-content>
+
+  

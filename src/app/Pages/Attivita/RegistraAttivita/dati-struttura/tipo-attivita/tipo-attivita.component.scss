@@ -34,3 +34,15 @@
     margin-left: 6px;
     cursor: pointer;
   }
+
+  .scrollable-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 2%;
+  }
+
+  :host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }

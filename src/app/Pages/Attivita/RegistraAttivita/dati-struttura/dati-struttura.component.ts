@@ -109,7 +109,6 @@ export class DatiStrutturaComponent  implements OnInit {
 
   addNewAtt(){
     this.isAdd = true;
-    this.listaAttivita = undefined;
   }
 
   dismissConferma(){
@@ -723,7 +722,10 @@ export class DatiStrutturaComponent  implements OnInit {
       this.attivita?.orari? this.attivita.orari : new Orari(),
       this.attivita?.immagini? this.attivita.immagini : [],
       this.attivita?.isVerificata? this.attivita.isVerificata : false,
-      this.attivita?.esitoVerifica? this.attivita.esitoVerifica : false)
+      this.attivita?.esitoVerifica? this.attivita.esitoVerifica : false,
+      this.attivita?.rating? this.attivita.rating : 0,
+      this.attivita?.numberOfRating? this.attivita.numberOfRating : 0,
+      this.attivita?.placeId? this.attivita.placeId : "")
   }
 
   async controlOrari (request: InsertAttivitaReqDto) {

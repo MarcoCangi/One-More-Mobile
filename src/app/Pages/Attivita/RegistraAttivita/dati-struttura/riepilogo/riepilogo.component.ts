@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Attivita, InsertAttivitaReqDto } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
@@ -8,7 +8,9 @@ import { Attivita, InsertAttivitaReqDto } from 'one-more-frontend-common/project
 })
 export class RiepilogoComponent  implements OnInit {
 
-  @Input() attivita! : Attivita
+  @Input() attivita! : Attivita;
+  @Output() isCheckedEvent = new EventEmitter<boolean>()
+  @Output() SalvaEvent = new EventEmitter<void>()
   requestAttivita: InsertAttivitaReqDto | undefined;
   isCheckboxChecked = false;
 
@@ -31,7 +33,12 @@ export class RiepilogoComponent  implements OnInit {
   }
 
   onCheckboxChange(event: any) {
-    this.isCheckboxChecked = event.detail.checked;
+    const isChecked = event.detail.checked;
+    this.isCheckedEvent.emit(isChecked);
+  }
+
+  Salva(){
+    this.SalvaEvent.emit();
   }
 
 }

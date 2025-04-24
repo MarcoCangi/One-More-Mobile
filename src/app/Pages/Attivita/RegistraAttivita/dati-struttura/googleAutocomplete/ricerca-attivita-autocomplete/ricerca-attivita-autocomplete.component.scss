@@ -6,6 +6,15 @@
     text-align: center;
   }
 
+  .gridIntro {
+    height: 100vh; /* Occupa tutta l'altezza della pagina */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center;     /* Centra orizzontalmente */
+    text-align: center;
+  }
+
   .formContent {
     margin-top: 50%;
     margin-left: 10%;
@@ -44,4 +53,13 @@
     font-size: 1.3rem;
     text-align: left;
     margin: 0;
+  }
+
+  ion-spinner {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }

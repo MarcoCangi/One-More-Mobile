@@ -8,23 +8,27 @@
   </ion-item>
 </ion-list> -->
 
+<div>
+  <div class="chip-toolbar">
+    <ion-chip *ngFor="let chip of selectedAttivita" [outline]="true">
+      <ion-label>{{chip.descrizione}}</ion-label>
+      <ion-icon name="close" (click)="removeChip(chip)"></ion-icon>
+    </ion-chip>
+  </div>
 
-<ion-toolbar class="chip-toolbar">
-  <ion-chip *ngFor="let chip of selectedAttivita" [outline]="true">
-    <ion-label>{{chip.descrizione}}</ion-label>
-    <ion-icon name="close" (click)="removeChip(chip)"></ion-icon>
-  </ion-chip>
-</ion-toolbar>
+  <ion-searchbar [(ngModel)]="filtro" placeholder="Cerca tipo attività"></ion-searchbar>
 
-<ion-searchbar [(ngModel)]="filtro" placeholder="Cerca tipo attività"></ion-searchbar>
-
-<ion-list class="limited-width">
-  <ion-item *ngFor="let decAttivita of listaAttivitaFiltrate">
-    <ion-checkbox
-      slot="start"
-      [checked]="isSelected(decAttivita.codTipoAttivita)"
-      (ionChange)="toggleSelection(decAttivita)">
-    </ion-checkbox>
-    <ion-label>{{ decAttivita.descrizione }}</ion-label>
-  </ion-item>
-</ion-list>
+  <div class = "scrollable-list">
+  <ion-list class="limited-width">
+    <ion-item *ngFor="let decAttivita of listaAttivitaFiltrate">
+      <ion-checkbox
+        slot="start"
+        [checked]="isSelected(decAttivita.codTipoAttivita)"
+        (ionChange)="toggleSelection(decAttivita)">
+      </ion-checkbox>
+      <ion-label>{{ decAttivita.descrizione }}</ion-label>
+    </ion-item>
+  </ion-list>
+  </div>
+  
+</div>

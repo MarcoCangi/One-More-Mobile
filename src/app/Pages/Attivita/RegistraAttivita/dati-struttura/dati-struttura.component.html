@@ -24,13 +24,15 @@
           </ion-card>
   </div>
 
-  <div *ngIf="isAdd">
-    <app-richiesta-tipo-compilazione (inserimentoManualeEvent)="this.isAdd=false"
-                                     [listaComuni]="this.listaComuni"
-                                     [listaAttivitaDDL]="listaAttivitaDDL"
-                                     [listaAttivitaSelezionate]="this.attivita?.listaTipoAttivita">
-    </app-richiesta-tipo-compilazione>
-  </div>
+    
+  <ion-modal [isOpen]="isAdd">
+    <ng-template>
+      <app-ricerca-attivita-autocomplete (closeEvent)="this.isAdd=false"
+                                         [listaComuni]="this.listaComuni"
+                                         [listaAttivitaDDL]="listaAttivitaDDL">
+      </app-ricerca-attivita-autocomplete>
+    </ng-template>
+  </ion-modal>
   
   
   <div *ngIf="!isLoading && isVerificato && (this.attivita || !listaAttivita) && !isAdd">

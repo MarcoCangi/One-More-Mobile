@@ -96,7 +96,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideAppCheck, initializeAppCheck, ReCaptchaV3Provider, CustomProvider } from '@angular/fire/app-check';
 import { FormRiepilogoComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/form-riepilogo/form-riepilogo.component';
 import { RicercaAttivitaAutocompleteComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/ricerca-attivita-autocomplete/ricerca-attivita-autocomplete.component';
-import { RichiestaTipoCompilazioneComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/googleAutocomplete/richiesta-tipo-compilazione/richiesta-tipo-compilazione.component';
 import { OrariDettaglioComponent } from './Pages/Attivita/ProfiloAttivita/dettaglio/orari-dettaglio/orari-dettaglio.component';
 import { GoogleMap } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
@@ -188,7 +187,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                  IconCittaComponent,
                  EsitoGestionePromoComponent,
                  RicercaAttivitaAutocompleteComponent,
-                 RichiestaTipoCompilazioneComponent,
                  FormRiepilogoComponent,
                  OrariDettaglioComponent,
                  RiepilogoComponent

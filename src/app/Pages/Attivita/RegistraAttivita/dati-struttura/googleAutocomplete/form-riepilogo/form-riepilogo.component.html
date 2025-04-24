@@ -1,42 +1,44 @@
 
-<ion-segment style="width: 90%; margin-left: 5%;" [(ngModel)]="segmentValue" scrollable>
-  <ion-segment-button value="one">
-    <ion-icon class="iconAtt" name="information-circle-outline"></ion-icon>
-  </ion-segment-button>
-  <ion-segment-button value="two">
-    <ion-icon class="iconAtt" name="images-outline"></ion-icon>
-  </ion-segment-button>
-  <ion-segment-button value="three">
-    <ion-icon class="iconAtt" name="checkmark-outline"></ion-icon>
-  </ion-segment-button>
-  <ion-segment-button value="four">
-    <ion-icon class="iconAtt" name="reorder-four-outline"></ion-icon>
-  </ion-segment-button>
-</ion-segment>
+<ion-header class="sticky-header">
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segmentValue" scrollable>
+      <ion-segment-button value="one">
+        <ion-icon class="iconAtt" name="information-circle-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="two">
+        <ion-icon class="iconAtt" name="images-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="three">
+        <ion-icon class="iconAtt" name="checkmark-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="four">
+        <ion-icon class="iconAtt" name="reorder-four-outline"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
 
+    <ion-row class="ion-align-items-center ion-justify-content-between">
+      <ion-col size="2">
+        <ion-button shape="round" class="btnNav" (click)="indietro()">
+          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="8" class="col-center" [ngSwitch]="segmentValue">
+        <h2 *ngSwitchCase="'one'" class="titleTypeCase">Info attività</h2>
+        <h2 *ngSwitchCase="'two'" class="titleTypeCase">Gallery</h2>
+        <h2 *ngSwitchCase="'three'" class="titleTypeCase">Tipo di attività</h2>
+        <h2 *ngSwitchCase="'four'" class="titleTypeCase">Riepilogo</h2>
+      </ion-col>
+      <ion-col size="2" class="ion-text-end">
+        <ion-button shape="round" class="btnNav" (click)="avanti()">
+          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
 
-<ng-container [ngSwitch]="segmentValue">
-
-  <ion-row class="ion-align-items-center">
-    <ion-col size="2" class="ion-text-start">
-      <ion-button shape="round" class="btnNav" (click)="indietro()">
-        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-      </ion-button>
-    </ion-col>
-  
-    <ion-col class="ion-text-center col-center" [ngSwitch]="segmentValue">
-      <h2 *ngSwitchCase="'one'" class="titleTypeCase">Info attività</h2>
-      <h2 *ngSwitchCase="'two'" class="titleTypeCase">Gallery</h2>
-      <h2 *ngSwitchCase="'three'" class="titleTypeCase">Tipo di attività</h2>
-      <h2 *ngSwitchCase="'four'" class="titleTypeCase">Riepilogo</h2>
-    </ion-col>
-  
-    <ion-col size="2" class="ion-text-end">
-      <ion-button shape="round" class="btnNav" (click)="avanti()">
-        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
+<ion-content>
+  <ng-container [ngSwitch]="segmentValue">
   
     <ion-card class="formContent" >
 
@@ -106,7 +108,9 @@
       </div>
 
       <div *ngSwitchCase="'four'">
-          <app-riepilogo [attivita]="this.attivita">
+          <app-riepilogo [attivita]="this.attivita"
+                         (isCheckedEvent)="this.isCheckboxChecked"
+                         (SalvaEvent)="insertAttivita()">
 
           </app-riepilogo>
       </div>
@@ -157,3 +161,4 @@
     </ion-content>
   </ng-template>
 </ion-modal>
+</ion-content>
