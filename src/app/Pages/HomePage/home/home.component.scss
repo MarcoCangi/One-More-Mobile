@@ -4,16 +4,7 @@
     align-items: center;
     width: 100%; /* Opzionale, assicura che il container occupi l'intera larghezza */
   }
-
-  ion-spinner {
-    width: 100px;
-    height: 100px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
+  
   .content{
     margin-top: 2%;
   }

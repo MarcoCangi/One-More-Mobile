@@ -24,3 +24,73 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+  ion-card-title.titleHomePage {
+    font-family: Helvetica !important;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-left: 3%;
+  }
+
+  ion-title.titleModal {
+    font-family: Helvetica !important;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-left: 3%;
+  }
+
+  ion-spinner {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  ion-icon.closeBlack {
+    width: 30px;
+    height: 30px;
+    color: black;
+  }
+
+  ion-icon.closeWhite {
+    width: 30px;
+    height: 30px;
+    color: white;
+  }
+
+  .card-containerHomePage {
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    flex: 1;
+  }
+
+  .card-wrapperHomePage {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    padding: 5px;
+    width: fit-content; /* Adatta la larghezza del wrapper al contenuto */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .card-wrapperHomePage::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-consigliHomePage {
+    flex: 0 0 auto;
+    width: 90%;
+    max-width: 260px;
+    flex-wrap: nowrap; /* Impedisce il wrapping del contenuto nella card */
+  }
+
+  .NameAttHomePage{
+    font-family: Helvetica;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }

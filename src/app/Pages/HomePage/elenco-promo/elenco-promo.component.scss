@@ -1,30 +1,9 @@
-.card-container {
-    display: flex;
-    overflow: hidden;
-    scroll-behavior: smooth;
-    flex: 1;
-  }
-  
   .container {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
     position: relative;
-  }
-  
-  .card-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 5px;
-    padding: 5px;
-    width: fit-content; /* Adatta la larghezza del wrapper al contenuto */
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .card-wrapper::-webkit-scrollbar {
-    display: none;
   }
   
   .card-consigli {
@@ -55,11 +34,6 @@
     max-height: 5px;
   }
   
-  .title{
-    font-family: Helvetica;
-    font-size: 1.3rem;
-  }
-
   .label-overlay {
     position: absolute;
     top: 10px; /* Modifica questa posizione in base alle tue preferenze */
@@ -69,11 +43,6 @@
     color: white; /* Colore del testo */
     padding: 5px 10px;
     border-radius: 4px;
-  }
-
-  .title2{
-    font-family: Helvetica;
-    font-size: 1rem;
   }
 
   .skeleton {

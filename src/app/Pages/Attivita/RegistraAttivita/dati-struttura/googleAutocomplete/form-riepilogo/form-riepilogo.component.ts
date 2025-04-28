@@ -17,12 +17,12 @@ export class FormRiepilogoComponent  implements OnInit {
   @Input() attivita! : Attivita;
   @Input() listaComuni : Comuni[] | undefined;
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
-  @Input() listaAttivitaSelezionate: TipoAttivita[] | undefined;
   @Output() backEvent = new EventEmitter<void>();
   essioneString:UserSession | null | undefined;
   attivitaForImg! : Attivita;
   segmentValue: string = 'one';
   segmentSteps = ['one', 'two', 'three', 'four'];
+  listaAttivitaSelezionate: TipoAttivita[] | undefined;
   listaTipoAttivita: TipoAttivita[] = [];
   IsModified: boolean = false;
   IsModifiedName: boolean = false;
@@ -55,7 +55,7 @@ export class FormRiepilogoComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit() {
-    if(this.attivita && this.attivita.placeId){
+    if(this.attivita && this.attivita.placeId && !this.attivita.idAttivita){
       const data = await this.attivitaService.apiGetAttivitaAutocomplete(this.attivita.placeId);
       if (data) {
           this.attivitaForImg = data;
@@ -66,6 +66,9 @@ export class FormRiepilogoComponent  implements OnInit {
             this.listaAttivitaSelezionate = this.attivita.listaTipoAttivita;
           }
       }
+    }
+    else if(this.attivita && this.attivita.idAttivita){
+      this.listaAttivitaSelezionate = this.attivita.listaTipoAttivita;
     }
   }
 
@@ -118,17 +121,11 @@ export class FormRiepilogoComponent  implements OnInit {
     await this.InitRequestAtt();
 
     await this.controlValidator(this.requestAttivita);
-    
+
     if (!this.isError) {
       const sessioneString = this.authService.getUserSession();
   
       if (sessioneString) {
-        if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.requestAttivita != undefined) {
-          this.requestAttivita.idAttivita = sessioneString.idAttivita;
-        }
-        if (sessioneString.idAttivita !== null && sessioneString.idAttivita !== undefined && sessioneString.idAttivita > 0 && this.attivita != undefined) {
-          this.attivita.idAttivita = sessioneString.idAttivita;
-        }
         if (sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.requestAttivita != undefined) { 
           this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
         }
@@ -150,6 +147,7 @@ export class FormRiepilogoComponent  implements OnInit {
           }
         
         if (this.requestAttivita) {
+          console.log(this.requestAttivita);
           await this.insertAttivita();
         }
       }
@@ -444,7 +442,7 @@ export class FormRiepilogoComponent  implements OnInit {
           this.isError = true;
         });
       }
-      else if(request.description.length < 100){
+      else if(request.description.length < 50){
         this.translate.get('ERRORS.MINIMUM_LENGTH_DESC_100').subscribe((translatedText: string) => {
           this.errorDesc = translatedText;
           this.isError = true;

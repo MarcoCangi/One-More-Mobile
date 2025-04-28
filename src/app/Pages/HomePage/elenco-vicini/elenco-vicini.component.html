@@ -1,10 +1,10 @@
 <ion-item>
-  <ion-card-title class="title">{{ 'Close to you' | translate }}</ion-card-title>
-  <ion-icon (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
+  <ion-card-title style="margin-bottom: 3%; margin-top: 9%;" class="titleHomePage">{{ 'Close to you' | translate }}</ion-card-title>
+  <ion-icon style="margin-bottom: 3%; margin-top: 9%;" (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
 </ion-item>
 
-  <div class="card-container" #widgetsContent>
-    <div class="card-wrapper" *ngIf="!isLoading">
+  <div class="card-containerHomePage" #widgetsContent>
+    <div class="card-wrapperHomePage" *ngIf="!isLoading">
       <ion-card class="card-consigli" *ngFor="let attivita of elencoVicini" (click)="VisualizzaAttivita(attivita)">
         <div class="label-overlay" *ngIf="attivita.isPromoPresente">
           <label>{{'Promo'|translate}}</label>
@@ -13,17 +13,17 @@
         <ion-grid>
           <ion-row>
             <ion-col size="8">
-              <ion-card-subtitle><ion-card-title class="title2">{{attivita.nome}}</ion-card-title></ion-card-subtitle>
+              <ion-card-title class="NameAttHomePage">{{attivita.nome}}</ion-card-title>
             </ion-col>
             <ion-col size="4">
-              <ion-card-label class="distance">{{ attivita.distanza }}</ion-card-label>
+              <ion-card-label>{{ attivita.distanza }}</ion-card-label>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card>
     </div>
 
-    <div class="card-wrapper" *ngIf="isLoading">
+    <div class="card-wrapperHomePage" *ngIf="isLoading">
       <ion-card class="skeleton">
         <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
         <ion-card-header>

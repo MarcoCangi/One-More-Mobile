@@ -1,23 +1,23 @@
 <ion-item style="margin-top: 5%;">
-  <ion-card-title class="title">{{ 'Promo' | translate }}</ion-card-title>
-  <ion-icon (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
+  <ion-card-title style="margin-bottom: 3%;" class="titleHomePage">{{ 'Promo' | translate }}</ion-card-title>
+  <ion-icon style="margin-bottom: 5%;" (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
 </ion-item>
 
-<div class="card-container" #widgetsContent>
-  <div class="card-wrapper" *ngIf="!isLoading">
+<div class="card-containerHomePage" #widgetsContent>
+  <div class="card-wrapperHomePage" *ngIf="!isLoading">
     <ion-card class="card-consigli" *ngFor="let attivita of elencoPromo" (click)="VisualizzaAttivita(attivita)">
       <div class="label-overlay">
         <label>{{'Promo'|translate}}</label>
       </div>
       <img mat-card-image [src]="getImmaginePrincipale(attivita)" alt="{{'ACTIVITYPHOTO|translate'}}"/>
       <ion-card-header>
-        <ion-card-title class="title2">{{attivita.nome}}</ion-card-title>
+        <ion-card-title class="NameAttHomePage">{{attivita.nome}}</ion-card-title>
         <ion-card-subtitle style="font-weight: normal;">{{attivita.indirizzo}}, {{attivita.civico}}</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
   </div>
 
-  <div class="card-wrapper" *ngIf="isLoading">
+  <div class="card-wrapperHomePage" *ngIf="isLoading">
     <ion-card class="skeleton">
       <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
       <ion-card-header>

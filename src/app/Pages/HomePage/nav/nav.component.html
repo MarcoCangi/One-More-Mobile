@@ -1,7 +1,9 @@
 
 <ion-header style="position: fixed; top:0; z-index: 2000;">
   <ion-toolbar>
-    <ion-label style="margin-left:20px; font-family: Berlin Sans FB; font-size: larger;">ReaDeal</ion-label>
+    
+    <img slot="start" style=" margin-left:20px; width: 35px; height: 35px;" src="/assets/Img/Icon_.png"/>
+    <ion-label style="margin-left:6px; font-family: Berlin Sans FB; font-size: larger;">ReaDeal</ion-label>
     <!-- <img slot="start" style=" margin-left:20px; width: 90px; height: 35px; margin-top: -15px; margin-bottom: -15px;" src="assets/Img/logo scritta.png"/> -->
     <ion-button slot="end" shape="round" class="custom-button" (click)="setLanguage()">
       {{ lblFlag }}
@@ -15,7 +17,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="end">
-            <ion-button (click)="cancel()"><ion-icon style="color: white;" name="close-outline"></ion-icon></ion-button>
+            <ion-button (click)="cancel()"><ion-icon class="closeWhite"  name="close-outline"></ion-icon></ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>

@@ -1,4 +1,5 @@
 .horizontal-scroll {
+    margin-top: 5%;
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch; // Abilita il momentum scrolling su iOS
@@ -42,6 +43,7 @@
       position: absolute; // Posizionamento assoluto rispetto al contenitore dell'icona
       left: 0; // Allinea il testo al centro
       width: 100%; // Occupa l'intera larghezza del contenitore
+      font-family: Helvetica;
       font-size: 15px; // Dimensione del font per l'intestazione
       color: #000000; // Colore del testo, cambialo a tuo piacimento
       bottom:10px;

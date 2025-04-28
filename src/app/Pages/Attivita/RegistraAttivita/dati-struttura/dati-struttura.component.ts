@@ -18,13 +18,14 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class DatiStrutturaComponent  implements OnInit {
   isAdd : boolean = false;
+  isSelected : boolean = false;
   listaAttivita: Attivita[] | undefined;
   formGroup: FormGroup | undefined;
   id: number | undefined;
   idAttivita:number | undefined;
   listaComuni: Comuni[] | undefined;
   listaAttivitaDDL: TipoAttivita[] | undefined;
-  attivita: Attivita | undefined;
+  attivita!: Attivita ;
   listaTipoAttivita: TipoAttivita[] = [];
   orari: Orari | undefined;
   requestAttivita: InsertAttivitaReqDto | undefined;
@@ -75,7 +76,6 @@ export class DatiStrutturaComponent  implements OnInit {
     this.isLoading = true;
     this.orari = new Orari();
     this.idAttivita = 0;
-    this.attivita = undefined;
     await this.InitRequestAtt();
     const user = await this.authService.getCurrentUserFromAuth();
     this.sessioneString = this.authService.getUserSession();
@@ -407,6 +407,7 @@ export class DatiStrutturaComponent  implements OnInit {
           this.provincia = this.attivita.provincia;
         }
       }
+        this.isSelected = true;
         this.isLoading = false;
         return;
       }
