@@ -110,10 +110,10 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-card-title class="title" style="margin-left: 3%;" *ngIf="!idAttivita">{{ 'SAVE' | translate }}</ion-card-title>
-            <ion-card-title class="title" style="margin-left: 3%;" *ngIf="idAttivita">{{ 'EDIT' | translate }}</ion-card-title>
+            <ion-card-title class="titleModal" style="margin-left: 3%;" *ngIf="!idAttivita">{{ 'SAVE' | translate }}</ion-card-title>
+            <ion-card-title class="titleModal" style="margin-left: 3%;" *ngIf="idAttivita">{{ 'EDIT' | translate }}</ion-card-title>
             <ion-buttons slot="end">
-              <ion-button (click)="dismissConferma()"><ion-icon name="close-outline"></ion-icon></ion-button>
+              <ion-button (click)="dismissConferma()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>

@@ -58,9 +58,9 @@
   <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-card-title class="title">{{ 'edit_psw' | translate }}</ion-card-title>
+          <ion-card-title class="titleModal">{{ 'edit_psw' | translate }}</ion-card-title>
           <ion-buttons slot="end">
-            <ion-button (click)="DimsissModalModificaPassword()"><ion-icon name="close-outline"></ion-icon></ion-button>
+            <ion-button (click)="DimsissModalModificaPassword()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -110,8 +110,8 @@
       <ion-toolbar>
         <ion-card-title class="title">{{'delete_account'|translate}}</ion-card-title>
         <ion-buttons slot="end">
-          <ion-button *ngIf="this.isDeleted" (click)="openPage(1)"><ion-icon name="close-outline"></ion-icon></ion-button>
-          <ion-button *ngIf="!this.isDeleted" (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline"></ion-icon></ion-button>
+          <ion-button *ngIf="this.isDeleted" (click)="openPage(1)"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
+          <ion-button *ngIf="!this.isDeleted" (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>

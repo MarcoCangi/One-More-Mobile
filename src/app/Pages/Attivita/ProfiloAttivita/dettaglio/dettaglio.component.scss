@@ -22,8 +22,9 @@
   .title{
     font-family: Helvetica;
     font-size: 1.2rem;
-    margin-top: 2%;
+    margin-top: 3%;
     margin-left: 2%;
+    font-weight: 500;
   }
 
   .nome{
@@ -31,15 +32,17 @@
     font-size: 1.4rem;
     margin-top: 5px;
     margin-left: 5px;
+    font-weight: 500;
   }
   
   .subtitle{
     font-family: Helvetica;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
   }
   
   .lbl-info{
-    font-size: 13px;
+    font-size: 0.9rem;
   }
   
   .capitalize {
@@ -128,8 +131,8 @@
   }
 
   .chip-container {
-    margin-top: 3%;
-    margin-bottom: 3%;
+    margin-top: 5%;
+    margin-bottom: 5%;
   }
 
   .descOfferta {
@@ -158,8 +161,14 @@
   }
 
   .imgOffer{
+    margin-top: 10%;
     width: 25px;
     height: 25px;
+  }
+
+  .lblOffer{
+    font-size: 0.7rem;
+    margin-bottom: 10%;
   }
 
   .map-container {
@@ -203,6 +212,7 @@
   }
 
   .custom-button {
+    margin-top: 20%;
     --box-shadow: 0px 4px 10px rgba(233, 84, 10, 0.5); /* Ombreggiatura arancione */
     --background: white; /* Sfondo bianco per contrasto */
     --color: #e9540a; /* Colore dell'icona */
