@@ -28,7 +28,7 @@
 
   ion-card-title.titleHomePage {
     font-family: Helvetica !important;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 500;
     margin-left: 3%;
   }
@@ -45,6 +45,12 @@
     font-size: 1.3rem;
     font-weight: 500;
     margin-left: 3%;
+  }
+
+  ion-card-title.titleList {
+    font-family: Helvetica !important;
+    font-size: 1.2rem;
+    font-weight: 500;
   }
 
   ion-spinner {

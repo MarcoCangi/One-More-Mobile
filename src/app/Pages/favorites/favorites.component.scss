@@ -33,16 +33,11 @@ ion-card {
 
 .title{
   font-family: Helvetica;
-  font-weight: lighter;
-  margin-left: 3%;
   font-size: 1.2rem;
+  font-weight: 450;
+  margin-left: 3%;
 }
 
-.title2{
-  font-family: Helvetica;
-  font-weight: lighter;
-  font-size: 1.1rem;
-}
 
 .labelTitle{
   position: fixed;
@@ -50,7 +45,7 @@ ion-card {
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: Helvetica;
-  font-weight: lighter;
+  font-weight: 450;
   font-size: 1.1rem;
 }
 

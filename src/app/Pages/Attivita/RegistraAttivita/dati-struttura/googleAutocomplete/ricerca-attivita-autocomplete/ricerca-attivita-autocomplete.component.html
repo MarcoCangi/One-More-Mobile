@@ -9,7 +9,7 @@
 
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-  <ion-item class="TitleContent">
+  <ion-item class="TitleContent" *ngIf="!isLoading && !this.attivita && !this.ListAttivita">
     <ion-grid>
       <ion-row>
         <ion-col class="column ion-text-center ion-align-items-center">

@@ -6,7 +6,7 @@
         <ion-grid>
           <ion-row>
             <ion-col size="10">
-              <ion-card-title class="title2">{{ attivita.nome }}</ion-card-title>
+              <ion-card-title class="titleList">{{ attivita.nome }}</ion-card-title>
             </ion-col>
             <ion-col size="2" class="column ion-text-center ion-align-items-center">
               <ion-icon name="close-outline"(click)="openConfirmModal(attivita.idAttivita,$event)" style="color:red; width: 25px; height: 25px;"></ion-icon>
@@ -39,7 +39,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-card-title class="title">{{'Promo'|translate}}</ion-card-title>
+        <ion-card-title class="titleModal">{{'Promo'|translate}}</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissPromoModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -60,7 +60,7 @@
   <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-card-title class="title" style="margin-left: 3%;">{{'REMOVEFAVORITES'|translate}}</ion-card-title>
+          <ion-card-title class="titleModal" style="margin-left: 3%;">{{'REMOVEFAVORITES'|translate}}</ion-card-title>
           <ion-buttons slot="end">
             <ion-button (click)="dismissConfirmModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
           </ion-buttons>
@@ -68,7 +68,7 @@
       </ion-header>
         <ion-card>
           <ion-card-header class="column ion-text-center ion-align-items-center">
-            <ion-card-title class="title">
+            <ion-card-title class="titleModal">
               {{'CHECKREMOVEFAVORITES'|translate}} 
             </ion-card-title>
           </ion-card-header>
