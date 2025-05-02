@@ -1,0 +1,95 @@
+<ion-spinner *ngIf="isLoadingSalvataggio" name="crescent" color="primary"></ion-spinner>
+
+<ion-header *ngIf="!isLoadingSalvataggio">
+  <ion-toolbar class="ModalToolbar">
+    <ion-buttons slot="end">
+      <ion-button (click)="close()"><ion-icon class="closeBlack" name="close-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-item class="TitleContent" *ngIf="!isLoadingSalvataggio && !isEsito">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="column ion-text-center ion-align-items-center">
+        <img *ngIf="typeModal === 'Save'" class="imgConfirm" src="assets/Img/spunta_vicino.png"/>
+        <img *ngIf="typeModal === 'Edit'" class="imgConfirm" src="assets/Img/zerocommissioni_1.png"/>
+        <img *ngIf="typeModal === 'Delete'" class="imgConfirm" src="assets/Img/triste.png"/>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf="typeModal === 'Save'" size="12" class="column ion-text-center ion-align-items-center">
+        <div  class="divModal">
+          {{ 'AlmostThere' | translate }}
+        </div>
+        <div class="divModal">
+          {{ 'ProceedSave' | translate }} 
+        </div>
+      </ion-col>
+      <ion-col *ngIf="typeModal === 'Edit'" size="12" class="column ion-text-center ion-align-items-center">
+        <div  class="divModal">
+          {{ 'AlmostThere' | translate }}
+        </div>
+        <div class="divModal">
+          {{ 'ProceedChange' | translate }} 
+        </div>
+      </ion-col>
+      <ion-col *ngIf="typeModal === 'Delete'" size="12" class="column ion-text-center ion-align-items-center">
+        <div class="divModal">
+          {{ 'CONFIRM_DELETE_ACTIVITY' | translate }} 
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+<div class="btnContainer" *ngIf="!isLoadingSalvataggio && !isEsito">
+  <ion-button color="danger" (click)="close()" class="btnConfirm">
+    <ion-icon class="iconBtn" name="close-outline"></ion-icon>
+  </ion-button>
+  <ion-button color="success" (click)="confirm()" class="btnConfirm">
+    <ion-icon class="iconBtn" name="checkmark-outline"></ion-icon>
+  </ion-button>
+</div>
+
+
+<ion-item class="TitleContent" *ngIf="!isLoadingSalvataggio && isEsito">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="column ion-text-center ion-align-items-center">
+        <img *ngIf="isEsitoOk" class="imgConfirm" src="assets/Img/spunta_okay.png"/>
+        <img *ngIf="!isEsitoOk" class="imgConfirm" src="assets/Img/not_okay.png"/>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf="isEsitoOk && (typeModal === 'Save' || typeModal === 'Edit')" size="12" class="column ion-text-center ion-align-items-center">
+        <div class="divModal">
+          {{ 'SAVE_SUCCESS' | translate }} 
+        </div>
+      </ion-col>
+      <ion-col *ngIf="isEsitoOk && typeModal === 'Delete'" size="12" class="column ion-text-center ion-align-items-center">
+        <div class="divModal">
+          {{ 'ACTIVITY_DELETED' | translate }} 
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!isEsitoOk" size="12" class="column ion-text-center ion-align-items-center">
+        <div class="divModal">
+          {{ 'SAVE_ERROR' | translate }} 
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+<div class="btnContainer" *ngIf="!isLoadingSalvataggio && isEsito && !isEsitoOk">
+  <ion-button color="light" (click)="close()" class="btnDone" shape="round">
+    <ion-label>{{ 'GO_BACK' | translate }}</ion-label>
+  </ion-button>
+</div>
+
+<div class="btnContainer" *ngIf="!isLoadingSalvataggio && isEsito && isEsitoOk">
+  <ion-button color="primary" (click)="confirm()" class="btnDone" shape="round">
+    <ion-label>{{ 'NEXT' | translate }}</ion-label>
+  </ion-button>
+</div>
+      

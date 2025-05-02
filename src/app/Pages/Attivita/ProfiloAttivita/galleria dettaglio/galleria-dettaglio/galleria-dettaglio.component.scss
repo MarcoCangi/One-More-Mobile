@@ -3,17 +3,6 @@
   --height: 100%;
 }
 
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
-  gap: 10px;
-  padding: 10px;
-  justify-items: center;
-  align-items: start;
-  height: calc(100vh - 56px); /* Altezza meno l'altezza del toolbar */
-  overflow-y: auto;
-}
-
 .uniform-image {
   width: 100%;
   height: 120px;
@@ -21,40 +10,12 @@
   border-radius: 5%;
 }
 
-.single-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 120px; /* Aggiunge altezza fissa per evitare sovrapposizioni */
-  margin-bottom: 5px; /* Aggiungi un margine inferiore per evitare sovrapposizioni */
-  overflow: hidden; /* Nasconde l'overflow per mantenere l'aspetto uniforme */
-}
-
-.image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100% - 56px); /* Altezza meno l'altezza del toolbar */
-}
-
 :host {
   display: block;
   height: 100%;
 }
 
-.ion-card {
-  box-sizing: border-box;
-}
-
 .ion-img {
   width: 100%;
   height: auto;
-}
-
-.title{
-  margin-left: 5%;
-  font-family: Helvetica;
-  font-weight: 500;
-  font-size: 1.1rem;
 }

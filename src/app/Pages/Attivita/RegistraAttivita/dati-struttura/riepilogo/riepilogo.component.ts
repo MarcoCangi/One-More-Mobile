@@ -10,9 +10,11 @@ export class RiepilogoComponent  implements OnInit {
 
   @Input() attivita! : Attivita;
   @Output() isCheckedEvent = new EventEmitter<boolean>()
-  @Output() SalvaEvent = new EventEmitter<void>()
+  @Output() SalvaEvent = new EventEmitter<boolean>()
+  @Output() EliminaEvent = new EventEmitter<void>()
   requestAttivita: InsertAttivitaReqDto | undefined;
   isCheckboxChecked = false;
+  isConfirmOpen: boolean = false;
 
   constructor() { }
 
@@ -32,14 +34,22 @@ export class RiepilogoComponent  implements OnInit {
     return this.attivita.immagini.filter(i => i !== immaginePrincipale);
   }
 
+  async conferma(){
+      this.isConfirmOpen = true;
+  }
+
   onCheckboxChange(event: any) {
     const isChecked = event.detail.checked;
     this.isCheckboxChecked = isChecked;
     this.isCheckedEvent.emit(isChecked);
   }
 
-  Salva(){
-    this.SalvaEvent.emit();
+  async Salva(isSaved: boolean) {
+    this.SalvaEvent.emit(isSaved);
+  }
+
+  async Elimina() {
+    this.EliminaEvent.emit();
   }
 
 }

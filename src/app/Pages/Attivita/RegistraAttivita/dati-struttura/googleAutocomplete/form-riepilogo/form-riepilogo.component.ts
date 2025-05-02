@@ -5,7 +5,8 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { TranslateService } from '@ngx-translate/core';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
-import { catchError, lastValueFrom, of, tap } from 'rxjs';
+import { AlertController } from '@ionic/angular';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 
 @Component({
   selector: 'app-form-riepilogo',
@@ -18,6 +19,7 @@ export class FormRiepilogoComponent  implements OnInit {
   @Input() listaComuni : Comuni[] | undefined;
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Output() backEvent = new EventEmitter<void>();
+  errorMessages: string | undefined;
   essioneString:UserSession | null | undefined;
   attivitaForImg! : Attivita;
   segmentValue: string = 'one';
@@ -30,37 +32,24 @@ export class FormRiepilogoComponent  implements OnInit {
   IsModifiedMail: boolean = false;
   IsModifiedCitta: boolean = false;
   IsModifiedDesc: boolean = false;
-  isLoadingSalvataggio: boolean = false;
+  IsConfirmed: boolean = false;
   isCheckboxChecked: boolean = false;
-  countImg = 1;
+  isOpenAlert: boolean = false;
+  isLoading: boolean = false;
   isError: boolean = false;
-  errorNome:string | undefined;
-  errorTel:string | undefined;
-  errorCell:string | undefined;
-  errorTipologia:string | undefined;
-  errorCitta:string | undefined;
-  errorEmail:string | undefined;
-  errorIndirizzo:string | undefined;
-  errorCivico:string | undefined;
-  errorCAP:string | undefined;
-  errorImg:string | undefined;
-  errorDesc:string | undefined;
-  errorDescServ:string | undefined;
-  errorOrari:string | undefined;
+  typeConfirmModal: string | undefined;
   requestAttivita: InsertAttivitaReqDto | undefined;
 
   constructor(private attivitaService: GetApiAttivitaService,
               private translate: TranslateService,
-              private authService: AuthService,) { }
+              private alertController: AlertController) { }
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit() {
     if(this.attivita && this.attivita.placeId && !this.attivita.idAttivita){
       const data = await this.attivitaService.apiGetAttivitaAutocomplete(this.attivita.placeId);
       if (data) {
           this.attivitaForImg = data;
           if(this.attivitaForImg){
-            console.log(this.attivitaForImg.listaTipoAttivita);
             this.attivita.immagini = this.attivitaForImg.immagini;
             this.attivita.listaTipoAttivita = this.attivitaForImg.listaTipoAttivita;
             this.listaAttivitaSelezionate = this.attivita.listaTipoAttivita;
@@ -69,14 +58,18 @@ export class FormRiepilogoComponent  implements OnInit {
     }
     else if(this.attivita && this.attivita.idAttivita){
       this.listaAttivitaSelezionate = this.attivita.listaTipoAttivita;
+
+      if(this.attivita.isVerificata && !this.attivita.esitoVerifica){
+        await this.presentMotivoAlert();
+      }
+
     }
   }
 
   async setChecked(check: boolean){
     this.isCheckboxChecked = check;
   }
-      
-
+  
   returnList(){
     this.backEvent.emit();
   }
@@ -113,51 +106,61 @@ export class FormRiepilogoComponent  implements OnInit {
     this.IsModifiedDesc = false;
   }
 
-  async prosegui() {
-    this.isLoadingSalvataggio = true;
-    if(this.isCheckboxChecked)
-    {
-    
+  closeConfirmModal(){
+    this.IsConfirmed = false;
+    this.typeConfirmModal = undefined;
+  }
+
+  OpenModal(type: string){
+    this.typeConfirmModal = type;
+    this.IsConfirmed = true;
+  }
+
+  async ControlPreSave( isSaved: boolean){
+    this.isLoading = true;
     await this.InitRequestAtt();
-
     await this.controlValidator(this.requestAttivita);
-
-    if (!this.isError) {
-      const sessioneString = this.authService.getUserSession();
-  
-      if (sessioneString) {
-        if (sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.requestAttivita != undefined) { 
-          this.requestAttivita.idSoggetto = sessioneString.idSoggetto;
-        }
-        if (sessioneString.idSoggetto !== null && sessioneString.idSoggetto !== undefined && sessioneString.idSoggetto > 0 && this.attivita != undefined) { 
-          this.attivita.idSoggetto = sessioneString.idSoggetto;
-        }
-        if (this.requestAttivita && this.requestAttivita.immagini != undefined && this.requestAttivita.immagini.length > 0) {
-            this.requestAttivita.immagini.forEach(immagine => {
-            immagine.ordinamento = this.countImg;
-            this.countImg = this.countImg + 1;
-          });
-        }
-          if (this.requestAttivita && this.requestAttivita.listaTipoAttivita && this.attivita && this.attivita.listaTipoAttivita != undefined && this.attivita.listaTipoAttivita.length > 0) {
-            this.requestAttivita.listaTipoAttivita.forEach(att => {
-              if (att.codTipoAttivita) {
-                att.codTipoAttivita = att.codTipoAttivita.toString().padStart(4, '0');
-              }
-            });
-          }
-        
-        if (this.requestAttivita) {
-          console.log(this.requestAttivita);
-          await this.insertAttivita();
-        }
+    if(this.isError){
+      this.isLoading = false;
+      this.presentErrorAlert();
+      this.isOpenAlert = true;
+    }
+    else{
+      if(isSaved){
+        this.OpenModal("Save");
       }
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      else{
+        this.OpenModal("Edit");
+      }
+      this.isLoading = false;
+      this.isOpenAlert = false;
     }
-    
-    this.isLoadingSalvataggio = false;
-    //this.dismissConferma();
-    }
+  }
+
+  async DeleteAttivita() {
+    this.OpenModal("Delete");
+  }
+
+  async presentErrorAlert() {
+    const alert = await this.alertController.create({
+      header: 'Err',
+      message: this.errorMessages,
+      buttons: ['OK'],
+      mode: 'ios'
+    });
+  
+    await alert.present();
+  }
+
+  async presentMotivoAlert() {
+    const alert = await this.alertController.create({
+      header: 'Attenzione',
+      message: this.attivita.motivo,
+      buttons: ['OK'],
+      mode: 'ios'
+    });
+  
+    await alert.present();
   }
 
   getImmaginePrincipale(): string {
@@ -248,32 +251,41 @@ export class FormRiepilogoComponent  implements OnInit {
       this.attivita.isOffertaNoGlutine = isNoGlutine;
   }
 
-  async insertAttivita() {
-      if (this.requestAttivita) {
-        try {
-          const response = await lastValueFrom(
-            this.attivitaService.apiInsertAttivita(this.requestAttivita).pipe(
-              tap(async (response) => {
-                this.authService.setIdAttivitaUserSession(response.idAttivita);
-                // this.isSalvataggioOK = true;
-                // this.isDetailModalOpen = true;
-  
-                const cacheKey = `lista_attivita`; //svuoto la cache con la vecchia lista delle attività
-                //this.storageService.removeItem(cacheKey);
-              }),
-              catchError((error) => {
-                console.error(error.error);
-                // this.isSalvataggioOK = false;
-                // this.isDetailModalOpen = true;
-                return of(null);
-              })
-            )
-          );
-        } catch (error) {
-          console.error('Errore durante l\'inserimento dell\'attività:', error);
-        }
-      }
+  handleOrariChange(newOrari: Orari) {
+    if(this.attivita.orari){
+      this.attivita.orari.lunediMatDa = JSON.parse(JSON.stringify(newOrari.lunediMatDa));
+      this.attivita.orari.lunediMatAl = JSON.parse(JSON.stringify(newOrari.lunediMatAl));
+      this.attivita.orari.lunediPomDa = JSON.parse(JSON.stringify(newOrari.lunediPomDa));
+      this.attivita.orari.lunediPomAl = JSON.parse(JSON.stringify(newOrari.lunediPomAl));
+      this.attivita.orari.martediMatDa = JSON.parse(JSON.stringify(newOrari.martediMatDa));
+      this.attivita.orari.martediMatAl = JSON.parse(JSON.stringify(newOrari.martediMatAl));
+      this.attivita.orari.martediPomDa = JSON.parse(JSON.stringify(newOrari.martediPomDa));
+      this.attivita.orari.martediPomAl = JSON.parse(JSON.stringify(newOrari.martediPomAl));
+      this.attivita.orari.mercolediMatDa = JSON.parse(JSON.stringify(newOrari.mercolediMatDa));
+      this.attivita.orari.mercolediMatAl = JSON.parse(JSON.stringify(newOrari.mercolediMatAl));
+      this.attivita.orari.mercolediPomDa = JSON.parse(JSON.stringify(newOrari.mercolediPomDa));
+      this.attivita.orari.mercolediPomAl = JSON.parse(JSON.stringify(newOrari.mercolediPomAl));
+      this.attivita.orari.giovediMatDa = JSON.parse(JSON.stringify(newOrari.giovediMatDa));
+      this.attivita.orari.giovediMatAl = JSON.parse(JSON.stringify(newOrari.giovediMatAl));
+      this.attivita.orari.giovediPomDa = JSON.parse(JSON.stringify(newOrari.giovediPomDa));
+      this.attivita.orari.giovediPomAl = JSON.parse(JSON.stringify(newOrari.giovediPomAl));
+      this.attivita.orari.venerdiMatDa = JSON.parse(JSON.stringify(newOrari.venerdiMatDa));
+      this.attivita.orari.venerdiMatAl = JSON.parse(JSON.stringify(newOrari.venerdiMatAl));
+      this.attivita.orari.venerdiPomDa = JSON.parse(JSON.stringify(newOrari.venerdiPomDa));
+      this.attivita.orari.venerdiPomAl = JSON.parse(JSON.stringify(newOrari.venerdiPomAl));
+      this.attivita.orari.sabatoMatDa = JSON.parse(JSON.stringify(newOrari.sabatoMatDa));
+      this.attivita.orari.sabatoMatAl = JSON.parse(JSON.stringify(newOrari.sabatoMatAl));
+      this.attivita.orari.sabatoPomDa = JSON.parse(JSON.stringify(newOrari.sabatoPomDa));
+      this.attivita.orari.sabatoPomAl = JSON.parse(JSON.stringify(newOrari.sabatoPomAl));
+      this.attivita.orari.domenicaMatDa = JSON.parse(JSON.stringify(newOrari.domenicaMatDa));
+      this.attivita.orari.domenicaMatAl = JSON.parse(JSON.stringify(newOrari.domenicaMatAl));
+      this.attivita.orari.domenicaPomDa = JSON.parse(JSON.stringify(newOrari.domenicaPomDa));
+      this.attivita.orari.domenicaPomAl = JSON.parse(JSON.stringify(newOrari.domenicaPomAl));
+      
+      if(this.requestAttivita && this.requestAttivita.orari)
+        this.requestAttivita.orari = this.attivita.orari;
     }
+  }
 
   async InitRequestAtt() {
       this.requestAttivita = new InsertAttivitaReqDto(
@@ -303,164 +315,268 @@ export class FormRiepilogoComponent  implements OnInit {
   }
 
   async controlValidator(request: InsertAttivitaReqDto | undefined){
-
+      this.errorMessages = "";
       this.isError = false;
       const telefonoPattern = /^[0-9()+ -]*$/;
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const noSpecialCharsRegex = /^(?!.*(DROP|TABLE|INSERT|DELETE|UPDATE)).*[a-zA-Z0-9À-ÖØ-öø-ÿ.,()!?/@#& _-]*$/i;
       const noSpecialCharsRegexCitta = /^[a-zA-Z0-9 _-]*$/;
-  
       if(request)
       {
       //CONTROLLO NOME//
-      if(request.nome == undefined || request.nome == ""){
+      if(request.nome == undefined || request.nome == "" || request.nome == null){
         this.translate.get('ERRORS.ACTIVITY_NAME_REQUIRED').subscribe((translatedText: string) => {
-          this.errorNome = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if(request.nome.length < 2){
         this.translate.get('ERRORS.MINIMUM_LENGTH_2').subscribe((translatedText: string) => {
-          this.errorNome = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if(request.nome.length > 50){
         this.translate.get('ERRORS.MAX_LENGTH_50').subscribe((translatedText: string) => {
-          this.errorNome = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if (!noSpecialCharsRegex.test(request.nome)) {
         this.translate.get('ERRORS.NAME_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
-          this.errorNome = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO TELEFONO//
-      if(request.telefono == undefined || request.telefono == ""){
+      if(request.telefono == undefined || request.telefono == "" || request.telefono == null){
         this.translate.get('ERRORS.PHONE_NUMBER_REQUIRED').subscribe((translatedText: string) => {
-          this.errorTel = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if(!telefonoPattern.test(request.telefono)){
         this.translate.get('ERRORS.INVALID_FORMAT').subscribe((translatedText: string) => {
-          this.errorTel = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
      
       //CONTROLLO TIPO ATTIVITA//
-      if(request.listaTipoAttivita == undefined || request.listaTipoAttivita.length == 0){
+      if(request.listaTipoAttivita == undefined || request.listaTipoAttivita.length == 0 || request.listaTipoAttivita == null){
         this.translate.get('ERRORS.LEAST_ONE_TYPE').subscribe((translatedText: string) => {
-          this.errorTipologia = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO CITTA'//
-      if(request.citta == undefined || request.citta == ""){
+      if(request.citta == undefined || request.citta == "" || request.citta == null){
         this.translate.get('ERRORS.CITY_OR_MUNICIPALITY').subscribe((translatedText: string) => {
-          this.errorCitta = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if(this.listaComuni && !this.listaComuni.some(comune => comune.descComune === request.citta)){
         this.translate.get('ERRORS.VALID_MUNICIPALITY').subscribe((translatedText: string) => {
-          this.errorCitta = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if (!noSpecialCharsRegexCitta.test(request.citta)) {
         this.translate.get('ERRORS.MUNICIPALITY_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
-          this.errorCitta = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO EMAIL//
-      if(request.email == undefined || request.email == ""){
+      if(request.email == undefined || request.email == "" || request.email == null){
         this.translate.get('ERRORS.MAIL_REQUIRED').subscribe((translatedText: string) => {
-          this.errorEmail = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if (!emailRegex.test(request.email)) {
         this.translate.get('ERRORS.VALID_EMAIL').subscribe((translatedText: string) => {
-          this.errorEmail = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO INDIRIZZO//
-      if(request.indirizzo == undefined || request.indirizzo == ""){
+      if(request.indirizzo == undefined || request.indirizzo == "" || request.indirizzo == null){
         this.translate.get('ERRORS.ADDRESS_REQUIRED').subscribe((translatedText: string) => {
-          this.errorIndirizzo = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO CIVICO//
-      if(request.civico == undefined || request.civico == ""){
+      if(request.civico == undefined || request.civico == "" || request.civico == null){
         this.translate.get('ERRORS.CIVIC_REQUIRED').subscribe((translatedText: string) => {
-          this.errorCivico = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO CAP//
-      if(request.cap == undefined || request.cap == ""){
+      if(request.cap == undefined || request.cap == "" || request.cap == null){
         this.translate.get('ERRORS.ZIP_CODE_REQUIRED').subscribe((translatedText: string) => {
-          this.errorCAP = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO ORARI//
-      //this.controlOrari(request);
+      this.controlOrari(request);
   
       //CONTROLLO IMMAGINI//
-      if(request.immagini == undefined || request.immagini.length == 0){
+      if(request.immagini == undefined || request.immagini.length == 0 || request.immagini == null){
         this.translate.get('ERRORS.ONE_OR_MORE_IMAGES').subscribe((translatedText: string) => {
-          this.errorImg = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       if(!request.immagini.find(i => i.isImmaginePrincipale)){
         this.translate.get('ERRORS.PROFILE_IMAGE_REQUIRED').subscribe((translatedText: string) => {
-          this.errorImg = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
   
       //CONTROLLO DESCRIZIONE//
-      if(request.description == undefined || request.description == ""){
+      if(request.description == undefined || request.description == "" || request.description == null){
         this.translate.get('ERRORS.DESCR_ACTIVITY_REQUIRED').subscribe((translatedText: string) => {
-          this.errorDesc = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if(request.description.length < 50){
-        this.translate.get('ERRORS.MINIMUM_LENGTH_DESC_100').subscribe((translatedText: string) => {
-          this.errorDesc = translatedText;
+        this.translate.get('ERRORS.MINIMUM_LENGTH_DESC_50').subscribe((translatedText: string) => {
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if(request.description.length > 2000){
         this.translate.get('ERRORS.MAX_LENGTH_DESC_2000').subscribe((translatedText: string) => {
-          this.errorDesc = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       else if (!noSpecialCharsRegex.test(request.description)) {
         this.translate.get('ERRORS.DESCR_CHAR_NOT_ALLOWED').subscribe((translatedText: string) => {
-          this.errorDesc = translatedText;
+          this.errorMessages = translatedText;
           this.isError = true;
+          return
         });
       }
       }
+  }
+
+  async controlOrari (request: InsertAttivitaReqDto) {
+    //CONTROLLO ORARI//
+    if(request.orari == undefined || 
+       !request.orari.lunediMatDa && !request.orari.lunediMatAl &&
+       !request.orari.lunediPomDa && !request.orari.lunediPomAl &&
+       !request.orari.martediMatDa && !request.orari.martediMatAl &&  
+       !request.orari.martediPomDa && !request.orari.martediPomAl && 
+       !request.orari.mercolediMatDa && !request.orari.mercolediMatAl &&
+       !request.orari.mercolediPomDa && !request.orari.mercolediPomAl &&
+       !request.orari.giovediMatDa && !request.orari.giovediMatAl &&
+       !request.orari.giovediPomDa && !request.orari.giovediPomAl &&
+       !request.orari.venerdiMatDa && !request.orari.venerdiMatAl &&
+       !request.orari.venerdiPomDa && !request.orari.venerdiPomAl &&
+       !request.orari.sabatoMatDa && !request.orari.sabatoMatAl &&
+       !request.orari.sabatoPomDa && !request.orari.sabatoPomAl &&
+       !request.orari.domenicaMatDa && !request.orari.domenicaMatAl &&
+       !request.orari.domenicaPomDa && !request.orari.domenicaPomAl
+    )
+      {
+        this.translate.get('ERRORS.REFERENCE_TIME').subscribe((translatedText: string) => {
+          this.errorMessages = translatedText;
+          this.isError = true;
+          return
+        });
+      }
+    else  if((request.orari.lunediMatDa && !request.orari.lunediMatAl) ||
+             (request.orari.lunediPomDa && !request.orari.lunediPomAl) ||
+             (request.orari.martediMatDa && !request.orari.martediMatAl) ||
+             (request.orari.martediPomDa && !request.orari.martediPomAl) ||
+             (request.orari.mercolediMatDa && !request.orari.mercolediMatAl) ||
+             (request.orari.mercolediPomDa && !request.orari.mercolediPomAl) ||
+             (request.orari.giovediMatDa && !request.orari.giovediMatAl) ||
+             (request.orari.giovediPomDa && !request.orari.giovediPomAl) ||
+             (request.orari.venerdiMatDa && !request.orari.venerdiMatAl) ||
+             (request.orari.venerdiPomDa && !request.orari.venerdiPomAl) ||
+             (request.orari.sabatoMatDa && !request.orari.sabatoMatAl) ||
+             (request.orari.sabatoPomDa && !request.orari.sabatoPomAl) ||
+             (request.orari.domenicaMatDa && !request.orari.domenicaMatAl) ||
+             (request.orari.domenicaPomDa && !request.orari.domenicaPomAl))
+            {
+              this.translate.get('ERRORS.INSERT_CLOSING_TIME').subscribe((translatedText: string) => {
+                this.errorMessages = translatedText;
+                this.isError = true;
+                return;
+              });
+            }
+   else  if((request.orari.lunediMatAl && !request.orari.lunediMatDa) ||
+            (request.orari.lunediPomAl && !request.orari.lunediPomDa) ||
+            (request.orari.martediMatAl && !request.orari.martediMatDa) ||
+            (request.orari.martediPomAl && !request.orari.martediPomDa) ||
+            (request.orari.mercolediMatAl && !request.orari.mercolediMatDa) ||
+            (request.orari.mercolediPomAl && !request.orari.mercolediPomDa) ||
+            (request.orari.giovediMatAl && !request.orari.giovediMatDa) ||
+            (request.orari.giovediPomAl && !request.orari.giovediPomDa) ||
+            (request.orari.venerdiMatAl && !request.orari.venerdiMatDa) ||
+            (request.orari.venerdiPomAl && !request.orari.venerdiPomDa) ||
+            (request.orari.sabatoMatAl && !request.orari.sabatoMatDa) ||
+            (request.orari.sabatoPomAl && !request.orari.sabatoPomDa) ||
+            (request.orari.domenicaMatAl && !request.orari.domenicaMatDa) ||
+            (request.orari.domenicaPomAl && !request.orari.domenicaPomDa))
+            {
+              this.translate.get('ERRORS.INSERT_OPENING_TIME').subscribe((translatedText: string) => {
+                this.errorMessages = translatedText;
+                this.isError = true;
+                return;
+              });
+            }
+
+   else  if((request.orari.lunediMatDa && request.orari.lunediMatAl && request.orari.lunediMatDa.trim() > request.orari.lunediMatAl.trim()) ||
+            (request.orari.martediMatDa && request.orari.martediMatAl && request.orari.martediMatDa.trim() > request.orari.martediMatAl.trim()) || 
+            (request.orari.mercolediMatDa && request.orari.mercolediMatAl && request.orari.mercolediMatDa.trim() > request.orari.mercolediMatAl.trim()) ||
+            (request.orari.giovediMatDa && request.orari.giovediMatAl && request.orari.giovediMatDa.trim() > request.orari.giovediMatAl.trim()) ||
+            (request.orari.venerdiMatDa && request.orari.venerdiMatAl && request.orari.venerdiMatDa.trim() > request.orari.venerdiMatAl.trim()) ||
+            (request.orari.sabatoMatDa && request.orari.sabatoMatAl && request.orari.sabatoMatDa.trim() > request.orari.sabatoMatAl.trim()) ||
+            (request.orari.domenicaMatDa && request.orari.domenicaMatAl && request.orari.domenicaMatDa.trim() > request.orari.domenicaMatAl.trim()) )
+            {
+              this.translate.get('ERRORS.START_NOT_GREATER_END').subscribe((translatedText: string) => {
+                this.errorMessages = translatedText;
+                this.isError = true;
+                return;
+              });
+            }
   }
   
 }

@@ -1,6 +1,8 @@
 .photo {
   width: 100%;
   height: auto;
+  border-radius: 5%; /* oppure 50% se vuoi immagine rotonda */
+  object-fit: cover; /* opzionale, per ritaglio uniforme */
 }
 
 .file-input {

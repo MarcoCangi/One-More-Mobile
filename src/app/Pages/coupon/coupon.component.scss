@@ -1,56 +1,21 @@
-.segment{
-    margin-top: 5%;
+.divCardHeaderCnt{
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; width: 100%;
 }
 
-.subSegment{
-    margin-top: 15%;
-}
-
-.btn{
-    object-fit: cover;
-
-    display: flex;
-}
-
-.full-modal::part(content) {
-    height: 100%;
-    width: 100%;
-}
-
-.title{
-    font-family: Helvetica;
-    font-weight: 450;
-    font-size: 1.1rem;
-  }
-
-  .title2{
-    font-family: Helvetica;
-    font-weight: 450;
-    font-size: 1.2rem;
-  }
-
-  .title3{
-    font-family: Helvetica;
-    font-weight: 450;
-    font-size: 1rem;
-  }
-
-  .labelTitle{
-    width: 310px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: Helvetica;
-    font-weight: 500;
-    font-size: 1.2rem;
-  }
-
-.divContainerBottom{
-  margin-top: -1rem;
+.divCardContentCnt {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 8px; /* regola la distanza tra immagine e testo */
+}
+
+.deleteIcon{
+  color:white; 
+  width: 25px; 
+  height: 25px;
 }
 
 .imgCoupon {
@@ -59,6 +24,87 @@
   border-radius: 10px;
 }
 
-ion-item {
-  --padding-start: 0;
+.title{
+  font-family: Helvetica;
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.subtitle{
+  font-family: Helvetica;
+  font-weight: 450;
+  font-size: 1rem;
+}
+
+.segment{
+    margin-top: 5%;
+}
+
+.full-modal::part(content) {
+    height: 100%;
+    width: 100%;
+}
+
+.labelTitle{
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: grey;
+  font-family: Helvetica;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.shiny-orange-background {
+    background: linear-gradient(
+    135deg,
+    #0a3d91 0%,
+    #3b8edc 40%,
+    #a0c8ff 60%,
+    #0a3d91 100%
+  );
+  // background: linear-gradient(
+  //   135deg,
+  //   #e9540a 0%,
+  //   #fa7330 40%,
+  //   #fd9c5f 60%,
+  //   #e9540a 100%
+  // );
+
+  background-size: 400% 400%;
+  animation: shimmer 6s ease infinite;
+
+  color: #ffffff;
+  border-radius: 10px;
+
+  /* Per effetto luccicante */
+  box-shadow: 0 0 10px rgba(112, 219, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.btn {
+  --color: #ffffff;
+  --border-color: #ffffff;
+}
+
+.btnContainer {
+  display: flex; 
+  flex-direction: column; 
+  gap: 2px;
+}
+
+.icon{
+  margin-top:5px; 
+  width: 35px;
+  height: 35px; 
+  object-fit: cover;
 }

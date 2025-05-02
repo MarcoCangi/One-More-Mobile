@@ -56,10 +56,8 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
     this.isLoading = true;
     if(this.requestAttivita){
       const data = await this.attivitaService.apiGetListaAttivitaAutocomplete(this.requestAttivita);
-          if (data) {
+          if (data)
               this.ListAttivita = data;
-              console.log(data);
-          }
         }
         this.isLoading = false;  
   }

@@ -47,6 +47,14 @@
     margin-left: 3%;
   }
 
+  ion-title.titleModalWhite {
+    font-family: Helvetica !important;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-left: 3%;
+    color:white
+  }
+
   ion-card-title.titleList {
     font-family: Helvetica !important;
     font-size: 1.2rem;
@@ -106,4 +114,15 @@
     font-family: Helvetica;
     font-size: 1.1rem;
     font-weight: 400;
+  }
+
+  ion-toolbar.ModalToolbar {
+    --background: linear-gradient(to right, #e9540a,  #ffffff)  !important;
+    --z-index: 999999;
+  }
+
+  ion-toolbar.ModalToolbarAddAtt {
+    --background: #ffffff !important;
+    --border-radius: 15px !important;
+    --z-index: 999999;
   }

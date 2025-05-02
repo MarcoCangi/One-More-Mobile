@@ -82,10 +82,37 @@ ion-item-divider{
 
 .distance{
   font-family: Helvetica;
-  font-weight: bold;
   font-size: 1rem;
 }
 
 ion-popover{
   width: 100%;
+}
+
+.rating-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 99;
+  display: flex;
+  gap: 2px;
+  background-color: rgba(0, 0, 0, 0.633); /* nero con 50% di opacità */
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.label-overlay {
+  position: absolute;
+  top: 8px; /* Modifica questa posizione in base alle tue preferenze */
+  left: 10px; /* Modifica questa posizione in base alle tue preferenze */
+  z-index: 100;
+  background-color: rgb(30, 192, 39); /* Aggiungi uno sfondo semi-trasparente se lo desideri */
+  color: white; /* Colore del testo */
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.star {
+  color: #f9b300; /* colore oro */
+  font-size: 1rem;
 }

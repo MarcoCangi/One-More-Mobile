@@ -1,4 +1,6 @@
 <div *ngIf="this.attivita.immagini">
+
+  <!-- immagini -->
   <div class="card-container" #widgetsContent>
     <div class="card-wrapper" *ngIf="!isLoading && attivita.immagini && attivita.immagini.length > 0">
       <ion-card class="card-img" *ngFor="let immagine of attivita.immagini.slice(0, 3)" (click)="openDialogImg(attivita.idAttivita)">
@@ -7,7 +9,7 @@
     </div>
     <div *ngIf="isLoading && attivita.immagini && attivita.immagini.length > 0">
       <ion-card class="card-Skeleton">
-        <ion-skeleton-text [animated]="true" class="Skeletonimage"></ion-skeleton-text>
+        <ion-skeleton-text animated class="Skeletonimage"></ion-skeleton-text>
       </ion-card>
     </div>
     <div class="overlayGallery" *ngIf="!isLoading">
@@ -15,6 +17,7 @@
     </div>
   </div>
   
+  <!-- promo -->
   <ion-card *ngIf="!isLoading && this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >
     <ion-grid>
       <ion-row>
@@ -33,11 +36,12 @@
   </ion-card>
   
   <ion-card>
+  <!-- info -->
   <ion-item>
     <ion-card-header>
       <ion-card-title *ngIf="!isLoading" class="nome">{{attivita.nome}}</ion-card-title>
-      <ion-skeleton-text *ngIf="isLoading" [animated]="true" style="height: 25px;"></ion-skeleton-text>
-        <ion-grid style="margin-top: 5px;">
+      <ion-skeleton-text *ngIf="isLoading" animated class="SkeletonTitle"></ion-skeleton-text>
+        <ion-grid style="margin-top: 5px;" *ngIf="!isLoading">
           <ion-row>
             <ion-col size="12" class="star-rating-container">
               <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
@@ -56,9 +60,9 @@
           </ion-row>
         </ion-grid>
         <ion-grid>
-          <ion-row>
+          <ion-row *ngIf="!isLoading">
             <ion-col size="4" class="column ion-text-center ion-align-items-center"> 
-              <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" (click)="callPhoneNumber(attivita.telefono)">
+              <ion-button  shape="round" class="custom-button" style="width: 40px; height: 40px;" (click)="callPhoneNumber(attivita.telefono)">
                 <ion-icon name="call-outline"></ion-icon>
               </ion-button>
             </ion-col>
@@ -72,8 +76,20 @@
                 <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" *ngIf="this.idSoggetto && !this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart-outline"></ion-icon></ion-button>
                 <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" *ngIf="this.idSoggetto && this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart"></ion-icon></ion-button>
             </ion-col>
+            <ion-skeleton-text *ngIf="isLoading" animated class="SkeletonBtn"></ion-skeleton-text>
           </ion-row>
-          <ion-row>
+          <ion-row *ngIf="isLoading">
+            <ion-col size="4" class="column ion-text-center ion-align-items-center"> 
+              <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="4" class="column ion-text-center ion-align-items-center">
+              <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="4" class="column ion-text-center ion-align-items-center">
+              <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!isLoading">
             <ion-col size="4" class="column ion-text-center ion-align-items-center"> 
               <ion-label>{{ 'Call' | translate }}</ion-label>
             </ion-col>
@@ -87,30 +103,23 @@
         </ion-grid>
     </ion-card-header>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="!isLoading">
       <div class="chip-container" *ngIf="!isLoading && (attivita.listaTipoAttivita && attivita.listaTipoAttivita.length > 0)">
           <ion-chip [outline]="true" *ngFor="let tipo of attivita.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
       </div>
-      <div *ngIf="isLoading && (attivita.listaTipoAttivita === undefined || attivita.listaTipoAttivita.length === 0)">
-      <ion-card class="card-Skeleton">
-        <ion-skeleton-text [animated]="true" class="Skeletonimage"></ion-skeleton-text>
-      </ion-card>
-    </div>
   </ion-item>
-    
+  
+  <!-- descrizione -->
   <ion-item>
     <ion-card-content>
-      <ion-card-title class="subtitle">{{ 'ABOUT_US' | translate }}</ion-card-title>
-      <div *ngIf="isLoading && attivita.description === null">
-        <ion-card class="desc-Skeleton">
-          <ion-skeleton-text [animated]="true" class="Skeletonimage"></ion-skeleton-text>
-        </ion-card>
-      </div>
-      <ion-label style="margin-top:4%;">{{attivita.description}}</ion-label>
+      <ion-card-title *ngIf="!isLoading" class="subtitle">{{ 'ABOUT_US' | translate }}</ion-card-title>
+      <ion-skeleton-text *ngIf="isLoading" animated class="SkeletonTitle"></ion-skeleton-text>
+      <ion-skeleton-text *ngIf="isLoading" [animated]="true" class="desc-Skeleton"></ion-skeleton-text>
+      <ion-label *ngIf="!isLoading" style="margin-top:4%;">{{attivita.description}}</ion-label>
     </ion-card-content>
   </ion-item>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="!isLoading">
       <ion-item *ngIf="attivita.isOffertaNoGlutine || attivita.isOffertaVegana || attivita.isOffertaVegetariana">
             <ion-grid style="margin-top: 15px;">
               <ion-row>
@@ -162,6 +171,49 @@
         </app-orari-dettaglio>
       </ion-card>
 
+    </ion-card-content>
+
+    <ion-card-content *ngIf="isLoading">
+      <ion-item>
+            <ion-grid style="margin-top: 15px;">
+              <ion-row>
+                <ion-col size="12" class="column ion-text-center ion-align-items-center">
+                  <ion-skeleton-text animated class="SkeletonTitle"></ion-skeleton-text>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                  <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                  <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                  <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                  <ion-skeleton-text animated class="SkeletonSubtitle"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                  <ion-skeleton-text animated class="SkeletonSubtitle"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="4" class="column ion-text-center ion-align-items-center">
+                  <ion-skeleton-text animated class="SkeletonSubtitle"></ion-skeleton-text>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+      </ion-item>
+  
+      <div class="map-container">
+        <ion-skeleton-text *ngIf="isLoading" [animated]="true" class="desc-Skeleton"></ion-skeleton-text>
+      </div>
+    
+      <div class="map-container">
+        <ion-skeleton-text *ngIf="isLoading" [animated]="true" class="desc-Skeleton"></ion-skeleton-text>
+      </div>
+  
     </ion-card-content>
   </ion-card>
 </div>

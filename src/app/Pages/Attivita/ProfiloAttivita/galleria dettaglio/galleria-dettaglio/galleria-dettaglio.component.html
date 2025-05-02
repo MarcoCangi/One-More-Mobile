@@ -1,7 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-card-title class="titleModal" >{{ 'Gallery' | translate }}</ion-card-title>
-    <ion-icon slot="end" name="close-outline" class="closeBlack" (click)="closeDialog()"></ion-icon>
+    <ion-card-title style="margin-left: 5%;" class="titleModal" >{{ 'Gallery' | translate }}</ion-card-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeDialog()">
+        <ion-icon slot="end" name="close-outline" class="closeBlack" (click)="closeDialog()"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>

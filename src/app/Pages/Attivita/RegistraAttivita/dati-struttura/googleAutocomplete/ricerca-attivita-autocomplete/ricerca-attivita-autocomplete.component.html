@@ -1,5 +1,5 @@
  <ion-header>
-    <ion-toolbar>
+    <ion-toolbar *ngIf="!this.attivita">
       <ion-title Class="titleModal">{{ 'ActivityData' | translate }}</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="this.closeEvent.emit()"><ion-icon class="closeBlack"  name="close-outline"></ion-icon></ion-button>
@@ -52,5 +52,6 @@
   <app-form-riepilogo *ngIf="!isLoading && this.attivita"
                       [attivita]="this.attivita"
                       [listaComuni]="this.listaComuni"
-                      [listaAttivitaDDL]="this.listaAttivitaDDL">
+                      [listaAttivitaDDL]="this.listaAttivitaDDL"
+                      (backEvent)="this.closeEvent.emit()">
   </app-form-riepilogo>

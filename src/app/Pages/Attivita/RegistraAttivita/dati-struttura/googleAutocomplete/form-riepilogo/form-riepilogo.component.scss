@@ -103,4 +103,22 @@
     box-sizing: border-box;
     padding-bottom: 20px; // per evitare che tocchi i bordi
   }
+
+  .statusModal {
+    font-family: Helvetica !important;
+    font-size: 1.0rem;
+    margin-left: 10px;
+  }
+
+  .iconStatus {
+    height: 20px;
+    width: 20px;
+    vertical-align: text-bottom;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  :host ::ng-deep ion-alert::part(header) {
+    color: red;
+  }
   
