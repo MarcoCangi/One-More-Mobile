@@ -1,23 +1,17 @@
-  .TitleContent {
-    margin-top: 25%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+.TitleContent {
+  padding: 10px 20px;
+}
 
-  .formContent {
-    margin-left: 10%;
-    width: 80%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+.formContent {
+  margin: 0 auto;
+  padding: 10px 16px;
+  max-width: 500px;
+  max-height: 600px;
+}
 
-  
+.contentx{
+  --max-height: 500px !important;
+}
 
   .subtitle {
     font-family: Helvetica;

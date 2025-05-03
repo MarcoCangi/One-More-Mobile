@@ -68,6 +68,37 @@ export class GalleryComponent implements OnInit {
     }
   }
 
+  async selectImagePrompt(isProfile: boolean) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt // <-- mostra il prompt nativo
+    });
+  
+    const url = image.dataUrl;
+    if (url) {
+      if (isProfile)
+        this.urlPrincipale = url;
+      else
+        this.urls.push(url);
+  
+      const nomeImmagine = 'camera_image_' + this.immaginiArray.length.toString();
+      const nuovaImmagine: Immagini = {
+        idImmagine: 0,
+        idAttivita: 0,
+        nomeUpload: nomeImmagine,
+        upload: url,
+        isImmaginePrincipale: isProfile,
+        isImmaginePrincipaleTemp: false,
+        ordinamento: 0,
+        isVerificata: false
+      };
+      this.immaginiArray.push(nuovaImmagine);
+      this.immaginiChange.emit(this.immaginiArray);
+    }
+  }
+
   onFileSelected(e: any) {
     if (e.target.files) {
       for (let i = 0; i < e.target.files.length; i++) {

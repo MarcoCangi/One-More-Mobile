@@ -1,9 +1,9 @@
 <div class="segment">
-  <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)">
-    <ion-segment-button value="default">
+  <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)" class="my-segment">
+    <ion-segment-button value="default" class="my-button-left">
       <ion-label>{{ 'ACTIVE_COUPONS' | translate }}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="segment">
+    <ion-segment-button value="segment" class="my-button-right">
       <ion-label>{{ 'INACTIVE_COUPONS' | translate }}</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -46,14 +46,14 @@
 <div *ngIf="!isLoading">
   <div *ngIf="segmentValue === 'segment'">
     <div>
-      <ion-segment class="segment" [(ngModel)]="subSegmentValue" (ionChange)="onSubSegmentChange($event)">
-        <ion-segment-button value="utilizzati">
+      <ion-segment class="segment" [(ngModel)]="subSegmentValue" (ionChange)="onSubSegmentChange($event)" class="my-segment">
+        <ion-segment-button value="utilizzati" class="my-button-left">
           <ion-label>{{ 'USED' | translate }}</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="scaduti">
+        <ion-segment-button value="scaduti" class="my-button">
           <ion-label>{{ 'EXPIRED' | translate }}</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="annullati">
+        <ion-segment-button value="annullati" class="my-button-right">
           <ion-label>{{ 'CANCELED' | translate }}</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -67,15 +67,15 @@
             <span style="font-size: 14px;">
               {{ 'USAGE' | translate }} {{ coupon.timestamp | date:'dd/MM/yyyy' }}
             </span>
-            <ion-icon name="information-circle-outline" (click)="openDetailNonAttModal(coupon)" class="deleteIcon" color="primary"></ion-icon>
+            <ion-icon name="information-circle-outline" (click)="openDetailNonAttModal(coupon)" class="infoIcon" color="primary"></ion-icon>
           </div>
         </ion-card-header>
         <ion-card-content (click)="openDetailModal(coupon)">
           <div class="divCardContentCnt" style="margin-top: -5px;">
             <ion-icon color="success"class="icon" name="checkmark-circle-outline"></ion-icon>
             <div class="btnContainer" style="margin-left: 10px;">
-              <span class="title">{{ coupon.nome }}</span>
-              <span class="subtitle">{{ coupon.titoloPromo }}</span>
+              <span class="titleNonAtt">{{ coupon.nome }}</span>
+              <span class="subtitleNonAtt">{{ coupon.titoloPromo }}</span>
             </div>
           </div>
         </ion-card-content>
@@ -100,8 +100,8 @@
           <div class="divCardContentCnt" style="margin-top: -5px;">
             <ion-icon color="danger" class="icon" name="information-circle-outline"></ion-icon>
             <div class="btnContainer" style="margin-left: 10px;">
-              <span class="title">{{ coupon.nome }}</span>
-              <span class="subtitle">{{ coupon.titoloPromo }}</span>
+              <span class="titleNonAtt">{{ coupon.nome }}</span>
+              <span class="subtitleNonAtt">{{ coupon.titoloPromo }}</span>
             </div>
           </div>
         </ion-card-content>
@@ -126,8 +126,8 @@
           <div class="divCardContentCnt" style="margin-top: -5px;">
             <ion-icon color="danger" class="icon" name="close-circle-outline"></ion-icon>
             <div class="btnContainer" style="margin-left: 10px;">
-              <span class="title">{{ coupon.nome }}</span>
-              <span class="subtitle">{{ coupon.titoloPromo }}</span>
+              <span class="titleNonAtt">{{ coupon.nome }}</span>
+              <span class="subtitleNonAtt">{{ coupon.titoloPromo }}</span>
             </div>
           </div>
         </ion-card-content>

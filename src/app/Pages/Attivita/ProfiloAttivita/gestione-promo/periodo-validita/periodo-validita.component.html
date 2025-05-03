@@ -1,21 +1,28 @@
 <form class="data-form">
-  <ion-label class="title">{{ 'PERIOD' | translate }}*</ion-label>
-  <ion-item class="form">
+  <ion-label class="form-title">{{ 'PERIOD' | translate }}*</ion-label>
+
+  <ion-item class="custom-input-item">
     <ion-input
+      class="custom-input"
       [value]="dataDalFormControl.value ? (dataDalFormControl.value | date: 'dd/MM/yyyy') : ''"
       placeholder="{{ 'STARTING_FROM' | translate }}"
       readonly>
     </ion-input>
-    <ion-button fill="clear" slot="end" (click)="openDataDalPicker()">{{ 'SELCT' | translate }}</ion-button>
+    <ion-button fill="clear" slot="end" class="custom-button" (click)="openDataDalPicker()">
+      {{ 'SELCT' | translate }}
+    </ion-button>
   </ion-item>
 
-  <ion-item class="form">
+  <ion-item class="custom-input-item">
     <ion-input
+      class="custom-input"
       [value]="dataAlFormControl.value ? (dataAlFormControl.value | date: 'dd/MM/yyyy') : ''"
       placeholder="{{ 'UNTIL' | translate }}"
       readonly>
     </ion-input>
-    <ion-button fill="clear" slot="end" (click)="openDataAlPicker()">{{ 'SELCT' | translate }}</ion-button>
+    <ion-button fill="clear" slot="end" class="custom-button" (click)="openDataAlPicker()">
+      {{ 'SELCT' | translate }}
+    </ion-button>
   </ion-item>
 
   <!-- Modal per la selezione della data iniziale -->

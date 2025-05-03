@@ -1,22 +1,31 @@
-<ion-card class="card">
-  <div class="divClose">
-    <ion-icon name="close-outline" class="closeBlack" (click)="Annulla()"></ion-icon>
+
+  <div class="TitleContent">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="column ion-text-center ion-align-items-center">
+          <img style="width: 150px; height: 170px;" src="assets/Img/triste.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="column ion-text-center ion-align-items-center">
+          <p class="titleModal">
+            {{ 'Sure you want to leave' | translate }}
+          </p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="6" size-md="3" class="ion-text-center">
+          <ion-button shape="round" color="danger" expand="block" (click)="LogOut()">
+            <ion-icon slot="start" name="log-in-outline"></ion-icon>
+            <ion-label>{{ 'Logout' | translate }}</ion-label>
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" size-md="3" class="ion-text-center">
+          <ion-button shape="round" color="primary" expand="block" (click)="Annulla()">
+            <ion-label>{{ 'Cancel' | translate }}</ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
-  <ion-content scroll-y="false">
-    <div class="content-wrapper">
-      <h2 class="title">{{ 'Sure you want to leave' | translate }}</h2>
-
-      <div class="contentButton">
-        <ion-button shape="round" color="danger" (click)="LogOut()">
-          <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
-          <ion-label>{{ 'Logout' | translate }}</ion-label>
-        </ion-button>
-
-        <ion-button shape="round" color="success" (click)="Annulla()">
-          <ion-label>{{ 'Cancel' | translate }}</ion-label>
-        </ion-button>
-      </div>
-    </div>
-  </ion-content>
-</ion-card>

@@ -1,42 +1,45 @@
  <ion-header>
     <ion-toolbar *ngIf="!this.attivita">
-      <ion-title Class="titleModal">{{ 'ActivityData' | translate }}</ion-title>
+      <ion-title *ngIf="this.isRicercaFatta" Class="titleModal">{{ 'SelectActivity' | translate }}</ion-title>
+      <ion-title *ngIf="!this.isRicercaFatta" Class="titleModal">{{ 'ActivityData' | translate }}</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="this.closeEvent.emit()"><ion-icon class="closeBlack"  name="close-outline"></ion-icon></ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
-
-  <ion-item class="TitleContent" *ngIf="!isLoading && !this.attivita && !this.ListAttivita">
-    <ion-grid>
-      <ion-row>
-        <ion-col class="column ion-text-center ion-align-items-center">
-          <img style="width: 150px; height: 170px;" src="assets/Img/1_more_visibility.png"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12" class="column ion-text-center ion-align-items-center">
-          <ion-title class="titleModal">
-            {{ 'SUBSCRIBE_LANDING_LINE' | translate }}
-          </ion-title>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
-
-  <div class="formContent" *ngIf="!isLoading && !this.attivita && !this.ListAttivita">
-    <form>
-      <app-nome (nomeChange)="handleNomeChange($event)"></app-nome>
-      <app-citta (cittaChange)="handleCittaChange($event)" [listaComuni]="listaComuni">
-      </app-citta>
-      <!-- <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo> -->
-      <div class="button-container">
-        <ion-button shape="round" (click)="Search()">{{ 'NEXT' | translate }}</ion-button>
-      </div>
-    </form>
+  <div *ngIf="!isLoading && !this.attivita && !this.ListAttivita">
+    <div class="TitleContent">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="column ion-text-center ion-align-items-center">
+            <img style="width: 150px; height: 170px;" src="assets/Img/1_more_visibility.png"/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="column ion-text-center ion-align-items-center">
+            <ion-title class="titleModal">
+              {{ 'SUBSCRIBE_LANDING_LINE' | translate }}
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <div class="formContent">
+      <form>
+        <app-nome (nomeChange)="handleNomeChange($event)"></app-nome>
+        <app-citta (cittaChange)="handleCittaChange($event)" [listaComuni]="listaComuni">
+        </app-citta>
+        <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
+        <div class="button-container">
+          <ion-button shape="round" (click)="Search()">{{ 'NEXT' | translate }}</ion-button>
+        </div>
+      </form>
+    </div>
   </div>
+
+  <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
   <ion-list style="margin-top: 2%;" *ngIf="!isLoading && this.ListAttivita  && !this.attivita">
       
@@ -47,7 +50,17 @@
         <p class="subtitle">{{ attivita.indirizzo }}</p>
       </ion-label>
     </ion-item>
-    </ion-list>
+  </ion-list>
+
+  <ion-row style="flex-wrap: wrap;" *ngIf="!isLoading && !this.attivita && this.isRicercaFatta">
+    <ion-col class="column ion-text-center ion-align-items-center">
+      <ion-card>
+        <p class="titleModal">
+          {{ 'AttNotFind' | translate }}</p>
+        <ion-button color="light" style="margin-top: 10px; margin-bottom: 10px;" shape="round" (click)="aggiuntaNewAttivita()">{{ 'Add_It' | translate }}</ion-button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
   
   <app-form-riepilogo *ngIf="!isLoading && this.attivita"
                       [attivita]="this.attivita"

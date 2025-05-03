@@ -206,14 +206,15 @@
               <ion-label>{{ 'DECLARATION_VERIFICATION' | translate }}</ion-label>
             </ion-card-header>
             <ion-card-content>
-              <ion-checkbox 
-                labelPlacement="end" 
-                (ionChange)="onCheckboxChange($event)" 
-                style="margin-top: 10px;">
-                {{ 'ACCEPT' | translate }}
-                <ion-label style="color: #007bff;">{{ 'TERMS_CONDITIONS' | translate }}</ion-label>
-              </ion-checkbox>
-              <ion-button (click)="Salva(true)">Salva</ion-button>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+                <ion-checkbox slot="start" (ionChange)="onCheckboxChange($event)"></ion-checkbox>
+                <ion-label style="margin: 0;">
+                  {{ 'ACCEPT' | translate }}
+                  <span style="color: #007bff; cursor: pointer;">{{ 'TERMS_CONDITIONS' | translate }}</span>
+                </ion-label>
+              </div>
+              
+              <ion-button (click)="Salva(true)" style="margin-top: 20px;">Salva</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-row>

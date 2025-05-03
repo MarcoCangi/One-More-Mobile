@@ -18,6 +18,12 @@
   height: 25px;
 }
 
+.infoIcon{
+  color:white; 
+  width: 20px; 
+  height: 20px;
+}
+
 .imgCoupon {
   width: 120px !important;
   height: 80px;
@@ -36,13 +42,20 @@
   font-size: 1rem;
 }
 
-.segment{
-    margin-top: 5%;
+.titleNonAtt{
+  font-family: Helvetica;
+  font-weight: 450;
+  font-size: 1.1rem;
 }
 
-.full-modal::part(content) {
-    height: 100%;
-    width: 100%;
+.subtitleNonAtt{
+  font-family: Helvetica;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+.segment{
+    margin-top: 5%;
 }
 
 .labelTitle{
@@ -104,7 +117,9 @@
 
 .icon{
   margin-top:5px; 
-  width: 35px;
-  height: 35px; 
+  width: 30px;
+  height: 30px; 
   object-fit: cover;
 }
+
+

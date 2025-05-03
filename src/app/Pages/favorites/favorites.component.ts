@@ -7,6 +7,7 @@ import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-f
 import { UserService } from 'one-more-frontend-common/projects/one-more-fe-service/src/user-service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 import { firstValueFrom } from 'rxjs';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-favorites',
@@ -32,7 +33,8 @@ export class FavoritesComponent  implements OnInit {
               private authService : AuthService,
               private userService: UserService,
               private promoService: GetApiPromoService,
-              private storageService: StorageService
+              private storageService: StorageService,
+              private actionSheetCtrl: ActionSheetController
   ) { }
 
   ngOnInit() {
@@ -208,6 +210,38 @@ export class FavoritesComponent  implements OnInit {
       this.redirectEsitoEvent.emit(typeRedirect);
     }, 100); // 100 millisecondi = 0.1 secondi
     this.isModalPromoOpen = false;
+  }
+
+  async presentActionSheetFor(idAttivita: number | undefined, event: Event) {
+    event.stopPropagation();
+    this.idAttivitaSelezionata = idAttivita;
+  
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Vuoi rimuovere dai preferiti questa attività?',
+      cssClass: 'custom-action-sheet',
+      buttons: [
+        {
+          text: 'Rimuovi dai preferiti',
+          role: 'destructive',
+          icon: 'trash',
+          cssClass: 'remove-favorite-button',
+          handler: () => {
+            this.AddRemoveFavorite();
+          }
+        },
+        {
+          text: 'Annulla',
+          role: 'cancel',
+          icon: 'close',
+          cssClass: 'cancel-button',
+          handler: () => {
+            // no-op
+          }
+        }
+      ]
+    });    
+  
+    await actionSheet.present();
   }
 
 }

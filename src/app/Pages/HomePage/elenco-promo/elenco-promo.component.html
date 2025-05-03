@@ -1,14 +1,30 @@
 <ion-item style="margin-top: 5%;">
-  <ion-card-title style="margin-bottom: 3%;" class="titleHomePage">{{ 'Promo' | translate }}</ion-card-title>
-  <ion-icon style="margin-bottom: 5%;" (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
+  <ion-card-title style="margin-bottom: 2%;" class="titleHomePage">{{ 'Promo' | translate }}</ion-card-title>
+  <ion-icon style="margin-bottom: 4%;" (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
 </ion-item>
 
 <div class="card-containerHomePage" #widgetsContent>
   <div class="card-wrapperHomePage" *ngIf="!isLoading">
     <ion-card class="card-consigli" *ngFor="let attivita of elencoPromo" (click)="VisualizzaAttivita(attivita)">
-      <div class="label-overlay">
+      <div class="label-overlayHomePage">
         <label>{{'Promo'|translate}}</label>
       </div>
+      <div class="rating-overlayHomePage">
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+          <ion-icon
+            [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
+            class="star">
+          </ion-icon>
+        </ng-container>
+        <span class="rating-countHomePage">({{ attivita.numberOfRating }})</span>
+      </div>
+
+      <!-- Distanza come overlay fissa -->
+      <div class="distance-overlay">
+        <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+        {{ attivita.distanza }}
+      </div>
+      
       <img mat-card-image [src]="getImmaginePrincipale(attivita)" alt="{{'ACTIVITYPHOTO|translate'}}"/>
       <ion-card-header>
         <ion-card-title class="NameAttHomePage">{{attivita.nome}}</ion-card-title>

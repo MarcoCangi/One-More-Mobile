@@ -1,62 +1,70 @@
- .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-    position: relative;
-  }
-  
-  .card-consigli {
-    flex: 0 0 auto;
-    width: 90%;
-    max-width: 260px;
-    flex-wrap: nowrap; /* Impedisce il wrapping del contenuto nella card */
-  }
-  
-  .card-consigli img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .mat-card-actions {
-    align-items: center;
-    justify-content: flex-end;
-  }
-  
-  .mat-card-content {
-    max-height: 50px; /* Imposta un'altezza massima per il contenuto della card */
-    overflow: hidden; /* Nasconde il contenuto che supera l'altezza massima */
-  }
-  
-  .label-overlay {
-    position: absolute;
-    top: 10px; /* Modifica questa posizione in base alle tue preferenze */
-    left: 10px; /* Modifica questa posizione in base alle tue preferenze */
-    z-index: 100;
-    background-color: rgb(30, 192, 39); /* Aggiungi uno sfondo semi-trasparente se lo desideri */
-    color: white; /* Colore del testo */
-    padding: 5px 10px;
-    border-radius: 4px;
-  }
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  position: relative;
+}
 
-  .skeleton {
-    flex: 0 0 auto;
-    width: 260px;
-    height: 210px;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }
+.skeleton {
+  flex: 0 0 auto;
+  width: 260px;
+  height: 210px;
+  object-fit: cover;
+  position: relative;
+  overflow: hidden;
+}
 
-  .imgSkeleton{
-    width: 100%;
-    margin-top: -10px;
-    height: 130px;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }
-  
+.imgSkeleton{
+  width: 100%;
+  margin-top: -10px;
+  height: 130px;
+  object-fit: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-consigli {
+  flex: 0 0 auto;
+  width: 90%;
+  max-width: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.card-consigli:hover {
+  transform: scale(1.02);
+}
+
+.card-consigli img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.star {
+  color: #f8c034;
+  font-size: 14px;
+}
+
+.distanza-inline {
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.title-with-distance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+

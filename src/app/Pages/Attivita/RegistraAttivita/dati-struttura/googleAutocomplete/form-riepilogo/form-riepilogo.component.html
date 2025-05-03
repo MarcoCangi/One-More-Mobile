@@ -24,17 +24,17 @@
   </ion-toolbar>
  <!-- Toolbar con scelta step --> 
   <ion-toolbar>
-    <ion-segment [(ngModel)]="segmentValue" scrollable>
-      <ion-segment-button value="one">
+    <ion-segment [(ngModel)]="segmentValue" scrollable class="my-segment">
+      <ion-segment-button value="one" class="my-button-left">
         <ion-icon class="iconAtt" name="information-circle-outline"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="two">
+      <ion-segment-button value="two" class="my-button">
         <ion-icon class="iconAtt" name="images-outline"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="three">
+      <ion-segment-button value="three" class="my-button">
         <ion-icon class="iconAtt" name="checkmark-outline"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="four">
+      <ion-segment-button value="four" class="my-button-right">
         <ion-icon class="iconAtt" name="reorder-four-outline"></ion-icon>
       </ion-segment-button>
     </ion-segment>

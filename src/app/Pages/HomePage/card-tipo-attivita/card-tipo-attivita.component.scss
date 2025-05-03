@@ -1,5 +1,5 @@
 .horizontal-scroll {
-    margin-top: 5%;
+    margin-top: 3%;
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch; // Abilita il momentum scrolling su iOS
@@ -28,23 +28,35 @@
     }
   
     .icon-container {
-      position: relative; // Assicura che il contenitore dell'icona abbia una posizione relativa
-      width: 130px; // Larghezza dell'icona
-      height: 130px; // Altezza dell'icona
-      box-sizing: border-box; // Include padding e border nella larghezza e altezza dell'elemento
+      position: relative;
+      width: 130px;
+      height: 130px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out;
     }
   
     .icon-container img {
-      width: 100%; // Riempie completamente il contenitore dell'icona
-      height: auto; // Altezza automatica per mantenere l'aspect ratio
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
   
     .icon-caption {
-      position: absolute; // Posizionamento assoluto rispetto al contenitore dell'icona
-      left: 0; // Allinea il testo al centro
-      width: 100%; // Occupa l'intera larghezza del contenitore
-      font-family: Helvetica;
-      font-size: 15px; // Dimensione del font per l'intestazione
-      color: #000000; // Colore del testo, cambialo a tuo piacimento
-      bottom:10px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 8px;
+      font-family: 'Helvetica Neue', Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      color: #ffffff;
+      background-color: rgba(0, 0, 0, 0.7); /* sfondo nero opaco */
+      text-align: center;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, 0.9); /* ombra forte */
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
     }

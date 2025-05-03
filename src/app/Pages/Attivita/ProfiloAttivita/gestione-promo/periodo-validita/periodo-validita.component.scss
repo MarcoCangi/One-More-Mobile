@@ -1,4 +1,5 @@
-.custom-modal {
+  
+  .custom-modal {
     --width: auto;
     --height: auto;
     --max-width: 90%;
@@ -21,12 +22,39 @@
     background: white;
   }
 
-  .title{
-    margin-left: 5%;
-    font-size: 0.8rem;
+  .data-form {
+    padding: 16px;
+  
+    .form-title {
+      font-weight: bold;
+      --margin-bottom: 12px !important;
+      font-size: 16px;
+      color: #333;
+    }
+  
+    .custom-input-item {
+      --background: #f5f5f5;
+      --border-radius: 12px;
+      --padding-start: 12px;
+      --inner-padding-end: 8px;
+      margin-bottom: 12px;
+      transition: border-color 0.3s;
+  
+      &.item-has-focus {
+        border-color: #e9540a;
+      }
+    }
+  
+    .custom-input {
+      color: #333;
+      font-size: 14px;
+      --placeholder-color: #9c9a9a;
+    }
+  
+    .custom-button {
+      font-size: 13px;
+      color: #e9540a;
+      font-weight: 600;
+    }
   }
-
-  .full-modal::part(content) {
-    height: 100%;
-    width: 100%;
-  }
+  
