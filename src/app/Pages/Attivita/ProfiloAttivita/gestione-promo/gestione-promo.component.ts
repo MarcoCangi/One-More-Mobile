@@ -30,6 +30,7 @@ export class GestionePromoComponent  implements OnInit {
     promo: Promo | undefined;
     listaTipologie: TipologiaOfferta[] = [];
     isLimitEnabled: boolean = false;
+    isLimitEnabledPerson: boolean = false;
     isLoading : boolean | undefined;
     errTitolo:string | undefined;
     errPeriodo:string | undefined;
@@ -45,13 +46,23 @@ export class GestionePromoComponent  implements OnInit {
     errorList: string[] = [];
     isEsitoOK : boolean = false;
     isSaved : boolean = false;
-
+    isCheckboxChecked : boolean = false;
+    segmentValue: string = 'one';
+    segmentSteps = ['one', 'two', 'three', 'four', 'five'];
+    isAddPromo: boolean = false;
+    daysOfWeek = [
+      { value: 1, label: 'MONDAY' },
+      { value: 2, label: 'TUESDAY' },
+      { value: 3, label: 'WEDNESDAY' },
+      { value: 4, label: 'THURSDAY' },
+      { value: 5, label: 'FRIDAY' },
+      { value: 6, label: 'SATURDAY' },
+      { value: 7, label: 'SUNDAY' },
+    ];
     @Input() modificaPromo!: Promo;
     @Output() openPageEvent = new EventEmitter<number>();
     @Output() openPageEventUpd = new EventEmitter<number>();
     
-    giorni: GiorniSettimanaPromo | undefined;
-
     constructor(
       private promoService : GetApiPromoService,
       private authService : AuthService,
@@ -66,7 +77,6 @@ export class GestionePromoComponent  implements OnInit {
       this.requestPromo = new InsertPromoReqDto();
       this.requestPromo.days = [];
       this.idAttivita = 0;
-      this.giorni = new GiorniSettimanaPromo();
       this.sessioneString = this.authService.getUserSession();
       this.attivita = undefined;
       if (this.sessioneString !== null) {
@@ -75,55 +85,8 @@ export class GestionePromoComponent  implements OnInit {
       }
 
       if(this.modificaPromo != undefined && this.modificaPromo != null)
-      {
-        this.requestPromo.idPromo = this.modificaPromo.idPromo;
-        this.requestPromo.idAttivita = this.modificaPromo.idAttivita;
-        this.idAttivita = this.modificaPromo.idAttivita;
-        if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0){
-          this.isLimitEnabled = true;
-          this.requestPromo.numCouponMax = this.modificaPromo.numCouponMax;
-        }
-        if(this.modificaPromo.dataDal){
-          this.requestPromo.dataDal = this.modificaPromo.dataDal;
-        }
-        if(this.modificaPromo.dataAl){
-          this.requestPromo.dataAl = this.modificaPromo.dataAl;
-        }
-        if(this.modificaPromo.titoloPromo){
-          this.requestPromo.titoloPromo = this.modificaPromo.titoloPromo;
-        }
-        if(this.modificaPromo.descPromo){
-          this.requestPromo.descPromo = this.modificaPromo.descPromo;
-        }
-        if(this.modificaPromo.validDays){
-          this.requestPromo.validDays = this.modificaPromo.validDays;
-        }
-        if(this.modificaPromo.isAllDayValidita){
-          this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
-        }
-        if(this.modificaPromo.days != undefined && this.modificaPromo.days.length > 0){
-          this.giorni.days = this.modificaPromo.days;
-          this.requestPromo.days = this.modificaPromo.days;
-        }
-        // if(this.modificaPromo.isAllDayValidita){
-        //   this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
-        // }
-        if(this.modificaPromo.orarioValiditaDa && this.modificaPromo.orarioValiditaAl){
-          this.requestPromo.orarioValiditaDa = this.modificaPromo.orarioValiditaDa;
-          this.requestPromo.orarioValiditaAl = this.modificaPromo.orarioValiditaAl;
-        }
-        if(this.modificaPromo.numCouponMax){
-          this.requestPromo.numCouponMax = this.modificaPromo.numCouponMax;
-        }
-        if(this.modificaPromo.numUtilizziPerPersonaMax){
-          this.requestPromo.numUtilizziPerPersonaMax = this.modificaPromo.numUtilizziPerPersonaMax;
-        }
-        if(this.modificaPromo.listaTipologie != undefined)
-        {
-          this.listaTipologie = this.modificaPromo.listaTipologie;
-          this.requestPromo.listaTipologie = this.modificaPromo.listaTipologie;
-        }
-      }
+        await this.PrevalorizzaReqPromo();
+
       else if(!this.modificaPromo)
       {
         if (this.id) {
@@ -131,6 +94,25 @@ export class GestionePromoComponent  implements OnInit {
         }
       }
       this.isLoading = false;
+    }
+
+    avanti() {
+      const currentIndex = this.segmentSteps.indexOf(this.segmentValue);
+      if (currentIndex < this.segmentSteps.length - 1) {
+        this.segmentValue = this.segmentSteps[currentIndex + 1];
+      }
+    }
+    
+    indietro() {
+      const currentIndex = this.segmentSteps.indexOf(this.segmentValue);
+      if (currentIndex > 0) {
+        this.segmentValue = this.segmentSteps[currentIndex - 1];
+      }
+    }
+
+    onCheckboxChange(event: any) {
+      const isChecked = event.detail.checked;
+      this.isCheckboxChecked = isChecked;
     }
 
   async prosegui(){
@@ -635,6 +617,7 @@ export class GestionePromoComponent  implements OnInit {
       const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(idSoggetto));
       if (data) {
         this.listaAttivita = data;
+        console.log(this.listaAttivita);
       }
     } catch (error) {
       console.error('Errore durante il recupero dell\'attività:', error);
@@ -647,7 +630,13 @@ export class GestionePromoComponent  implements OnInit {
       this.requestPromo = new InsertPromoReqDto()  
       this.attivita = attivita;
       this.idAttivita = this.attivita?.idAttivita;
+      this.isAddPromo = true;
     }
+  }
+
+  closeAddMdal(){
+    this.isAddPromo = false;
+    this.attivita = undefined;
   }
 
   dismissConferma(){
@@ -685,4 +674,60 @@ export class GestionePromoComponent  implements OnInit {
     // Costruisci un elenco HTML
     return `<ul>${errorList.map(error => `<li>${error}</li>`).join('')}</ul>`;
   }  
+
+  async PrevalorizzaReqPromo(){
+    this.requestPromo.idPromo = this.modificaPromo.idPromo;
+        this.requestPromo.idAttivita = this.modificaPromo.idAttivita;
+        this.idAttivita = this.modificaPromo.idAttivita;
+        if(this.modificaPromo.numCouponMax != undefined && this.modificaPromo.numCouponMax > 0){
+          this.isLimitEnabled = true;
+          this.requestPromo.numCouponMax = this.modificaPromo.numCouponMax;
+        }
+        if(this.modificaPromo.numUtilizziPerPersonaMax != undefined && this.modificaPromo.numUtilizziPerPersonaMax > 0){
+          this.isLimitEnabledPerson = true;
+          this.requestPromo.numUtilizziPerPersonaMax = this.modificaPromo.numUtilizziPerPersonaMax;
+        }
+        if(this.modificaPromo.dataDal){
+          this.requestPromo.dataDal = this.modificaPromo.dataDal;
+        }
+        if(this.modificaPromo.dataAl){
+          this.requestPromo.dataAl = this.modificaPromo.dataAl;
+        }
+        if(this.modificaPromo.titoloPromo){
+          this.requestPromo.titoloPromo = this.modificaPromo.titoloPromo;
+        }
+        if(this.modificaPromo.descPromo){
+          this.requestPromo.descPromo = this.modificaPromo.descPromo;
+        }
+        if(this.modificaPromo.validDays){
+          this.requestPromo.validDays = this.modificaPromo.validDays;
+        }
+        if(this.modificaPromo.isAllDayValidita){
+          this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
+        }
+        if(this.modificaPromo.days != undefined && this.modificaPromo.days.length > 0){
+          if (this.requestPromo.days) {
+            this.requestPromo.days = this.modificaPromo.days;
+          }
+          this.requestPromo.days = this.modificaPromo.days;
+        }
+        // if(this.modificaPromo.isAllDayValidita){
+        //   this.requestPromo.isAllDayValidita = this.modificaPromo.isAllDayValidita;
+        // }
+        if(this.modificaPromo.orarioValiditaDa && this.modificaPromo.orarioValiditaAl){
+          this.requestPromo.orarioValiditaDa = this.modificaPromo.orarioValiditaDa;
+          this.requestPromo.orarioValiditaAl = this.modificaPromo.orarioValiditaAl;
+        }
+        if(this.modificaPromo.numCouponMax){
+          this.requestPromo.numCouponMax = this.modificaPromo.numCouponMax;
+        }
+        if(this.modificaPromo.numUtilizziPerPersonaMax){
+          this.requestPromo.numUtilizziPerPersonaMax = this.modificaPromo.numUtilizziPerPersonaMax;
+        }
+        if(this.modificaPromo.listaTipologie != undefined)
+        {
+          this.listaTipologie = this.modificaPromo.listaTipologie;
+          this.requestPromo.listaTipologie = this.modificaPromo.listaTipologie;
+        }
+  }
 }

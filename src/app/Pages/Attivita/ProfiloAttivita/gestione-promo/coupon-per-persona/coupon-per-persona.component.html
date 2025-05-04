@@ -1,13 +1,11 @@
 <form [formGroup]="exampleForm" class="form">
-  <ion-label>{{ 'SET_USAGE_LIMIT' | translate }}</ion-label>
-  <ion-toggle style="margin-left: 5%;" [(ngModel)]="isLimitEnabled" [ngModelOptions]="{standalone: true}" color="primary"></ion-toggle>
-<div *ngIf="isLimitEnabled" style="margin-top: 5%;">
-  <ion-label><p>{{ 'COUPON_LIMIT_PER_PERSON' | translate }}</p></ion-label>
-  <ion-item>
-    <ion-input type="number" 
+<div>
+  <ion-label class="promoLabel">{{ 'COUPON_LIMIT_PER_PERSON' | translate }}</ion-label>
+    <ion-input style="margin-top: 15px;"
+              type="number" 
                formControlName="nMax"
                placeholder="N° max"
+               class="promoInput"
                value={{numMaxPerPersona}}></ion-input>
-  </ion-item>
 </div>
 </form>

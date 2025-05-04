@@ -1,9 +1,11 @@
-<form class="data-form">
-  <ion-label class="form-title">{{ 'PERIOD' | translate }}*</ion-label>
-
+<form  class="form">
+  <div class="promo-title-wrapper">
+    <ion-icon name="calendar-outline" class="promo-title-icon"></ion-icon>
+    <span class="titleModalPromo">{{ 'PERIOD' | translate }}</span>
+  </div>
   <ion-item class="custom-input-item">
     <ion-input
-      class="custom-input"
+      class="promoInput"
       [value]="dataDalFormControl.value ? (dataDalFormControl.value | date: 'dd/MM/yyyy') : ''"
       placeholder="{{ 'STARTING_FROM' | translate }}"
       readonly>
@@ -15,7 +17,7 @@
 
   <ion-item class="custom-input-item">
     <ion-input
-      class="custom-input"
+      class="promoInput"
       [value]="dataAlFormControl.value ? (dataAlFormControl.value | date: 'dd/MM/yyyy') : ''"
       placeholder="{{ 'UNTIL' | translate }}"
       readonly>

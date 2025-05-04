@@ -8,8 +8,6 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class CouponPerPersonaComponent implements OnInit {
 
-  isLimitEnabled: boolean = false;
-
   @Input() numMaxPerPersona: number | undefined;
   @Output() numMaxPerPersonaChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -18,8 +16,6 @@ export class CouponPerPersonaComponent implements OnInit {
   exampleForm!:FormGroup;
 
   ngOnInit(): void {
-    if(this.numMaxPerPersona)
-      this.isLimitEnabled = true;
     this.exampleForm = this.fb.group({
       nMax: [this.numMaxPerPersona]
     });

@@ -5,12 +5,9 @@
     background-color: rgb(221, 216, 216);
   }
 
- .lbl-col {
-   display: flex;
-   justify-content: center;
-   align-items: center;
- }
-  
-  .centered-label {
-    text-align: center;
-  }
+ // Button centrato
+.container ion-button {
+  width: 80%;
+  max-width: 300px;
+  font-size: 16px;
+}

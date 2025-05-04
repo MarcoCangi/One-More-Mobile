@@ -5,23 +5,28 @@
   
   <div class="contentListAtt" *ngIf="!isLoading && isVerificato && this.listaAttivita">
       <ion-toolbar class="ModalToolbarAddAtt">
-        <ion-title class="title">{{ 'YOUR_ACTIVITIES' | translate }}</ion-title>
+        <ion-title>{{ 'YOUR_ACTIVITIES' | translate }}</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="addNewAtt()" style="background-color: #007bff; border-radius: 50%; width: 45px; height: 45px;"><ion-icon style="color: white; height: 35px; width: 35px;" name="add-outline"></ion-icon></ion-button>
+          <ion-button (click)="addNewAtt()" class="att-add"><ion-icon style="color: white; height: 35px; width: 35px;" name="add-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar> 
-          <ion-card *ngFor="let att of listaAttivita" (click)="getAttivita(att.idSoggetto, att.idAttivita)">
-            <ion-card-header>
-              <ion-card-title class="title">
-                {{ att.nome }}
-              </ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-card-subtitle>
-                {{att.citta}}, {{att.indirizzo}}, {{att.civico}}, {{att.cap}}
-              </ion-card-subtitle>
-            </ion-card-content>
-          </ion-card>
+      <ion-card *ngFor="let att of listaAttivita" (click)="getAttivita(att.idSoggetto, att.idAttivita)" class="activity-card">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10">
+              <ion-card-header>
+                <ion-card-title class="att-title">{{ att.nome }}</ion-card-title>
+                <ion-card-subtitle class="att-subtitle">
+                  {{ att.citta }}, {{ att.indirizzo }}, {{ att.civico }}, {{ att.cap }}
+                </ion-card-subtitle>
+              </ion-card-header>
+            </ion-col>
+            <ion-col size="2" class="att-icon-col">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
   </div>
     
   <ion-modal [isOpen]="isAdd">

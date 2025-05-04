@@ -5,42 +5,16 @@
   color:black;
 }
 
-.ion-alert{
-  margin-top: 8%;
-  margin-bottom: 4%;
-}
-
-.err{
-  color: red;
-  margin-left: 5%;
-}
-
-.title{
-  font-family: Helvetica;
-  font-weight: 500;
-  font-size: 1.1rem;
-}
-
-.title2{
-  font-family: Helvetica;
-  font-weight: 500;
-  font-size: 1rem;
-}
-
-
 .subTitle{
   font-family: Helvetica;
   font-weight: 500;
   font-size: 1.1rem;
 }
 
-.contentListAtt{
-  margin-top: 5%;
-  min-width: 340px; 
-  scrollbar-width: none;
-  overflow-x: hidden;
-}
 
-.contentListAtt::-webkit-scrollbar {
-  display: none; /* Nasconde la scrollbar nei browser basati su WebKit */
+.att-add{
+  background-color: #007bff; 
+  border-radius: 50%; 
+  width: 45px; 
+  height: 45px;
 }

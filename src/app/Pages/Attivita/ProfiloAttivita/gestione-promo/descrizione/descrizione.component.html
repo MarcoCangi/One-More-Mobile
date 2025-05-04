@@ -1,4 +1,8 @@
-<form [formGroup]="exampleForm">
+<form [formGroup]="exampleForm" class="form">
+  <div class="promo-title-wrapper">
+    <ion-icon name="reader-outline" class="promo-title-icon"></ion-icon>
+    <span class="titleModalPromo">{{ 'ENTER_DESCRIPTION' | translate }}</span>
+  </div>
   <ion-item>
     <ion-textarea
       label="{{'DESCRIPTION_OFFER'|translate}} *" 
@@ -8,16 +12,17 @@
       value={{descrizione}}
       [counter]="true"
       maxlength="200"
+      class="promotextArea"
       [autoGrow]="true">
     </ion-textarea>
   </ion-item>
-  <ion-note style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
+  <ion-note class="promoNote" style="margin-left: 5%;" *ngIf="hasError('required')" color="danger">
     {{ 'ENTER_DESCRIPTION' | translate }}
   </ion-note>
-  <ion-note style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
+  <ion-note class="promoNote" style="margin-left: 5%;" *ngIf="hasError('minlength')" color="danger">
     {{ 'MIN_LENGTH_5' | translate }}
   </ion-note>
-  <ion-note style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
+  <ion-note class="promoNote" style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
     {{ 'MAX_LENGTH_200' | translate }}
   </ion-note>
 </form>

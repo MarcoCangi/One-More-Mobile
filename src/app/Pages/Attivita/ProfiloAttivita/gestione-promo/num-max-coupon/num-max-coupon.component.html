@@ -1,6 +1,9 @@
-<form [formGroup]="exampleForm">
-      <ion-label class="lblH3">{{ 'MAX_COUPONS_AVAILABLE' | translate }}</ion-label>
-      <ion-input matInput type="number" 
+<form [formGroup]="exampleForm" class="form">
+      <ion-label class="promoLabel">{{ 'MAX_COUPONS_AVAILABLE' | translate }}</ion-label>
+      <ion-input style="margin-top: 15px;"
+                 matInput
+                 type="number" 
+                 class="promoInput"
                  placeholder="N° max" 
                  formControlName="nMax"
                  value={{numMax}}></ion-input>

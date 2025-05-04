@@ -22,4 +22,5 @@ export class DettaglioCouponComponent  implements OnInit {
   CloseModalDetail(){
     this.CloseModalDetailEvent.emit();
   }
+  
 }

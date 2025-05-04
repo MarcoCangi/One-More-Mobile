@@ -1,27 +1,12 @@
-.formInput{
-    max-width: 70%;
-    margin-left: 5%;
-    margin-bottom: 5%;
-  }
+.formInput {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto 20px auto;
+}
 
   .err{
     color: red;
     margin-left: 5%;
-  }
-
-  .title{
-    font-family: Helvetica;
-    font-weight: 500;
-    font-size: 1.2rem;
-    margin-left: 5%;
-    z-index: 1;
-  }
-
-  .contentListAtt{
-    margin-top: 5%;
-    min-width: 340px; 
-    scrollbar-width: none;
-    overflow-x: hidden;
   }
 
   .custom-error-dialog {
@@ -77,3 +62,201 @@
     height: 100px;
     width: 80px;
   }
+
+  .btnNav {
+    width: 30px;
+    height: 30px;
+    --background: #ffffff;
+    --color: #3880ff;
+    border-radius: 50%;
+    padding: 0;
+    --padding-start: 2;
+    --padding-end: 2;
+  }
+
+  .titleMod{
+    font-family: Helvetica;
+    font-size: 1.1rem;
+    text-align: left;
+    margin-top: 2%;
+    margin-bottom: 5%;
+  }
+  
+  .subtitle {
+    font-family: Helvetica;
+    font-size: 0.9rem;
+    text-align: left;
+    margin: 0;
+  }
+
+  .iconAtt{
+    height: 30px;
+    width: 30px;
+  }
+  
+  .allinea-verticale {
+    display: flex;
+    align-items: center;
+  }
+  
+  .col-testo {
+    display: flex;
+    align-items: center;
+  }
+
+  .modifica-sezione {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 16px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .btnClose {
+    margin-top: 20px;
+    align-self: center;
+  }
+
+  .formContentModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; // centra tutto il contenuto nel card
+  }
+
+  .col-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .titleTypeCase {
+    font-family: Helvetica;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: var(--ion-background-color);
+  }
+
+  .scrollable {
+    overflow-y: auto;
+    height: 100vh; // o calc(100vh - altezza header)
+    padding: 16px;
+  }
+
+  .switch-segment-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 20px; // per evitare che tocchi i bordi
+  }
+
+  .statusModal {
+    font-family: Helvetica !important;
+    font-size: 1.0rem;
+    margin-left: 10px;
+  }
+
+  .iconStatus {
+    height: 20px;
+    width: 20px;
+    vertical-align: text-bottom;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  :host ::ng-deep ion-alert::part(header) {
+    color: red;
+  }
+
+ion-header,
+ion-toolbar,
+ion-segment,
+ion-segment-button {
+  --width: 100% !important;
+  --min-width: 100% !important;
+  --max-width: 100% !important;
+}
+
+.divContent {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  height: 100%;
+}
+
+.step-content {
+  --padding-top: 12px;
+  --padding-bottom: 80px; /* spazio per la bottom tab bar se c’è */
+  background: #f9f9f9;
+}
+
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-step {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.page-content {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-step {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.promo-header {
+  display: flex;
+  align-items: flex-start;
+}
+
+.promo-icon {
+  font-size: 30px;
+  margin-top: 10px;
+  margin-right: 12px;
+}
+
+.promo-text {
+  display: flex;
+  margin-top: 18px;
+  flex-direction: column;
+  min-height: 60px;
+}
+
+.promo-title {
+  font-family: Helvetica !important;
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.promo-subtitle {
+  font-family: Helvetica !important;
+  margin-top: 20px;
+  font-size: 1.3rem;
+  font-weight: 550;
+}

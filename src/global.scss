@@ -46,6 +46,107 @@
     font-weight: 500;
   }
 
+  .titleModalPromo {
+    font-family: Helvetica !important;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.2;
+  }
+
+
+  ion-card-title.att-title {
+    font-family: Helvetica;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #222;
+  }
+
+  ion-card-subtitle.att-subtitle {
+    font-family: Helvetica, sans-serif;
+    font-size: 0.8rem;
+    color: #555;
+  }
+
+  ion-card.activity-card {
+    margin: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+  }
+
+  ion-input.promoInput, ion-textarea.promotextArea {
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --background: #f4f4f4;
+    --color: #000;
+    font-size: 16px;
+  }
+
+  ion-input.promoInputTime {
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --background: #d1c7c7;
+    --color: #000;
+    font-size: 16px;
+  }
+
+  // Etichette
+ion-label.promoLabel {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+// Note di errore
+ion-note.promoNote[color="danger"] {
+  font-size: 13px;
+  margin-top: 2px;
+  display: block;
+}
+
+  // Checkbox container
+  .check {
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  form.form, .data-form {
+    padding: 16px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    margin-bottom: 16px;
+  }
+
+  .contentListAtt{
+    margin-top: 5%;
+    min-width: 340px; 
+    scrollbar-width: none;
+    overflow-x: hidden;
+  }
+  
+  .contentListAtt::-webkit-scrollbar {
+    display: none; /* Nasconde la scrollbar nei browser basati su WebKit */
+  }
+
+  .att-icon-col ion-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50%;
+    font-size: 30px;
+    color: #007bff;
+  }
+
+  ion-card.activity-card:hover {
+    transform: scale(1.01);
+  }
+
   ion-title.titleModal {
     font-family: Helvetica !important;
     font-size: 1.2rem;
@@ -93,6 +194,20 @@
     overflow: hidden;
     scroll-behavior: smooth;
     flex: 1;
+  }
+
+  .promo-title-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-left: 2%;
+    margin-bottom: 30px;
+  }
+
+  .promo-title-icon {
+    font-size: 20px;
+    min-width: 25px;
+    min-height: 25px;
   }
 
   .card-wrapperHomePage {
@@ -181,6 +296,11 @@
     font-weight: 500;
   }
 
+  ion-icon.iconAtt{
+    height: 25px;
+    width: 25px;
+  }
+
   ion-toolbar.ModalToolbar {
     --background: linear-gradient(to right, #e9540a,  #ffffff)  !important;
     --z-index: 999999;
@@ -232,6 +352,7 @@
   ion-segment.my-segment {
     --background: #ffffff;
     --indicator-color: transparent;
+    --max-height: 50px !important;
   }
   
   ion-segment-button.my-button {

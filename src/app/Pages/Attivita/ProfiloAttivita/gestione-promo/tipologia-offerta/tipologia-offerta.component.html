@@ -1,40 +1,46 @@
 <form class="form">
-
+  <div class="promo-title-wrapper">
+    <ion-icon name="checkmark-outline" class="promo-title-icon"></ion-icon>
+    <span class="titleModalPromo">{{ 'SELECT_OFFER_TYPES' | translate }}</span>
+  </div>
     <ion-grid>
         <ion-row>
-          <ion-col>
-            <ion-label>{{ 'SELECT_OFFER_TYPES' | translate }}</ion-label>
+          <ion-col size="6" style="text-align: left;">
+            <ion-checkbox labelPlacement="end" [formControl]="is2X1FormControl" [checked]=is2X1>2X1</ion-checkbox>
+          </ion-col>
+          <ion-col size="6" style="text-align: left;">
+            <ion-checkbox labelPlacement="end" [formControl]="is3X2FormControl" [checked]=is3x2>3X2</ion-checkbox>
+          </ion-col>
+        </ion-row> 
+        <ion-row>
+          <ion-col size="6" style="text-align: left;">
+            <ion-checkbox labelPlacement="end" [formControl]="isOmaggioFormControl" [checked]=isOmaggio>{{ 'Gift' | translate }}</ion-checkbox>
+          </ion-col>
+          <ion-col size="6" style="text-align: left;">
+            <ion-checkbox labelPlacement="end" [formControl]="isPacchettoFormControl" [checked]=isPacchetto>{{ 'Bundle' | translate }}</ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="is2X1FormControl" [checked]=is2X1>2X1</ion-checkbox>
-          </ion-col>
-          <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="is3X2FormControl" [checked]=is3x2>3X2</ion-checkbox>
-          </ion-col>
-          <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isOmaggioFormControl" [checked]=isOmaggio>{{ 'Gift' | translate }}</ion-checkbox>
-          </ion-col>
-          <ion-col>
-            <ion-checkbox labelPlacement="end" [formControl]="isPacchettoFormControl" [checked]=isPacchetto>{{ 'Bundle' | translate }}</ion-checkbox>
-          </ion-col>
-          <ion-col>
+          <ion-col size="6" style="text-align: left;">
             <ion-checkbox labelPlacement="end" [formControl]="isScontoFormControl" [checked]=isSconto>{{ 'Discounts' | translate }}</ion-checkbox>
           </ion-col>
-          <ion-col>
+          <ion-col size="6" style="text-align: left;">
             <ion-checkbox labelPlacement="end" [formControl]="isBambiniFormControl" [checked]=isBambini>{{ 'Child' | translate }}</ion-checkbox>
           </ion-col>
-          <ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" style="text-align: left;">
             <ion-checkbox labelPlacement="end" [formControl]="isFamiglieFormControl" [checked]=isFamiglie>{{ 'Families' | translate }}</ion-checkbox>
           </ion-col>
-          <ion-col>
+          <ion-col size="6" style="text-align: left;">
             <ion-checkbox labelPlacement="end" [formControl]="isCoppieFormControl" [checked]=isCoppie>{{ 'Couples' | translate }}</ion-checkbox>
           </ion-col>
-          <ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" style="text-align: left;">
             <ion-checkbox labelPlacement="end" [formControl]="isVeganiFormControl" [checked]=isVegani>{{ 'Vegan' | translate }}</ion-checkbox>
           </ion-col>
-          <ion-col>
+          <ion-col size="6" style="text-align: left;">
             <ion-checkbox labelPlacement="end" [formControl]="isVegetarianiFormControl" [checked]=isVegetariani>{{ 'Vegetarian' | translate }}</ion-checkbox>
           </ion-col>
         </ion-row>

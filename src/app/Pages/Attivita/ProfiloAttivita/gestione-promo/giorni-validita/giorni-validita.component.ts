@@ -10,7 +10,7 @@ import { GiorniSettimanaPromo } from 'one-more-frontend-common/projects/one-more
 })
 export class GiorniValiditaComponent  implements OnInit {
 
-  @Input() giorni: GiorniSettimanaPromo | undefined;
+  @Input() giorni: number[] | undefined;
   @Output() isAllSettimanaChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() isLunediChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() isMartediChange : EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -51,25 +51,25 @@ export class GiorniValiditaComponent  implements OnInit {
     this.sabatoFormControl = new FormControl();
     this.domenicaFormControl = new FormControl();
 
-    if(this.giorni != undefined && this.giorni.days != undefined && this.giorni.days.length > 0)   
+    if(this.giorni != undefined && this.giorni.length > 0)   
     {
-      this.isAllSettimanaFormControl = this.giorni.days.includes(0);
-      this.isLunediFormControl = this.giorni.days.includes(1);
-      this.isMartediFormControl = this.giorni.days.includes(2);
-      this.isMercolediFormControl = this.giorni.days.includes(3);
-      this.isGiovediFormControl = this.giorni.days.includes(4);
-      this.isVenerdiFormControl = this.giorni.days.includes(5);
-      this.isSabatoFormControl = this.giorni.days.includes(6);
-      this.isDomenicaFormControl = this.giorni.days.includes(7);
+      this.isAllSettimanaFormControl = this.giorni.includes(0);
+      this.isLunediFormControl = this.giorni.includes(1);
+      this.isMartediFormControl = this.giorni.includes(2);
+      this.isMercolediFormControl = this.giorni.includes(3);
+      this.isGiovediFormControl = this.giorni.includes(4);
+      this.isVenerdiFormControl = this.giorni.includes(5);
+      this.isSabatoFormControl = this.giorni.includes(6);
+      this.isDomenicaFormControl = this.giorni.includes(7);
 
-      this.allSettimanaFormControl.setValue(this.giorni.days.includes(0) ? true : false);
-      this.lunediFormControl.setValue(this.giorni.days.includes(1) ? true : false);
-      this.martediFormControl.setValue(this.giorni.days.includes(2) ? true : false);
-      this.mercolediFormControl.setValue(this.giorni.days.includes(3) ? true : false);
-      this.giovediFormControl.setValue(this.giorni.days.includes(4) ? true : false);
-      this.venerdiFormControl.setValue(this.giorni.days.includes(5) ? true : false);
-      this.sabatoFormControl.setValue(this.giorni.days.includes(6) ? true : false);
-      this.domenicaFormControl.setValue(this.giorni.days.includes(7) ? true : false);
+      this.allSettimanaFormControl.setValue(this.giorni.includes(0) ? true : false);
+      this.lunediFormControl.setValue(this.giorni.includes(1) ? true : false);
+      this.martediFormControl.setValue(this.giorni.includes(2) ? true : false);
+      this.mercolediFormControl.setValue(this.giorni.includes(3) ? true : false);
+      this.giovediFormControl.setValue(this.giorni.includes(4) ? true : false);
+      this.venerdiFormControl.setValue(this.giorni.includes(5) ? true : false);
+      this.sabatoFormControl.setValue(this.giorni.includes(6) ? true : false);
+      this.domenicaFormControl.setValue(this.giorni.includes(7) ? true : false);
 
     }
     

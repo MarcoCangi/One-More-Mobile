@@ -1,29 +1,40 @@
 <form class="form">
-  <ion-label>{{ 'SELECT_DAYS_AVAILABLE' | translate }}</ion-label>
-  <div class="container">
-    <div class="check">
-        <ion-checkbox labelPlacement="end" [formControl]="allSettimanaFormControl" [checked]="isAllSettimanaFormControl === true">{{ 'ALL_DAYS' | translate }}</ion-checkbox>
-      </div>
-      <div class="check">
-        <ion-checkbox labelPlacement="end" [formControl]="lunediFormControl" [checked]="isLunediFormControl === true">{{ 'MONDAY' | translate }}</ion-checkbox>
-      </div>
-      <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="martediFormControl" [checked]="isMartediFormControl === true">{{ 'TUESDAY' | translate }}</ion-checkbox>
-      </div>
-      <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="mercolediFormControl" [checked]="isMercolediFormControl === true">{{ 'WEDNESDAY' | translate }}</ion-checkbox>
-      </div>
-      <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="giovediFormControl" [checked]="isGiovediFormControl === true">{{ 'THURSDAY' | translate }}</ion-checkbox>
-      </div>
-      <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="venerdiFormControl" [checked]="isVenerdiFormControl === true">{{ 'FRIDAY' | translate }}</ion-checkbox>
-      </div>
-      <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="sabatoFormControl" [checked]="isSabatoFormControl === true">{{ 'SATURDAY' | translate }}</ion-checkbox>
-      </div>
-      <div class="check">
-        <ion-checkbox labelPlacement="end" color="primary" [formControl]="domenicaFormControl" [checked]="isDomenicaFormControl === true">{{ 'SUNDAY' | translate }}</ion-checkbox>
-      </div>
+  <div class="promo-title-wrapper">
+    <ion-icon name="today-outline" class="promo-title-icon"></ion-icon>
+    <span class="titleModalPromo">{{ 'SELECT_DAYS_AVAILABLE' | translate }}</span>
   </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" [formControl]="allSettimanaFormControl" [checked]="isAllSettimanaFormControl === true">{{ 'ALL_DAYS' | translate }}</ion-checkbox>
+      </ion-col>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="giovediFormControl" [checked]="isGiovediFormControl === true">{{ 'THURSDAY' | translate }}</ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" [formControl]="lunediFormControl" [checked]="isLunediFormControl === true">{{ 'MONDAY' | translate }}</ion-checkbox>
+      </ion-col>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="venerdiFormControl" [checked]="isVenerdiFormControl === true">{{ 'FRIDAY' | translate }}</ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="martediFormControl" [checked]="isMartediFormControl === true">{{ 'TUESDAY' | translate }}</ion-checkbox>
+      </ion-col>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="sabatoFormControl" [checked]="isSabatoFormControl === true">{{ 'SATURDAY' | translate }}</ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="mercolediFormControl" [checked]="isMercolediFormControl === true">{{ 'WEDNESDAY' | translate }}</ion-checkbox>
+      </ion-col>
+      <ion-col size="6" style="text-align: left;">
+        <ion-checkbox labelPlacement="end" color="primary" [formControl]="domenicaFormControl" [checked]="isDomenicaFormControl === true">{{ 'SUNDAY' | translate }}</ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </form>

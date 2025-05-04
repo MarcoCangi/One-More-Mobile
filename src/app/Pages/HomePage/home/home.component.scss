@@ -4,6 +4,10 @@
     align-items: center;
     width: 100%; /* Opzionale, assicura che il container occupi l'intera larghezza */
   }
+
+.container content{
+  --min-width: 100% !important;
+}
   
   .content{
     margin-top: 2%;
