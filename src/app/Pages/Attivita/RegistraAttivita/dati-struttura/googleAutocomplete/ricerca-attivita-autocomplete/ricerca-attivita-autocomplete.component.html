@@ -8,6 +8,7 @@
     </ion-toolbar>
   </ion-header>
 
+  
   <div *ngIf="!isLoading && !this.attivita && !this.ListAttivita">
     <div class="TitleContent">
       <ion-grid>
@@ -41,8 +42,9 @@
 
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-  <ion-list style="margin-top: 2%;" *ngIf="!isLoading && this.ListAttivita  && !this.attivita">
-      
+  <div *ngIf="!isLoading && this.ListAttivita && this.ListAttivita.length > 0 && !this.attivita"
+     style="max-height: 90vh; overflow-y: auto; margin-top: 2%;">
+  <ion-list>
     <ion-item *ngFor="let attivita of this.ListAttivita" (click)="SelectAttivita(attivita)">
       <ion-icon name="business-outline" slot="start" class="iconAtt"></ion-icon>
       <ion-label>
@@ -50,17 +52,66 @@
         <p class="subtitle">{{ attivita.indirizzo }}</p>
       </ion-label>
     </ion-item>
+    <ion-row style="flex-wrap: wrap; justify-content: center;"*ngIf="!isLoading && !this.attivita && this.isRicercaFatta">
+      <ion-col size="12" size-md="6" class="ion-text-center">
+        <ion-card style="box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 22px; border-radius: 16px; background: linear-gradient(90deg, #ff8a00, #e9540a);">
+          <p style="font-size: 20px; color: #ffffff; margin-bottom: 30px;">
+            {{ 'AttNotFind' | translate }}
+          </p>
+          <ion-button expand="block" color="primary" shape="round" fill="solid" (click)="aggiuntaNewAttivita()">
+            {{ 'Add_It' | translate }}
+          </ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-list>
+  </div>
+  
 
-  <ion-row style="flex-wrap: wrap;" *ngIf="!isLoading && !this.attivita && this.isRicercaFatta">
-    <ion-col class="column ion-text-center ion-align-items-center">
-      <ion-card>
-        <p class="titleModal">
-          {{ 'AttNotFind' | translate }}</p>
-        <ion-button color="light" style="margin-top: 10px; margin-bottom: 10px;" shape="round" (click)="aggiuntaNewAttivita()">{{ 'Add_It' | translate }}</ion-button>
-      </ion-card>
-    </ion-col>
-  </ion-row>
+  <div *ngIf="!isLoading && !this.attivita && (!this.ListAttivita || this.ListAttivita.length === 0) && this.isRicercaFatta">
+    <div class="TitleContent">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="column ion-text-center ion-align-items-center">
+            <img style="width: 150px; height: 170px;" src="assets/Img/triste.png"/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="column ion-text-center ion-align-items-center">
+            <ion-title class="titleModal">
+              {{ 'NO_ACTIVITIES_FOUND' | translate }}
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <div class="formContent">
+      <form>
+        <app-nome (nomeChange)="handleNomeChange($event)"></app-nome>
+        <app-citta (cittaChange)="handleCittaChange($event)" [listaComuni]="listaComuni">
+        </app-citta>
+        <app-indirizzo (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
+        <div class="button-container">
+          <ion-button shape="round" (click)="Search()">{{ 'NEXT' | translate }}</ion-button>
+        </div>
+      </form>
+    </div>
+
+    <ion-row style="flex-wrap: wrap; justify-content: center;"*ngIf="!isLoading && !this.attivita && this.isRicercaFatta">
+      <ion-col size="12" size-md="6" class="ion-text-center">
+        <ion-card style="box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 22px; border-radius: 16px; background: linear-gradient(90deg, #ff8a00, #e9540a);">
+          <p style="font-size: 20px; color: #ffffff; margin-bottom: 30px;">
+            {{ 'AttNotFind' | translate }}
+          </p>
+          <ion-button expand="block" color="primary" shape="round" fill="solid" (click)="aggiuntaNewAttivita()">
+            {{ 'Add_It' | translate }}
+          </ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+
   
   <app-form-riepilogo *ngIf="!isLoading && this.attivita"
                       [attivita]="this.attivita"

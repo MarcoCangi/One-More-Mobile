@@ -13,7 +13,7 @@ import { CouponComponent } from '../../coupon/coupon.component';
 import { UserComponent } from '../../user/user.component';
 import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
 import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -249,5 +249,47 @@ export class HomeComponent  implements OnInit {
         }
       );
     }
+  }
+
+  async getListAttivitaFromArrow(idTypeRicerca: TipoRicercaAttivita) {
+    const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
+  
+    if (!idTypeRicerca) return;
+  
+    this.isLoading = true;
+  
+    let apiCall$: Observable<Attivita[]>;
+  
+    switch (idTypeRicerca) {
+      case TipoRicercaAttivita.AttivitaConPromo:
+        apiCall$ = await this.attivitaService.apiGetListaAttivitaWhitPromo(latitudine, longitudine, false);
+        break;
+  
+      case TipoRicercaAttivita.AttivitaVicine:
+        apiCall$ = await this.attivitaService.apiGetListaAttivitaNear(latitudine, longitudine, false);
+        break;
+  
+      case TipoRicercaAttivita.AttivitaNuove:
+      default:
+        apiCall$ = await this.attivitaService.apiGetListaAttivitaJustSigned(latitudine, longitudine, false);
+        break;
+    }
+  
+    apiCall$.subscribe(
+      (data: Attivita[]) => {
+        const attivitaFiltrate = new AttivitaFiltrate(data, latitudine, longitudine, '');
+        this.listaAttivitaRicerca = attivitaFiltrate;
+  
+        this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+        this.attivitaService.setIsListaAttModalOpen(true);
+  
+        this.isLoading = false;
+        this.openPageEvent(2);
+      },
+      (error: any) => {
+        console.error("Errore durante la chiamata API:", error);
+        this.isLoading = false;
+      }
+    );
   }
 }

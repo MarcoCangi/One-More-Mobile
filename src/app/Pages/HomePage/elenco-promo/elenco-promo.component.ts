@@ -39,7 +39,7 @@ async loadData() {
       this.elencoPromo = cachedData; // Usa i dati dalla cache
       this.isLoading = false;
     } else {
-      (await this.attivitaService.apiGetListaAttivitaWhitPromo(this.latitudine, this.longitudine))
+      (await this.attivitaService.apiGetListaAttivitaWhitPromo(this.latitudine, this.longitudine, true))
         .subscribe(async (data: Attivita[]) => {
           this.elencoPromo = data;
           await this.storageService.setItem(cacheKey, data, 240);

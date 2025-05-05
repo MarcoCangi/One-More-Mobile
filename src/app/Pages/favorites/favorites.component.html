@@ -1,45 +1,57 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
- <div *ngIf="!isLoading && listaAttivitaFavoriti" class="card-container">
-  <div *ngIf="listaAttivitaFavoriti && listaAttivitaFavoriti.length > 0">
-    <ion-card *ngFor="let attivita of listaAttivitaFavoriti" style="--min-height: 140px; --min-width: 400px;">
-      <ion-card-content style="padding: 0;" (click)="VisualizzaAttivita(attivita.idAttivita)">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="10">
-              <ion-card-title class="titleList">{{ attivita.nome }}</ion-card-title>
-            </ion-col>
-            <ion-col size="2" class="column ion-text-center ion-align-items-center">
-              <ion-icon name="close-outline"(click)="presentActionSheetFor(attivita.idAttivita, $event)" style="color:red; width: 25px; height: 25px;"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="5" (click)="VisualizzaAttivita(attivita.idAttivita)">
-              <img [src]="getImmaginePrincipale(attivita)" class="imgCoupon"/>
-            </ion-col>
-            <ion-col size="7">
-              <ion-label (click)="VisualizzaAttivita(attivita.idAttivita)">{{ attivita.indirizzo}}, {{attivita.civico}}</ion-label>
-              <br>
-              <ion-label (click)="VisualizzaAttivita(attivita.idAttivita)">{{ attivita.citta }}</ion-label>
-              <br>
-              <ion-button *ngIf="attivita.isPromoPresente" size="small" color="success" (click)="openPromoModal(attivita.idAttivita)">{{'Promo'|translate}}</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
+
+<div *ngIf="!isLoading && listaAttivitaFavoriti" class="card-container">
+
+  <div *ngIf="listaAttivitaFavoriti.length > 0">
+    <ion-card *ngFor="let attivita of listaAttivitaFavoriti" class="fav-card">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="10">
+            <ion-card-title class="fav-title">{{ attivita.nome }}</ion-card-title>
+          </ion-col>
+          <ion-col size="2" class="ion-text-right">
+            <ion-icon name="close-outline" class="close-icon"
+                      (click)="presentActionSheetFor(attivita.idAttivita, $event)">
+            </ion-icon>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="fav-content" (click)="VisualizzaAttivita(attivita.idAttivita)">
+          <ion-col size="4">
+            <img [src]="getImmaginePrincipale(attivita)" class="fav-img" />
+          </ion-col>
+          <ion-col size="8" class="fav-info">
+            <div class="fav-address">
+              {{ attivita.indirizzo }}, {{ attivita.civico }}<br>
+              {{ attivita.citta }}
+            </div>
+            <ion-button *ngIf="attivita.isPromoPresente"
+                        size="small"
+                        color="success"
+                        fill="solid"
+                        shape="round"
+                        (click)="openPromoModal(attivita.idAttivita)">
+              {{ 'Promo' | translate }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card>
   </div>
+
   <div class="column ion-text-center ion-align-items-center">
-    <ion-label class="labelTitle" *ngIf="!isLoading && listaAttivitaFavoriti && listaAttivitaFavoriti.length === 0" >{{'NOACTIVITIES'|translate}}</ion-label>
+    <ion-label class="labelTitle"
+               *ngIf="!isLoading && listaAttivitaFavoriti.length === 0">
+      {{ 'NOACTIVITIES' | translate }}
+    </ion-label>
   </div>
 </div>
-
-
 
 <ion-modal [isOpen]="isModalPromoOpen" class="full-modal">
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-card-title class="titleModal">{{'Promo'|translate}}</ion-card-title>
+        <ion-card-title class="titleModal">{{ 'Promo' | translate }}</ion-card-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismissPromoModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
         </ion-buttons>
@@ -49,7 +61,8 @@
       <ion-card>
         <ion-card-content>
           <app-pannello-promo [listaPromo]="this.listaPromo"
-                              (redirecEsitoEvent)="redirecEsitoEvent($event)"></app-pannello-promo>
+                              (redirecEsitoEvent)="redirecEsitoEvent($event)">
+          </app-pannello-promo>
         </ion-card-content>
       </ion-card>
     </ion-content>

@@ -61,21 +61,23 @@
 
     <!-- UTILIZZATI -->
     <div *ngIf="subSegmentValue === 'utilizzati'">
-      <ion-card *ngFor="let coupon of couponUtilizzati" style="--min-height: 130px; --min-width: 400px;">
+      <ion-card *ngFor="let coupon of couponUtilizzati" class="coupon-card used">
         <ion-card-header>
-          <div class="divCardHeaderCnt">
-            <span style="font-size: 14px;">
-              {{ 'USAGE' | translate }} {{ coupon.timestamp | date:'dd/MM/yyyy' }}
-            </span>
-            <ion-icon name="information-circle-outline" (click)="openDetailNonAttModal(coupon)" class="infoIcon" color="primary"></ion-icon>
+          <div class="card-header">
+            <span>{{ 'USAGE' | translate }} {{ coupon.timestamp | date:'dd/MM/yyyy' }}</span>
+            <ion-icon name="information-circle-outline"
+                      class="info-icon"
+                      (click)="openDetailNonAttModal(coupon)">
+            </ion-icon>
           </div>
         </ion-card-header>
+      
         <ion-card-content (click)="openDetailModal(coupon)">
-          <div class="divCardContentCnt" style="margin-top: -5px;">
-            <ion-icon color="success"class="icon" name="checkmark-circle-outline"></ion-icon>
-            <div class="btnContainer" style="margin-left: 10px;">
-              <span class="titleNonAtt">{{ coupon.nome }}</span>
-              <span class="subtitleNonAtt">{{ coupon.titoloPromo }}</span>
+          <div class="card-body">
+            <ion-icon name="checkmark-circle" class="status-icon success"></ion-icon>
+            <div class="text-group">
+              <span class="card-title">{{ coupon.nome }}</span>
+              <span class="card-subtitle">{{ coupon.titoloPromo }}</span>
             </div>
           </div>
         </ion-card-content>
@@ -87,21 +89,23 @@
 
     <!-- SCADUTI -->
     <div *ngIf="subSegmentValue === 'scaduti'">
-      <ion-card *ngFor="let coupon of couponScaduti" style="--min-height: 130px; --min-width: 400px;">
+      <ion-card *ngFor="let coupon of couponScaduti" class="coupon-card used">
         <ion-card-header>
-          <div class="divCardHeaderCnt">
-            <span style="font-size: 14px;">
-              {{ 'EXPIRED_ON' | translate }} {{ coupon.dataAl | date:'dd/MM/yyyy' }}
-            </span>
-            <ion-icon name="information-circle-outline" (click)="openDetailNonAttModal(coupon)" class="deleteIcon" color="primary"></ion-icon>
+          <div class="card-header">
+            <span>{{ 'USAGE' | translate }} {{ coupon.timestamp | date:'dd/MM/yyyy' }}</span>
+            <ion-icon name="information-circle-outline"
+                      class="info-icon"
+                      (click)="openDetailNonAttModal(coupon)">
+            </ion-icon>
           </div>
         </ion-card-header>
+      
         <ion-card-content (click)="openDetailModal(coupon)">
-          <div class="divCardContentCnt" style="margin-top: -5px;">
+          <div class="card-body">
             <ion-icon color="danger" class="icon" name="information-circle-outline"></ion-icon>
-            <div class="btnContainer" style="margin-left: 10px;">
-              <span class="titleNonAtt">{{ coupon.nome }}</span>
-              <span class="subtitleNonAtt">{{ coupon.titoloPromo }}</span>
+            <div class="text-group">
+              <span class="card-title">{{ coupon.nome }}</span>
+              <span class="card-subtitle">{{ coupon.titoloPromo }}</span>
             </div>
           </div>
         </ion-card-content>
@@ -113,28 +117,30 @@
     
     <!-- ANNULLATI -->
     <div *ngIf="subSegmentValue === 'annullati'">
-      <ion-card *ngFor="let coupon of couponAnnullati" style="--min-height: 130px; --min-width: 400px;">
+      <ion-card *ngFor="let coupon of couponAnnullati" class="coupon-card used">
         <ion-card-header>
-          <div class="divCardHeaderCnt">
-            <span style="font-size: 14px;">
-              {{ 'CANCELED_ON' | translate }} {{ coupon.timestamp | date:'dd/MM/yyyy' }}
-            </span>
-            <ion-icon name="information-circle-outline" (click)="openDetailNonAttModal(coupon)" class="deleteIcon" color="primary"></ion-icon>
+          <div class="card-header">
+            <span>{{ 'USAGE' | translate }} {{ coupon.timestamp | date:'dd/MM/yyyy' }}</span>
+            <ion-icon name="information-circle-outline"
+                      class="info-icon"
+                      (click)="openDetailNonAttModal(coupon)">
+            </ion-icon>
           </div>
         </ion-card-header>
+      
         <ion-card-content (click)="openDetailModal(coupon)">
-          <div class="divCardContentCnt" style="margin-top: -5px;">
+          <div class="card-body">
             <ion-icon color="danger" class="icon" name="close-circle-outline"></ion-icon>
-            <div class="btnContainer" style="margin-left: 10px;">
-              <span class="titleNonAtt">{{ coupon.nome }}</span>
-              <span class="subtitleNonAtt">{{ coupon.titoloPromo }}</span>
+            <div class="text-group">
+              <span class="card-title">{{ coupon.nome }}</span>
+              <span class="card-subtitle">{{ coupon.titoloPromo }}</span>
             </div>
           </div>
         </ion-card-content>
       </ion-card>
       <div class="column ion-text-center ion-align-items-center"></div>
         <ion-label class="labelTitle" *ngIf="!isLoading && couponAnnullati && couponAnnullati.length === 0" >{{ 'NO_CANCELED_COUPONS' | translate }}</ion-label>
-      </div>
+    </div>
     </div>
   </div>
 </div>

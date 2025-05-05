@@ -19,6 +19,7 @@ export class FormRiepilogoComponent  implements OnInit {
   @Input() listaComuni : Comuni[] | undefined;
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Output() backEvent = new EventEmitter<void>();
+  isLoadIMG: boolean = false;
   errorMessages: string | undefined;
   essioneString:UserSession | null | undefined;
   attivitaForImg! : Attivita;
@@ -46,6 +47,7 @@ export class FormRiepilogoComponent  implements OnInit {
 
   async ngOnInit() {
     if(this.attivita && this.attivita.placeId && !this.attivita.idAttivita){
+      this.isLoadIMG = true;
       const data = await this.attivitaService.apiGetAttivitaAutocomplete(this.attivita.placeId);
       if (data) {
           this.attivitaForImg = data;
@@ -55,6 +57,7 @@ export class FormRiepilogoComponent  implements OnInit {
             this.listaAttivitaSelezionate = this.attivita.listaTipoAttivita;
           }
       }
+      this.isLoadIMG = false;
     }
     else if(this.attivita && this.attivita.idAttivita){
       this.listaAttivitaSelezionate = this.attivita.listaTipoAttivita;

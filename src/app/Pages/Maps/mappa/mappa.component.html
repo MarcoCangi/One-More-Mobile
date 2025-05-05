@@ -17,23 +17,40 @@
 </div>
   
 
-<ion-popover style="width: 100%;" [trigger]="null" [isOpen]="isDetailModalOpen" side="top" alignment="center" (didDismiss)="popoverDismissed()">
+<ion-popover
+  class="activity-popover"
+  [trigger]="null"
+  [isOpen]="isDetailModalOpen"
+  side="top"
+  alignment="center"
+  (didDismiss)="popoverDismissed()">
   <ng-template>
-        <img [src]="getImmaginePrincipale(selectedAttivita)" class="imgAttDetail" alt="{{'ACTIVITYPHOTO'|translate}}" />
-        <ion-card-header>
-          <ion-card-title class="title">{{ selectedAttivita?.nome }}</ion-card-title>
-          <ion-card-subtitle>{{ selectedAttivita?.indirizzo }}, {{ selectedAttivita?.civico }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <div class="chip-container">
-            <ion-chip style="font-size: x-small;" [outline]="true" *ngFor="let tipo of selectedAttivita?.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
-          </div>
-          <div class="btnContent" style="display: flex; justify-content: center; margin-top: 10px;">
-            <ion-button class="btnDettaglio" shape="round" (click)="VisualizzaAttivita(selectedAttivita?.idAttivita, 1)">{{'Detail'|translate}}</ion-button>
-          </div>
-        </ion-card-content>
+    <div class="popover-wrapper">
+      <img [src]="getImmaginePrincipale(selectedAttivita)" class="popover-img" alt="{{ 'ACTIVITYPHOTO' | translate }}" />
+
+      <div class="popover-body">
+        <h2 class="popover-title">{{ selectedAttivita?.nome }}</h2>
+        <p class="popover-address">{{ selectedAttivita?.indirizzo }}, {{ selectedAttivita?.civico }}</p>
+
+        <div class="chip-container">
+          <ion-chip *ngFor="let tipo of selectedAttivita?.listaTipoAttivita" outline="true" class="custom-chip">
+            {{ tipo.descrizione }}
+          </ion-chip>
+        </div>
+
+        <ion-button
+          expand="block"
+          shape="round"
+          class="btn-detail"
+          (click)="VisualizzaAttivita(selectedAttivita?.idAttivita, 1)">
+          {{ 'Detail' | translate }}
+        </ion-button>
+      </div>
+    </div>
   </ng-template>
 </ion-popover>
+
+
 
 
   <!-- Modal for activity list -->
@@ -42,20 +59,26 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="end">
-            <ion-button (click)="dismissListModal()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
+            <ion-button (click)="dismissListModal()">
+              <ion-icon name="close-outline" class="closeBlack"></ion-icon>
+            </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
-        <div style="display: flex; justify-content: center; margin-top: 10px;">
-          <ion-button shape="round" color="primary" (click)="dismissListModal()">
-            <ion-icon name="map-outline"></ion-icon> <ion-label style="margin-left: 10px;">{{'Map'|translate}}</ion-label> 
+  
+      <ion-content class="ion-padding">
+        <div class="btnContent">
+          <ion-button shape="round" fill="outline" color="primary" (click)="dismissListModal()">
+            <ion-icon name="map-outline" slot="start"></ion-icon>
+            {{ 'Map' | translate }}
           </ion-button>
         </div>
-        <ion-card *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
-          <div class="label-overlay" *ngIf="attivita.isPromoPresente">
-            <label>{{'Promo'|translate}}</label>
+  
+        <ion-card class="attivita-card" *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
+          <div class="badge-promo" *ngIf="attivita.isPromoPresente">
+            {{ 'Promo' | translate }}
           </div>
+  
           <div class="rating-overlay">
             <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
               <ion-icon
@@ -64,20 +87,14 @@
               </ion-icon>
             </ng-container>
           </div>
-          <img class="imgAtt" [src]="getImmaginePrincipale(attivita)" />
-          <ion-card-header>
-            <ion-grid style="width: 100%;">
-              <ion-row>
-                <ion-col size="9" style="text-align: left;">
-                  <ion-card-title class="title">{{ attivita.nome }}</ion-card-title>
-                  <ion-card-subtitle>{{ attivita.indirizzo }}, {{ attivita.civico }}</ion-card-subtitle>
-                </ion-col>
-                <ion-col size="3" style="text-align: right;">
-                  <ion-card-title class="distance">{{ attivita.distanza }}</ion-card-title>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-card-header>
+  
+          <img class="att-img" [src]="getImmaginePrincipale(attivita)" />
+  
+          <ion-card-content>
+            <h2 class="att-title">{{ attivita.nome }}</h2>
+            <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
+            <p class="att-distance">{{ attivita.distanza }}</p>
+          </ion-card-content>
         </ion-card>
       </ion-content>
     </ng-template>

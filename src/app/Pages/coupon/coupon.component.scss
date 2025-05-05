@@ -122,4 +122,76 @@
   object-fit: cover;
 }
 
+.coupon-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 450;
+    color: #666;
+  }
+
+  .info-icon {
+    font-size: 20px;
+    color: #3880ff;
+  }
+
+  .card-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: -5px;
+  }
+
+  .status-icon {
+    font-size: 30px;
+    flex-shrink: 0;
+  }
+
+  .text-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-title {
+    --font-family: Helvetica !important;
+    font-weight: 450;
+    font-size: 1.05rem;
+    color: #222;
+  }
+
+  .card-subtitle {
+    --font-family: Helvetica !important;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: #666;
+  }
+}
+
+/* Stato: usato */
+.coupon-card.used .status-icon {
+  color: #2dd36f;
+}
+
+/* Stato: scaduto */
+.coupon-card.expired .status-icon {
+  color: #ffce00;
+}
+
+/* Stato: annullato */
+.coupon-card.canceled .status-icon {
+  color: #eb445a;
+}
 

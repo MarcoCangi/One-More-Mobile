@@ -119,6 +119,7 @@
     "DESCRIPTION": "Description",
     "VALID_DAYS": "Valid days",
     "VALID_TIME": "Valid time",
+    "NO_ACTIVITIES_FOUND": "No activities found",
     "OFFER_TYPES": "Offer types",
     "COUPONS_NOT_USED": "coupons have been requested but not used yet.",
     "CONFIRM_DISABLE_PROMO_WARNING": "By disabling the promotion, you will cancel all unused user coupons. Are you sure you want to disable the promotion?",

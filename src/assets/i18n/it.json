@@ -125,6 +125,7 @@
     "DESCRIPTION_OFFER": "Descrizione dell' offerta",
     "VALID_DAYS": "Giorni validità",
     "VALID_TIME": "Orario validità",
+    "NO_ACTIVITIES_FOUND": "Nessuna attività trovata",
     "OFFER_TYPES": "Tipologie di offerta",
     "NO_LIMIT": "Nessun limite",
     "MAX_COUPONS_PER_PERSON": "Numero massimo dei coupon utilizzabili da una singola persona",

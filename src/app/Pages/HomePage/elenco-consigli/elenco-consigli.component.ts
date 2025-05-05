@@ -40,7 +40,7 @@ export class ElencoConsigliComponent {
           this.listaElencoNuove = cachedData;
           this.isLoading = false;
         } else {
-          (await this.attivitaService.apiGetListaAttivitaJustSigned(this.latitudine, this.longitudine))
+          (await this.attivitaService.apiGetListaAttivitaJustSigned(this.latitudine, this.longitudine, true))
             .subscribe(async (data: Attivita[]) => {
               this.listaElencoNuove = data;
               await this.storageService.setItem(cacheKey, data, 240); 

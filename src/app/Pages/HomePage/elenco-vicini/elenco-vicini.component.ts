@@ -38,7 +38,7 @@ export class ElencoViciniComponent {
         this.elencoVicini = cachedData;
         this.isLoading = false;
       } else {
-        (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine))
+        (await this.attivitaService.apiGetListaAttivitaNear(this.latitudine, this.longitudine, true))
           .subscribe(async (data: Attivita[]) => {
             this.elencoVicini = data;
             await this.storageService.setItem(cacheKey, data, 240); 
