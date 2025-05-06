@@ -1,0 +1,110 @@
+.formInput {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto 20px auto;
+}
+  
+.err{
+  color: red;
+  margin-left: 5%;
+}
+
+.btnNav {
+  width: 30px;
+  height: 30px;
+  --background: #ffffff;
+  --color: #3880ff;
+  border-radius: 50%;
+  padding: 0;
+  --padding-start: 2;
+  --padding-end: 2;
+}
+
+.iconAtt{
+  height: 30px;
+  width: 30px;
+}
+
+.btnClose {
+  margin-top: 20px;
+  align-self: center;
+}
+
+.formContentModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // centra tutto il contenuto nel card
+}
+
+.col-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.titleTypeCase {
+  font-family: Helvetica;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: var(--ion-background-color);
+}
+
+.scrollable {
+  overflow-y: auto;
+  height: 100vh; // o calc(100vh - altezza header)
+  padding: 16px;
+}
+
+.switch-segment-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 20px; // per evitare che tocchi i bordi
+}
+
+:host ::ng-deep ion-alert::part(header) {
+  color: red;
+}
+
+.promo-header {
+  display: flex;
+  align-items: flex-start;
+}
+
+.promo-icon {
+  font-size: 30px;
+  margin-top: 10px;
+  margin-right: 12px;
+}
+
+.promo-text {
+  display: flex;
+  margin-top: 18px;
+  flex-direction: column;
+  min-height: 60px;
+}
+
+.promo-title {
+  font-family: Helvetica !important;
+  margin: 0;
+  font-weight: 550;
+  font-size: 1rem;
+}
+
+.promo-subtitle {
+  font-family: Helvetica !important;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 450;
+}
+
+  

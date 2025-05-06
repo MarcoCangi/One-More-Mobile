@@ -260,18 +260,19 @@ export class MappaComponent implements OnInit {
   
   private createCircularMarker(imageUrl: string): string {
     const svg = `
-      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Bordo blu chiaro spesso -->
-        <circle cx="50" cy="50" r="45" stroke="#4DA6FF" stroke-width="8" fill="white"/>
-  
-        <!-- Ritaglio circolare -->
+    <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4DA6FF" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#4DA6FF" stop-opacity="0"/>
+        </radialGradient>
         <clipPath id="circleClip">
           <circle cx="50" cy="50" r="42"/>
         </clipPath>
-  
-        <!-- Immagine che riempie il cerchio -->
-        <image x="4" y="4" width="92" height="92" href="${imageUrl}" clip-path="url(#circleClip)" preserveAspectRatio="xMidYMid slice"/>
-      </svg>
+      </defs>
+      <circle cx="50" cy="50" r="45" fill="white" stroke="url(#glow)" stroke-width="8"/>
+      <image x="4" y="4" width="92" height="92" href="${imageUrl}" clip-path="url(#circleClip)" preserveAspectRatio="xMidYMid slice"/>
+    </svg>
     `;
   
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;

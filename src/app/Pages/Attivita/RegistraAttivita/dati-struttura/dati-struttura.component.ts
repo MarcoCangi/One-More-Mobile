@@ -95,6 +95,8 @@ export class DatiStrutturaComponent  implements OnInit {
         if (this.attivita && this.attivita.idAttivita && this.attivita.idSoggetto) {
           this.idAttivita = this.attivita.idAttivita;
           this.storageService.setItem(cacheKey, this.attivita);
+          this.isSelected = true;
+          this.isLoading = false;
         }
       }
     } catch (error) {

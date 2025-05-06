@@ -86,14 +86,15 @@ ion-popover{
 
 .rating-overlay {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 99;
-  display: flex;
-  gap: 2px;
-  background-color: rgba(0, 0, 0, 0.651); /* nero con 50% di opacità */
-  padding: 3px 6px;
-  border-radius: 4px;
+    top: 185px;
+    left: 10px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 4px 8px;
+    border-radius: 12px;
 }
 
 .label-overlay {
@@ -146,36 +147,36 @@ ion-popover{
   z-index: 10;
 }
 
-.badge-promo {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #1ec027;
-  color: white;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 6px;
-  z-index: 10;
-}
-
 .att-title {
+  --font-family: Helvetica !important;
   font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 6px;
+  font-weight: 450;
+  margin-top: 15px;
   color: #1e1e1e;
 }
 
 .att-address {
   font-size: 0.95rem;
-  color: #666;
+  color: #665;
 }
 
-.att-distance {
-  font-size: 0.85rem;
-  color: #999;
-  margin-top: 4px;
+.distance-overlayMap {
+  position: absolute;
+  top: 185px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 3px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
 }
+
 
 .btnContent {
   display: flex;
@@ -183,16 +184,35 @@ ion-popover{
   margin-bottom: 16px;
 }
 
+ion-popover::part(content) {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.label-overlayMap {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  z-index: 100;
+  background-color: rgb(30, 192, 39);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
 
 .activity-popover {
-  --width: 92vw;
-  --max-width: 420px;
-  --border-radius: 16px;
+  --width: 80vw;
+  --max-width: 400px;
+  --border-radius: 20px;
   --box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 
   .popover-wrapper {
     background: white;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -203,10 +223,12 @@ ion-popover{
     height: 160px;
     object-fit: cover;
     border-bottom: 1px solid #eee;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
   }
 
   .popover-body {
-    padding: 16px;
+    padding: 20px;
     text-align: center;
   }
 

@@ -22,7 +22,7 @@ import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AppCheckInterceptor } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/interceptors/app-check.interceptor';
-
+import { FormPromoComponent } from './Pages/Attivita/ProfiloAttivita/gestione-promo/form-promo/form-promo.component';
 import { AppComponent } from './app.component';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { NavComponent } from './Pages/HomePage/nav/nav.component';
@@ -191,7 +191,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                  FormRiepilogoComponent,
                  OrariDettaglioComponent,
                  RiepilogoComponent,
-                 ConfirmComponent
+                 ConfirmComponent,
+                 FormPromoComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,

@@ -1,43 +1,8 @@
-.TitleContent {
-  margin-top: 25%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.imgConfirm {
-  width: 150px; 
-  height: 170px;
-}
-
 .divModal {
   font-family: Helvetica !important;
   font-size: 1.3rem;
   font-weight: 500;
   margin-left: 3%;
-}
-
-.btnContainer {
-  display: flex;
-  justify-content: center;
-  gap: 30px; /* distanza tra i due bottoni */
-  margin-top: 10px;
-}
-
-.btnConfirm {
-  --width: 60px;
-  --height: 60px;
-  --border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  padding: 0;
-  min-width: unset;
-  min-height: unset;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 ion-button.btnEdit {

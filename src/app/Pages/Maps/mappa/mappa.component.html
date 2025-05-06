@@ -26,6 +26,24 @@
   (didDismiss)="popoverDismissed()">
   <ng-template>
     <div class="popover-wrapper">
+      <div class="label-overlayMap" *ngIf="selectedAttivita?.isPromoPresente">
+        {{ 'Promo' | translate }}
+      </div>
+
+      <div class="rating-overlayHomePage">
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+          <ion-icon
+            [name]="(selectedAttivita?.rating ?? 0) >= star ? 'star' : (selectedAttivita?.rating ?? 0) >= star - 0.5 ? 'star-half' : 'star-outline'"
+            class="star">
+          </ion-icon>
+        </ng-container>
+      </div>
+
+      <div class="distance-overlay">
+        <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+        {{ selectedAttivita?.distanza }}
+      </div>
+
       <img [src]="getImmaginePrincipale(selectedAttivita)" class="popover-img" alt="{{ 'ACTIVITYPHOTO' | translate }}" />
 
       <div class="popover-body">
@@ -75,7 +93,7 @@
         </div>
   
         <ion-card class="attivita-card" *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
-          <div class="badge-promo" *ngIf="attivita.isPromoPresente">
+          <div class="label-overlayHomePage" *ngIf="attivita.isPromoPresente">
             {{ 'Promo' | translate }}
           </div>
   
@@ -87,13 +105,18 @@
               </ion-icon>
             </ng-container>
           </div>
+
+          <!-- Distanza come overlay fissa -->
+          <div class="distance-overlayMap">
+            <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+            {{ attivita.distanza }}
+          </div>
   
           <img class="att-img" [src]="getImmaginePrincipale(attivita)" />
   
           <ion-card-content>
             <h2 class="att-title">{{ attivita.nome }}</h2>
             <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
-            <p class="att-distance">{{ attivita.distanza }}</p>
           </ion-card-content>
         </ion-card>
       </ion-content>

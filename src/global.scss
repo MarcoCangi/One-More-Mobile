@@ -58,7 +58,7 @@
 
   ion-card-title.att-title {
     font-family: Helvetica;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     color: #222;
   }
@@ -80,9 +80,11 @@
     --border-radius: 12px;
     --padding-start: 16px;
     --padding-end: 16px;
-    --background: #f4f4f4;
     --color: #000;
     font-size: 16px;
+    --border-width: 0;           /* rimuove la linea */
+    --highlight-color-focused: transparent; /* rimuove l'effetto blu */
+    --box-shadow: none;          /* niente ombra */
   }
 
   ion-input.promoInputTime {
@@ -397,5 +399,40 @@ ion-note.promoNote[color="danger"] {
   ion-modal.full-modal::part(content) {
     height: 100%;
     width: 100%;
+  }
+
+  .imgConfirm {
+    width: 150px; 
+    height: 170px;
+  }
+
+  ion-item.TitleContent {
+    margin-top: 25%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btnContainer {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* distanza tra i due bottoni */
+    margin-top: 10px;
+  }
+
+  ion-button.btnConfirm {
+    --width: 60px;
+    --height: 60px;
+    --border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    min-width: unset;
+    min-height: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   

@@ -22,7 +22,7 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   idSoggetto!: number;
   isLoading : boolean = false;
   isModifica! : boolean;
-  promoSelezionata! : Promo;
+  promoSelezionata : Promo | undefined;
   segmentValue: string = 'default';
   panelOpenState = false;
   listaAttivita: Attivita[] | undefined;
@@ -38,7 +38,6 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   ) {}
 
   async ngOnInit(): Promise<void> {
-    
     this.isLoading = true;
     this.idAttivita = 0;
     this.idSoggetto = 0;
@@ -120,6 +119,21 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     } catch (error) {
       console.error('Errore durante il recupero dell\'attività:', error);
     }
+  }
+
+  async recoverModificaPromo() {
+    this.isLoading = true;
+    this.isModifica = false;
+    this.promoSelezionata = undefined;
+    this.isLoading = false;
+  }
+
+  async recoverModificaPromoRefresh() {
+    this.isLoading = true;
+    this.isModifica = false;
+    await this.getPromoAttivita(this.idAttivita);
+    this.promoSelezionata = undefined;
+    this.isLoading = false;
   }
 
   async getPromoAttivita(idAttivita: number) {

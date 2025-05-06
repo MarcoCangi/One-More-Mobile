@@ -1,49 +1,107 @@
 .full-width-container {
-    width: 100%;
-  }
-  
-  .full-width-item {
-    min-width: 350px;
-    width: 100%;
-  }
-  
-  ion-accordion {
-    width: 100%;
-    max-width: 430px;
-  }
-  
-  ion-accordion-group {
-    width: 100%;
-  }
-  
-  ion-item {
-    width: 100%;
-  }
+  width: 100%;
+  padding: 0 1rem;
+}
 
-  ion-item-divider{
-    margin-top: -6%;
-    margin-bottom: 2%;
-  }
+.segment {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
 
-  .segment{
-    margin-top: 5%;
-  }
+ion-segment {
+  max-width: 400px;
+  width: 100%;
+}
 
-  .title{
-    font-family: Helvetica;
-    font-weight: 500;
-    font-size: 1.1rem;
-  }
+.contentListAtt {
+  margin-top: 1rem;
+  padding: 0 1rem;
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
 
-  .contentListAtt{
-    margin-top: 5%;
-    min-width: 340px; 
-    scrollbar-width: none;
-    overflow-x: hidden;
-  }
+ion-card {
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+}
 
-  .title2{
-    font-family: Helvetica;
-    font-weight: 500;
-    font-size: 0.9rem;
+ion-card-title.title {
+  font-family: Helvetica;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #222;
+}
+
+ion-card-subtitle {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.title2 {
+  font-family: Helvetica;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
+}
+
+ion-accordion {
+  width: 100%;
+  max-width: 430px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+ion-accordion-group {
+  width: 100%;
+}
+
+ion-item {
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  font-size: 0.95rem;
+}
+
+ion-item ion-label {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+ion-label[style*="font-weight: bold;"] {
+  font-weight: 600 !important;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+ion-chip {
+  margin: 4px;
+  font-size: 0.85rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem auto;
+}
+
+.lblAdd {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+
+  ion-button {
+    margin-top: 1rem;
   }
+}
+
+ion-modal.full-modal::part(content) {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  padding: 0;
+}
