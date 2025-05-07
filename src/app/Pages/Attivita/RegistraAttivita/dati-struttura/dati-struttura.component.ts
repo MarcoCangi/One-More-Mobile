@@ -106,7 +106,7 @@ export class DatiStrutturaComponent  implements OnInit {
   }
 
   async getListaAttivita(idSoggetto: number) {
-    const cacheKey = `lista_attivita`; // Chiave generica per la cache
+    const cacheKey = `lista_attivita`; 
   
     try {
       const cachedData = await this.storageService.getItem(cacheKey);

@@ -1,73 +1,114 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
-<ion-grid *ngIf="!isLoading">
-  <ion-row>
-    <ion-col size-l="6" offset-l="3" class="ion-text-center">
-      <ion-card>
-        <ion-card-header>
-          <ion-toolbar>
-            <ion-card-title *ngIf="!isRegistered" class="title">{{ 'Register' | translate }}</ion-card-title>
-            <ion-card-title *ngIf="isRegistered" class="title">{{ 'Welcome' | translate }}</ion-card-title>
-            <ion-icon slot="end"  name="close-outline" class="closeBlack" (click)="closeRegister()"></ion-icon>
-          </ion-toolbar>
-        </ion-card-header>
+
+<ion-grid *ngIf="!isLoading" style="margin-top: 20%;">
+  <ion-row justify-content-center>
+    <ion-col size="12" size-md="6" class="ion-text-center">
+      <ion-card class="card-login ion-padding">
+
+        <ion-toolbar>
+          <ion-title class="title">{{ isRegistered ? 'Welcome' : ('Register' | translate) }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="closeRegister()">
+              <ion-icon name="close-outline" class="closeBlack"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+
         <ion-card-content class="scroll-content">
-          <ion-card-subtitle class="error" [style.visibility]="errore !== '' ? 'visible' : 'hidden'">{{errore}}</ion-card-subtitle>
-  
-          <form *ngIf="!isRegistered" class="login-container" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="text-align: center;">
-                <ion-item>
-                  <ion-input labelPlacement="floating" formControlName="nomeRegistrazione" type="text">
-                    <div slot="label">{{ 'Name' | translate }}</div>
-                  </ion-input>
-                </ion-item>
-              <ion-item>
-                <ion-input labelPlacement="floating" formControlName="cognomeRegistrazione" type="text">
-                  <div slot="label">{{ 'Surname' | translate }}</div>
-                </ion-input>
-              </ion-item>
+
+          <ion-text color="danger" *ngIf="errore">
+            <p class="error">{{ errore }}</p>
+          </ion-text>
+
+          <form *ngIf="!isRegistered" [formGroup]="formRegistrazione" (ngSubmit)="onSubmit()" style="margin-top: 1rem;">
+
             <ion-item>
-              <ion-input labelPlacement="floating" formControlName="emailRegistrazione" type="email">
-                <div slot="label">{{'Email'|translate}}</div>
+              <ion-input
+                label="{{ 'Name' | translate }}"
+                labelPlacement="floating"
+                formControlName="nomeRegistrazione"
+                type="text"
+                placeholder="Mario">
               </ion-input>
             </ion-item>
+
             <ion-item>
-              <ion-input labelPlacement="floating" formControlName="passwordRegistrazione" type="password" (input)="onPasswordInput()">
-                <div slot="label">{{'Password'|translate}}</div>
+              <ion-input
+                label="{{ 'Surname' | translate }}"
+                labelPlacement="floating"
+                formControlName="cognomeRegistrazione"
+                type="text"
+                placeholder="Rossi">
               </ion-input>
             </ion-item>
+
             <ion-item>
-              <ion-input labelPlacement="floating" formControlName="ConfermaPasswordRegistrazione" type="password" (input)="onPasswordInput()">
-                <div slot="label">{{ 'Confirm' | translate }} {{'Password'|translate}}</div>
+              <ion-input
+                label="{{ 'Email' | translate }}"
+                labelPlacement="floating"
+                formControlName="emailRegistrazione"
+                type="email"
+                placeholder="email@example.com">
               </ion-input>
             </ion-item>
-            <ion-note style="margin-left: 5%;" *ngIf="passwordsDoNotMatch" color="danger">
+
+            <ion-item>
+              <ion-input
+                label="{{ 'Password' | translate }}"
+                labelPlacement="floating"
+                formControlName="passwordRegistrazione"
+                type="password"
+                (input)="onPasswordInput()"
+                placeholder="••••••••"><ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="{{ 'Confirm Password' | translate }}"
+                labelPlacement="floating"
+                formControlName="ConfermaPasswordRegistrazione"
+                type="password"
+                (input)="onPasswordInput()"
+                placeholder="••••••••"><ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              </ion-input>
+            </ion-item>
+
+            <ion-note *ngIf="passwordsDoNotMatch" color="danger" class="ion-padding-top">
               {{ 'Passwords dont match' | translate }}
             </ion-note>
-              <br>
-              <br>
-              <ion-button style="--height: 40px;" shape="round" type="input" [disabled]="!formRegistrazione.valid">{{ 'Register' | translate }}</ion-button>
-              
-              <div class="divIcon">
-                <label>{{ 'or sign up with' | translate }}</label>
-                <br>
-                <img class="card-img-google" (click)="signInWithGoogle()" style="cursor: pointer;" src="assets/Img/google.png">
-                  <img class="card-img-facebook" (click)="signInWithFacebook()" style="cursor: pointer;" src="assets/Img/facebook.png">
-              </div>
+
+            <ion-button expand="block" shape="round" style="margin-top: 1.5rem;" type="submit" [disabled]="!formRegistrazione.valid">
+              {{ 'REGISTER' | translate }}
+            </ion-button>
+
+            <ion-label class="ion-text-center" style="margin-top: 15px;">{{ 'or sign up with' | translate }}</ion-label>
+
+            <div class="divIcon">
+              <ion-button fill="clear" (click)="signInWithGoogle()">
+                <img src="assets/Img/google.png" class="card-img-google" alt="Google">
+              </ion-button>
+              <ion-button fill="clear" (click)="signInWithFacebook()">
+                <img src="assets/Img/facebook.png" class="card-img-facebook" alt="Facebook">
+              </ion-button>
+            </div>
+
           </form>
 
-          <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center; margin-top: 10%;">
-            <ion-button shape="round" color="success" (click)="closeRegister()">{{ 'Close' | translate }}</ion-button>
+          <!-- Dopo registrazione -->
+          <div *ngIf="isRegistered" class="ion-text-center" style="margin-top: 2rem;">
+            <ion-label *ngIf="!esitoResendVerification">{{ 'Didnt get the email' | translate }}</ion-label>
+            <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{ esitoResendVerification }}</ion-label>
+
+            <ion-button fill="clear" color="primary" (click)="resendVerificationEmail()" style="margin-top: 1rem;">
+              {{ 'Resend verification email' | translate }}
+            </ion-button>
+
+            <ion-button expand="block" shape="round" color="success" (click)="closeRegister()" style="margin-top: 2rem;">
+              {{ 'Close' | translate }}
+            </ion-button>
           </div>
-          <br>
-          <br>
-          <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center;">
-            <ion-label *ngIf="!esitoResendVerification">({{ 'Didnt get the email' | translate }})</ion-label>
-            <ion-label *ngIf="esitoResendVerification" style="font-weight: bold;">{{esitoResendVerification}}</ion-label>
-          </div>
-          <br>
-          <br>
-          <div *ngIf="isRegistered" style="display: flex; justify-content: center; align-items: center;">
-            <ion-label color="primary" (click)="resendVerificationEmail()">{{ 'Resend verification email' | translate }}</ion-label>
-          </div>
+
         </ion-card-content>
       </ion-card>
     </ion-col>

@@ -41,10 +41,7 @@ export class GestionePromoComponent  implements OnInit {
     isAddPromo: boolean = false;
     isModidifica: boolean = false;
     
-    
     @Output() openPageEvent = new EventEmitter<number>();
-    @Output() openPageEventUpd = new EventEmitter<number>();
-    @Output() recoverListaPromo = new EventEmitter<number>();
 
     constructor(
       private promoService : GetApiPromoService,
@@ -77,10 +74,18 @@ export class GestionePromoComponent  implements OnInit {
 
   async getListaAttivita(idSoggetto: number) {
     try {
+      const cacheKey = 'lista_attivita';
+      const cacheTTL = 6000; // 1h
+      const cached = await this.localStorage.getItem(cacheKey);
+      if (cached) {
+        this.listaAttivita = cached;
+        return;
+      }
+  
       const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(idSoggetto));
       if (data) {
         this.listaAttivita = data;
-        console.log(this.listaAttivita);
+        await this.localStorage.setItem(cacheKey, data, cacheTTL);
       }
     } catch (error) {
       console.error('Errore durante il recupero dell\'attività:', error);
@@ -97,5 +102,15 @@ export class GestionePromoComponent  implements OnInit {
 
   onModalDismiss() {
     this.isAddPromo = false;
+  }
+
+  async onModalDismissAndGoToPage(event: { idPage: number, idAttivita: number }) {
+    this.isAddPromo = false;
+    this.isLoading = true;
+    const cacheKey = 'id_attivitaPromo';
+    await this.localStorage.setItem(cacheKey, event.idAttivita);
+    setTimeout(() => {
+      this.openPageEvent.emit(event.idPage);
+    }, 200);
   }
 }

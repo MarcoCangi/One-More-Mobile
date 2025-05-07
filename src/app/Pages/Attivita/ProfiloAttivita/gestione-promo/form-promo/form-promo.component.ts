@@ -20,7 +20,7 @@ export class FormPromoComponent  implements OnInit {
   @Input() idAttivita: number | undefined;
   @Output() closeModal = new EventEmitter<void>();
   @Output() closeModalAndRefresh = new EventEmitter<void>();
-  @Output() closeModalAndGoToPage = new EventEmitter<number>();
+  @Output() closeModalAndGoToPage = new EventEmitter<{ idPage: number, idAttivita: number }>();
   isSaved: boolean = false;
   isEsito: boolean = false;
   isConfirmOpen: boolean = false;
@@ -71,10 +71,12 @@ export class FormPromoComponent  implements OnInit {
   }
 
   onModalDismissWithRefresh() {
-    if(this.isSaved)
+    if(this.isSaved){
+      this.closeModalAndGoToPage.emit({ idPage: 7, idAttivita: this.idAttivita! });
+    }
+    else{
       this.closeModalAndRefresh.emit();
-    else
-      this.closeModalAndGoToPage.emit(7);
+    }
   }
 
   avanti() {
@@ -123,13 +125,15 @@ export class FormPromoComponent  implements OnInit {
         return;
   
       const sessioneString = this.authService.getUserSession();
+
+      this.setEsito(true)
     
       if (sessioneString !== null) {
         
         if (this.idAttivita) {
           this.requestPromo.idAttivita = this.idAttivita;
         }
-  
+      
         if(this.requestPromo.days && this.requestPromo.days.length > 0)
         {
           const sortedDays = this.requestPromo.days.sort((a, b) => a - b);
@@ -147,7 +151,7 @@ export class FormPromoComponent  implements OnInit {
         if (dataAl) {
           this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
         }
-        
+
         await this.localStorage.removeItem(`attivita_promo`);
 
         const today = new Date().setHours(0, 0, 0, 0);
@@ -167,7 +171,7 @@ export class FormPromoComponent  implements OnInit {
         if (dataAl) {
           this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
         }
-        
+
         if(this.isSaved){
           try {
             console.log(this.requestPromo);
@@ -191,7 +195,7 @@ export class FormPromoComponent  implements OnInit {
       else{
         this.setEsito(false);
       }
-      this.isLoading = false;
+    this.isLoading = false;
   }
 
   setEsito(isOk: boolean){

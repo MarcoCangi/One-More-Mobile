@@ -26,7 +26,7 @@
   }
 
   .title{
-    font-family: Helvetica;
+    --font-family: Helvetica !important;
     font-weight: 500;
     font-size: 1.1rem;
   }
@@ -87,7 +87,7 @@
   
 
   .title2{
-    font-family: Helvetica;
+    --font-family: Helvetica !important;
     font-weight: 500;
     font-size: 1.3rem;
   }

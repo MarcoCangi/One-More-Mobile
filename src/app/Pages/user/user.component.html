@@ -7,20 +7,19 @@
     </ion-col>
   </ion-row>
   <ion-row style="margin-top: 2rem;">
-    <ion-col size="4" >
-      <ion-icon name="person-outline" class="icon"></ion-icon>
+    <ion-col size="3" >
+      <ion-icon name="person-circle-outline" color="primary" class="icon"></ion-icon>
     </ion-col>
-    <ion-col size="8">
-      <ion-label style="font-size: medium;">{{this.user?.displayName}}</ion-label>
-      <br>
+    <ion-col size="9" style="margin-top: 8px;">
+      <ion-label class="title2">{{this.user?.displayName}}</ion-label>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="this.user?.typeLog === 1" style="margin-top: 10%;">
-    <ion-col size="4">
-      <ion-label style="font-size: large;">{{'EMAIL'|translate}}</ion-label>
+    <ion-col size="3">
+      <ion-icon name="mail-outline" color="primary" class="icon"></ion-icon>
     </ion-col>
-    <ion-col size="8">
-      <ion-label style="font-size: medium;">{{this.user?.email}}</ion-label>
+    <ion-col size="9" style="margin-top: 8px;">
+      <ion-label class="title2">{{this.user?.email}}</ion-label>
     </ion-col>
   </ion-row>
   <ion-item></ion-item>

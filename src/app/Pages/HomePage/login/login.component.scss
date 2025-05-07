@@ -1,41 +1,33 @@
-.error{
-    text-align: center;
-    color: red;
-  }
-  
-  .notification{
-    text-align: center;
-    color: rgb(50, 193, 47);
-  }
+.card-login {
+  width: 90%;
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
 
-  .card-img-google{
-    width: 30px;
-    height: 30px;
-    margin-right: 2%;
-  }
+.title {
+  --font-family: Helvetica !important;
+  font-weight: 450;
+  font-size: 1.3rem;
+  margin-left: 2%;
+  text-align: left;
+}
 
-  .card-img-facebook{
-    width: 30px;
-    height: 30px;
-    margin-left: 2%;
-  }
+.error, .notification {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
 
-  .divIcon{
-    align-items: center;
-  }
+.divIcon {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
 
-  .header {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .scroll-content {
-    overflow-y: hidden;
-    max-height: 60vh; /* Altezza massima consentita, regola a tuo piacimento */
-  }
-
-  .title{
-    font-family: Helvetica;
-    font-weight: 500;
-    font-size: 1.1rem;
-  }
+.card-img-google, .card-img-facebook {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}

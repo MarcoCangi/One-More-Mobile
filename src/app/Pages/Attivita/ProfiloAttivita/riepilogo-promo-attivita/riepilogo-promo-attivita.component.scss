@@ -1,12 +1,7 @@
 .full-width-container {
+  margin-top: 15px;
   width: 100%;
   padding: 0 1rem;
-}
-
-.segment {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
 }
 
 ion-segment {
@@ -39,11 +34,17 @@ ion-card-subtitle {
   color: #666;
 }
 
-.title2 {
-  font-family: Helvetica;
+.scadenza-label {
+  --font-family: Helvetica !important;
+  font-size: 0.90rem;
+  color: #707070;
+}
+
+.titlePromo {
+  --font-family: Helvetica !important;
+  font-size: 1.1rem;
   font-weight: 500;
-  font-size: 1rem;
-  color: #333;
+  color: #000;
 }
 
 ion-accordion {

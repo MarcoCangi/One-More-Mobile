@@ -70,13 +70,13 @@ ion-item-divider{
 }
 
 .title{
-  font-family: Helvetica;
+  --font-family: Helvetica !important;
   font-weight: 500;
   font-size: 1rem;
 }
 
 .distance{
-  font-family: Helvetica;
+  --font-family: Helvetica !important;
   font-size: 0.9rem;
 }
 

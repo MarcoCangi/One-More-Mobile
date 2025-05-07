@@ -407,6 +407,7 @@ ion-note.promoNote[color="danger"] {
   }
 
   ion-item.TitleContent {
+    --font-family: Helvetica !important;
     margin-top: 25%;
     padding: 20px;
     display: flex;

@@ -1,52 +1,80 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
-<ion-grid *ngIf="!isLoading" style="margin-top: 30%;">
-  <ion-row>
-    <ion-col size-l="6" offset-l="3" class="ion-text-center">
-      <ion-card>
-        <ion-card-header>
-          <ion-toolbar>
-            <ion-card-title class="titleModal">{{ 'Log in' | translate }}</ion-card-title>
-            <ion-icon slot="end" name="close-outline" class="closeBlack" (click)="closeLogin()"></ion-icon>
-          </ion-toolbar>
-        </ion-card-header>
-        <ion-card-content  class="scroll-content">
-          <ion-card-subtitle class="error" [style.visibility]="errore !== '' ? 'visible' : 'hidden'">{{errore}}</ion-card-subtitle>
-          <ion-card-subtitle class="notification" [style.visibility]="notificaInvio ? 'visible' : 'hidden'">{{notificaInvio}}</ion-card-subtitle>
-            <form class="login-container" [formGroup]="homeForm" (ngSubmit)="Login()" style="text-align: center;">
 
-                <ion-item>
-                  <ion-input labelPlacement="floating" type="email" formControlName="emailLogin" type="email" value={{email}}>
-                    <div slot="label">{{'EMAIL'|translate}}</div>
-                  </ion-input>
-                </ion-item>
+<ion-grid *ngIf="!isLoading" style="margin-top: 20%;">
+  <ion-row justify-content-center>
+    <ion-col size="12" size-md="6" class="ion-text-center">
+      <ion-card class="card-login ion-padding">
 
-                <ion-item>
-                  <ion-input labelPlacement="floating" type="password" formControlName="passwordLogin" name="passwordLogin"[clearInput]="true" value="Default value">
-                    <div slot="label">{{'Password'|translate}}</div>
-                  </ion-input>
-                </ion-item>
-            
-                <br>
-                <ion-button shape="round" type="input" [disabled]="!homeForm.valid">{{ 'Login' | translate }}</ion-button>
-                <ion-button fill="clear" (click)="openRegister()">{{ 'Register' | translate }}</ion-button>
-                <br>
-                <br>
-                <label>{{ 'or log with' | translate }}</label>
-                <br>
-                <br>
-                <div class="divIcon">
-                  <img class="card-img-google" (click)="signInWithGoogle()" style="cursor: pointer;" src="assets/Img/google.png">
-            
-                  <img class="card-img-facebook" (click)="signInWithFacebook()" style="cursor: pointer;" src="assets/Img/facebook.png">
-                </div>
-                <br>
-                <div>
-            
-                  <ion-button fill="clear" (click)="resetPassword()">{{ 'Forgot your password' | translate }}</ion-button>
-            
-                </div>
-            </form>
-          </ion-card-content>
+        <ion-toolbar>
+          <ion-title class="title">{{ 'Log in' | translate }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="closeLogin()">
+              <ion-icon class="closeBlack" name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+
+        <ion-card-content class="scroll-content">
+
+          <ion-text color="danger" *ngIf="errore">
+            <p class="error">{{ errore }}</p>
+          </ion-text>
+
+          <ion-text color="success" *ngIf="notificaInvio">
+            <p class="notification">{{ notificaInvio }}</p>
+          </ion-text>
+
+          <form [formGroup]="homeForm" (ngSubmit)="Login()" style="margin-top: 1rem;">
+
+            <ion-item>
+              <ion-input 
+                label="{{ 'EMAIL' | translate }}"
+                labelPlacement="floating"
+                type="email"
+                formControlName="emailLogin"
+                autocomplete="email"
+                inputmode="email"
+                placeholder="email@example.com">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="{{ 'Password' | translate }}"
+                labelPlacement="floating"
+                type="password"
+                formControlName="passwordLogin"
+                autocomplete="current-password"
+                clearInput="true"
+                placeholder="••••••••"><ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              </ion-input>
+            </ion-item>
+
+            <ion-button expand="block" shape="round" type="submit" style="margin-top: 40px;" [disabled]="!homeForm.valid">
+              {{ 'Login' | translate }}
+            </ion-button>
+
+            <ion-button fill="clear" expand="block" style="margin-top: 20px;"  (click)="openRegister()">
+              {{ 'Register' | translate }}
+            </ion-button>
+
+            <ion-label class="ion-text-center" style="margin-top: 20px;">{{ 'or log with' | translate }}</ion-label>
+
+            <div class="divIcon" style="margin-top: 0.5rem;">
+              <ion-button fill="clear" (click)="signInWithGoogle()">
+                <img src="assets/Img/google.png" class="card-img-google" alt="Google Login">
+              </ion-button>
+              <ion-button fill="clear" (click)="signInWithFacebook()">
+                <img src="assets/Img/facebook.png" class="card-img-facebook" alt="Facebook Login">
+              </ion-button>
+            </div>
+
+            <ion-button fill="clear" size="small" (click)="resetPassword()" style="margin-top: 30px;">
+              {{ 'Forgot your password' | translate }}
+            </ion-button>
+
+          </form>
+        </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>

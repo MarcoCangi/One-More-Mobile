@@ -26,28 +26,30 @@
 
 <!-- LISTA PROMO -->
 <div *ngIf="!isLoading && !isModifica && !listaAttivita" class="full-width-container">
-  <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)" class="segment">
-    <ion-segment-button value="default">
+  <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)" class="my-segment">
+    <ion-segment-button value="default" class="my-button-left">
       <ion-label>{{ 'ACTIVE_PROMOS' | translate }}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="segment">
+    <ion-segment-button value="segment" class="my-button-right">
       <ion-label>{{ 'INACTIVE_PROMOS' | translate }}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <!-- PROMO ATTIVE -->
   <ng-container *ngIf="segmentValue === 'default'">
-    <div *ngIf="listaPromoAttive?.length === 0" class="lblAdd ion-text-center" style="margin-top: 25vh;">
+    <div *ngIf="listaPromoAttive?.length === 0" class="lblAdd ion-text-center" style="margin-top: 30vh;">
       <ion-label>{{ 'NO_ACTIVE_PROMOS' | translate }}</ion-label>
       <ion-button expand="block" style="margin-top: 16px;" (click)="openPage()">{{ 'ADD_PROMO' | translate }}</ion-button>
     </div>
 
-    <ion-accordion-group *ngIf="(listaPromoAttive?.length ?? 0) > 0">
+    <ion-accordion-group *ngIf="(listaPromoAttive?.length ?? 0) > 0" style="margin-top: 10px;">
       <ion-accordion *ngFor="let promo of listaPromoAttive">
         <ion-item slot="header" color="light">
-          <ion-label>
-            <div class="title2">{{ promo.titoloPromo }}</div>
-            <div>{{ promo.dataInserimento | date:'dd-MM-yyyy' }}</div>
+          <ion-label class="ion-text-wrap">
+            <div style="display: flex; flex-direction: column;">
+              <span class="scadenza-label">Scadenza: {{ promo.dataAl | date:'dd-MM-yyyy' }}</span>
+              <span class="titlePromo" style="margin-top: 6px;">{{ promo.titoloPromo }}</span>
+            </div>
           </ion-label>
         </ion-item>
 
@@ -108,7 +110,7 @@
 
   <!-- PROMO NON ATTIVE -->
   <ng-container *ngIf="segmentValue === 'segment'">
-    <ion-accordion-group *ngIf="(listaPromoNonAttive?.length ?? 0) > 0">
+    <ion-accordion-group *ngIf="(listaPromoNonAttive?.length ?? 0) > 0" style="margin-top: 10px;">
       <ion-accordion *ngFor="let promo of listaPromoNonAttive">
         <ion-item slot="header" color="light">
           <ion-label>

@@ -159,7 +159,6 @@ export class ConfirmComponent  implements OnInit {
   }
 
   async eliminaAttivita() {
-        
         try {
           const utente = this.authService.getUser(); // Ottieni l'utente attuale
     

@@ -1,28 +1,33 @@
-.card-img-google{
-  width: 30px;
-  height: 30px;
-  margin-right: 2%;
+.card-login {
+  width: 90%;
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
-.card-img-facebook{
-  width: 30px;
-  height: 30px;
-  margin-left: 2%;
+.title {
+  --font-family: Helvetica !important;
+  font-weight: 450;
+  font-size: 1.3rem;
+  text-align: left;
 }
 
-.scroll-content {
-  overflow-y: auto;
-  max-height: 70vh; /* Altezza massima consentita, regola a tuo piacimento */
+.divIcon {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
 
-.title{
-  font-family: Helvetica;
-  font-weight: 500;
-  font-size: 1.1rem;
+.card-img-google, .card-img-facebook {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 
-ion-grid{
-  overflow-y: hidden;
+.error {
+  text-align: center;
+  color: red;
+  font-size: 0.9rem;
 }
-  
-  

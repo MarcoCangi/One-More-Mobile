@@ -6,6 +6,7 @@ import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 
 @Component({
   selector: 'app-riepilogo-promo-attivita',
@@ -35,9 +36,11 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     private promoService : GetApiPromoService,
     private authService : AuthService,
     private attivitaService: GetApiAttivitaService,
+    private localStorage: StorageService
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.listaAttivita = undefined;
     this.isLoading = true;
     this.idAttivita = 0;
     this.idSoggetto = 0;
@@ -49,6 +52,14 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
 
     if (this.idSoggetto) {
       await this.getListaAttivita(this.idSoggetto);
+    }
+
+    const cacheKey = 'id_attivitaPromo';
+    const cached = await this.localStorage.getItem(cacheKey);
+    await this.localStorage.removeItem(cacheKey);
+    if(cached) {
+      this.idAttivita = cached;
+      await this.getPromoAttivita(this.idAttivita);
     }
     this.isLoading = false;
   }
@@ -112,9 +123,18 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
 
   async getListaAttivita(idSoggetto: number) {
     try {
+      const cacheKey = 'lista_attivita';
+      const cacheTTL = 6000; // 1h
+      const cached = await this.localStorage.getItem(cacheKey);
+      if (cached) {
+        this.listaAttivita = cached;
+        return;
+      }
+  
       const data = await lastValueFrom(this.attivitaService.apiGetAttivitaByIdSoggetto(idSoggetto));
       if (data) {
         this.listaAttivita = data;
+        await this.localStorage.setItem(cacheKey, data, cacheTTL);
       }
     } catch (error) {
       console.error('Errore durante il recupero dell\'attività:', error);
@@ -131,8 +151,10 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   async recoverModificaPromoRefresh() {
     this.isLoading = true;
     this.isModifica = false;
-    await this.getPromoAttivita(this.idAttivita);
     this.promoSelezionata = undefined;
+    setTimeout(async () => {
+      await this.getPromoAttivita(this.idAttivita);
+    }, 200);
     this.isLoading = false;
   }
 

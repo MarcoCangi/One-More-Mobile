@@ -1,19 +1,18 @@
 .icon{
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
 }
-
 
 
   .title{
     margin-left: 5%;
-    font-family: Helvetica;
-    font-weight: 500;
-    font-size: 1rem;
+    --font-family: Helvetica !important;
+    font-weight: 450;
+    font-size: 1.2rem;
   }
 
   .title2{
-    font-family: Helvetica;
+    --font-family: Helvetica !important;
     font-weight: 500;
     font-size: 1rem;
     margin-top: 1rem;
@@ -54,3 +53,5 @@
     justify-content: center; 
     align-items: center;
   }
+
+  

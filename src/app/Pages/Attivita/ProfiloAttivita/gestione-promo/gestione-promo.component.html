@@ -31,7 +31,7 @@
   <ng-template>
     <app-form-promo [idAttivita]="this.idAttivita"
                     (closeModal)="onModalDismiss()"
-                    (closeModalAndGoToPage)="openPage($event)">
+                    (closeModalAndGoToPage)="onModalDismissAndGoToPage($event)">
     </app-form-promo>
   </ng-template>
 </ion-modal>
