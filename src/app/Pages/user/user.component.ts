@@ -240,13 +240,15 @@ export class UserComponent  implements OnInit {
         
         try {
           // Ottieni l'utente autenticato
-          const user = this.authService.getCurrentUserFromAuth();
+          const user = await this.authService.getCurrentUserFromAuth();
 
           if(user)
           {
             // Verifica la vecchia password
             const credential = EmailAuthProvider.credential(email, vecchiaPassword);
-            await reauthenticateWithCredential(user, credential);
+
+            if(user)
+              await reauthenticateWithCredential(user, credential);
   
             // Imposta la nuova password
             await updatePassword(user, newPassword);

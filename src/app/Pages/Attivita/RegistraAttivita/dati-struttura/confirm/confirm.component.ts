@@ -3,6 +3,7 @@ import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { InsertAttivitaReqDto } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+
 import { catchError, lastValueFrom, of, tap } from 'rxjs';
 
 @Component({
@@ -17,8 +18,9 @@ export class ConfirmComponent  implements OnInit {
   isLoadingSalvataggio: boolean = false;
   isEsito: boolean = false;
   isEsitoOk: boolean = false;
+  errorMessage!: string;
   countImg = 1;
-  @Output() CloseEvent = new EventEmitter<void>()
+  @Output() CloseEvent = new EventEmitter<void>();
 
   constructor(private attivitaService: GetApiAttivitaService,
               private storageService: StorageService,
@@ -44,6 +46,12 @@ export class ConfirmComponent  implements OnInit {
 
   close() {
     this.CloseEvent.emit();
+  }
+
+  async next() {
+    await this.storageService.setItem(`isSavedUpdateAtt`, true);
+    this.authService.setIsShowedSplashFalse();
+    location.reload();
   }
 
   async prosegui() {
@@ -78,6 +86,7 @@ export class ConfirmComponent  implements OnInit {
   }
   
   async modificaAttivita() {
+    
         const sessioneString = this.authService.getUserSession();
 
         if (sessioneString) {
@@ -104,59 +113,60 @@ export class ConfirmComponent  implements OnInit {
   }
 
   async insertAttivita() {
-    if (this.requestAttivita) {
-      try {
-        const response = await lastValueFrom(
-          this.attivitaService.apiInsertAttivita(this.requestAttivita).pipe(
-            tap(async (response) => {
-              this.authService.setIdAttivitaUserSession(response.idAttivita);
-              const cacheKey = `lista_attivita`; 
-              this.storageService.removeItem(cacheKey);
-              this.isEsito = true;
-              this.isEsitoOk = true;
-            }),
-            catchError((error) => {
-              console.error(error.error);
-              this.isEsito = true;
-              this.isEsitoOk = false;
-              return of(null);
-            })
-          )
-        );
-      } catch (error) {
-        this.isEsito = true;
-        this.isEsitoOk = false;
-      }
-    }
+    // if (this.requestAttivita) {
+    //   try {
+    //     const response = await this.attivitaService.apiInsertAttivita(this.requestAttivita);
+  
+    //     if (response.isError) {
+    //       this.isEsito = true;
+    //       this.isEsitoOk = false;
+    //       this.errorMessage = response.errorMessage;
+    //       return;
+    //     }
+  
+    //     if (response.idAttivita) {
+    //       this.authService.setIdAttivitaUserSession(response.idAttivita);
+    //       this.storageService.removeItem('lista_attivita');
+    //       this.isEsito = true;
+    //       this.isEsitoOk = true;
+    //     } else {
+    //       this.isEsito = true;
+    //       this.isEsitoOk = false;
+    //     }
+    //   } catch (error: any) {
+    //     console.error(error?.error || error);
+    //     this.isEsito = true;
+    //     this.isEsitoOk = false;
+    //   }
+    // }
+
+    this.isEsito = true;
+    this.isEsitoOk = true;
   }
+  
 
   async updateAttivita() {
-   if (this.requestAttivita) {
-     try {
-       const response = await lastValueFrom(
-         this.attivitaService.apiUpdateAttivita(this.requestAttivita).pipe(
-           tap(() => {
-             const cacheKey = `lista_attivita`;
-             const cacheKeyAtt = `attivita_${this.requestAttivita?.idAttivita}`;
-             this.storageService.removeItem(cacheKey);
-             this.storageService.removeItem(cacheKeyAtt);
-             this.isEsito = true;
-             this.isEsitoOk = true;
-           }),
-           catchError((error) => {
-             console.error(error.error);
-             this.isEsito = true;
-             this.isEsitoOk = false;
-             return of(null);
-           })
-         )
-       );
-     } catch (error) {
-      this.isEsito = true;
-      this.isEsitoOk = false;
-     }
-   }
+    // if (this.requestAttivita) {
+    //   try {
+    //     const response = await this.attivitaService.apiUpdateAttivita(this.requestAttivita);
+  
+    //     const cacheKey = `lista_attivita`;
+    //     const cacheKeyAtt = `attivita_${this.requestAttivita.idAttivita}`;
+    //     this.storageService.removeItem(cacheKey);
+    //     this.storageService.removeItem(cacheKeyAtt);
+  
+    //     this.isEsito = true;
+    //     this.isEsitoOk = true;
+    //   } catch (error: any) {
+    //     this.isEsito = true;
+    //     this.isEsitoOk = false;
+    //   }
+    // }
+    
+    this.isEsito = true;
+    this.isEsitoOk = true;
   }
+  
 
   async eliminaAttivita() {
         try {

@@ -89,7 +89,6 @@ import { UserComponent } from './Pages/user/user.component';
 import { InfoRegistrazioneAttivitaComponent } from './Pages/Attivita/info-registrazione-attivita/info-registrazione-attivita.component';
 import { ConfermaDisattivazionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-disattivazione-promo/conferma-disattivazione-promo.component';
 import { ElencoViciniComponent } from './Pages/HomePage/elenco-vicini/elenco-vicini.component';
-import { EsitoGestionePromoComponent } from './Pages/Attivita/ProfiloAttivita/riepilogo-promo-attivita/esito-gestione-promo/esito-gestione-promo.component';
 import { IconCittaComponent } from './Pages/HomePage/icon-citta/icon-citta.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -186,7 +185,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                  ConfermaDisattivazionePromoComponent,
                  ElencoViciniComponent,
                  IconCittaComponent,
-                 EsitoGestionePromoComponent,
                  RicercaAttivitaAutocompleteComponent,
                  FormRiepilogoComponent,
                  OrariDettaglioComponent,

@@ -30,6 +30,8 @@
     "Map": "Mappa",
     "Search": "Cerca",
     "Favorites": "Preferiti",
+    "ACTIVITY_ALREADY_REGISTERED": "L'attività risulta già registrata.",
+    "ACTIVITY_INSERTION_ERROR": "Errore durante l'inserimento dell'attività.",
     "ROME": "ROMA",
     "MILAN": "MILANO",
     "FLORENCE": "FIRENZE",

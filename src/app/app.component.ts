@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
 
     await this.locationService.getCurrentLocation();
 
-    this.checkIsPromo();
+    this.checkIsAddAtt();
 
     this.IsShowSplashVisible = this.authService.getIsShowedSplash();
 
@@ -130,11 +130,10 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async checkIsPromo(){
-    const isPromoUpdateOrSaved = await this.storageService.getItem(`isSavedUpdatePromo`);
-    if(isPromoUpdateOrSaved == true){
-      await this.openPageEvent(7);
-      this.storageService.removeItem(`isSavedUpdatePromo`);
+  async checkIsAddAtt(){
+    const isAttUpdateOrSaved = await this.storageService.getItem(`isSavedUpdateAtt`);
+    if(isAttUpdateOrSaved == true){
+      await this.openPageEvent(5);
     }
   }
 

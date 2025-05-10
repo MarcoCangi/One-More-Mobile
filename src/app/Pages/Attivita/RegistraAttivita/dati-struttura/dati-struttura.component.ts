@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class DatiStrutturaComponent  implements OnInit {
   isAdd : boolean = false;
+  isAttAdded : boolean = false;
   isSelected : boolean = false;
   listaAttivita: Attivita[] | undefined;
   id: number | undefined;
@@ -47,9 +48,13 @@ export class DatiStrutturaComponent  implements OnInit {
     this.idAttivita = 0;
     const user = await this.authService.getCurrentUserFromAuth();
     this.sessioneString = this.authService.getUserSession();
-    if((user && user?.emailVerified == true && this.sessioneString?.typeLog == 1) || (this.sessioneString?.typeLog == 2 || this.sessioneString?.typeLog == 3))
+    await this.checkIsAddAtt();
+    if(this.isAttAdded){
+      this.isVerificato = true;
+    }
+    else if((user && user?.emailVerified == true && this.sessioneString?.typeLog == 1) || (this.sessioneString?.typeLog == 2 || this.sessioneString?.typeLog == 3))
        this.isVerificato = true;
-
+    
     if(this.isVerificato)
     {
       await this.getListaComuni();
@@ -65,7 +70,16 @@ export class DatiStrutturaComponent  implements OnInit {
         await this.getListaAttivita(this.id);
       }
     }
+    
     this.isLoading = false;
+  }
+
+  async checkIsAddAtt(){
+    const isAttUpdateOrSaved = await this.storageService.getItem(`isSavedUpdateAtt`);
+    if(isAttUpdateOrSaved == true){
+      this.isAttAdded = true;
+      await this.storageService.removeItem(`isSavedUpdateAtt`);
+    }
   }
 
   addNewAtt(){

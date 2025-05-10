@@ -28,6 +28,8 @@
     "Map": "Map",
     "Search": "Search",
     "Favorites": "Favorites",
+    "ACTIVITY_ALREADY_REGISTERED": "The activity is already registered.",
+    "ACTIVITY_INSERTION_ERROR": "An error occurred during the activity insertion.",
     "ROME": "ROME",
     "MILAN": "MILAN",
     "FLORENCE": "FLORENCE",

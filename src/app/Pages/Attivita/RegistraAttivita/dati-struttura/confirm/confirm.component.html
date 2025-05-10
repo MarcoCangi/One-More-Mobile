@@ -76,6 +76,9 @@
         <div class="divModal">
           {{ 'SAVE_ERROR' | translate }} 
         </div>
+        <div *ngIf="this.errorMessage && this.errorMessage !== ''" class="divModal">
+          {{ this.errorMessage | translate }}
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -88,7 +91,7 @@
 </div>
 
 <div class="btnContainer" *ngIf="!isLoadingSalvataggio && isEsito && isEsitoOk">
-  <ion-button color="primary" (click)="confirm()" class="btnDone" shape="round">
+  <ion-button color="primary" (click)="next()" class="btnDone" shape="round">
     <ion-label>{{ 'NEXT' | translate }}</ion-label>
   </ion-button>
 </div>

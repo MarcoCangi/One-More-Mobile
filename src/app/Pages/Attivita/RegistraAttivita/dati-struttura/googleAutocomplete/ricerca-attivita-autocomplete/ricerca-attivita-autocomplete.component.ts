@@ -22,7 +22,6 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Input() listaComuni : Comuni[] | undefined;
   @Output() closeEvent = new EventEmitter<void>();
-
   constructor(private attivitaService : GetApiAttivitaService) { }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
