@@ -91,7 +91,21 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   }
 
   openPage(){
-    this.openPageEvent.emit(6);
+    this.isLoading = true;
+    this.isModifica = true;
+    this.isLoading = false;
+  }
+
+  async onModalDismissAndGoToPage(event: { idPage: number, idAttivita: number }) {
+    this.isModifica = false;
+    this.isLoading = true;
+    this.isConfirmOpen = false;
+    await this.getPromoAttivita(this.idAttivita);
+    const cacheKey = 'id_attivitaPromo';
+    await this.localStorage.setItem(cacheKey, event.idAttivita);
+    setTimeout(() => {
+      this.openPageEvent.emit(event.idPage);
+    }, 200);
   }
 
   async ModificaPromo(promo: Promo): Promise<void> {

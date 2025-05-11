@@ -15,6 +15,7 @@ export class RiepilogoComponent  implements OnInit {
   requestAttivita: InsertAttivitaReqDto | undefined;
   isCheckboxChecked = false;
   isConfirmOpen: boolean = false;
+  isTermsAndCondition: boolean = false;
 
   constructor() { }
 

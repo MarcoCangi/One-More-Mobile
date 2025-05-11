@@ -42,7 +42,7 @@ async loadData() {
       (await this.attivitaService.apiGetListaAttivitaWhitPromo(this.latitudine, this.longitudine, true))
         .subscribe(async (data: Attivita[]) => {
           this.elencoPromo = data;
-          await this.storageService.setItem(cacheKey, data, 240);
+          await this.storageService.setItem(cacheKey, data, 120);
           this.isLoading = false;
         });
     }

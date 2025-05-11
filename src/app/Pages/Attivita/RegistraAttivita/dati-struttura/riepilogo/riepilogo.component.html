@@ -209,7 +209,7 @@
                 <ion-checkbox slot="start" (ionChange)="onCheckboxChange($event)"></ion-checkbox>
                 <ion-label style="margin: 0;">
                   {{ 'ACCEPT' | translate }}
-                  <span style="color: #007bff; cursor: pointer;">{{ 'TERMS_CONDITIONS' | translate }}</span>
+                  <span style="color: #007bff; cursor: pointer;" (click)="this.isTermsAndCondition = true">{{ 'TERMS_CONDITIONS' | translate }}</span>
                 </ion-label>
               </div>
               
@@ -228,4 +228,11 @@
     </ion-item>
   </ion-list>
 </div>
+
+<ion-modal [isOpen]="isTermsAndCondition" (didDismiss)="this.isTermsAndCondition = false">
+  <ng-template>
+    <app-terms-condition (CloseEvent)="this.isTermsAndCondition = false">
+    </app-terms-condition>
+  </ng-template>
+</ion-modal>
 

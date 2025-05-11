@@ -60,6 +60,7 @@ export class FormPromoComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit() {
+    console.log(this.idAttivita);
     this.isLoading = true;
     this.requestPromo = new InsertPromoReqDto();
     await this.PrevalorizzaReqPromo();
@@ -432,7 +433,7 @@ export class FormPromoComponent  implements OnInit {
     this.errorMessage = '';
     this.isError = false;
     const today = new Date().setHours(0, 0, 0, 0);
-    const noSpecialCharsRegex = /^(?!.*(DROP|TABLE|INSERT|DELETE|UPDATE)).*[a-zA-Z0-9À-ÖØ-öø-ÿ.,()!?/@#& _-]*$/i;
+    const noSpecialCharsRegex = /^(?!.*\b(DROP|TABLE|INSERT|DELETE|UPDATE|SELECT|SCRIPT|IFRAME|ONERROR|ONLOAD)\b)(?!.*[<>]).{1,200}$/i;
     const onlyNumbersRegex = /^[0-9]+$/;
 
     //TITOLO

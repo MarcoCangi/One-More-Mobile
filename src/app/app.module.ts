@@ -108,6 +108,7 @@ import { Constants } from 'one-more-frontend-common/projects/one-more-fe-service
 import { RiepilogoComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/riepilogo/riepilogo.component';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { ConfirmComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/confirm/confirm.component';
+import { TermsConditionComponent } from './Pages/terms-condition/terms-condition.component';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -190,7 +191,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                  OrariDettaglioComponent,
                  RiepilogoComponent,
                  ConfirmComponent,
-                 FormPromoComponent
+                 FormPromoComponent,
+                 TermsConditionComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,

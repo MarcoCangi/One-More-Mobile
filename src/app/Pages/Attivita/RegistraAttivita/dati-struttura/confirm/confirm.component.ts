@@ -113,32 +113,32 @@ export class ConfirmComponent  implements OnInit {
   }
 
   async insertAttivita() {
-    // if (this.requestAttivita) {
-    //   try {
-    //     const response = await this.attivitaService.apiInsertAttivita(this.requestAttivita);
+    if (this.requestAttivita) {
+      try {
+        const response = await this.attivitaService.apiInsertAttivita(this.requestAttivita);
   
-    //     if (response.isError) {
-    //       this.isEsito = true;
-    //       this.isEsitoOk = false;
-    //       this.errorMessage = response.errorMessage;
-    //       return;
-    //     }
+        if (response.isError) {
+          this.isEsito = true;
+          this.isEsitoOk = false;
+          this.errorMessage = response.errorMessage;
+          return;
+        }
   
-    //     if (response.idAttivita) {
-    //       this.authService.setIdAttivitaUserSession(response.idAttivita);
-    //       this.storageService.removeItem('lista_attivita');
-    //       this.isEsito = true;
-    //       this.isEsitoOk = true;
-    //     } else {
-    //       this.isEsito = true;
-    //       this.isEsitoOk = false;
-    //     }
-    //   } catch (error: any) {
-    //     console.error(error?.error || error);
-    //     this.isEsito = true;
-    //     this.isEsitoOk = false;
-    //   }
-    // }
+        if (response.idAttivita) {
+          this.authService.setIdAttivitaUserSession(response.idAttivita);
+          this.storageService.removeItem('lista_attivita');
+          this.isEsito = true;
+          this.isEsitoOk = true;
+        } else {
+          this.isEsito = true;
+          this.isEsitoOk = false;
+        }
+      } catch (error: any) {
+        console.error(error?.error || error);
+        this.isEsito = true;
+        this.isEsitoOk = false;
+      }
+    }
 
     this.isEsito = true;
     this.isEsitoOk = true;
@@ -146,22 +146,22 @@ export class ConfirmComponent  implements OnInit {
   
 
   async updateAttivita() {
-    // if (this.requestAttivita) {
-    //   try {
-    //     const response = await this.attivitaService.apiUpdateAttivita(this.requestAttivita);
+    if (this.requestAttivita) {
+      try {
+        const response = await this.attivitaService.apiUpdateAttivita(this.requestAttivita);
   
-    //     const cacheKey = `lista_attivita`;
-    //     const cacheKeyAtt = `attivita_${this.requestAttivita.idAttivita}`;
-    //     this.storageService.removeItem(cacheKey);
-    //     this.storageService.removeItem(cacheKeyAtt);
+        const cacheKey = `lista_attivita`;
+        const cacheKeyAtt = `attivita_${this.requestAttivita.idAttivita}`;
+        this.storageService.removeItem(cacheKey);
+        this.storageService.removeItem(cacheKeyAtt);
   
-    //     this.isEsito = true;
-    //     this.isEsitoOk = true;
-    //   } catch (error: any) {
-    //     this.isEsito = true;
-    //     this.isEsitoOk = false;
-    //   }
-    // }
+        this.isEsito = true;
+        this.isEsitoOk = true;
+      } catch (error: any) {
+        this.isEsito = true;
+        this.isEsitoOk = false;
+      }
+    }
     
     this.isEsito = true;
     this.isEsitoOk = true;

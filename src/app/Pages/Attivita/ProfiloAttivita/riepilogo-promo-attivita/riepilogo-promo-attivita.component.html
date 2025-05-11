@@ -163,7 +163,8 @@
     <app-form-promo [idAttivita]="idAttivita" 
                     [modificaPromo]="promoSelezionata" 
                     (closeModal)="recoverModificaPromo()"
-                    (closeModalAndRefresh)="recoverModificaPromoRefresh()"></app-form-promo>
+                    (closeModalAndRefresh)="recoverModificaPromoRefresh()"
+                    (closeModalAndGoToPage)="onModalDismissAndGoToPage($event)"></app-form-promo>
   </ng-template>
 </ion-modal>
 
