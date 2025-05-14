@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
+import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 
 @Component({
   selector: 'app-ricerca',
@@ -16,21 +17,27 @@ export class RicercaComponent implements OnInit {
 
   @Input() listaTipoAttivita: TipoAttivita[] | undefined;
   @Input() listaAttivitaPerRicerca: AttivitaRicerca[] | undefined = [];
+  @Input() listaCitta: Comuni[] | undefined;
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openPageEvent = new EventEmitter<number>();
 
   selectedOption: TipoAttivita | null = null;
   selectedOptionAttivita: AttivitaRicerca | null = null;
+  selectedCityOption: Comuni | null = null;
   tipoOfferte : number[] | undefined;
 
   filteredOptions: Observable<TipoAttivita[]> | null = null;
+  filteredCitiesOptions: Observable<Comuni[]> | null = null;
   filteredOptionAtt: Observable<AttivitaRicerca[]> | undefined;
   
   inputControl: FormControl = new FormControl();
+  inputCityControl: FormControl = new FormControl();
 
   searchForm!: FormGroup;
   showDropdown = true;
+  showCitiesDropdown = true;
   private _filterValue = '';
+  private _filterCityValue = '';
   
   position!: GeolocationPosition;
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
@@ -56,10 +63,15 @@ export class RicercaComponent implements OnInit {
   async ngOnInit(): Promise<void> {
       this.isLoading = true;
       this.showDropdown = false;
+      this.showCitiesDropdown = false;
   
       this.filteredOptions = this.inputControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value))
+      );
+      this.filteredCitiesOptions = this.inputCityControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterCities(value))
       );
   
       this.filteredOptionAtt = this.searchForm.get('nomeLocale')?.valueChanges.pipe(
@@ -104,6 +116,28 @@ export class RicercaComponent implements OnInit {
     return [];
   }
 
+  _filterCities(value: string): Comuni[] {
+    const filterCityValue = value.toLowerCase();
+if (Array.isArray(this.listaCitta)) {
+  // Filtra prima le corrispondenze esatte
+  const exactMatches = this.listaCitta.filter(citta =>
+    citta.descComune?.toLowerCase() === filterCityValue
+  );
+
+  // Filtra le corrispondenze parziali (escludendo quelle già trovate come esatte)
+  const partialMatches = this.listaCitta.filter(citta =>
+    citta.descComune?.toLowerCase().includes(filterCityValue) &&
+    citta.descComune?.toLowerCase() !== filterCityValue
+  );
+
+  // Combina i risultati esatti e parziali, limitando il totale a 5
+  const filteredList = [...exactMatches, ...partialMatches].slice(0, 5);
+
+  return filteredList;
+}
+return [];
+  }
+
   _filterAtt(value: string): AttivitaRicerca [] {
     const filterValue = value.toLowerCase();
     if (Array.isArray(this.listaAttivitaPerRicerca)) {
@@ -120,6 +154,12 @@ export class RicercaComponent implements OnInit {
     this.selectedOption = option;
   }
 
+  selectCityOption(cityOption: Comuni): void {
+    this.showCitiesDropdown = false;
+    this.inputCityControl.setValue(cityOption.descComune);
+    this.selectedCityOption = cityOption;
+  }
+
   closeDropdown = (event: MouseEvent) => {
     const clickedElement = event.target as HTMLElement;
     const inputElement = document.getElementById('inputAttivita');
@@ -128,6 +168,17 @@ export class RicercaComponent implements OnInit {
       this.showDropdown = false;
     } else {
       this.showDropdown = true;
+    }
+  }
+
+  closeCitiesDropdown = (event: MouseEvent) => {
+    const clickedElement = event.target as HTMLElement;
+    const inputElement = document.getElementById('cityIinput');
+
+    if (inputElement && !inputElement.contains(clickedElement)) {
+      this.showCitiesDropdown = false;
+    } else {
+      this.showCitiesDropdown = true;
     }
   }
 
@@ -157,7 +208,7 @@ export class RicercaComponent implements OnInit {
     this.isLoading = true; // Set to true at the start of the loading process
     this.isLoadingRicerca = true;
     const nomeLocale = this.searchForm.get('nomeLocale')?.value;
-    const citta = this.searchForm.get('citta')?.value;
+    const citta = this.selectedCityOption?.descComune;
     const codTipoAttivita = this.selectedOption?.codTipoAttivita;
     this.filtro = new FiltriAttivita();
 

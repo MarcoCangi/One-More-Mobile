@@ -4,10 +4,20 @@
   <ion-card-content>
     <form [formGroup]="searchForm" class="colIcon">
       <ion-searchbar type="text" 
-                 placeholder="Nome del locale/attività" 
+                 placeholder="{{'NAME_VENUE'|translate}}" 
                  formControlName="nomeLocale"></ion-searchbar>
       <br>
-      <ion-searchbar style="margin-top: -5%;" type="text" placeholder="{{'SearchCity'|translate}}" formControlName="citta"></ion-searchbar>
+      <!-- <ion-searchbar style="margin-top: -5%;" type="text" placeholder="{{'SearchCity'|translate}}" formControlName="citta"></ion-searchbar> -->
+      <ion-searchbar style="margin-top: -5%;" id="cityInput"
+      class="form-control form input custom-input mt-1"
+      placeholder="{{'SearchCity'|translate}}"
+      [formControl]="inputCityControl"
+      (click)="showCitiesDropdown = !showCitiesDropdown"></ion-searchbar>
+    <ion-list lines="inset" class="suggestion-list" *ngIf="showCitiesDropdown">
+      <ion-item *ngFor="let cityOption of filteredCitiesOptions | async" (click)="selectCityOption(cityOption)">
+        {{ cityOption.descComune }}
+      </ion-item>
+    </ion-list>
       <br>
       <ion-searchbar style="margin-top: -5%;" id="inputAttivita"
         class="form-control form input custom-input mt-1"

@@ -14,6 +14,7 @@ import { UserComponent } from '../../user/user.component';
 import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/riepilogo-promo-attivita/riepilogo-promo-attivita.component';
 import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 import { firstValueFrom, Observable } from 'rxjs';
+import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 
 @Component({
   selector: 'app-home',
@@ -50,6 +51,7 @@ export class HomeComponent  implements OnInit {
   idSoggetto : number | undefined;
   @Input() idPage!: number;
   @Input() listaTipoAttivita: TipoAttivita[] =[];
+  @Input() listaCitta: Comuni[] = [];
   attivita: Attivita | undefined;
   attivitaRicercate: Attivita [] | undefined;
   alertButtons = ['Ricarica'];

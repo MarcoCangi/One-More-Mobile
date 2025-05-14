@@ -92,6 +92,7 @@
 
     <div id="ricerca" *ngIf="idPage === 8">
         <app-ricerca [listaTipoAttivita]="this.listaTipoAttivita"
+                        [listaCitta]="this.listaCitta"                    
                      (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
                      (openPageEvent)="openPageEvent($event)"></app-ricerca>
     </div>

@@ -3,7 +3,7 @@
       <img src="/assets/Img/LogoSchermo.jpeg" alt="Splash Image">
     </div>
   
-    <app-nav class="scroll" [listaTipoAttivita]="this.listaAttivitaDDL"
+    <app-nav class="scroll" [listaTipoAttivita]="this.listaAttivitaDDL" [listaCitta]="this.listaCitta"
              [ngClass]="{'sticky-search': isSearchSticky}"
              (openPageEvent)="openPageEvent($event)"
              (updateIdFooterEvent)="updateIdFooterEvent($event)"

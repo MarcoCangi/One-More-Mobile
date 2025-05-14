@@ -10,6 +10,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { HomeComponent } from '../home/home.component';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service'; 
+import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 
 @Component({
   selector: 'app-nav',
@@ -18,6 +19,7 @@ import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-se
 })
 export class NavComponent implements OnInit {
   @Input() listaTipoAttivita: TipoAttivita[] = [];
+  @Input() listaCitta: Comuni[]=[];
   @Input() idPage!: number;
   @Output() openMappaEvent = new EventEmitter<void>();
   @Output() openPageEvent = new EventEmitter<number>();

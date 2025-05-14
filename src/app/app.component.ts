@@ -10,6 +10,8 @@ import { Geolocation } from '@capacitor/geolocation';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
+import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -21,6 +23,7 @@ export class AppComponent implements OnInit {
   faMap = faMap;
   datiAttivita: Attivita | undefined;
   listaAttivitaDDL: TipoAttivita[] = [];
+  listaCitta: Comuni[] = [];
   attivita: Attivita | undefined;
   sessioneString: UserSession | undefined;
   orari: Orari | undefined;
@@ -33,6 +36,7 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, 
               private attivitaService: GetApiAttivitaService,
+              private comuniService: GetApiComuniService,
               private messagingService: MessagingService,
               private translate: TranslateService,
               private locationService: LocationService,
@@ -78,6 +82,25 @@ export class AppComponent implements OnInit {
         });
       } else {
         this.listaAttivitaDDL = listaAttivitaDDL;
+      }
+    });
+
+    //GET LISTA COMUNI
+    this.comuniService.apiGetListaComuni().subscribe(async (listaCitta) => {
+      if (!listaCitta) {
+        (await this.comuniService.apiGetListaComuni()).subscribe((data: Comuni[]) => {
+          this.listaCitta = data.map((item: Comuni) => {
+            return {
+              CodCatastale: item.CodCatastale,
+              descComune: item.descComune,
+              provincia: item.provincia,  
+              isinseribile: item.isinseribile
+            };
+          });
+          this.comuniService.setlistaComuni(this.listaCitta);
+        });
+      } else {
+        this.listaCitta = listaCitta;
       }
     });
   }
