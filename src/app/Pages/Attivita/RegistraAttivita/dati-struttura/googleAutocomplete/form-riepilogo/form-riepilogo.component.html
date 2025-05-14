@@ -166,10 +166,10 @@
         
           <div *ngIf="IsModifiedCitta" class="modifica-sezione">
             <ion-title class="titleMod">Inserisci o modifica i dati relativi all'indirizzo della tua attività</ion-title>
-            <app-indirizzo [indirizzo]="attivita.indirizzo" (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
-            <app-civico [civico]="attivita.civico" (civicoChange)="handleCivicoChange($event)"></app-civico>
-            <app-cap [cap]="attivita.cap" (capChange)="handleCapChange($event)"></app-cap>
-            <app-citta [listaComuni]="listaComuni" [citta]="attivita.citta" (cittaChange)="handleCittaChange($event)"></app-citta>
+            <app-indirizzo [indirizzo]="attivita.indirizzo.trim()" (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
+            <app-civico [civico]="attivita.civico.trim()" (civicoChange)="handleCivicoChange($event)"></app-civico>
+            <app-cap [cap]="attivita.cap.trim()" (capChange)="handleCapChange($event)"></app-cap>
+            <app-citta [listaComuni]="listaComuni" [citta]="attivita.citta.trim()" (cittaChange)="handleCittaChange($event)"></app-citta>
             <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
           </div>
         
