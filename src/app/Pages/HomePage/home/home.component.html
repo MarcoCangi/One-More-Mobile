@@ -1,9 +1,9 @@
  
-    <div class="container content">
 
-        <ion-spinner *ngIf="isLoading && (idPage === 1 || idPage === undefined)" name="crescent" color="primary"></ion-spinner>
+
+    <ion-spinner *ngIf="isLoading && (idPage === 1 || idPage === undefined)" name="crescent" color="primary"></ion-spinner>
         
-    <div class="contentList" *ngIf="!isLoading && isCaricamentoOk && (idPage === 1 || idPage === undefined)">
+    <div *ngIf="!isLoading && isCaricamentoOk && (idPage === 1 || idPage === undefined)">
         
         <app-icon-promo (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-icon-promo>
 
@@ -113,7 +113,7 @@
     <div id="infoAttivita" *ngIf="idPage === 13" style="height: 100%">
         <app-info-registrazione-attivita></app-info-registrazione-attivita>
     </div>
-</div>
+
 
 
 

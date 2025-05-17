@@ -1,67 +1,68 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<ion-card *ngIf="!isLoadingRicerca">
-  <ion-card-content>
     <form [formGroup]="searchForm" class="colIcon">
-      <ion-searchbar type="text" 
-                 placeholder="{{'NAME_VENUE'|translate}}" 
-                 formControlName="nomeLocale"></ion-searchbar>
-      <br>
-      <!-- <ion-searchbar style="margin-top: -5%;" type="text" placeholder="{{'SearchCity'|translate}}" formControlName="citta"></ion-searchbar> -->
-      <ion-searchbar style="margin-top: -5%;" id="cityInput"
-      class="form-control form input custom-input mt-1"
-      placeholder="{{'SearchCity'|translate}}"
-      [formControl]="inputCityControl"
-      (click)="showCitiesDropdown = !showCitiesDropdown"></ion-searchbar>
-    <ion-list lines="inset" class="suggestion-list" *ngIf="showCitiesDropdown">
-      <ion-item *ngFor="let cityOption of filteredCitiesOptions | async" (click)="selectCityOption(cityOption)">
-        {{ cityOption.descComune }}
-      </ion-item>
-    </ion-list>
-      <br>
-      <ion-searchbar style="margin-top: -5%;" id="inputAttivita"
-        class="form-control form input custom-input mt-1"
-        placeholder="{{'TYPEACTIVITY'|translate}}"
-        [formControl]="inputControl"
-        (click)="showDropdown = !showDropdown"></ion-searchbar>
-      <ion-list lines="inset" class="suggestion-list" *ngIf="showDropdown">
-        <ion-item *ngFor="let option of filteredOptions | async" (click)="selectOption(option)">
-          {{ option.descrizione }}
-        </ion-item>
-      </ion-list>
-      <br>
-      <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}" >{{'SEARCHPROMOTYPE'| translate}}</ion-toggle>
-      <div class="formInput divNumMaxCoupon" *ngIf="isModalOpen" >
+
+      <!-- 🔍 Nome locale -->
+      <div class="search-wrapper">
+        <ion-searchbar 
+          placeholder="{{ 'NAME_VENUE' | translate }}" 
+          formControlName="nomeLocale"
+          (ionInput)="openSuggestions('nome')"
+          (ionFocus)="openSuggestions('nome')">
+        </ion-searchbar>
+      
+        <ion-list *ngIf="showSuggestions" class="suggestion-list">
+          <ion-item *ngFor="let option of filteredOptionAtt | async" (click)="selectAttivitaOption(option)">
+            {{ option.nome }}
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <!-- 🌍 Città -->
+      <div class="search-wrapper">
+        <ion-searchbar 
+          placeholder="{{ 'SearchCity' | translate }}"
+          [formControl]="inputCityControl"
+          (ionInput)="openSuggestions('citta')"
+          (ionFocus)="openSuggestions('citta')">
+        </ion-searchbar>
+      
+        <ion-list *ngIf="showCitiesDropdown" class="suggestion-list">
+          <ion-item *ngFor="let city of filteredCitiesOptions | async" (click)="selectCityOption(city)">
+            {{ city.descComune }}
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <!-- 🏷️ Tipo di locale -->
+      <div class="search-wrapper">
+        <ion-searchbar 
+          placeholder="{{ 'TYPEACTIVITY' | translate }}"
+          [formControl]="inputControl"
+          (ionInput)="openSuggestions('tipo')"
+          (ionFocus)="openSuggestions('tipo')">
+        </ion-searchbar>
+      
+        <ion-list *ngIf="showDropdown" class="suggestion-list">
+          <ion-item *ngFor="let option of filteredOptions | async" (click)="selectOption(option)">
+            {{ option.descrizione }}
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <!-- 🎯 Toggle -->
+      <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}">
+        {{ 'SEARCHPROMOTYPE' | translate }}
+      </ion-toggle>
+
+      <div class="formInput divNumMaxCoupon" *ngIf="isModalOpen">
         <app-tipo-offerte (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipo-offerte>
       </div>
-      <br>
-      <br>
-      <div style="text-align: center; margin-top: -5%;">
+
+      <div style="text-align: center; margin-top: 10px;">
         <ion-button shape="round" (click)="Ricerca()">
-          <ion-label>{{'Search'|translate}}</ion-label>
+          <ion-label>{{ 'Search' | translate }}</ion-label>
         </ion-button>
       </div>
-    </form>
-  </ion-card-content>
-</ion-card>
 
-<ion-list *ngIf="!isLoading" lines="inset" class="suggestion-list">
-  <ion-item *ngFor="let option of filteredOptionAtt | async" (click)="VisualizzaAttivita(option.idAttivita)">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="9">
-          <ion-icon name="business-outline"></ion-icon>
-          {{ option.nome }}
-          <ion-label style="font-size: x-small;">
-            {{option.indirizzo}}, {{option.civico}}
-          </ion-label>
-        </ion-col>
-        <ion-col size="3" class="colIcon">
-          <div *ngIf="option.isPromoPresente" class="label-overlay">
-            <label style="font-size: 1.1rem;">{{'Promo'|translate}}</label>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
-</ion-list>
+    </form>

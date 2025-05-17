@@ -1,15 +1,27 @@
-<ion-item>
-  <ion-input
-    label="{{ 'CITY' | translate }}*" 
-    labelPlacement="stacked"
-    type="text"
-    [formControl]="comuniControl"
-    (ionInput)="onSearchChange($event)"
-    [value]="citta">
-  </ion-input>
-</ion-item>
-<ion-list *ngIf="showSuggestions">
-  <ion-item *ngFor="let comune of comuniFiltrati" (click)="selectComune(comune)">
-    {{ comune }}
+<div class="dropdown-wrapper">
+  <ion-item>
+    <ion-input
+      label="{{ 'CITY' | translate }}*"
+      labelPlacement="stacked"
+      type="text"
+      [formControl]="comuniControl"
+      (ionInput)="onSearchChange($event)"
+      [value]="citta"
+      (ionFocus)="onFocus()"
+      (ionBlur)="onBlur()"
+      autocomplete="off">
+    </ion-input>
   </ion-item>
-</ion-list>
+
+  <!-- Dropdown stile tendina -->
+  <ion-card *ngIf="showSuggestions" class="dropdown-card">
+    <ion-list>
+      <ion-item
+        button
+        *ngFor="let comune of comuniFiltrati"
+        (click)="selectComune(comune)">
+        {{ comune }}
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</div>

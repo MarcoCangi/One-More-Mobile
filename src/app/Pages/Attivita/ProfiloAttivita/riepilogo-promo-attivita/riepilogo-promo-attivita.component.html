@@ -175,7 +175,8 @@
       [idPromo]="idPromoDisable"
       [idAttivita]="idAttivitaDisable"
       [couponRichiesti]="numCouponRichiesti"
-      (dismissDisattivazioneEvent)="dismissDisattivaPromo($event)">
+      (dismissDisattivazioneEvent)="dismissDisattivaPromo($event)"
+      (closeModal)="this.isConfirmOpen = false">
     </app-conferma-disattivazione-promo>
   </ng-template>
 </ion-modal>

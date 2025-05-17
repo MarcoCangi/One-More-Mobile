@@ -67,19 +67,24 @@
       </ion-grid >
       </ion-card-content>
       
-      <ion-card-content *ngIf="!this.isAdd && !this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
-        <ion-card-title class="title"> {{ 'CONFIRM_DELETE_COUPON' | translate }}</ion-card-title>
-      <ion-grid>
-        <ion-row style="margin-top:15px;">
-          <ion-col size="6" class="column ion-text-center ion-align-items-center">
-            <ion-button shape="round" color="light" (click)="CloseModalConfirm()">{{ 'GO_BACK' | translate }}</ion-button>
-          </ion-col>
-          <ion-col size="6" class="column ion-text-center ion-align-items-center">
-            <ion-button shape="round" color="danger" (click)="Confirm(3)">{{ 'DELETE' | translate }}</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
+      <ion-card-content *ngIf="!this.isAdd && !this.isEsito && !isLoading" class="content-wrapper">
+  <ion-card-title class="title">{{ 'CONFIRM_DELETE_COUPON' | translate }}</ion-card-title>
+
+  <ion-grid>
+      <ion-row class="button-row">
+        <ion-col size="6" class="btn-col">
+          <ion-button expand="block" shape="round" fill="outline" color="medium" (click)="CloseModalConfirm()">
+            {{ 'GO_BACK' | translate }}
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" class="btn-col">
+          <ion-button expand="block" shape="round" color="danger" (click)="Confirm(3)">
+            {{ 'DELETE' | translate }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
   
       <ion-card-content *ngIf="this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px; height: 400px;">
         <ion-card-title class="title" *ngIf="this.isConfirmed && this.typeUtilizzo === 2">{{ 'COUPON_USED' | translate }}</ion-card-title>
@@ -89,7 +94,7 @@
         <ion-grid>
           <ion-row>
             <ion-col class="column ion-text-center ion-align-items-center">
-              <ion-icon *ngIf="this.isConfirmed" color="success" class="img" name="checkmark-circle-outline"></ion-icon>
+              <img *ngIf="this.isConfirmed" class="imgConfirm" src="assets/Img/spunta_vicino.png"/>
               <ion-icon *ngIf="!this.isConfirmed" color="danger" class="img" name="close-circle-outline"></ion-icon>
             </ion-col>
           </ion-row>

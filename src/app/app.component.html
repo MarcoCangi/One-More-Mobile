@@ -9,8 +9,8 @@
              (updateIdFooterEvent)="updateIdFooterEvent($event)"
              [idPage]="this.idPage"></app-nav>  
   
-    <app-footer class="footer" style="margin-top: 100px;"
-                (openPageEvent)="openPageEvent($event)"
-                [idPage]="this.idPage"
-                [idSoggetto]="this.idSoggetto"></app-footer>
+    <app-footer *ngIf="!keyboardOpen" class="footer"
+            (openPageEvent)="openPageEvent($event)"
+            [idPage]="this.idPage"
+            [idSoggetto]="this.idSoggetto"></app-footer>
   </ion-app>

@@ -5,11 +5,19 @@
 }
 
 .footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   z-index: 1000;
   --background: #e9540a;
+}
+
+.keyboard-open ion-content app-footer{
+  opacity: 0;
+}
+
+.keyboard-open .footer {
+  --display: none !important;
 }
 
 .splash-screen {

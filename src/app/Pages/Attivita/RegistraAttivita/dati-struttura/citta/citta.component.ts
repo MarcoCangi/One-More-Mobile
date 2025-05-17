@@ -13,6 +13,7 @@ export class CittaComponent implements OnInit {
   comuniControl = new FormControl('', Validators.required);
   comuniFiltrati: string[] = [];
   showSuggestions: boolean = false;
+  hasComuneError: boolean = false;
 
   @Input() listaComuni: Comuni[] | undefined;
   @Input() citta: string | undefined;
@@ -23,31 +24,41 @@ export class CittaComponent implements OnInit {
       debounceTime(100),
       tap((value: string | null) => {
         this.comuniFiltrati = this.filterComuni(value);
-        if(this.listaComuni && this.listaComuni.find(x => x.descComune === value))
-          this.showSuggestions = false;
-        else
-          this.showSuggestions = this.comuniFiltrati.length > 0;
+        this.showSuggestions = this.comuniFiltrati.length > 0;
+      
+        // Emissione se valido
+        this.emitCittaChange(value);
       })
     ).subscribe();
-
-    this.comuniControl.valueChanges.subscribe((value: string | null) => {
-      this.emitCittaChange(value);
-    });
-
+  
     if (this.citta && this.citta.trim() !== '') {
       this.comuniControl.setValue(this.citta);
     }
   }
 
-  emitCittaChange(value: string | null) {
-    if (this.listaComuni && value !== null) {
-      const comune = this.listaComuni.find(x => x.descComune === value);
-      if (comune) {
-        this.cittaChange.emit(comune);
-        this.showSuggestions = false;
+
+  emitCittaChange(value: string | null, emitOnValidOnly: boolean = true) {
+    if (!value || value.trim() === '') {
+      this.hasComuneError = true;
+      return;
+    }
+
+    const comune = this.listaComuni?.find(
+      x => x.descComune.toLowerCase() === value.trim().toLowerCase()
+    );
+
+    if (comune) {
+      this.hasComuneError = false;
+      this.cittaChange.emit(comune);  // ✅ Emissione corretta
+      this.showSuggestions = false;
+    } else {
+      this.hasComuneError = true;
+      if (!emitOnValidOnly) {
+        // puoi notificare comunque al padre che non è valido, se ti serve
       }
     }
   }
+
 
   filterComuni(value: string | null): string[] {
     const filterValue = (value || '').toLowerCase();
@@ -71,5 +82,16 @@ export class CittaComponent implements OnInit {
     this.comuniFiltrati = [];
     this.showSuggestions = false;
     this.emitCittaChange(comune);
+  }
+
+  onFocus() {
+  this.showSuggestions = this.comuniFiltrati.length > 0;
+}
+
+  onBlur() {
+    setTimeout(() => {
+      this.showSuggestions = false;
+      this.emitCittaChange(this.comuniControl.value);  // forza l’emissione se valido
+    }, 200);
   }
 }

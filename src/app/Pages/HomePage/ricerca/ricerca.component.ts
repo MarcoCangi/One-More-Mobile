@@ -64,6 +64,8 @@ export class RicercaComponent implements OnInit {
       this.isLoading = true;
       this.showDropdown = false;
       this.showCitiesDropdown = false;
+
+      document.addEventListener('click', this.handleClickOutside);
   
       this.filteredOptions = this.inputControl.valueChanges.pipe(
         startWith(''),
@@ -148,17 +150,29 @@ return [];
     return [];
   }
 
-  selectOption(option: TipoAttivita): void {
-    this.showDropdown = false;
-    this.inputControl.setValue(option.descrizione);
-    this.selectedOption = option;
-  }
+  selectAttivitaOption(option: AttivitaRicerca): void {
+  this.searchForm.get('nomeLocale')?.setValue(option.nome);
+  this.selectedOptionAttivita = option;
+  this.closeAllDropdowns();
+}
 
-  selectCityOption(cityOption: Comuni): void {
-    this.showCitiesDropdown = false;
-    this.inputCityControl.setValue(cityOption.descComune);
-    this.selectedCityOption = cityOption;
-  }
+selectCityOption(cityOption: Comuni): void {
+  this.inputCityControl.setValue(cityOption.descComune);
+  this.selectedCityOption = cityOption;
+  this.closeAllDropdowns();
+}
+
+selectOption(option: TipoAttivita): void {
+  this.inputControl.setValue(option.descrizione);
+  this.selectedOption = option;
+  this.closeAllDropdowns();
+}
+
+closeAllDropdowns() {
+  this.showSuggestions = false;
+  this.showCitiesDropdown = false;
+  this.showDropdown = false;
+}
 
   closeDropdown = (event: MouseEvent) => {
     const clickedElement = event.target as HTMLElement;
@@ -260,4 +274,20 @@ return [];
   openPage(idPage:number){
     this.openPageEvent.emit(idPage);
   }
+
+  handleClickOutside = (event: MouseEvent) => {
+   const target = event.target as HTMLElement;
+    
+   if (!target.closest('ion-searchbar')) {
+     this.showSuggestions = false;
+     this.showCitiesDropdown = false;
+     this.showDropdown = false;
+   }
+  }
+
+  openSuggestions(type: 'nome' | 'citta' | 'tipo') {
+  this.showSuggestions = type === 'nome';
+  this.showCitiesDropdown = type === 'citta';
+  this.showDropdown = type === 'tipo';
+}
 }

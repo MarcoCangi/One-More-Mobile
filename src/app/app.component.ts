@@ -1,4 +1,4 @@
-/* eslint-disable @angular-eslint/use-lifecycle-interface */
+import { AfterViewInit } from '@angular/core'; // aggiungi sopra
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
@@ -17,7 +17,7 @@ import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   lblFlag: string = "it";
   isIta: boolean = true;
   faMap = faMap;
@@ -33,6 +33,8 @@ export class AppComponent implements OnInit {
   idPage!: number;
   showSplash = true;
   IsShowSplashVisible : boolean = false;
+  keyboardOpen: boolean = false;
+  private initialHeight: number = window.innerHeight;
 
   constructor(private authService: AuthService, 
               private attivitaService: GetApiAttivitaService,
@@ -41,6 +43,14 @@ export class AppComponent implements OnInit {
               private translate: TranslateService,
               private locationService: LocationService,
               private storageService: StorageService) { }
+
+  ngAfterViewInit(): void {
+    window.addEventListener('resize', () => {
+      const height = window.innerHeight;
+      // Se si è ridotta di almeno 150px, supponiamo che la tastiera sia aperta
+      this.keyboardOpen = height < this.initialHeight - 150;
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     this.checkAndRefreshToken();
@@ -103,6 +113,13 @@ export class AppComponent implements OnInit {
         this.listaCitta = listaCitta;
       }
     });
+
+    // Osserva quando cambia la classe del body (per intercettare la tastiera)
+  const observer = new MutationObserver(() => {
+    this.keyboardOpen = document.body.classList.contains('keyboard-open');
+  });
+
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
 
   setLanguage() {

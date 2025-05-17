@@ -406,6 +406,10 @@ ion-note.promoNote[color="danger"] {
     height: 170px;
   }
 
+  .keyboard-open .footer {
+    --display: none !important;
+  } 
+
   ion-item.TitleContent {
     --font-family: Helvetica !important;
     margin-top: 25%;

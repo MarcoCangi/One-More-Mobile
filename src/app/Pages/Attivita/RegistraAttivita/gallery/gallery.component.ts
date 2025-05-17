@@ -1,7 +1,9 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Immagini } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { Attivita, Immagini } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 
 @Component({
   selector: 'app-gallery',
@@ -12,6 +14,7 @@ export class GalleryComponent implements OnInit {
 
   @Input() requiredFileType!: string;
   @Input() immagini: Immagini[] | undefined;
+  @Input() attivita: Attivita | undefined;
   immaginiArray: Immagini[] = [];
   @Output() immaginiChange: EventEmitter<Immagini[]> = new EventEmitter<Immagini[]>();
 
@@ -19,9 +22,13 @@ export class GalleryComponent implements OnInit {
   urlPrincipale: string = '';
   urls: string[] = [];
   isModalOpen: boolean = false;
+  isImgPrincipaleEliminata: boolean = false;
+  
   CameraSource = CameraSource;  // Definisci CameraSource come proprietà
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+              private alertController: AlertController,
+              private translate: TranslateService) {}
 
   ngOnInit() {
     if (this.immagini && this.immagini.length > 0) {
@@ -65,6 +72,11 @@ export class GalleryComponent implements OnInit {
       };
       this.immaginiArray.push(nuovaImmagine);
       this.immaginiChange.emit(this.immaginiArray);
+
+      if (isProfile && this.isImgPrincipaleEliminata) {
+        this.isImgPrincipaleEliminata = false;
+        this.presentInfoAlert();
+      }
     }
   }
 
@@ -96,6 +108,11 @@ export class GalleryComponent implements OnInit {
       };
       this.immaginiArray.push(nuovaImmagine);
       this.immaginiChange.emit(this.immaginiArray);
+    
+      if (isProfile && this.isImgPrincipaleEliminata) {
+        this.isImgPrincipaleEliminata = false;
+        this.presentInfoAlert();
+      }
     }
   }
 
@@ -144,6 +161,11 @@ export class GalleryComponent implements OnInit {
       const newImgArray = this.immaginiArray.filter(i => i.isImmaginePrincipale != true);
       this.immaginiArray = newImgArray;
       this.immaginiChange.emit(this.immaginiArray);
+      if(this.attivita && this.attivita.idAttivita && this.attivita.isVerificata && this.attivita.esitoVerifica){
+        this.isImgPrincipaleEliminata= true;  
+        console.log(this.isImgPrincipaleEliminata);
+      }
+        
     }
     else{
       const index = this.urls.indexOf(this.selectedImageUrl);
@@ -154,6 +176,7 @@ export class GalleryComponent implements OnInit {
       }
     }
   }
+
   getImmaginePrincipaleIsTemp(): boolean{
     if(this.immagini && this.immagini.find(i => i.isImmaginePrincipale && i.isVerificata))
       return false;
@@ -162,4 +185,19 @@ export class GalleryComponent implements OnInit {
     else 
       return false;
   }
+
+  async presentInfoAlert() {
+  const header = this.translate.instant('WARNING');
+  const message = this.translate.instant('IMAGE_VERIFICATION_MESSAGE');
+  const okText = this.translate.instant('OK');
+
+  const alert = await this.alertController.create({
+    header,
+    message,
+    buttons: [okText],
+    mode: 'ios'
+  });
+
+  await alert.present();
+}
 }

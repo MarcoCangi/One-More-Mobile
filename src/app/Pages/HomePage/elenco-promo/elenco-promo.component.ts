@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
@@ -9,7 +9,7 @@ import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-
   templateUrl: './elenco-promo.component.html',
   styleUrls: ['./elenco-promo.component.scss'],
 })
-export class ElencoPromoComponent{
+export class ElencoPromoComponent implements OnInit{
 
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
@@ -25,7 +25,7 @@ export class ElencoPromoComponent{
   constructor(private attivitaService: GetApiAttivitaService,
               private storageService: StorageService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.loadData();
 }
 

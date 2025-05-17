@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-card-title class="titleModal">{{ 'DISABLE_PROMO' | translate }}</ion-card-title>
     <ion-buttons slot="end">
-      <ion-button (click)="Annulla()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
+      <ion-button (click)="close()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -22,7 +22,7 @@
 
     <div class="container" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5%; margin-top: 5%;">
       <ion-button color="danger" shape="round" (click)="Disattiva()">{{ 'DISABLE' | translate }}</ion-button>
-      <ion-button color="primary" shape="round" (click)="Annulla()">{{ 'GO_BACK' | translate }}</ion-button>
+      <ion-button color="primary" shape="round" (click)="close()">{{ 'GO_BACK' | translate }}</ion-button>
     </div>
   </ion-card-content>
 </ion-card>

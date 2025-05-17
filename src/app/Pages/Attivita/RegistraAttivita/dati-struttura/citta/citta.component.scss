@@ -1,2 +1,19 @@
+.dropdown-wrapper {
+  position: relative;
+}
 
-  
+.dropdown-card {
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  top: 100%; // Posiziona subito sotto l'input
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+ion-input input {
+  text-transform: uppercase;
+}

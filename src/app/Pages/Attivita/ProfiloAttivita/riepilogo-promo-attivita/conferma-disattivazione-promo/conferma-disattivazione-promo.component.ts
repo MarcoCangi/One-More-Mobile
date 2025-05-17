@@ -13,6 +13,7 @@ export class ConfermaDisattivazionePromoComponent  implements OnInit {
   @Input() idAttivita : number | undefined;
   @Input() couponRichiesti : number | undefined;
   @Output() dismissDisattivazioneEvent = new EventEmitter<{ idPromo: number, isDisattivata: boolean }>();
+  @Output() closeModal = new EventEmitter<void>();
   isLoading! : boolean;
   isDisattivata! : boolean;
   constructor(private promoService: GetApiPromoService,
@@ -48,5 +49,9 @@ export class ConfermaDisattivazionePromoComponent  implements OnInit {
 
   Annulla(){
     this.dismissDisattivazioneEvent.emit();
+  }
+
+  close(){
+    this.closeModal.emit();
   }
 }

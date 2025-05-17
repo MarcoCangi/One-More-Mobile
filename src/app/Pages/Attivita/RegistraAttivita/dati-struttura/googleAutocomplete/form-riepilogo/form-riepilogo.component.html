@@ -120,8 +120,9 @@
 
     <div *ngSwitchCase="'two'" class="switch-segment-content">
       <ion-spinner *ngIf="isLoadIMG" name="crescent" color="primary"></ion-spinner>
-      <app-gallery *ngIf="!isLoadIMG" name="gallery" [immagini]="this.attivita.immagini" 
-                                  (immaginiChange)="handleImmaginiChange($event)"></app-gallery>
+      <app-gallery *ngIf="!isLoadIMG" name="gallery" [attivita] = "this.attivita" 
+                                                     [immagini]="this.attivita.immagini" 
+                                                     (immaginiChange)="handleImmaginiChange($event)"></app-gallery>
     </div>
 
     <div *ngSwitchCase="'three'" class="switch-segment-content">
