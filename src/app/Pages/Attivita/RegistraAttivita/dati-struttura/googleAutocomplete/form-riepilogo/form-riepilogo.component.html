@@ -113,7 +113,7 @@
   </div>
   <ion-card-content>
     <ion-card class="card-orari" style="margin-top: 5%;">
-      <app-orari-dettaglio [attivita]="this.attivita"></app-orari-dettaglio>
+      <app-orari-dettaglio [attivita]="this.attivita" (click)="modifica(6)" ></app-orari-dettaglio>
     </ion-card>
   </ion-card-content>
     </div>
@@ -148,25 +148,29 @@
   
         <ion-card class="formContentModal">
           <div *ngIf="IsModifiedName" class="modifica-sezione">
-            <ion-title class="titleMod">{{'ENTER_EDIT_BUSINESS'|translate}}</ion-title>
+            <!-- <ion-title class="titleMod">{{'ENTER_EDIT_BUSINESS'|translate}}</ion-title> -->
+            <h4 class="titleMod">{{'ENTER_EDIT_BUSINESS'|translate}}</h4>  
             <app-nome [nome]="attivita.nome" (nomeChange)="handleNomeChange($event)"></app-nome>
             <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         
           <div *ngIf="IsModifiedPhone" class="modifica-sezione">
-            <ion-title class="titleMod">{{'ENTER_EDIT_PHONE'|translate}}</ion-title>
+            <!-- <ion-title class="titleMod">{{'ENTER_EDIT_PHONE'|translate}}</ion-title> -->
+             <h4 class="titleMod">{{'ENTER_EDIT_PHONE'|translate}}</h4> 
             <app-telefono [telefono]="attivita.telefono" (telefonoChange)="handleTelefonoChange($event)"></app-telefono>
             <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         
           <div *ngIf="IsModifiedMail" class="modifica-sezione">
-            <ion-title class="titleMod">{{'ENTER_EDIT_EMAIL'|translate}}</ion-title>
+            <!-- <ion-title class="titleMod">{{'ENTER_EDIT_EMAIL'|translate}}</ion-title> -->
+             <h4 class="titleMod">{{'ENTER_EDIT_EMAIL'|translate}}</h4>
             <app-email [email]="attivita.email" (emailChange)="handleEmailChange($event)"></app-email>
             <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         
           <div *ngIf="IsModifiedCitta" class="modifica-sezione">
-            <ion-title class="titleMod">{{'ENTER_EDIT_ADDRESS'|translate}}</ion-title>
+            <!-- <ion-title class="titleMod">{{'ENTER_EDIT_ADDRESS'|translate}}</ion-title> -->
+             <h4 class="title-mod">{{'ENTER_EDIT_ADDRESS'|translate}}</h4>
             <app-indirizzo [indirizzo]="attivita.indirizzo.trim()" (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
             <app-civico [civico]="attivita.civico.trim()" (civicoChange)="handleCivicoChange($event)"></app-civico>
             <app-cap [cap]="attivita.cap.trim()" (capChange)="handleCapChange($event)"></app-cap>
@@ -175,8 +179,16 @@
           </div>
         
           <div *ngIf="IsModifiedDesc" class="modifica-sezione">
-            <ion-title class="titleMod">{{'ENTER_EDIT_DESCRIPTION'|translate}}</ion-title>
+            <!-- <ion-title class="titleMod">{{'ENTER_EDIT_DESCRIPTION'|translate}}</ion-title> -->
+             <h4 class="title-mod">{{'ENTER_EDIT_DESCRIPTION'|translate}}</h4>
             <app-menu [description]="attivita.description" (descrizioneChange)="handleDescChange($event)"></app-menu>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
+          </div>
+
+          <div *ngIf="IsModifiedOrari" class="modifica-sezione" style="padding-left:0px;">
+            <!-- <ion-title class="titleMod">{{'ENTER_EDIT_HOURS'|translate}}</ion-title> -->
+             <h4 class="title-mod">{{'ENTER_EDIT_HOURS'|translate}}</h4>
+            <app-orari-apertura [orari]="this.attivita.orari" (orariChange)="handleOrariChange($event)"></app-orari-apertura>
             <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         </ion-card>

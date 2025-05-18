@@ -33,6 +33,7 @@ export class FormRiepilogoComponent  implements OnInit {
   IsModifiedMail: boolean = false;
   IsModifiedCitta: boolean = false;
   IsModifiedDesc: boolean = false;
+  IsModifiedOrari: boolean = false;
   IsConfirmed: boolean = false;
   isCheckboxChecked: boolean = false;
   isOpenAlert: boolean = false;
@@ -98,6 +99,7 @@ export class FormRiepilogoComponent  implements OnInit {
     this.IsModifiedMail = type === 3;
     this.IsModifiedCitta = type === 4;
     this.IsModifiedDesc = type ===5;
+    this.IsModifiedOrari = type === 6;
   }
 
   chiudi(){
