@@ -148,36 +148,36 @@
   
         <ion-card class="formContentModal">
           <div *ngIf="IsModifiedName" class="modifica-sezione">
-            <ion-title class="titleMod">Inserisci o modifica il nome della tua attività</ion-title>
+            <ion-title class="titleMod">{{'ENTER_EDIT_BUSINESS'|translate}}</ion-title>
             <app-nome [nome]="attivita.nome" (nomeChange)="handleNomeChange($event)"></app-nome>
-            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         
           <div *ngIf="IsModifiedPhone" class="modifica-sezione">
-            <ion-title class="titleMod">Inserisci o modifica il numero di telefono</ion-title>
+            <ion-title class="titleMod">{{'ENTER_EDIT_PHONE'|translate}}</ion-title>
             <app-telefono [telefono]="attivita.telefono" (telefonoChange)="handleTelefonoChange($event)"></app-telefono>
-            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         
           <div *ngIf="IsModifiedMail" class="modifica-sezione">
-            <ion-title class="titleMod">Inserisci o modifica la tua email</ion-title>
+            <ion-title class="titleMod">{{'ENTER_EDIT_EMAIL'|translate}}</ion-title>
             <app-email [email]="attivita.email" (emailChange)="handleEmailChange($event)"></app-email>
-            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         
           <div *ngIf="IsModifiedCitta" class="modifica-sezione">
-            <ion-title class="titleMod">Inserisci o modifica i dati relativi all'indirizzo della tua attività</ion-title>
+            <ion-title class="titleMod">{{'ENTER_EDIT_ADDRESS'|translate}}</ion-title>
             <app-indirizzo [indirizzo]="attivita.indirizzo.trim()" (indirizzoChange)="handleIndirizzoChange($event)"></app-indirizzo>
             <app-civico [civico]="attivita.civico.trim()" (civicoChange)="handleCivicoChange($event)"></app-civico>
             <app-cap [cap]="attivita.cap.trim()" (capChange)="handleCapChange($event)"></app-cap>
             <app-citta [listaComuni]="listaComuni" [citta]="attivita.citta.trim()" (cittaChange)="handleCittaChange($event)"></app-citta>
-            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         
           <div *ngIf="IsModifiedDesc" class="modifica-sezione">
-            <ion-title class="titleMod">Inserisci o modifica la descrizione della tua attività</ion-title>
+            <ion-title class="titleMod">{{'ENTER_EDIT_DESCRIPTION'|translate}}</ion-title>
             <app-menu [description]="attivita.description" (descrizioneChange)="handleDescChange($event)"></app-menu>
-            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">Chiudi</ion-button>
+            <ion-button class="btnClose" shape="round" color="primary" (click)="chiudi()">{{'Close'|translate}}</ion-button>
           </div>
         </ion-card>
       </ion-content>
