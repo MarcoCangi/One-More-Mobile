@@ -73,7 +73,7 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
 
   aggiuntaNewAttivita(){
     this.attivita = new Attivita(
-      0, 0, '', '', '', '', '', '', 0, 0, '', '', '', false, false, false, false, [], new Orari, [], false, false, '', '', 0, false, 0, 0, ''
+      0, 0, '', '', '', '', '', '', 0, 0, '', '', '', false, false, false, false, [], new Orari, [], false, false, '', '', 0, false, 0, 0, '',''
     );
   }
 

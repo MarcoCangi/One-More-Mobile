@@ -121,11 +121,12 @@ export class DatiStrutturaComponent  implements OnInit {
 
   async getListaAttivita(idSoggetto: number) {
     const cacheKey = `lista_attivita`; 
-  
+    
     try {
       const cachedData = await this.storageService.getItem(cacheKey);
       if (cachedData) {
         this.listaAttivita = cachedData;
+        console.log(this.listaAttivita);
         return;
       }
   

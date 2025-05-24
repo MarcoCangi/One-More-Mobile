@@ -191,6 +191,13 @@ ion-note.promoNote[color="danger"] {
     color: white;
   }
 
+  ion-thumbnail img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 52px;
+    height: 52px;
+  }
+
   .card-containerHomePage {
     display: flex;
     overflow: hidden;

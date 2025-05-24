@@ -2,8 +2,7 @@
 
 <div class="map">
   <ion-spinner style="background-color: white; border-radius: 25%;" *ngIf="isLoading" name="dots" color="primary"></ion-spinner>
-  <ion-button class="btnsearch" color="light" shape="round" style="margin-top: 5rem; z-index: 10000;" *ngIf="this.isMooving" (click)="cerca()">{{'SEARCHHERE'|translate}}</ion-button>
-  <google-map *ngIf="isPositionLoaded" [zoom]="12" id="mapElement" #googleMap height="100%" width="100%" [center]="center" 
+  <google-map *ngIf="isPositionLoaded" [zoom]="12" id="mapElement" #googleMap height="100%" width="100%" [center]="center" [options]="mapOptions"
               (centerChanged)="centerChanged()" 
               (zoomChanged)="zoomChanged()" 
               (mapClick)="move($event)">
@@ -13,9 +12,39 @@
               (mapClick)="markerClicked(marker)">
   </map-marker>
 </google-map>
-  <ion-button class="btnListaAttivita" shape="round" expand="block" (click)="openListModal()">{{'FullList'|translate}}</ion-button>
+<div class="divToolbar ">
+  <ion-button shape="round" fill="outline" class="white-outline-btn"><ion-icon style="margin-right: 5px;" name="ticket-outline"></ion-icon>PROMOZIONI</ion-button>
+</div>
+<ion-button class="btnsearch" color="light" shape="round" *ngIf="this.isMooving" (click)="cerca()">{{'SEARCHHERE'|translate}}</ion-button>
+<ion-button shape="round" class="btnAttList" (click)="openListModal()"><ion-icon name="chevron-up-outline" style="margin-top: -35px; width: 25px; height: 25px;"></ion-icon><ion-label style="margin-top: -35px;">{{'FullList'|translate}}</ion-label></ion-button>
 </div>
   
+<div class="horizontal-list-overlay">
+  <div class="scroll-container" #scrollContainer (scroll)="onScroll(scrollContainer)">
+    <div class="card-attivita" *ngFor="let attivita of attivitas; let i = index" #card (click)="VisualizzaAttivita(attivita.idAttivita, 2); onCardFocus(attivita); onScroll(scrollContainer)">
+      <img [src]="getImmaginePrincipale(attivita)" alt="Immagine Attività" />
+      <div class="card-content">
+        <h2>{{ attivita.nome }}</h2>
+        <p>{{ attivita.cap }} - {{ attivita.citta}}</p>
+        <p class="tipoAtt"> {{ getTipiAttivitaString(attivita) }} </p>
+      </div>
+      <div class="distance">
+          <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+          {{ attivita.distanza }}
+        </div>
+      <div class="rating">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <ion-icon
+              [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
+              class="star">
+            </ion-icon>
+          </ng-container>
+          <span class="rating-countHomePage">({{ attivita.numberOfRating }})</span>
+        </div>
+      <div class="badge-promo" *ngIf="attivita.isPromoPresente">PROMO</div>
+    </div>
+  </div>
+</div>
 
 <ion-popover
   class="activity-popover"
@@ -69,28 +98,22 @@
 </ion-popover>
 
 
-
-
-  <!-- Modal for activity list -->
+<!-- Modal for activity list -->
   <ion-modal [isOpen]="isListModalOpen" class="full-modal">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="end">
-            <ion-button (click)="dismissListModal()">
-              <ion-icon name="close-outline" class="closeBlack"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+        <ion-toolbar class="modalToolbar">
+          <ion-icon slot="end" (click)="dismissListModal()" name="chevron-down-outline" class="closewhite"></ion-icon>
         </ion-toolbar>
       </ion-header>
-  
+
       <ion-content class="ion-padding">
-        <div class="btnContent">
+        <!-- <div class="btnContent">
           <ion-button shape="round" fill="outline" color="primary" (click)="dismissListModal()">
             <ion-icon name="map-outline" slot="start"></ion-icon>
             {{ 'Map' | translate }}
           </ion-button>
-        </div>
+        </div> -->
   
         <ion-card class="attivita-card" *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
           <div class="label-overlayHomePage" *ngIf="attivita.isPromoPresente">
@@ -122,3 +145,7 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+
+
+
+

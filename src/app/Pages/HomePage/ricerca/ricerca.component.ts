@@ -1,8 +1,6 @@
+// ricerca.component.ts
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { lastValueFrom } from 'rxjs';
 import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
@@ -14,204 +12,148 @@ import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/sr
   styleUrls: ['./ricerca.component.scss'],
 })
 export class RicercaComponent implements OnInit {
-
   @Input() listaTipoAttivita: TipoAttivita[] | undefined;
   @Input() listaAttivitaPerRicerca: AttivitaRicerca[] | undefined = [];
   @Input() listaCitta: Comuni[] | undefined;
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openPageEvent = new EventEmitter<number>();
 
+  globalSearchControl: FormControl = new FormControl();
+  showUnifiedSuggestions = false;
+  filteredUnifiedOptions: any[] = [];
+
   selectedOption: TipoAttivita | null = null;
   selectedOptionAttivita: AttivitaRicerca | null = null;
   selectedCityOption: Comuni | null = null;
-  tipoOfferte : number[] | undefined;
+  tipoOfferte: number[] | undefined;
 
-  filteredOptions: Observable<TipoAttivita[]> | null = null;
-  filteredCitiesOptions: Observable<Comuni[]> | null = null;
-  filteredOptionAtt: Observable<AttivitaRicerca[]> | undefined;
-  
-  inputControl: FormControl = new FormControl();
-  inputCityControl: FormControl = new FormControl();
-
-  searchForm!: FormGroup;
-  showDropdown = true;
-  showCitiesDropdown = true;
-  private _filterValue = '';
-  private _filterCityValue = '';
-  
-  position!: GeolocationPosition;
-  center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
+  isModalOpen: boolean = false;
+  attivita: Attivita | undefined;
+  isLoading: boolean = false;
+  isLoadingRicerca: boolean = false;
   filtro!: FiltriAttivita;
   listaAttivitaRicerca!: AttivitaFiltrate;
-  isModalOpen: boolean = false;
-  showSuggestions: boolean = true;
-  attivita: Attivita | undefined;
-  isLoading : boolean = false;
-  isLoadingRicerca : boolean = false;
 
-  constructor(private formBuilder: FormBuilder,
-              private locationService: LocationService,
-              private attivitaService: GetApiAttivitaService) 
-            {
-              this.searchForm = this.formBuilder.group({
-                nomeLocale: new FormControl(''),
-                citta: new FormControl(''),
-                tipoLocale: new FormControl('')
-              });
-            }
+  constructor(
+    private locationService: LocationService,
+    private attivitaService: GetApiAttivitaService
+  ) {}
 
   async ngOnInit(): Promise<void> {
-      this.isLoading = true;
-      this.showDropdown = false;
-      this.showCitiesDropdown = false;
-
-      document.addEventListener('click', this.handleClickOutside);
-  
-      this.filteredOptions = this.inputControl.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
-      this.filteredCitiesOptions = this.inputCityControl.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterCities(value))
-      );
-  
-      this.filteredOptionAtt = this.searchForm.get('nomeLocale')?.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterAtt(value))
-      );
-  
-      await this.GetAttivita();
-  
-      document.addEventListener('click', this.closeDropdown);
-  }
-  
-  async GetAttivita() {
-      if(!this.listaAttivitaPerRicerca || this.listaAttivitaPerRicerca.length == 0)
-        this.listaAttivitaPerRicerca = this.attivitaService.GetListaAttivitaPerRicercaSession();
-      if(!this.listaAttivitaPerRicerca || this.listaAttivitaPerRicerca.length == 0){
-        try {
-          const listaAttivita = await this.attivitaService.apiGetListaAttivitaPreSearch();
-          if (listaAttivita) {
-              this.listaAttivitaPerRicerca = listaAttivita;
-              this.attivitaService.createListaAttivitaPerRicercaSession(this.listaAttivitaPerRicerca);
-          }
-      } catch (error) {
-          console.error('Error fetching activities:', error);
-      } finally {
-          this.isLoading = false;
-      }
-      }
-      else{
-        this.isLoading = false;
-      }
+    this.isLoading = true;
+    await this.loadAttivita();
+    this.isLoading = false;
   }
 
-  _filter(value: string): TipoAttivita[] {
-    const filterValue = value.toLowerCase();
-    if (Array.isArray(this.listaTipoAttivita)) {
-      const filteredList = this.listaTipoAttivita.filter(attivita =>
-        attivita.descrizione?.toLowerCase().includes(filterValue)
-      );
-      return filteredList.slice(0, 3); // Restituisci solo le prime 3 opzioni filtrate
+  async loadAttivita(): Promise<void> {
+    if (!this.listaAttivitaPerRicerca || this.listaAttivitaPerRicerca.length === 0) {
+      this.listaAttivitaPerRicerca = this.attivitaService.GetListaAttivitaPerRicercaSession();
     }
-    return [];
-  }
-
-  _filterCities(value: string): Comuni[] {
-    const filterCityValue = value.toLowerCase();
-if (Array.isArray(this.listaCitta)) {
-  // Filtra prima le corrispondenze esatte
-  const exactMatches = this.listaCitta.filter(citta =>
-    citta.descComune?.toLowerCase() === filterCityValue
-  );
-
-  // Filtra le corrispondenze parziali (escludendo quelle già trovate come esatte)
-  const partialMatches = this.listaCitta.filter(citta =>
-    citta.descComune?.toLowerCase().includes(filterCityValue) &&
-    citta.descComune?.toLowerCase() !== filterCityValue
-  );
-
-  // Combina i risultati esatti e parziali, limitando il totale a 5
-  const filteredList = [...exactMatches, ...partialMatches].slice(0, 5);
-
-  return filteredList;
-}
-return [];
-  }
-
-  _filterAtt(value: string): AttivitaRicerca [] {
-    const filterValue = value.toLowerCase();
-    if (Array.isArray(this.listaAttivitaPerRicerca)) {
-      return this.listaAttivitaPerRicerca.filter(attivita =>
-        attivita.nome?.toLowerCase().includes(filterValue)
-      ).slice(0, 8); 
-    }
-    return [];
-  }
-
-  selectAttivitaOption(option: AttivitaRicerca): void {
-  this.searchForm.get('nomeLocale')?.setValue(option.nome);
-  this.selectedOptionAttivita = option;
-  this.closeAllDropdowns();
-}
-
-selectCityOption(cityOption: Comuni): void {
-  this.inputCityControl.setValue(cityOption.descComune);
-  this.selectedCityOption = cityOption;
-  this.closeAllDropdowns();
-}
-
-selectOption(option: TipoAttivita): void {
-  this.inputControl.setValue(option.descrizione);
-  this.selectedOption = option;
-  this.closeAllDropdowns();
-}
-
-closeAllDropdowns() {
-  this.showSuggestions = false;
-  this.showCitiesDropdown = false;
-  this.showDropdown = false;
-}
-
-  closeDropdown = (event: MouseEvent) => {
-    const clickedElement = event.target as HTMLElement;
-    const inputElement = document.getElementById('inputAttivita');
-
-    if (inputElement && !inputElement.contains(clickedElement)) {
-      this.showDropdown = false;
-    } else {
-      this.showDropdown = true;
-    }
-  }
-
-  closeCitiesDropdown = (event: MouseEvent) => {
-    const clickedElement = event.target as HTMLElement;
-    const inputElement = document.getElementById('cityIinput');
-
-    if (inputElement && !inputElement.contains(clickedElement)) {
-      this.showCitiesDropdown = false;
-    } else {
-      this.showCitiesDropdown = true;
-    }
-  }
-
-  async VisualizzaAttivita(idAttivita: number | undefined): Promise<void> {
-    this.isLoading = true; // Set to true at the start of the loading process
-    this.isLoadingRicerca = true;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    if (idAttivita) {
-        try {
-            const data = await this.attivitaService.apiGetAttivitaByIdAttivita(idAttivita);
-            this.attivita = data;
-            this.ricercaAttiviaSelezionataEvent.emit(this.attivita);
-        } catch (error) {
-            console.error('Error fetching activity:', error);
+    if (!this.listaAttivitaPerRicerca || this.listaAttivitaPerRicerca.length === 0) {
+      try {
+        const lista = await this.attivitaService.apiGetListaAttivitaPreSearch();
+        if (lista) {
+          this.listaAttivitaPerRicerca = lista;
+          this.attivitaService.createListaAttivitaPerRicercaSession(lista);
         }
+      } catch (err) {
+        console.error('Errore caricamento attività:', err);
+      }
     }
-    this.isLoadingRicerca = false;
-    this.isLoading = false; // Set to false after the loading process is complete
+  }
+
+  onGlobalSearchInput(event: any): void {
+    const value = event.target.value?.toLowerCase() || '';
+    this.filteredUnifiedOptions = [];
+
+    if (!value.trim()) return;
+
+    const attivita = (this.listaAttivitaPerRicerca || [])
+      .filter(a => a.nome?.toLowerCase().includes(value))
+      .map(a => ({ ...a, type: 'attivita' }));
+
+    const citta = (this.listaCitta || [])
+      .filter(c => c.descComune?.toLowerCase().includes(value))
+      .map(c => ({
+        ...c,
+        descComune: c.descComune.charAt(0).toUpperCase() + c.descComune.slice(1).toLowerCase(),
+        type: 'citta'
+      }));
+
+    const tipo = (this.listaTipoAttivita || [])
+      .filter(t => t.descrizione?.toLowerCase().includes(value))
+      .map(t => ({ ...t, type: 'tipo' }));
+
+    const deduplicated = new Map<string, any>();
+    [...attivita, ...citta, ...tipo].forEach(item => {
+      let key = '';
+      if ('nome' in item && item.nome) key = item.nome.toLowerCase();
+      else if ('descComune' in item && item.descComune) key = item.descComune.toLowerCase();
+      else if ('descrizione' in item && item.descrizione) key = item.descrizione.toLowerCase();
+
+
+      if (!deduplicated.has(key)) deduplicated.set(key, item);
+    });
+
+    this.filteredUnifiedOptions = Array.from(deduplicated.values())
+      .sort((a, b) => {
+        const getValue = (item: any) => {
+          switch (item.type) {
+            case 'attivita': return item.nome?.toLowerCase() || '';
+            case 'citta': return item.descComune?.toLowerCase() || '';
+            case 'tipo': return item.descrizione?.toLowerCase() || '';
+            default: return '';
+          }
+        };
+
+        const aVal = getValue(a);
+        const bVal = getValue(b);
+
+        const startsWithA = aVal.startsWith(value);
+        const startsWithB = bVal.startsWith(value);
+
+        if (startsWithA && !startsWithB) return -1;
+        if (!startsWithA && startsWithB) return 1;
+
+        return aVal.localeCompare(bVal);
+      })
+      .slice(0, 15)
+      .sort((a, b) => {
+        const getValue = (item: any) => {
+          switch (item.type) {
+            case 'attivita': return item.nome?.toLowerCase() || '';
+            case 'citta': return item.descComune?.toLowerCase() || '';
+            case 'tipo': return item.descrizione?.toLowerCase() || '';
+            default: return '';
+          }
+        };
+
+        const aVal = getValue(a);
+        const bVal = getValue(b);
+
+        const startsWithA = aVal.startsWith(value);
+        const startsWithB = bVal.startsWith(value);
+
+        if (startsWithA && !startsWithB) return -1;
+        if (!startsWithA && startsWithB) return 1;
+
+        return aVal.localeCompare(bVal);
+      })
+      .slice(0, 10);
+  }
+
+  selectUnifiedOption(option: any): void {
+    this.globalSearchControl.setValue(option.nome || option.descComune || option.descrizione);
+
+    if (option.type === 'attivita') {
+      this.selectedOptionAttivita = option;
+    } else if (option.type === 'citta') {
+      this.selectedCityOption = option;
+    } else if (option.type === 'tipo') {
+      this.selectedOption = option;
+    }
+
+    this.showUnifiedSuggestions = false;
   }
 
   handleListaTipologieChange(tipologie: number[]) {
@@ -219,37 +161,33 @@ closeAllDropdowns() {
   }
 
   async Ricerca(): Promise<void> {
-    this.isLoading = true; // Set to true at the start of the loading process
+    this.isLoading = true;
     this.isLoadingRicerca = true;
-    const nomeLocale = this.searchForm.get('nomeLocale')?.value;
-    const citta = this.selectedCityOption?.descComune;
-    const codTipoAttivita = this.selectedOption?.codTipoAttivita;
-    this.filtro = new FiltriAttivita();
 
+    const searchValue = this.globalSearchControl.value?.trim().toLowerCase();
+    this.filtro = new FiltriAttivita();
     this.filtro.tipoRicercaAttivita = 3;
 
-    if (nomeLocale != null && nomeLocale.trim() !== '') {
-      this.filtro.nome = nomeLocale;
+    if (this.selectedOptionAttivita?.nome?.toLowerCase() === searchValue) {
+      this.filtro.nome = this.selectedOptionAttivita?.nome;
       this.filtro.range = 1000;
-    }
-    else{
+    } else {
       this.filtro.range = 100;
     }
-    if (citta != null && citta.trim() !== '') {
-      this.filtro.citta = citta.toUpperCase();
-    }
-    else{
+
+    if (this.selectedCityOption) {
+      this.filtro.citta = this.selectedCityOption.descComune.toUpperCase();
+    } else {
       const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
       this.filtro.latitudine = latitudine;
       this.filtro.longitudine = longitudine;
     }
 
-    if (codTipoAttivita != null && codTipoAttivita.trim() !== '') {
-      this.filtro.codTipoAttivita = codTipoAttivita;
+    if (this.selectedOption) {
+      this.filtro.codTipoAttivita = this.selectedOption.codTipoAttivita;
     }
 
-    if(this.tipoOfferte && this.tipoOfferte.length > 0)
-    {
+    if (this.tipoOfferte && this.tipoOfferte.length > 0) {
       this.filtro.codTipoPromo = this.tipoOfferte;
     }
 
@@ -258,7 +196,7 @@ closeAllDropdowns() {
         this.listaAttivitaRicerca = data;
       },
       (error: any) => {
-        console.error("Errore durante la chiamata API:", error);
+        console.error('Errore API:', error);
       },
       () => {
         this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
@@ -271,23 +209,7 @@ closeAllDropdowns() {
     );
   }
 
-  openPage(idPage:number){
+  openPage(idPage: number) {
     this.openPageEvent.emit(idPage);
   }
-
-  handleClickOutside = (event: MouseEvent) => {
-   const target = event.target as HTMLElement;
-    
-   if (!target.closest('ion-searchbar')) {
-     this.showSuggestions = false;
-     this.showCitiesDropdown = false;
-     this.showDropdown = false;
-   }
-  }
-
-  openSuggestions(type: 'nome' | 'citta' | 'tipo') {
-  this.showSuggestions = type === 'nome';
-  this.showCitiesDropdown = type === 'citta';
-  this.showDropdown = type === 'tipo';
-}
 }

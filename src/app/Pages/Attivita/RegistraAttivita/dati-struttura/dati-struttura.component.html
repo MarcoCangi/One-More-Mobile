@@ -10,23 +10,19 @@
           <ion-button (click)="addNewAtt()" class="att-add"><ion-icon style="color: white; height: 35px; width: 35px;" name="add-outline"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar> 
-      <ion-card *ngFor="let att of listaAttivita" (click)="getAttivita(att.idSoggetto, att.idAttivita)" class="activity-card">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="10">
-              <ion-card-header>
-                <ion-card-title class="att-title">{{ att.nome }}</ion-card-title>
-                <ion-card-subtitle class="att-subtitle">
-                  {{ att.citta }}, {{ att.indirizzo }}, {{ att.civico }}, {{ att.cap }}
-                </ion-card-subtitle>
-              </ion-card-header>
-            </ion-col>
-            <ion-col size="2" class="att-icon-col">
-              <ion-icon name="create-outline"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card>
+      
+      <ion-list>
+        <ion-item *ngFor="let attivita of listaAttivita">
+          <ion-thumbnail slot="start">
+            <img [src]="attivita.uploadImgPrincipale" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ attivita.nome }}</h2>
+            <p>{{ attivita.citta }}, {{ attivita.indirizzo }}, {{ attivita.civico }}, {{ attivita.cap }}</p>
+          </ion-label>
+            <ion-icon name="create-outline" color="primary" slot="end" (click)="getAttivita(attivita.idSoggetto, attivita.idAttivita)"></ion-icon>
+        </ion-item>
+      </ion-list>
   </div>
     
   <ion-modal [isOpen]="isAdd">

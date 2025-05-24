@@ -1,17 +1,19 @@
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, ElementRef, QueryList, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { IonModal } from '@ionic/angular';
 import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { firstValueFrom } from 'rxjs';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
+
 @Component({
   selector: 'app-mappa',
   templateUrl: './mappa.component.html',
   styleUrls: ['./mappa.component.scss'],
 })
 export class MappaComponent implements OnInit {
+  @ViewChildren('card') cardElements!: QueryList<ElementRef>;
   @ViewChild('googleMap', { static: false }) googleMap!: GoogleMap;
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openSearchEvent = new EventEmitter<number>();
@@ -38,9 +40,17 @@ export class MappaComponent implements OnInit {
   isPositionLoaded: boolean = false;
   isMooving: boolean = false;
   markerOptionsList: google.maps.MarkerOptions[] = [];
+  activeMarkerId: number | null = null;
+  scrollTimeout: any;
+  mapOptions: google.maps.MapOptions = {
+  mapTypeControl: false,
+  streetViewControl: false,
+  fullscreenControl: false,
+};
 
   constructor(private service: GetApiAttivitaService,
-              private locationService: LocationService
+              private locationService: LocationService,
+              private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -63,6 +73,56 @@ export class MappaComponent implements OnInit {
     }, 200);
     this.isLoading = false;
   }
+
+  onCardFocus(attivita: Attivita): void {
+    this.activeMarkerId = attivita.idAttivita;
+
+    const latLng: google.maps.LatLngLiteral = {
+      lat: attivita.latitudine,
+      lng: attivita.longitudine
+    };
+
+    // Centra la mappa
+    this.googleMap.googleMap?.panTo(latLng);
+
+    // 🔁 Forza rigenerazione dei marker
+    if (this.attivitas) {
+      this.updateMarkerPositions(this.attivitas);
+    }
+  }
+
+  onScroll(container: HTMLElement): void {
+  // Debounce per evitare troppe chiamate
+    clearTimeout(this.scrollTimeout);
+    this.scrollTimeout = setTimeout(() => {
+      const containerRect = container.getBoundingClientRect();
+      const containerCenter = containerRect.left + containerRect.width / 2;
+
+      let closestIndex = -1;
+      let closestDistance = Infinity;
+
+      this.cardElements.forEach((cardRef, index) => {
+        const card = cardRef.nativeElement as HTMLElement;
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+        const distance = Math.abs(containerCenter - cardCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      if (closestIndex !== -1 && this.attivitas && this.attivitas[closestIndex]) {
+        const focusedAttivita = this.attivitas[closestIndex];
+        if (focusedAttivita.idAttivita !== this.activeMarkerId) {
+          this.onCardFocus(focusedAttivita);
+        }
+      }
+    }, 30); // ritardo per stabilità dello scroll
+  }
+
+
   
   /**
    * Recupera la posizione dell'utente, se possibile, altrimenti usa una posizione di default
@@ -224,6 +284,10 @@ export class MappaComponent implements OnInit {
       // Aggiorniamo i marker e la lista delle attività visibili
       this.attivitas = filteredAttivitas;
       this.updateMarkerPositions(filteredAttivitas);
+
+      if (this.attivitas?.length) {
+        this.onCardFocus(this.attivitas[0]);
+      }
       
     } catch (error) {
       console.error("Errore durante la chiamata API:", error);
@@ -242,41 +306,51 @@ export class MappaComponent implements OnInit {
     this.markerPositions = attivitas
       .filter(e => e.latitudine !== undefined && e.longitudine !== undefined)
       .map(e => ({ lat: e.latitudine, lng: e.longitudine }));
-  
-    this.markerOptionsList = attivitas.map(e => {
-      const imageUrl = this.getImmaginePrincipale(e); // Ottieni immagine principale
-  
+
+    this.markerOptionsList = attivitas.map((e, index) => {
+      const imageUrl = this.getImmaginePrincipale(e);
+      const isActive = e.idAttivita === this.activeMarkerId;
+
       return {
         draggable: false,
         icon: {
-          url: this.createCircularMarker(imageUrl || 'assets/Img/default-marker.png'), // Crea un marker circolare
-          scaledSize: new google.maps.Size(50, 50),
-          anchor: new google.maps.Point(25, 25)
+          url: this.createCircularMarker(imageUrl, isActive),
+          scaledSize: new google.maps.Size(isActive ? 68 : 50, isActive ? 68 : 50),
+          anchor: new google.maps.Point(32, 32)
         },
+        zIndex: isActive ? 999 : index, // <-- attivo in primo piano
         title: e.nome
       };
     });
   }
+
   
-  private createCircularMarker(imageUrl: string): string {
+  private createCircularMarker(imageUrl: string, isActive: boolean = false): string {
+    const borderColor = isActive ? "#4DA6FF" : "#FFFFFF";  // blu se attivo, bianco se no
+    const borderWidth = isActive ? 4 : 3;
+    
     const svg = `
-    <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#4DA6FF" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#4DA6FF" stop-opacity="0"/>
-        </radialGradient>
-        <clipPath id="circleClip">
-          <circle cx="50" cy="50" r="42"/>
-        </clipPath>
-      </defs>
-      <circle cx="50" cy="50" r="45" fill="white" stroke="url(#glow)" stroke-width="8"/>
-      <image x="4" y="4" width="92" height="92" href="${imageUrl}" clip-path="url(#circleClip)" preserveAspectRatio="xMidYMid slice"/>
-    </svg>
+      <svg width="100" height="120" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="circleClip">
+            <circle cx="50" cy="50" r="38"/>
+          </clipPath>
+          <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.2"/>
+          </filter>
+        </defs>
+        <g filter="url(#shadow)">
+          <circle cx="50" cy="50" r="42" fill="#fff" stroke="${borderColor}" stroke-width="${borderWidth}" />
+          <image x="12" y="12" width="76" height="76" href="${imageUrl}" clip-path="url(#circleClip)" preserveAspectRatio="xMidYMid slice" />
+        </g>
+        <!-- punta stile pin -->
+        <path d="M50 92 L58 110 L42 110 Z" fill="${borderColor}" />
+      </svg>
     `;
-  
+    
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   }
+
   
   getImmaginePrincipale(attivita: Attivita | undefined): string {
     if (attivita && attivita.immagini != undefined) {
@@ -291,13 +365,35 @@ export class MappaComponent implements OnInit {
     }
   }
 
+  getTipiAttivitaString(attivita: Attivita): string {
+    return attivita.listaTipoAttivita?.map(t => t.descrizione).join(', ') ?? '';
+  }
+
+
   markerClicked(markerPosition: google.maps.LatLngLiteral): void {
-    this.selectedAttivita = this.attivitas?.find(attivita => 
-      attivita.latitudine === markerPosition.lat && attivita.longitudine === markerPosition.lng);
-    if (this.selectedAttivita) {
+    const attivita = this.attivitas?.find(a =>
+      a.latitudine === markerPosition.lat && a.longitudine === markerPosition.lng
+    );
+
+    if (attivita) {
+      this.activeMarkerId = attivita.idAttivita;
+
+      // Centra la mappa
+      const latLng: google.maps.LatLngLiteral = {
+        lat: attivita.latitudine,
+        lng: attivita.longitudine
+      };
+      this.googleMap.googleMap?.panTo(latLng);
+
+      // Aggiorna i marker
+      this.updateMarkerPositions(this.attivitas!);
+
+      // Mostra il dettaglio
+      this.selectedAttivita = attivita;
       this.isDetailModalOpen = true;
     }
   }
+
 
   selectNewAtt(idAtt: number | undefined){
     this.selectedAttivita = this.attivitas?.find(attivita => 

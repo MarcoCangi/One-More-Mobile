@@ -1,137 +1,65 @@
 .map {
-  top: 0;
-  height: 90vh; /* 90% of the viewport height */
-  width: 100vw; /* 100% of the viewport width */
-  max-width: 100%; /* Ensures the map doesn't overflow the screen width */
-  max-height: 100%; /* Ensures the map doesn't overflow the screen width */
-  overflow: hidden; /* Prevents overflow content from being visible */
-  position: relative; /* Ensures the map stays within its container */
-}
-ion-button.floating-button {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-}
-
-ion-searchbar {
-  position: absolute;
-  top: 7%;
-  --border-radius:40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-}
-
-.btnsearch {
-  width: 160px;
-  height: 40px;
-  position: fixed;
-  top: 6%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10000;
-}
-
-.btnListaAttivita{
-  width: 160px;
-  height: 40px;
-  position: fixed;
-  bottom: 5%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10000;
-}
-
-.imgAtt{
-  width: 100%;
-  max-height: 50vw;
-}
-
-ion-item-divider{
-  margin-top: -5%;
-  margin-bottom: 5%;
-}
-
-.imgAttDetail{
-  width: 100%;
-  max-height: 55vw;
-}
-
-.btnDettaglio {
-  right: 0;
-}
-
-.btnContent{
-  display: flex; 
-  justify-content: center; 
-  margin-top: 10px;
-}
-
-.title{
-  --font-family: Helvetica !important;
-  font-weight: 500;
-  font-size: 1rem;
-}
-
-.distance{
-  --font-family: Helvetica !important;
-  font-size: 0.9rem;
-}
-
-ion-popover{
-  width: 100%;
-}
-
-.rating-overlay {
-  position: absolute;
-    top: 185px;
-    left: 10px;
-    z-index: 99;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 4px 8px;
-    border-radius: 12px;
-}
-
-.label-overlay {
-  position: absolute;
-  top: 8px; /* Modifica questa posizione in base alle tue preferenze */
-  left: 10px; /* Modifica questa posizione in base alle tue preferenze */
-  z-index: 100;
-  background-color: rgb(30, 192, 39); /* Aggiungi uno sfondo semi-trasparente se lo desideri */
-  color: white; /* Colore del testo */
-  padding: 5px 10px;
-  border-radius: 4px;
-}
-
-.star {
-  color: #f8c034; /* colore oro */
-  font-size: 1rem;
-}
-
-.attivita-card {
   position: relative;
-  margin-bottom: 16px;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0.5 6px 15px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.01);
-    cursor: pointer;
-  }
+  height: 100vh;
+  margin-top: 15px;
 }
 
-.att-img {
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-toolbar {
+  --background: #e9540a;
+  height: 45px;
+}
+
+.closewhite {
+    width: 30px;
+    height: 30px;;
+    color:white;
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+
+.horizontal-list-overlay {
+  position: absolute;
+  bottom: 35px;
   width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 1px solid #f0f0f0;
+  z-index: 10000;
+  pointer-events: auto;
+  margin-left: 15px;
+}
+
+.label-overlayMap {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  z-index: 100;
+  background-color: rgb(30, 192, 39);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.distance-overlayMap {
+  position: absolute;
+  top: 185px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 3px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
 }
 
 .badge-rating {
@@ -160,28 +88,182 @@ ion-popover{
   color: #665;
 }
 
-.distance-overlayMap {
-  position: absolute;
-  top: 185px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
-  padding: 3px 8px;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 12px;
+.att-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.scroll-container {
   display: flex;
-  align-items: center;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 12px;
+  padding: 8px 12px 12px 12px; /* padding orizzontale */
+}
+
+.scroll-container {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.card-attivita {
+  scroll-snap-align: center;
+}
+
+.card-attivita {
+  flex: 0 0 85%;
+  max-width: 300px;
+  display: flex;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  scroll-snap-align: start;
+  position: relative;
+  margin-bottom: 75px;
+}
+
+.card-attivita img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 12px 0 0 12px;
+}
+
+.card-content {
+  padding: 9px;
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.btnContent{
+  display: flex; 
+  justify-content: center; 
+  margin-top: 10px;
+}
+
+.attivita-card {
+  position: relative;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0.5 6px 15px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+  }
+}
+
+.rating-overlay {
+  position: absolute;
+    top: 185px;
+    left: 10px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.label-overlay {
+  position: absolute;
+  top: 8px; /* Modifica questa posizione in base alle tue preferenze */
+  left: 10px; /* Modifica questa posizione in base alle tue preferenze */
   z-index: 100;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  background-color: rgb(30, 192, 39); /* Aggiungi uno sfondo semi-trasparente se lo desideri */
+  color: white; /* Colore del testo */
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.btnAttList{
+  width: 100%;
+  bottom: -20px;
+  height: 80px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10010;
+  --background: #e9540a;
+  --color: white; /* colore del testo/icona */
+}
+
+.card-content h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 170px;
+  display: block;
+}
+
+.card-content p {
+  margin: 2px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.tipoAtt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  color: #666;
+  width: 170px; 
+  display: block;
 }
 
 
-.btnContent {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
+.distance {
+    position: absolute;
+    bottom: 5px;
+    left: 103px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+  }
+
+.rating {
+    position: absolute;
+    bottom: 5px;
+    right: 2px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+
+.badge-promo {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: #00c853;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 12px;
 }
 
 ion-popover::part(content) {
@@ -189,20 +271,35 @@ ion-popover::part(content) {
   overflow: hidden;
 }
 
-.label-overlayMap {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  z-index: 100;
-  background-color: rgb(30, 192, 39);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+.btnsearch {
+  width: 160px;
+  height: 40px;
+  position: fixed;
+  top: 140px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
 }
 
+.full-modal{
+  z-index: 10001;
+}
+
+.white-outline-btn {
+  --color: white;               /* Colore del testo e delle icone */
+  --border-color: white;        /* Colore del bordo */
+  --ion-color-base: transparent; /* Rende il background trasparente */
+  margin-left: 5px;
+}
+
+.divToolbar  {
+  position: fixed;
+  top: 55px;
+  width: 100%;
+  height: 55px;
+  z-index: 10000;
+  background-color: #e9540a !important;
+}
 
 .activity-popover {
   --width: 80vw;
@@ -267,3 +364,5 @@ ion-popover::part(content) {
   }
 
 }
+
+

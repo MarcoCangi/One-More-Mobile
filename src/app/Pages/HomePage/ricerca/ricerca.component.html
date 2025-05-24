@@ -1,68 +1,38 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-    <form [formGroup]="searchForm" class="colIcon">
+<form class="colIcon" style="margin-top: 10%;">
+  <ion-searchbar
+    placeholder="Cerca per nome, città o tipo"
+    [formControl]="globalSearchControl"
+    (ionInput)="onGlobalSearchInput($event)"
+    (ionFocus)="showUnifiedSuggestions = true">
+  </ion-searchbar>
 
-      <!-- 🔍 Nome locale -->
-      <div class="search-wrapper">
-        <ion-searchbar 
-          placeholder="{{ 'NAME_VENUE' | translate }}" 
-          formControlName="nomeLocale"
-          (ionInput)="openSuggestions('nome')"
-          (ionFocus)="openSuggestions('nome')">
-        </ion-searchbar>
-      
-        <ion-list *ngIf="showSuggestions" class="suggestion-list">
-          <ion-item *ngFor="let option of filteredOptionAtt | async" (click)="selectAttivitaOption(option)">
-            {{ option.nome }}
-          </ion-item>
-        </ion-list>
-      </div>
+  <ion-list *ngIf="showUnifiedSuggestions && filteredUnifiedOptions.length > 0" class="suggestion-list">
+    <ion-item *ngFor="let option of filteredUnifiedOptions" (click)="selectUnifiedOption(option)">
+      <ion-label>
+         <div *ngIf="option.type === 'attivita'">
+          <strong><ion-icon name="pin-outline"></ion-icon>  {{ option.nome }}</strong>
+          <div style="font-size: 12px; color: gray;">{{ option.indirizzo }}</div>
+        </div>
+        <label *ngIf="option.type === 'citta'"><ion-icon name="location-outline"></ion-icon> {{ option.descComune }}</label>
+        <label *ngIf="option.type === 'tipo'"><ion-icon name="storefront-outline"></ion-icon> {{ option.descrizione }}</label>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
-      <!-- 🌍 Città -->
-      <div class="search-wrapper">
-        <ion-searchbar 
-          placeholder="{{ 'SearchCity' | translate }}"
-          [formControl]="inputCityControl"
-          (ionInput)="openSuggestions('citta')"
-          (ionFocus)="openSuggestions('citta')">
-        </ion-searchbar>
-      
-        <ion-list *ngIf="showCitiesDropdown" class="suggestion-list">
-          <ion-item *ngFor="let city of filteredCitiesOptions | async" (click)="selectCityOption(city)">
-            {{ city.descComune }}
-          </ion-item>
-        </ion-list>
-      </div>
+  <!-- 🎯 Toggle -->
+  <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}">
+    {{ 'SEARCHPROMOTYPE' | translate }}
+  </ion-toggle>
 
-      <!-- 🏷️ Tipo di locale -->
-      <div class="search-wrapper">
-        <ion-searchbar 
-          placeholder="{{ 'TYPEACTIVITY' | translate }}"
-          [formControl]="inputControl"
-          (ionInput)="openSuggestions('tipo')"
-          (ionFocus)="openSuggestions('tipo')">
-        </ion-searchbar>
-      
-        <ion-list *ngIf="showDropdown" class="suggestion-list">
-          <ion-item *ngFor="let option of filteredOptions | async" (click)="selectOption(option)">
-            {{ option.descrizione }}
-          </ion-item>
-        </ion-list>
-      </div>
+  <div class="formInput divNumMaxCoupon" *ngIf="isModalOpen">
+    <app-tipo-offerte (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipo-offerte>
+  </div>
 
-      <!-- 🎯 Toggle -->
-      <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}">
-        {{ 'SEARCHPROMOTYPE' | translate }}
-      </ion-toggle>
-
-      <div class="formInput divNumMaxCoupon" *ngIf="isModalOpen">
-        <app-tipo-offerte (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipo-offerte>
-      </div>
-
-      <div style="text-align: center; margin-top: 10px;">
-        <ion-button shape="round" (click)="Ricerca()">
-          <ion-label>{{ 'Search' | translate }}</ion-label>
-        </ion-button>
-      </div>
-
-    </form>
+  <div style="text-align: center; margin-top: 10px;">
+    <ion-button shape="round" (click)="Ricerca()">
+      <ion-label>{{ 'Search' | translate }}</ion-label>
+    </ion-button>
+  </div>
+</form>
