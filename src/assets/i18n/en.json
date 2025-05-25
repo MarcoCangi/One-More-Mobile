@@ -28,8 +28,6 @@
     "Map": "Map",
     "Search": "Search",
     "Favorites": "Favorites",
-    "ACTIVITY_ALREADY_REGISTERED": "The activity is already registered.",
-    "ACTIVITY_INSERTION_ERROR": "An error occurred during the activity insertion.",
     "ROME": "ROME",
     "MILAN": "MILAN",
     "FLORENCE": "FLORENCE",
@@ -342,13 +340,23 @@
       "NEW_PASSWORD_CONFIRM":"Confirm the new password",
       "NEW_PASS_NOT_BE_OLD":"The new password cannot be the same as the old one",
       "USER_UNAUTHENTICATED":"Unauthenticated user error.",
-      "FILL_FIELDS":"Fill in all fields correctly."
+      "FILL_FIELDS":"Fill in all fields correctly.",
+      "ACTIVITY_ALREADY_REGISTERED": "The activity is already registered.",
+      "ACTIVITY_INSERTION_ERROR": "An error occurred during the activity insertion.",
+      "ACTIVITY_INSERTION_ERROR_INVALID":"Invalid activity"
     },
     "MESSAGES":{
       "RESERVATION_MADE":"Reservation made",
       "COUPON_RESERVED":"A coupon has been reserved",
       "REGISTRATION_COMPLETE":"Registration complete. Check your email to verify your account.",
-      "PASSWORD_CHANGED":"Password changed successfully!"
+      "PASSWORD_CHANGED":"Password changed successfully!",
+      "PROMOTION_EXPIRED":"The promotion has expired",
+      "OWNER_BUSINESS":"You cannot apply for the promo since you are the owner of the business",
+      "PROMO_ALREADY_ACTIVE":"The promo is already active, go to the MY COUPONS section to view it",
+      "PROMO_ALREADY_USED":"Have you already used this promo today",
+      "LIMIT_CANCELED_PROMO":"You have reached the limit of canceled promos in the last 7 days",
+      "MAX_NUMBER_COUPONS":"Maximum number of coupons reached",
+      "COUPONS_AVAILABLE_USED":"You have already used all the coupons available for this promo"
     },
     "SUBSCRIBE_LANDING_LINE":"Sign up and get noticed",
     "LET_S_START":"let's start",
