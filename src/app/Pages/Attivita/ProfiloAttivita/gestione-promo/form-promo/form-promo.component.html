@@ -66,6 +66,24 @@
             </app-descrizione>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col size ="12" class="column ion-text-center ion-align-items-center">
+            <app-area-promo [promo]="this.requestPromo"
+                            (isFoodDrinkChange)="handleFoodDrinkChange($event)"
+                            (isFoodChange)="handleFoodChange($event)"
+                            (isDrinkChange)="handleDrinkChange($event)"
+                            (isAnyTimeChange)="handleAnyTimeChange($event)"
+                            (isBreakfastChange)="handleBreakfastChange($event)"
+                            (isBrunchChange)="handleBrunchChange($event)"
+                            (isLunchChange)="handleLunchChange($event)"
+                            (isAfternoonTeaChange)="handleAfternoonTeaChange($event)"
+                            (isHappyHourChange)="handleHappyHourChange($event)"
+                            (isDinnerChange)="handleDinnerChange($event)"
+                            (isLateNightChange)="handleLateNightChange($event)"
+                            >
+            </app-area-promo>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </div>
 

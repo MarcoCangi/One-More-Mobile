@@ -210,6 +210,7 @@ export class FormPromoComponent  implements OnInit {
   }
 
   async PrevalorizzaReqPromo(){
+    console.log(this.modificaPromo);
     if(this.idAttivita)
       this.requestPromo.idAttivita = this.idAttivita;
     
@@ -258,6 +259,22 @@ export class FormPromoComponent  implements OnInit {
         this.listaTipologie = this.modificaPromo.listaTipologie;
         this.requestPromo.listaTipologie = this.modificaPromo.listaTipologie;
       }
+      if(this.modificaPromo.descTipoConsumazione != undefined && this.modificaPromo.descTipoConsumazione != '')
+      {
+        this.requestPromo.descTipoConsumazione = this.modificaPromo.descTipoConsumazione;
+      }
+      if(this.modificaPromo.descrizioniPeriodi != undefined && this.modificaPromo.descrizioniPeriodi != '')
+      {
+        this.requestPromo.descrizioniPeriodi = this.modificaPromo.descrizioniPeriodi;
+      }
+      if(this.modificaPromo.periodo != undefined && this.modificaPromo.periodo != '')
+      {
+        this.requestPromo.periodo = this.modificaPromo.periodo;
+      }
+      if(this.modificaPromo.codTipoConsumazione != undefined && this.modificaPromo.codTipoConsumazione > 0)
+      {
+        this.requestPromo.codTipoConsumazione = this.modificaPromo.codTipoConsumazione;
+      }
     }
   }
 
@@ -275,6 +292,104 @@ export class FormPromoComponent  implements OnInit {
 
   handleDescChange(descrizione: string) {
     this.requestPromo.descPromo = descrizione;
+  }
+
+  handleFoodDrinkChange(isFoodDrink: boolean) {
+    if (isFoodDrink) {
+          this.requestPromo.codTipoConsumazione = 3; 
+    }
+  }
+
+  handleFoodChange(isFood: boolean) {
+    if (isFood) {
+          this.requestPromo.codTipoConsumazione = 1; 
+    }
+  }
+
+  handleDrinkChange(isDrink: boolean) {
+    if (isDrink) {
+          this.requestPromo.codTipoConsumazione = 2; 
+    }
+  }
+
+  handleAnyTimeChange(isAnyTime: boolean) {
+    if (isAnyTime) {
+        if (!this.requestPromo.periodo?.includes('8')) {
+        this.aggiungiPeriodo('8');
+      }
+    } else {
+      this.rimuoviPeriodo('8');
+    }
+  }
+
+  handleLateNightChange(isLateNight: boolean) {
+    if (isLateNight) {
+      if (!this.requestPromo.periodo?.includes('7')) {
+        this.aggiungiPeriodo('7');
+      }
+    } else {
+      this.rimuoviPeriodo('7');
+    }
+  }
+
+  handleDinnerChange(isDinner: boolean) {
+    if (isDinner) {
+      if (!this.requestPromo.periodo?.includes('6')) {
+        this.aggiungiPeriodo('6');
+      }
+    } else {
+      this.rimuoviPeriodo('6');
+    }
+  }
+
+  handleHappyHourChange(isHappyHour: boolean) {
+    if (isHappyHour) {
+      if (!this.requestPromo.periodo?.includes('5')) {
+        this.aggiungiPeriodo('5');
+      }
+    } else {
+      this.rimuoviPeriodo('5');
+    }
+  }
+
+  handleAfternoonTeaChange(isAfternoonTea: boolean) {
+    if (isAfternoonTea) {
+      if (!this.requestPromo.periodo?.includes('4')) {
+        this.aggiungiPeriodo('4');
+      }
+    } else {
+      this.rimuoviPeriodo('4');
+    }
+  }
+
+  handleLunchChange(isLunch: boolean) {
+    if (isLunch) {
+      if (!this.requestPromo.periodo?.includes('3')) {
+        this.aggiungiPeriodo('3');
+      }
+    } else {
+      this.rimuoviPeriodo('3');
+    }
+  }
+
+  handleBrunchChange(isBrunch: boolean) {
+    if (isBrunch) {
+      if (!this.requestPromo.periodo?.includes('2')) {
+        this.aggiungiPeriodo('2');
+      }
+    } else {
+      this.rimuoviPeriodo('2');
+    }
+  }
+
+  handleBreakfastChange(isBreakfast: boolean) {
+    if (isBreakfast) {
+      if (!this.requestPromo.periodo?.includes('1')) {
+        this.aggiungiPeriodo('1');
+      }
+    } else {
+      this.rimuoviPeriodo('1');
+    }
   }
 
   handleAllSettimanaChange(isAllSettimana: boolean) {
@@ -630,12 +745,59 @@ export class FormPromoComponent  implements OnInit {
         return;
       });
      }
+
+     //PERIODO DELLA GIORNATA(COLAZIONE, PRANZO ECC...)
+     if(!promo.periodo || promo.periodo == ''){
+      this.translate.get('PERIODTYPEREQUIRED').subscribe((translatedText: string) => {
+        this.errorMessage = translatedText;
+        this.isError = true;
+        return;
+      });
+     }
+     if(promo.periodo){
+        const periodiSelezionati = promo.periodo.split(',').filter(p => p.trim() !== '');
+      if (periodiSelezionati.length > 3) {
+        this.translate.get('MAXPERIODS').subscribe((translatedText: string) => {
+          this.errorMessage = translatedText;
+          this.isError = true;
+          return;
+        });
+        return;
+      }
+     }
+    if((promo.codTipoConsumazione && promo.codTipoConsumazione == 0) || !promo.codTipoConsumazione){
+      this.translate.get('ERRORS.TYPEPROMOFOODORDRINK').subscribe((translatedText: string) => {
+        this.errorMessage = translatedText;
+        this.isError = true;
+        return;
+      });
+     }
   }
 
   rimuoviNumero(array: number[], numero: number): void {
     const indice: number = array.indexOf(numero);
     if (indice !== -1) {
         array.splice(indice, 1);
+    }
+  }
+
+  rimuoviPeriodo(periodo: string): void {
+    if (this.requestPromo.periodo && this.requestPromo.periodo !== '') {
+      const periodi = this.requestPromo.periodo
+        .split(',')
+        .map(p => p.trim())
+        .filter(p => p !== periodo); // rimuove quello selezionato
+
+      this.requestPromo.periodo = periodi.join(',');
+    }
+  }
+
+  aggiungiPeriodo(periodo: string): void {
+    const lista = this.requestPromo.periodo?.split(',').filter(p => p) || [];
+
+    if (!lista.includes(periodo)) {
+      lista.push(periodo);
+      this.requestPromo.periodo = lista.join(',');
     }
   }
 

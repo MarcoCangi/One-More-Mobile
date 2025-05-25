@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { GiorniSettimanaPromo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 
 @Component({
   selector: 'app-giorni-validita',
