@@ -99,7 +99,7 @@
       <div class="ion-padding" slot="content" *ngIf="promo.motivazioneDisabilitata" class="lbl-info">
         <ion-card>
           <ion-card-header>
-            <ion-label style="color: red;">{{ promo.motivazioneDisabilitata }}</ion-label>
+            <ion-label style="color: red;">{{ promo.motivazioneDisabilitata | translate }}</ion-label>
           </ion-card-header>
           <ion-card-content class="column ion-text-center ion-align-items-center" >
             <ion-button (click)="dismissConfirmModal(1)" color="primary" shape="round" style="margin-bottom: 5px;">{{'MYCOUPONS'|translate}} <ion-icon style="margin-left: 5px;" name="ticket-outline"></ion-icon></ion-button>
