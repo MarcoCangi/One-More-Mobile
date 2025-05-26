@@ -49,7 +49,7 @@
 
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<ion-content *ngIf="!isLoading && !this.isConfirmOpen" [fullscreen]="true">
+<ion-content class="sfondo" *ngIf="!isLoading && !this.isConfirmOpen" [fullscreen]="true">
   <ng-container [ngSwitch]="segmentValue">
     <div *ngSwitchCase="'one'" class="switch-segment-content">
       <ion-grid style="margin-top: 5%; --min-width: 90%;">

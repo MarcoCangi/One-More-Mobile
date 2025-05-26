@@ -111,6 +111,26 @@ export class AreaPromoComponent  implements OnInit {
       this.emitFoodDrinkChange(value);
     });
 
+    this.foodFormControl.valueChanges.subscribe((value: boolean) => {
+      if (value && this.drinkFormControl.value) {
+        this.foodDrinkFormControl.setValue(true);
+        this.deselectOtherType();
+        this.emitFoodDrinkChange(true);
+      } else {
+        this.emitFoodChange(value);
+      }
+    });
+
+    this.drinkFormControl.valueChanges.subscribe((value: boolean) => {
+    if (value && this.foodFormControl.value) {
+      this.foodDrinkFormControl.setValue(true);
+        this.deselectOtherType();
+      this.emitFoodDrinkChange(true);
+      } else {
+        this.emitDrinkChange(value);
+      }
+    });
+
     this.anyTimeFormControl.valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.deselectOtherPeriod();
@@ -157,7 +177,6 @@ export class AreaPromoComponent  implements OnInit {
 
 
     const checkboxesType = [
-      this.foodDrinkFormControl,
       this.foodFormControl,
       this.drinkFormControl
     ];

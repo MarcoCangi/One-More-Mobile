@@ -1,11 +1,10 @@
 <form [formGroup]="exampleForm" class="form">
   <div class="promo-title-wrapper">
     <ion-icon name="bulb-outline" class="promo-title-icon"></ion-icon>
-    <span class="titleModalPromo">{{ 'PROMO_TITLE_INSERT' | translate }}</span>
+    <span class="titleModalPromo">{{ 'PROMO_TITLE_INSERT' | translate }}*</span>
   </div>
   <ion-item>
     <ion-input
-      label="{{'TITLE' | translate }} *" 
       labelPlacement="stacked"
       type="text"
       formControlName="titoloFormControl"
