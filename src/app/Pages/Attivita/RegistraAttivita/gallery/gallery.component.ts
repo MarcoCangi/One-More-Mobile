@@ -162,8 +162,7 @@ export class GalleryComponent implements OnInit {
       this.immaginiArray = newImgArray;
       this.immaginiChange.emit(this.immaginiArray);
       if(this.attivita && this.attivita.idAttivita && this.attivita.isVerificata && this.attivita.esitoVerifica){
-        this.isImgPrincipaleEliminata= true;  
-        console.log(this.isImgPrincipaleEliminata);
+        this.isImgPrincipaleEliminata= true; 
       }
         
     }

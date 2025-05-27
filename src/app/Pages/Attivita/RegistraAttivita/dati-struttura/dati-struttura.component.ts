@@ -126,7 +126,6 @@ export class DatiStrutturaComponent  implements OnInit {
       const cachedData = await this.storageService.getItem(cacheKey);
       if (cachedData) {
         this.listaAttivita = cachedData;
-        console.log(this.listaAttivita);
         return;
       }
   

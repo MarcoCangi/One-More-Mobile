@@ -10,7 +10,7 @@
       formControlName="descFormControl"
       value={{descrizione}}
       [counter]="true"
-      maxlength="200"
+      maxlength="150"
       class="promotextArea"
       [autoGrow]="true">
     </ion-textarea>
@@ -22,6 +22,6 @@
     {{ 'MIN_LENGTH_5' | translate }}
   </ion-note>
   <ion-note class="promoNote" style="margin-left: 5%;" *ngIf="hasError('maxlength')" color="danger">
-    {{ 'MAX_LENGTH_200' | translate }}
+    {{ 'MAX_LENGTH_150' | translate }}
   </ion-note>
 </form>

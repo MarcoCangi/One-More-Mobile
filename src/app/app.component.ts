@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.showSplash = false;
         this.authService.setIsShowedSplash(); // segna che lo splash è stato già mostrato
-      }, 2500); // durata splash
+      }, 3500); // durata splash
     } else {
       this.showSplash = false; // salta splash se è già stato mostrato
     }

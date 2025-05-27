@@ -135,7 +135,7 @@ export class AreaPromoComponent  implements OnInit {
       if (value) {
         this.deselectOtherPeriod();
       }
-      this.emitFoodDrinkChange(value);
+      this.emitAnyTimeChange(value);
     });
 
     this.foodFormControl.valueChanges.subscribe((value: boolean) => {

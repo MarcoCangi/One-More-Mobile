@@ -1,3 +1,4 @@
+<ng-container *ngIf="attivita?.orari; else orariMancanti">
 <ion-grid style="margin-top: 3%;">
   <ion-row class="row-align">
     <ion-col>
@@ -151,3 +152,11 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+</ng-container>
+
+<ng-template #orariMancanti>
+    <ion-button>
+      {{ 'INSERTHOURS' | translate }}
+    </ion-button>
+</ng-template>
+

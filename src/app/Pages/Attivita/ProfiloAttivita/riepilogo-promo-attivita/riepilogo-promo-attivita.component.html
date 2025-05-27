@@ -43,7 +43,7 @@
         <ion-item slot="header" color="light">
           <ion-label class="ion-text-wrap">
             <div style="display: flex; flex-direction: column;">
-              <span class="scadenza-label">Scadenza: {{ promo.dataAl | date:'dd-MM-yyyy' }}</span>
+              <span class="scadenza-label">{{ 'EXPIRES' | translate }}: {{ promo.dataAl | date:'dd-MM-yyyy' }}</span>
               <span class="titlePromo" style="margin-top: 6px;">{{ promo.titoloPromo }}</span>
             </div>
           </ion-label>
@@ -54,30 +54,63 @@
             <ion-item>
               <ion-label><strong>{{ 'DESCRIPTION' | translate }}</strong>: {{ promo.descPromo }}</ion-label>
             </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'VALIDITY_PERIOD' | translate }}</strong>: {{ promo.dataDal | date:'dd-MM-yyyy' }} - {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-label>
             </ion-item>
-            <ion-item>
-              <ion-label><strong>{{ 'ON_DAYS' | translate }}</strong>:</ion-label>
-              <ion-chip *ngFor="let d of promo.days">{{ ('DAY_' + d) | translate }}</ion-chip>
+            <ion-item class="riepilogoContainer">
+              <div class="days-wrapper">
+               <label class="days-label" style="color: #444;;"><strong>{{ 'FOODORDRINKS' | translate }}</strong>:</label>
+                <div class="chip-container">
+                  <ion-chip *ngIf="promo.codTipoConsumazione === 1">{{ 'FOOD' | translate }}</ion-chip>
+                  <ion-chip *ngIf="promo.codTipoConsumazione === 2">{{ 'DRINKS' | translate }}</ion-chip>
+                  <ion-chip *ngIf="promo.codTipoConsumazione === 3">{{ 'FOODDRINKS' | translate }}</ion-chip>
+                </div>
+              </div>
             </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
+             <div class="days-wrapper">
+              <label class="days-label" style="color: #444;;"><strong>{{ 'MOMENTDAY' | translate }}</strong>:</label>
+              <div class="chip-container">
+                <ion-chip *ngIf="promo.periodo?.includes('1')" >{{ 'BREAKFAST' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('2')" >{{ 'BRUNCH' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('3')" >{{ 'LUNCH' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('4')" >{{ 'AFTERNOONTEA' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('5')" >{{ 'HAPPYHOUR' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('6')" >{{ 'DINNER' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('7')" >{{ 'LATENIGHT' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('8')" >{{ 'ANYTIME' | translate }}</ion-chip>
+              </div>
+            </div>
+           </ion-item>
+            <ion-item class="riepilogoContainer">
+             <div class="days-wrapper">
+              <label class="days-label" style="color: #444;;"><strong>{{ 'ON_DAYS' | translate }}</strong>:</label>
+              <div class="chip-container">
+                <ion-chip *ngFor="let d of promo.days">
+                  {{ ('DAY_' + d) | translate }}
+                </ion-chip>
+              </div>
+            </div>
+           </ion-item>
+            <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'TIME' | translate }}</strong>: 
                 <ng-container *ngIf="promo.isAllDayValidita">{{ 'ALL_DAY' | translate }}</ng-container>
                 <ng-container *ngIf="!promo.isAllDayValidita">{{ 'FROM' | translate }} {{ promo.orarioValiditaDa }} - {{ 'TO' | translate }} {{ promo.orarioValiditaAl }}</ng-container>
               </ion-label>
             </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'MAX_COUPONS' | translate }}</strong>: {{ promo.numCouponMax || ('NO_LIMIT' | translate) }}</ion-label>
             </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'COUPONS_PER_PERSON' | translate }}</strong>: {{ promo.numUtilizziPerPersonaMax || ('NO_LIMIT' | translate) }}</ion-label>
             </ion-item>
-            <ion-item>
-              <ion-chip *ngFor="let tipo of promo.listaTipologie">{{ tipo.descrizione }}</ion-chip>
+            <ion-item class="riepilogoContainer">
+              <div class="chip-container">
+                <ion-chip *ngFor="let tipo of promo.listaTipologie">{{ tipo.descrizione }}</ion-chip>
+              </div>
             </ion-item>
-            <ion-item>
-              <ion-grid>
+            <ion-item class="riepilogoContainer">
+              <ion-grid class="gridContainer">
                 <ion-row>
                   <ion-col><strong>{{ 'COUPONS_REQUESTED_COUNT' | translate }}</strong></ion-col>
                   <ion-col>{{ promo.numCouponRichiesti || 0 }}</ion-col>
@@ -94,10 +127,9 @@
               </ion-grid>
             </ion-item>
           </ion-list>
-
           <div class="ion-text-center" style="margin-top: 1rem;">
+            <ion-button shape="round"  fill="outline" color="danger" (click)="openDisattivaPromo(promo.idPromo, promo.idAttivita, promo.numCouponRichiesti)">{{ 'DISABLE' | translate }}</ion-button>
             <ion-button shape="round" (click)="ModificaPromo(promo)">{{ 'EDIT' | translate }}</ion-button>
-            <ion-button shape="round" color="warning" (click)="openDisattivaPromo(promo.idPromo, promo.idAttivita, promo.numCouponRichiesti)">{{ 'DISABLE' | translate }}</ion-button>
           </div>
         </div>
       </ion-accordion>
@@ -108,10 +140,13 @@
   <ng-container *ngIf="segmentValue === 'segment'">
     <ion-accordion-group *ngIf="(listaPromoNonAttive?.length ?? 0) > 0" style="margin-top: 10px;">
       <ion-accordion *ngFor="let promo of listaPromoNonAttive">
+
         <ion-item slot="header" color="light">
-          <ion-label>
-            <div class="title2">{{ promo.titoloPromo }}</div>
-            <div>{{ promo.dataInserimento | date:'dd-MM-yyyy' }}</div>
+          <ion-label class="ion-text-wrap">
+            <div style="display: flex; flex-direction: column;">
+              <span class="scadenza-label">{{ 'ENDED' | translate }}: {{ promo.dataAl | date:'dd-MM-yyyy' }}</span>
+              <span class="titlePromo" style="margin-top: 6px;">{{ promo.titoloPromo }}</span>
+            </div>
           </ion-label>
         </ion-item>
 
@@ -120,27 +155,67 @@
             <ion-item>
               <ion-label><strong>{{ 'DESCRIPTION' | translate }}</strong>: {{ promo.descPromo }}</ion-label>
             </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'VALIDITY_PERIOD' | translate }}</strong>: {{ promo.dataDal | date:'dd-MM-yyyy' }} → {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-label>
             </ion-item>
-            <ion-item>
-              <ion-label><strong>{{ 'ON_DAYS' | translate }}</strong>:</ion-label>
-              <ion-chip *ngFor="let d of promo.days">{{ ('DAY_' + d) | translate }}</ion-chip>
-            </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
+             <div class="days-wrapper">
+              <label class="days-label" style="color: #444;;"><strong>{{ 'MOMENTDAY' | translate }}</strong>:</label>
+              <div class="chip-container">
+                <ion-chip *ngIf="promo.periodo?.includes('1')" >{{ 'BREAKFAST' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('2')" >{{ 'BRUNCH' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('3')" >{{ 'LUNCH' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('4')" >{{ 'AFTERNOONTEA' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('5')" >{{ 'HAPPYHOUR' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('6')" >{{ 'DINNER' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('7')" >{{ 'LATENIGHT' | translate }}</ion-chip>
+                <ion-chip *ngIf="promo.periodo?.includes('8')" >{{ 'ANYTIME' | translate }}</ion-chip>
+              </div>
+            </div>
+           </ion-item>
+            <ion-item class="riepilogoContainer">
+             <div class="days-wrapper">
+              <label class="days-label" style="color: #444;;"><strong>{{ 'ON_DAYS' | translate }}</strong>:</label>
+              <div class="chip-container">
+                <ion-chip *ngFor="let d of promo.days">
+                  {{ ('DAY_' + d) | translate }}
+                </ion-chip>
+              </div>
+            </div>
+           </ion-item>
+           <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'TIME' | translate }}</strong>: 
                 <ng-container *ngIf="promo.isAllDayValidita">{{ 'ALL_DAY' | translate }}</ng-container>
                 <ng-container *ngIf="!promo.isAllDayValidita">{{ 'FROM' | translate }} {{ promo.orarioValiditaDa }} - {{ 'TO' | translate }} {{ promo.orarioValiditaAl }}</ng-container>
               </ion-label>
             </ion-item>
-            <ion-item>
-              <ion-chip *ngFor="let tipo of promo.listaTipologie">{{ tipo.descrizione }}</ion-chip>
-            </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'MAX_COUPONS' | translate }}</strong>: {{ promo.numCouponMax || ('NO_LIMIT' | translate) }}</ion-label>
             </ion-item>
-            <ion-item>
+            <ion-item class="riepilogoContainer">
               <ion-label><strong>{{ 'COUPONS_PER_PERSON' | translate }}</strong>: {{ promo.numUtilizziPerPersonaMax || ('NO_LIMIT' | translate) }}</ion-label>
+            </ion-item>
+            <ion-item class="riepilogoContainer">
+              <div class="chip-container">
+                <ion-chip *ngFor="let tipo of promo.listaTipologie">{{ tipo.descrizione }}</ion-chip>
+              </div>
+            </ion-item>
+            <ion-item class="riepilogoContainer">
+              <ion-grid class="gridContainer">
+                <ion-row>
+                  <ion-col><strong>{{ 'COUPONS_REQUESTED_COUNT' | translate }}</strong></ion-col>
+                  <ion-col>{{ promo.numCouponRichiesti || 0 }}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col><strong>{{ 'COUPONS_USED' | translate }}</strong></ion-col>
+                  <ion-col>{{ promo.numCouponUtilizzati || 0 }}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col><strong>{{ 'COUPONS_REMAINING' | translate }}</strong></ion-col>
+                  <ion-col *ngIf="!promo.numCouponRimanenti">{{ 'UNLIMITED' | translate }}</ion-col>
+                  <ion-col *ngIf="promo.numCouponRimanenti">{{promo.numCouponRimanenti}}</ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
           </ion-list>
           <div class="ion-text-center" style="margin-top: 1rem;">

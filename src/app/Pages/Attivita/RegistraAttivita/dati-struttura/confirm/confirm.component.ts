@@ -76,7 +76,6 @@ export class ConfirmComponent  implements OnInit {
           }
           
           if (this.requestAttivita) {
-            console.log(this.requestAttivita);
             await this.insertAttivita();
           }
         }

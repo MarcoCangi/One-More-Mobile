@@ -106,3 +106,31 @@ ion-modal.full-modal::part(content) {
   border-radius: 0;
   padding: 0;
 }
+
+.days-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.days-label {
+  margin-bottom: 6px;
+}
+
+.riepilogoContainer{
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+.gridContainer{
+  margin-top: 8px;
+}
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+}
+

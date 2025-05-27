@@ -119,16 +119,9 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
   }
 
   private getDaysArray(validDays: string): number[] {
-    const days: number[] = [];
-    if (validDays.includes('-')) {
-      const range = validDays.split('-');
-      for (let i = parseInt(range[0]); i <= parseInt(range[1]); i++) {
-        days.push(i);
-      }
-    } else {
-      days.push(parseInt(validDays));
-    }
-    return days;
+     const parts = validDays.split('-');
+     const days: number[] = parts.map(x => parseInt(x)).filter(x => !isNaN(x));
+     return days;
   }
 
   onSegmentChange(event: any) {
@@ -192,6 +185,7 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
                 });
                 
                 this.listaPromoAttive = data.filter(item => item.isAttiva === true);
+                console.log(this.listaPromoAttive);
                 this.listaPromoNonAttive = data.filter(item => item.isAttiva === false);
                 this.listaAttivita = undefined;
             }

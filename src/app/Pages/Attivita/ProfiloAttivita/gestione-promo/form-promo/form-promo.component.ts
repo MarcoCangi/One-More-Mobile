@@ -60,7 +60,6 @@ export class FormPromoComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit() {
-    console.log(this.idAttivita);
     this.isLoading = true;
     this.requestPromo = new InsertPromoReqDto();
     await this.PrevalorizzaReqPromo();
@@ -175,7 +174,6 @@ export class FormPromoComponent  implements OnInit {
 
         if(this.isSaved){
           try {
-            console.log(this.requestPromo);
             await this.promoService.apiInsertPromo(this.requestPromo);
             this.setEsito(true);
           } catch (error: any) {
@@ -210,7 +208,6 @@ export class FormPromoComponent  implements OnInit {
   }
 
   async PrevalorizzaReqPromo(){
-    console.log(this.modificaPromo);
     if(this.idAttivita)
       this.requestPromo.idAttivita = this.idAttivita;
     
@@ -637,8 +634,8 @@ export class FormPromoComponent  implements OnInit {
         return;
       });
     }
-    else if(promo.descPromo.length > 200){
-      this.translate.get('ERRORS.DESCRIPTION_MAX_LENGTH_200').subscribe((translatedText: string) => {
+    else if(promo.descPromo.length > 150){
+      this.translate.get('ERRORS.DESCRIPTION_MAX_LENGTH_150').subscribe((translatedText: string) => {
         this.errorMessage = translatedText;
         this.isError = true;
         return;
