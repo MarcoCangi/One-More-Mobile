@@ -129,7 +129,7 @@
           </ion-list>
           <div class="ion-text-center" style="margin-top: 1rem;">
             <ion-button shape="round"  fill="outline" color="danger" (click)="openDisattivaPromo(promo.idPromo, promo.idAttivita, promo.numCouponRichiesti)">{{ 'DISABLE' | translate }}</ion-button>
-            <ion-button shape="round" (click)="ModificaPromo(promo)">{{ 'EDIT' | translate }}</ion-button>
+            <ion-button shape="round" (click)="ModificaPromo(promo,1)">{{ 'EDIT' | translate }}</ion-button>
           </div>
         </div>
       </ion-accordion>
@@ -219,7 +219,7 @@
             </ion-item>
           </ion-list>
           <div class="ion-text-center" style="margin-top: 1rem;">
-            <ion-button shape="round" color="success" (click)="ModificaPromo(promo)">{{ 'REACTIVATE' | translate }}</ion-button>
+            <ion-button shape="round" color="success" (click)="ModificaPromo(promo,2)">{{ 'REACTIVATE' | translate }}</ion-button>
           </div>
         </div>
       </ion-accordion>

@@ -108,11 +108,13 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     }, 200);
   }
 
-  async ModificaPromo(promo: Promo): Promise<void> {
+  async ModificaPromo(promo: Promo, command: number): Promise<void> {
 
     this.isLoading = true;
     if (promo) {
       this.promoSelezionata = promo;
+      if(command === 2)
+        this.promoSelezionata.dataAl = new Date();
       this.isModifica = true;
     }
     this.isLoading = false;

@@ -20,13 +20,15 @@
 
   <div class = "scrollable-list">
   <ion-list class="limited-width">
-    <ion-item *ngFor="let decAttivita of listaAttivitaFiltrate">
+    <ion-item *ngFor="let decAttivita of listaAttivitaFiltrate"  
+      >
       <ion-checkbox
         slot="start"
+        (ionChange)="toggleSelection(decAttivita)"
         [checked]="isSelected(decAttivita.codTipoAttivita)"
-        (ionChange)="toggleSelection(decAttivita)">
+       >
       </ion-checkbox>
-      <ion-label>{{ decAttivita.descrizione }}</ion-label>
+      <ion-label (click)="toggleSelection(decAttivita)">{{ decAttivita.descrizione }}</ion-label>
     </ion-item>
   </ion-list>
   </div>
