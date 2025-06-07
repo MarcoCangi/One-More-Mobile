@@ -18,22 +18,12 @@
   </div>
   
   <!-- promo -->
-  <ion-card *ngIf="!isLoading && this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-card-title class="title">{{ 'Special Offers' | translate }}</ion-card-title>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    
-    <ion-card-content>
-      <app-pannello-promo (openPageLogin)="isOpenPageLoginEvent($event)"
-                          (redirecEsitoEvent)="redirecEsitoEvent($event)"
-                          [listaPromo]="this.listaPromo"
-                          [idAttivita]="this.attivitaSelezionata?.idAttivita"></app-pannello-promo>
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="!isLoading && this.attivita.isPromoPresente && this.listaPromo && this.listaPromo.length > 0" style="margin-top: 5%;" >
+    <app-pannello-promo (openPageLogin)="isOpenPageLoginEvent($event)"
+                        (redirecEsitoEvent)="redirecEsitoEvent($event)"
+                        [listaPromo]="this.listaPromo"
+                        [idAttivita]="this.attivitaSelezionata?.idAttivita"></app-pannello-promo>
+  </div>
   
   <ion-card>
   <!-- info -->

@@ -18,6 +18,8 @@
             </div>
           </div>
 
+        <app-elenco-promo-food [latitudine]="latitudine" [longitudine]="longitudine"  (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo-food>
+
         <app-elenco-promo [latitudine]="latitudine" [longitudine]="longitudine"  (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
 
         <app-card-tipo-attivita (openPageRicercaTipoAttEvent)="openPageRicercaTipoAttEvent($event)" style="margin-bottom: 100px;"></app-card-tipo-attivita>

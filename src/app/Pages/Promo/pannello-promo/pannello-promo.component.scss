@@ -1,16 +1,180 @@
+.icona-promo-container {
+    width: 35px;
+    height: 35px;
+    margin-left: 3px;
+    margin-right: 3px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05); /* Ombra solo sopra */
+    transition: transform 0.2s ease;
+  }
+
+  .card-promo {
+    position: relative;
+    overflow: visible; /* permette al chip di sbordare */
+    margin-top: 20px;
+  }
+
+  @keyframes fade-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  .chip-rimanenti {
+    position: absolute;
+    top: -8px;       /* meno sbordatura per renderlo visibile */
+    right: 8px;      /* spostato un po’ più dentro */
+    z-index: 10;
+    background-color: var(--ion-color-danger);
+    font-size: 0.75rem;
+    height: 20px;
+    padding: 0 8px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+    animation: fade-in-top 0.4s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .promo-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 15px 0;
+  }
+
+  .icona-promo {
+    width: 30px;
+    height: 30px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+
+  .typePromo-overlay {
+    position: relative;
+    left: 15px;
+    top:38px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+  }
+
+
+  .dueperuno{
+    margin-top: 3px;
+    margin-right: 2px;
+  }
+
+  .gift{
+    margin-top: 2px;
+    margin-right: 3px;
+  }
+  
+  .bundle{
+    margin-top: 5px;
+    margin-right: 1px;
+  }
+  
+  .percent{
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+  
+  .child{
+    margin-top: 2px;
+    margin-right: 1px;
+  }
+  
+  .family{
+    margin-top: 2px;
+    margin-right: 1px;
+  }
+  
+  .love{
+    margin-top: 3px;
+    margin-right: 2px;
+  }
+  
+  .vegan{
+    margin-top: 3px;
+    margin-right: 2px;
+  }
+  
+  .vegetarian{
+    margin-top: 3px;
+    margin-right: 3px;
+  }
+
+ .titlePromo{
+  margin-top: 15px;
+ }
+
+.sezione-periodo {
+  margin-top: 20px;
+}
+
+.chip-periodo-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.chip-periodo {
+  --background: #f3f3f3;
+  --color: #222;
+  border-radius: 20px;
+  font-size: 0.80rem;
+  padding-inline: 10px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.chip-icon {
+  font-size: 16px;
+  margin-right: 6px;
+  color: #fc6114; /* colore icona coerente con il brand */
+}
+.lbl{
+    --font-family: Helvetica;
+    font-size: 16px;
+    font-weight: 550;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 h2{
     margin-left: 3%;
   }
 
-  .headers-align .mat-expansion-panel-header-description {
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .headers-align .mat-mdc-form-field + .mat-mdc-form-field {
-    margin-left: 8px;
-  }
-  
+
   .chip{
     font-size: 12px; 
     height: 24px; 
@@ -35,10 +199,16 @@ h2{
     margin-bottom: 3%;
   }
 
+  .lblContainer{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
   .lbl{
     font-family: Roboto, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 550;
   }
 
   .lbl-info{

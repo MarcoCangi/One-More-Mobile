@@ -1,26 +1,95 @@
-<div class="contenitore">
-  <ion-accordion-group class="headers-align" multiple="true">
-    <ion-accordion *ngFor="let promo of listaPromo" style="margin-bottom: 10px;">
-      <ion-item slot="header" color="success" style="border-radius: 50px;">
-        <ion-label>{{ promo.titoloPromo }}</ion-label>
-      </ion-item>
-      
-      <div class="ion-padding" slot="content" *ngIf="promo.isAbilitataForUser">
-        <ion-card>
-          <ion-card-content>
-            <ion-note slot="end" style="color: black; font-size: 0.8rem;">{{'EndsOn'|translate}} {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-note>
-            <br>
-            <br>
-          <ion-label>{{ promo.descPromo }}</ion-label>
-        <br>
-        <br>
-        <ion-chip *ngFor="let tipologia of promo.listaTipologie">
-          <ion-label style="font-size: 0.8rem;">{{ tipologia.descrizione }}</ion-label>
-        </ion-chip>
-        <br>
-        <br>
-          <ion-label class="lbl">{{'ValidOnDays'|translate}}</ion-label>
-            <ion-grid>
+
+<div *ngFor="let promo of listaPromo">
+
+  <!-- icone tipo promo -->
+  <div class="typePromo-overlay">
+      <div class="icona-promo-container" *ngIf="has2X1Tipologia(promo)">
+          <img class="icona-promo dueperuno"  src="assets/Img/2x1_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasOmaggiTipologia(promo)">
+          <img class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasPacchettiTipologia(promo)">
+          <img class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasScontiTipologia(promo)">
+          <img class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasPerBambiniTipologia(promo)">
+          <img class="icona-promo child" src="assets/Img/bambini_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasPerFamiglieTipologia(promo)">
+          <img class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasPerCoppieTipologia(promo)">
+          <img class="icona-promo love" src="assets/Img/love_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasVeganiTipologia(promo)">
+          <img class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
+      </div>
+      <div class="icona-promo-container" *ngIf="hasVegetarianiTipologia(promo)">
+          <img class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
+      </div>
+  </div>
+
+  <ion-card class="card-promo">
+    <!-- CHIP POSIZIONATO IN ALTO A DESTRA -->
+    <ion-chip class="chip-rimanenti" *ngIf="promo.numCouponRimanenti && promo.numCouponRimanenti < 50">
+      <ion-icon name="time-outline" style="margin-right: 4px;" color="white"></ion-icon>
+      <ion-label>Solo {{ promo.numCouponRimanenti }} rimanenti!</ion-label>
+    </ion-chip>
+    <ion-card-header>
+      <ion-card-title class="titlePromo">
+        {{promo.titoloPromo}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-subtitle>
+        {{promo.descPromo}}
+      </ion-card-subtitle>
+      <hr class="promo-divider" />
+      <div class="sezione-periodo">
+        <ion-label class="lbl">Perfetto per</ion-label>
+        <div class="chip-periodo-wrapper">
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('1')">
+            <ion-icon name="cafe-outline" class="chip-icon"></ion-icon>
+            <ion-label>Colazione</ion-label>
+          </ion-chip>
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('2')">
+            <ion-icon name="restaurant-outline" class="chip-icon"></ion-icon>
+            <ion-label>Brunch</ion-label>
+          </ion-chip>
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('3')">
+            <ion-icon name="pizza-outline" class="chip-icon"></ion-icon>
+            <ion-label>Pranzo</ion-label>
+          </ion-chip>
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('4')">
+            <ion-icon name="cafe-outline" class="chip-icon"></ion-icon>
+            <ion-label>Tè pomeridiano</ion-label>
+          </ion-chip>
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('5')">
+            <ion-icon name="wine-outline" class="chip-icon"></ion-icon>
+            <ion-label>Happy Hour</ion-label>
+          </ion-chip>
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('6')">
+            <ion-icon name="restaurant-outline" class="chip-icon"></ion-icon>
+            <ion-label>Cena</ion-label>
+          </ion-chip>
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('7')">
+            <ion-icon name="moon-outline" class="chip-icon"></ion-icon>
+            <ion-label>Late Night</ion-label>
+          </ion-chip>
+          <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('8')">
+            <ion-icon name="time-outline" class="chip-icon"></ion-icon>
+            <ion-label>Sempre</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+      <hr class="promo-divider" />
+      <div class="lblContainer">
+        <ion-label class="lbl">{{'ValidOnDays'|translate}}</ion-label>
+      </div>
+      <ion-grid>
               <ion-row>
                   <ion-col class="column ion-text-center ion-align-items-center">
                     <ion-label class="labelDays">{{'MON'|translate}}</ion-label>
@@ -75,7 +144,34 @@
                   <ion-label *ngIf="!promo.days?.includes(7) && !promo.days?.includes(0)"><ion-icon color="danger" style="height: 22px; width: 22px;" name="close-outline"></ion-icon></ion-label>
                 </ion-col>
             </ion-row>
-            </ion-grid>
+          </ion-grid>
+          <hr class="promo-divider" />
+          <ion-note slot="end" style="color: black; font-size: 0.8rem;">{{'EndsOn'|translate}} {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-note>
+          <ion-button expand="block" (click)="openConfirmModal(promo)">{{'Reserve'|translate}}</ion-button>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+    
+
+      
+      
+      <!-- <div class="ion-padding" slot="content" *ngIf="promo.isAbilitataForUser">
+        <ion-card>
+          <ion-card-content>
+            <ion-note slot="end" style="color: black; font-size: 0.8rem;">{{'EndsOn'|translate}} {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-note>
+            <br>
+            <br>
+          <ion-label>{{ promo.descPromo }}</ion-label>
+        <br>
+        <br>
+        <ion-chip *ngFor="let tipologia of promo.listaTipologie">
+          <ion-label style="font-size: 0.8rem;">{{ tipologia.descrizione }}</ion-label>
+        </ion-chip>
+        <br>
+        <br>
+          <ion-label class="lbl">{{'ValidOnDays'|translate}}</ion-label>
+            
             <ion-label class="lbl" *ngIf="promo.isAllDayValidita"> {{'ValidAllDay'|translate}}</ion-label>
             <ion-grid>
               <ion-row>
@@ -95,8 +191,8 @@
         </div>
       </ion-card-content>
         </ion-card>
-      </div>
-      <div class="ion-padding" slot="content" *ngIf="promo.motivazioneDisabilitata" class="lbl-info">
+      </div> -->
+      <!-- <div class="ion-padding" slot="content" *ngIf="promo.motivazioneDisabilitata" class="lbl-info">
         <ion-card>
           <ion-card-header>
             <ion-label style="color: red;">{{ promo.motivazioneDisabilitata | translate }}</ion-label>
@@ -105,12 +201,7 @@
             <ion-button (click)="dismissConfirmModal(1)" color="primary" shape="round" style="margin-bottom: 5px;">{{'MYCOUPONS'|translate}} <ion-icon style="margin-left: 5px;" name="ticket-outline"></ion-icon></ion-button>
           </ion-card-content>
         </ion-card>
-      </div>
-      <ion-item-divider></ion-item-divider>
-    </ion-accordion>
-    
-  </ion-accordion-group>
-</div> 
+      </div> -->
 
 <ion-modal [isOpen]="isModalConfirmOpen" class="full-modal">
   <ng-template>

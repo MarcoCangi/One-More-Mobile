@@ -120,4 +120,44 @@ export class PannelloPromoComponent implements OnInit {
   async resendVerificationEmail(){
     this.esitoResendVerification = await this.authService.resendVerificationEmail();
   }
+
+  has2X1Tipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 1) ?? false;
+  }
+
+  has3X2Tipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 2) ?? false;
+  }
+
+  hasOmaggiTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 3) ?? false;
+  }
+
+  hasPacchettiTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 4) ?? false;
+  }
+
+  hasScontiTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 5) ?? false;
+  }
+
+  hasPerBambiniTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 6) ?? false;
+  }
+
+  hasPerFamiglieTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 7) ?? false;
+  }
+
+  hasPerCoppieTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 8) ?? false;
+  }
+
+  hasVeganiTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 9) ?? false;
+  }
+
+  hasVegetarianiTipologia(promo: Promo): boolean {
+    return promo.listaTipologie?.some(t => t.codTipologia === 1) ?? false;
+  }
 }

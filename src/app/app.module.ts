@@ -110,6 +110,8 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { ConfirmComponent } from './Pages/Attivita/RegistraAttivita/dati-struttura/confirm/confirm.component';
 import { TermsConditionComponent } from './Pages/terms-condition/terms-condition.component';
 import { AreaPromoComponent } from './Pages/Attivita/ProfiloAttivita/gestione-promo/area-promo/area-promo.component';
+import { ElencoPromoFoodComponent } from './Pages/HomePage/elenco-promo-food/elenco-promo-food.component';
+import { ElencoPromoDrinkComponent } from './Pages/HomePage/elenco-promo-drink/elenco-promo-drink.component';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -194,7 +196,9 @@ export function HttpLoaderFactory(http: HttpClient) {
                  ConfirmComponent,
                  FormPromoComponent,
                  TermsConditionComponent,
-                 AreaPromoComponent
+                 AreaPromoComponent,
+                 ElencoPromoFoodComponent,
+                 ElencoPromoDrinkComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,

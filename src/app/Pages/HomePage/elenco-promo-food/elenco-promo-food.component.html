@@ -1,0 +1,140 @@
+<ion-item style="margin-top: 5%;">
+  <ion-card-title style="margin-bottom: 2%;" class="titleHomePage">{{ 'PromoFood' | translate }}</ion-card-title>
+  <ion-icon style="margin-bottom: 4%;" (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
+</ion-item>
+
+<div class="card-containerHomePage" #widgetsContent>
+  <div class="card-wrapperHomePage" *ngIf="!isLoading">
+
+    <div *ngFor="let attivita of elencoAttivita" (click)="VisualizzaAttivita(attivita)">
+      <div class="divContainerCard" *ngFor="let promo of attivita.promo?.slice(0, 1)">
+
+        <div class="typePromo-overlayHomePage">
+            <div class="icona-promo-container" *ngIf="has2X1Tipologia(promo)">
+                <img class="icona-promo dueperuno"  src="assets/Img/2x1_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasOmaggiTipologia(promo)">
+                <img class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasPacchettiTipologia(promo)">
+                <img class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasScontiTipologia(promo)">
+                <img class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasPerBambiniTipologia(promo)">
+                <img class="icona-promo child" src="assets/Img/bambini_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasPerFamiglieTipologia(promo)">
+                <img class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasPerCoppieTipologia(promo)">
+                <img class="icona-promo love" src="assets/Img/love_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasVeganiTipologia(promo)">
+                <img class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
+            </div>
+            <div class="icona-promo-container" *ngIf="hasVegetarianiTipologia(promo)">
+                <img class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
+            </div>
+          </div>
+          
+        <ion-card class ="card-consigli">
+
+        <ion-title style="margin-top: 30px; font-size: 18px;">{{attivita.nome}}</ion-title>
+        <div class="rating">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                <ion-icon
+                  [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
+                  class="star">
+                </ion-icon>
+            </ng-container>
+        </div>
+        <div class="distancePromo-overlay">
+              <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+              {{ attivita.distanza }}
+        </div>
+        
+        <ion-item button detail="true" lines="none">
+          <ion-label class="titlePromoHomePage">
+            {{ promo.titoloPromo }}
+          </ion-label>
+        </ion-item>
+
+       <div class="chip-overlay" style="margin-left: 10px;">
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('1')" >{{ 'BREAKFAST' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('2')" >{{ 'BRUNCH' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('3')" >{{ 'LUNCH' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('4')" >{{ 'AFTERNOONTEA' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('5')" >{{ 'HAPPYHOUR' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('6')" >{{ 'DINNER' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('7')" >{{ 'LATENIGHT' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('8')" >{{ 'ANYTIME' | translate }}</ion-chip>
+            </div>
+        
+        </ion-card>
+      </div>
+    </div>
+    
+
+
+    <!-- <ion-card class="card-consigli">
+      <div *ngFor="let promo of attivita.promo?.slice(0, 1)">
+        <ion-card-header>
+          
+        </ion-card-header>
+        <ion-card-content style="margin-top: 40px;">
+          <ion-item button detail="true">
+            <ion-card-title class="titlePromoHomePage">
+              {{ promo.titoloPromo}}
+            </ion-card-title>
+          </ion-item>
+          <div class="chip-overlay" style="margin-left: 10px;">
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('1')" >{{ 'BREAKFAST' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('2')" >{{ 'BRUNCH' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('3')" >{{ 'LUNCH' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('4')" >{{ 'AFTERNOONTEA' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('5')" >{{ 'HAPPYHOUR' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('6')" >{{ 'DINNER' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('7')" >{{ 'LATENIGHT' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('8')" >{{ 'ANYTIME' | translate }}</ion-chip>
+            </div>
+        </ion-card-content>
+        <ion-card-footer>
+          <ion-card-subtitle style="margin-left: 35px;">
+            {{ attivita.nome }}
+          </ion-card-subtitle>
+          <div class="rating">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+              <ion-icon
+                [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
+                class="star">
+              </ion-icon>
+          </ng-container>
+          </div>
+          <div class="distancePromo-overlay">
+            <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+            {{ attivita.distanza }}
+          </div>
+        </ion-card-footer>
+      </div>
+    </ion-card> -->
+  </div>
+
+  <div class="card-wrapperHomePage" *ngIf="isLoading">
+    <ion-card class="skeleton">
+      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+    <ion-card class="skeleton">
+      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+  </div>
+</div>

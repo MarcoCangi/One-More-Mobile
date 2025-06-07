@@ -287,6 +287,21 @@ ion-note.promoNote[color="danger"] {
     white-space: nowrap;
   }
 
+  .promoContainerHomePage {
+    position: absolute;
+    flex-direction: column; // cambia da row a column per gestire meglio il contenuto
+    align-items: flex-start;
+    gap: 6px;
+    max-width: 90%;
+    top: 235px;
+    left: 0px;
+    padding: 3px 8px;
+    font-size: 13px;
+    display: flex;
+    z-index: 100;
+    white-space: normal; // fondamentale per il wrapping
+  }
+
   .rating-overlayHomePage {
     position: absolute;
     top: 170px;
