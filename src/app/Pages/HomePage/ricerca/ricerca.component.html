@@ -1,8 +1,16 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
 <form class="colIcon" style="margin-top: 10%;">
+
   <ion-searchbar
-    placeholder="Cerca per nome, città o tipo"
+    placeholder="Cerca città"
+    [formControl]="globalSearchControl"
+    (ionInput)="onCitySearchInput($event)"
+    (ionFocus)="showUnifiedSuggestions = true">
+  </ion-searchbar>
+
+  <ion-searchbar
+    placeholder="Cerca per nome o tipo di locale"
     [formControl]="globalSearchControl"
     (ionInput)="onGlobalSearchInput($event)"
     (ionFocus)="showUnifiedSuggestions = true">

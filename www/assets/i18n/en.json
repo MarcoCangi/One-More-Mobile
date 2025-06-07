@@ -147,6 +147,7 @@
     "DESCRIPTION": "Description",
     "VALID_DAYS": "Valid days",
     "VALID_TIME": "Valid time",
+    "VALID_TIMEDAYS": "Valid time and days",
     "CITY_NOT_VALID": "La città inserita non è valida",
     "NO_ACTIVITIES_FOUND": "No activities found",
     "OFFER_TYPES": "Offer types",

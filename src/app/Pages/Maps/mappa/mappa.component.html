@@ -1,8 +1,7 @@
 
-
+<ion-spinner *ngIf="isLoading" name="dots" color="primary"></ion-spinner>
 <div class="map">
-  <ion-spinner style="background-color: white; border-radius: 25%;" *ngIf="isLoading" name="dots" color="primary"></ion-spinner>
-  <google-map *ngIf="isPositionLoaded" [zoom]="12" id="mapElement" #googleMap height="100%" width="100%" [center]="center" [options]="mapOptions"
+  <google-map *ngIf="isPositionLoaded && !isLoading" [zoom]="12" id="mapElement" #googleMap height="100%" width="100%" [center]="center" [options]="mapOptions"
               (centerChanged)="centerChanged()" 
               (zoomChanged)="zoomChanged()" 
               (mapClick)="move($event)">
@@ -13,7 +12,7 @@
   </map-marker>
 </google-map>
 <div class="divToolbar ">
-  <ion-button shape="round" fill="outline" class="white-outline-btn"><ion-icon style="margin-right: 5px;" name="ticket-outline"></ion-icon>PROMOZIONI</ion-button>
+  <ion-searchbar (click)="isSearchModalOpen = true"></ion-searchbar>
 </div>
 <ion-button class="btnsearch" color="light" shape="round" *ngIf="this.isMooving" (click)="cerca()">{{'SEARCHHERE'|translate}}</ion-button>
 <ion-button shape="round" class="btnAttList" (click)="openListModal()"><ion-icon name="chevron-up-outline" style="margin-top: -35px; width: 25px; height: 25px;"></ion-icon><ion-label style="margin-top: -35px;">{{'FullList'|translate}}</ion-label></ion-button>
@@ -142,6 +141,19 @@
             <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
           </ion-card-content>
         </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="isSearchModalOpen" class="full-modal" ondismiss="isSearchModalOpen = false">
+    <ng-template>
+      <ion-toolbar>
+        <ion-icon slot="end" (click)="isSearchModalOpen = false" name="close-outline" class="closewhite"></ion-icon>
+      </ion-toolbar>
+      <ion-content>
+        <app-ricerca>
+      
+        </app-ricerca>
       </ion-content>
     </ng-template>
   </ion-modal>

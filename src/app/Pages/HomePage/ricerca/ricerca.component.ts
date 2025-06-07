@@ -62,6 +62,71 @@ export class RicercaComponent implements OnInit {
     }
   }
 
+  onCitySearchInput(event: any): void {
+    const value = event.target.value?.toLowerCase() || '';
+    this.filteredUnifiedOptions = [];
+
+    if (!value.trim()) return;
+
+    const citta = (this.listaCitta || [])
+      .filter(c => c.descComune?.toLowerCase().includes(value))
+      .map(c => ({
+        ...c,
+        descComune: c.descComune.charAt(0).toUpperCase() + c.descComune.slice(1).toLowerCase(),
+        type: 'citta'
+      }));
+
+    const deduplicated = new Map<string, any>();
+    [...citta].forEach(item => {
+      let key = '';
+      if ('descComune' in item && item.descComune) key = item.descComune.toLowerCase();
+
+      if (!deduplicated.has(key)) deduplicated.set(key, item);
+    });
+
+    this.filteredUnifiedOptions = Array.from(deduplicated.values())
+      .sort((a, b) => {
+        const getValue = (item: any) => {
+          switch (item.type) {
+            case 'citta': return item.descComune?.toLowerCase() || '';
+            default: return '';
+          }
+        };
+
+        const aVal = getValue(a);
+        const bVal = getValue(b);
+
+        const startsWithA = aVal.startsWith(value);
+        const startsWithB = bVal.startsWith(value);
+
+        if (startsWithA && !startsWithB) return -1;
+        if (!startsWithA && startsWithB) return 1;
+
+        return aVal.localeCompare(bVal);
+      })
+      .slice(0, 15)
+      .sort((a, b) => {
+        const getValue = (item: any) => {
+          switch (item.type) {
+            case 'citta': return item.descComune?.toLowerCase() || '';
+            default: return '';
+          }
+        };
+
+        const aVal = getValue(a);
+        const bVal = getValue(b);
+
+        const startsWithA = aVal.startsWith(value);
+        const startsWithB = bVal.startsWith(value);
+
+        if (startsWithA && !startsWithB) return -1;
+        if (!startsWithA && startsWithB) return 1;
+
+        return aVal.localeCompare(bVal);
+      })
+      .slice(0, 10);
+  }
+
   onGlobalSearchInput(event: any): void {
     const value = event.target.value?.toLowerCase() || '';
     this.filteredUnifiedOptions = [];
@@ -72,25 +137,15 @@ export class RicercaComponent implements OnInit {
       .filter(a => a.nome?.toLowerCase().includes(value))
       .map(a => ({ ...a, type: 'attivita' }));
 
-    const citta = (this.listaCitta || [])
-      .filter(c => c.descComune?.toLowerCase().includes(value))
-      .map(c => ({
-        ...c,
-        descComune: c.descComune.charAt(0).toUpperCase() + c.descComune.slice(1).toLowerCase(),
-        type: 'citta'
-      }));
-
     const tipo = (this.listaTipoAttivita || [])
       .filter(t => t.descrizione?.toLowerCase().includes(value))
       .map(t => ({ ...t, type: 'tipo' }));
 
     const deduplicated = new Map<string, any>();
-    [...attivita, ...citta, ...tipo].forEach(item => {
+    [...attivita, ...tipo].forEach(item => {
       let key = '';
       if ('nome' in item && item.nome) key = item.nome.toLowerCase();
-      else if ('descComune' in item && item.descComune) key = item.descComune.toLowerCase();
       else if ('descrizione' in item && item.descrizione) key = item.descrizione.toLowerCase();
-
 
       if (!deduplicated.has(key)) deduplicated.set(key, item);
     });
@@ -100,7 +155,6 @@ export class RicercaComponent implements OnInit {
         const getValue = (item: any) => {
           switch (item.type) {
             case 'attivita': return item.nome?.toLowerCase() || '';
-            case 'citta': return item.descComune?.toLowerCase() || '';
             case 'tipo': return item.descrizione?.toLowerCase() || '';
             default: return '';
           }
@@ -122,7 +176,6 @@ export class RicercaComponent implements OnInit {
         const getValue = (item: any) => {
           switch (item.type) {
             case 'attivita': return item.nome?.toLowerCase() || '';
-            case 'citta': return item.descComune?.toLowerCase() || '';
             case 'tipo': return item.descrizione?.toLowerCase() || '';
             default: return '';
           }

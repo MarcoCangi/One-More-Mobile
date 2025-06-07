@@ -153,6 +153,7 @@
     "DESCRIPTION_OFFER": "Descrizione dell' offerta",
     "VALID_DAYS": "Giorni validità",
     "VALID_TIME": "Orario validità",
+    "VALID_TIMEDAYS": "Orario e giorni di validità",
     "CITY_NOT_VALID": "La città inserita non è valida",
     "NO_ACTIVITIES_FOUND": "Nessuna attività trovata",
     "OFFER_TYPES": "Tipologie di offerta",

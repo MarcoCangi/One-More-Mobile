@@ -32,6 +32,7 @@ export class MappaComponent implements OnInit {
   display: any;
   filter!: FiltriAttivita;
   // Modal states
+  isSearchModalOpen = false;
   isDetailModalOpen = false;
   isListModalOpen = false;
   isFilterModalOpen = false;

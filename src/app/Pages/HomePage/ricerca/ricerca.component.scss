@@ -8,6 +8,11 @@ ion-card{
     min-width: 320px;
 }
 
+ion-searchbar::part(search-icon) {
+  /* Cambia l'icona della lente con una tua icona marker SVG/base64 */
+  mask-image: url('data:image/svg+xml;utf8,<svg fill="black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 0C167.6 0 96 71.6 96 160c0 96 144 352 144 352s144-256 144-352c0-88.4-71.6-160-160-160zM256 240c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z"/></svg>');
+  background-color: var(--ion-color-primary); /* colore dell’icona */
+}
 
   ion-searchbar {
     --border-radius: 40px;
