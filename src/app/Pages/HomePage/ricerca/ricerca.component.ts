@@ -5,12 +5,14 @@ import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivi
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
-
+type TipoPromo = 'dueperuno' | 'gift' | 'bundle' | 'percent' | 'child' | 'family' | 'love' | 'vegan' | 'vegetarian';
 @Component({
   selector: 'app-ricerca',
   templateUrl: './ricerca.component.html',
   styleUrls: ['./ricerca.component.scss'],
 })
+
+
 export class RicercaComponent implements OnInit {
   @Input() listaTipoAttivita: TipoAttivita[] | undefined;
   @Input() listaAttivitaPerRicerca: AttivitaRicerca[] | undefined = [];
@@ -19,15 +21,20 @@ export class RicercaComponent implements OnInit {
   @Output() openPageEvent = new EventEmitter<number>();
 
   globalSearchControl: FormControl = new FormControl();
+  citySearchControl: FormControl = new FormControl();
   showUnifiedSuggestions = false;
+  showCitySuggestions = false;
   filteredUnifiedOptions: any[] = [];
-
+  filteredCityOptions: any[] = [];
+  selectedTipo: 'cibo' | 'bevande' | 'entrambi' | null = null;
+  selectedPeriod: 'colazione' | 'brunch' | 'pranzo' | 'tè'| 'happyhour'| 'cena'| 'dopocena'| 'sempre'| null = null;
+  
   selectedOption: TipoAttivita | null = null;
   selectedOptionAttivita: AttivitaRicerca | null = null;
   selectedCityOption: Comuni | null = null;
   tipoOfferte: number[] | undefined;
-
-  isModalOpen: boolean = false;
+  selectedTypePromo: TipoPromo[] = [];
+  isModalOpen: boolean = true;
   attivita: Attivita | undefined;
   isLoading: boolean = false;
   isLoadingRicerca: boolean = false;
@@ -64,7 +71,7 @@ export class RicercaComponent implements OnInit {
 
   onCitySearchInput(event: any): void {
     const value = event.target.value?.toLowerCase() || '';
-    this.filteredUnifiedOptions = [];
+    this.filteredCityOptions = [];
 
     if (!value.trim()) return;
 
@@ -84,7 +91,7 @@ export class RicercaComponent implements OnInit {
       if (!deduplicated.has(key)) deduplicated.set(key, item);
     });
 
-    this.filteredUnifiedOptions = Array.from(deduplicated.values())
+    this.filteredCityOptions = Array.from(deduplicated.values())
       .sort((a, b) => {
         const getValue = (item: any) => {
           switch (item.type) {
@@ -200,8 +207,6 @@ export class RicercaComponent implements OnInit {
 
     if (option.type === 'attivita') {
       this.selectedOptionAttivita = option;
-    } else if (option.type === 'citta') {
-      this.selectedCityOption = option;
     } else if (option.type === 'tipo') {
       this.selectedOption = option;
     }
@@ -209,9 +214,24 @@ export class RicercaComponent implements OnInit {
     this.showUnifiedSuggestions = false;
   }
 
+  selectCityOption(option: any): void {
+    this.citySearchControl.setValue(option.descComune);
+    this.selectedCityOption = option;
+    this.showCitySuggestions = false;
+  }
+
   handleListaTipologieChange(tipologie: number[]) {
     this.tipoOfferte = tipologie;
   }
+
+  togglePromoSelection(type: TipoPromo): void {
+  const index = this.selectedTypePromo.indexOf(type);
+  if (index >= 0) {
+    this.selectedTypePromo.splice(index, 1); // rimuove selezione
+  } else if (this.selectedTypePromo.length < 3) {
+    this.selectedTypePromo.push(type); // aggiunge se < 3
+  }
+}
 
   async Ricerca(): Promise<void> {
     this.isLoading = true;

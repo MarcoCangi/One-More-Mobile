@@ -327,6 +327,8 @@
     "CONFIRM": "CONFERMA",
     "CANCEL": "ANNULLA",
     "CLOSE": "CHIUDI",
+    "FILTER": "FILTRI",
+    "Filter": "Filtri",
     "SOMETHING_WRONG":"Oops, qualcosa è andato storto.",
     "PROMO_ADD_SUCCESS":"La tua promozione è stata inserita con successo!",
     "PROMO_UPD_SUCCESS":"La tua promozione è stata modificata con successo!",

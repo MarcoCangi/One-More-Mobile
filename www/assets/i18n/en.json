@@ -300,6 +300,8 @@
     "CANCEL": "CANCEL",
     "TITLE": "Title",
     "CLOSE": "CLOSE",
+    "FILTER": "FILTER",
+    "Filter": "Filter",
     "SOMETHING_WRONG":"Oops, something went wrong.",
     "PROMO_ADD_SUCCESS":"Your promo has been added!",
     "PROMO_UPD_SUCCESS":"Your promo has been updated!",

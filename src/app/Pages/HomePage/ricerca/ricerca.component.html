@@ -2,14 +2,22 @@
 
 <form class="colIcon" style="margin-top: 10%;">
 
-  <ion-searchbar
-    placeholder="Cerca città"
-    [formControl]="globalSearchControl"
+  <ion-searchbar search-icon="location-outline" class="search"
+    placeholder="Posizione attuale"
+    [formControl]="citySearchControl"
     (ionInput)="onCitySearchInput($event)"
-    (ionFocus)="showUnifiedSuggestions = true">
+    (ionFocus)="showCitySuggestions = true">
   </ion-searchbar>
 
-  <ion-searchbar
+  <ion-list *ngIf="showCitySuggestions && filteredCityOptions.length > 0" class="suggestion-list">
+    <ion-item *ngFor="let option of filteredCityOptions" (click)="selectCityOption(option)">
+      <ion-label>
+        <label *ngIf="option.type === 'citta'"><ion-icon name="location-outline"></ion-icon> {{ option.descComune }}</label>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-searchbar  class="search"
     placeholder="Cerca per nome o tipo di locale"
     [formControl]="globalSearchControl"
     (ionInput)="onGlobalSearchInput($event)"
@@ -23,20 +31,186 @@
           <strong><ion-icon name="pin-outline"></ion-icon>  {{ option.nome }}</strong>
           <div style="font-size: 12px; color: gray;">{{ option.indirizzo }}</div>
         </div>
-        <label *ngIf="option.type === 'citta'"><ion-icon name="location-outline"></ion-icon> {{ option.descComune }}</label>
         <label *ngIf="option.type === 'tipo'"><ion-icon name="storefront-outline"></ion-icon> {{ option.descrizione }}</label>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <!-- 🎯 Toggle -->
-  <ion-toggle style="margin-left: 5%;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}">
-    {{ 'SEARCHPROMOTYPE' | translate }}
-  </ion-toggle>
+  
 
-  <div class="formInput divNumMaxCoupon" *ngIf="isModalOpen">
-    <app-tipo-offerte (listaTipologieChanged)="handleListaTipologieChange($event)"></app-tipo-offerte>
-  </div>
+  <!-- 🎯 Toggle -->
+  <!-- <ion-toggle style="margin-left: 10px; margin-top: 15px;" [(ngModel)]="isModalOpen" [ngModelOptions]="{standalone: true}">
+    {{ 'FILTER' | translate }}
+  </ion-toggle> -->
+
+  <ion-grid style="margin-top: 20px; margin-bottom: 20px;">
+  <ion-row>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container"
+        [ngClass]="{ 'active': selectedTipo === 'cibo' }"
+        (click)="selectedTipo = 'cibo'">
+        <ion-icon name="pizza-outline"></ion-icon>
+        <div class="label">Cibo</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container"
+        [ngClass]="{ 'active': selectedTipo === 'bevande' }"
+        (click)="selectedTipo = 'bevande'">
+        <ion-icon name="wine-outline"></ion-icon>
+        <div class="label">Bevande</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container"
+        [ngClass]="{ 'active': selectedTipo === 'entrambi' }"
+        (click)="selectedTipo = 'entrambi'">
+        <ion-icon name="fast-food-outline"></ion-icon>
+        <div class="label">Entrambi</div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<ion-grid style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+  <ion-radio-group value="sempre">
+    <ion-row>
+      <ion-col size="4" class="ion-text-left">
+        <ion-radio value="colazione" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'colazione' }" (click)="selectedPeriod = 'colazione'">Colazione</ion-radio>
+      </ion-col>
+      <ion-col size="4" class="ion-text-left">
+        <ion-radio value="brunch" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'brunch' }" (click)="selectedPeriod = 'brunch'">Brunch</ion-radio>
+      </ion-col>
+      <ion-col size="4" class="ion-text-left">
+        <ion-radio value="pranzo" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'pranzo' }" (click)="selectedPeriod = 'pranzo'">Pranzo</ion-radio>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4" class="ion-text-left">
+        <ion-radio value="tè" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'tè' }" (click)="selectedPeriod = 'tè'">Tè pomeridiano</ion-radio>
+      </ion-col>
+      <ion-col size="4" class="ion-text-left">
+        <ion-radio value="happyhour" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'happyhour' }" (click)="selectedPeriod = 'happyhour'">Aperitivo</ion-radio>
+      </ion-col>
+      <ion-col size="4" class="ion-text-left">
+        <ion-radio value="cena" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'cena' }" (click)="selectedPeriod = 'cena'">Cena</ion-radio>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4" class="ion-text-left">
+        <ion-radio value="dopocena" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'dopocena' }" (click)="selectedPeriod = 'dopocena'">Dopocena</ion-radio>
+      </ion-col>
+      <ion-col size="8" class="ion-text-left">
+        <ion-radio value="sempre" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'sempre' }" (click)="selectedPeriod = 'sempre'">Ad ogni ora</ion-radio>
+      </ion-col>
+    </ion-row>
+  </ion-radio-group>
+</ion-grid>
+
+
+<ion-grid style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+  <ion-row>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('dueperuno') }"
+        (click)="togglePromoSelection('dueperuno')">
+        <img *ngIf="!selectedTypePromo.includes('dueperuno')" class="icona-promo dueperuno" src="assets/Img/2x1_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('dueperuno')" class="icona-promo dueperuno" src="assets/Img/2x1.png" />
+        <div class="label">2X1</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('gift') }"
+        (click)="togglePromoSelection('gift')">
+        <img *ngIf="!selectedTypePromo.includes('gift')" class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('gift')" class="icona-promo gift" src="assets/Img/gift 2.png" />
+        <div class="label">Omaggi</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('bundle') }"
+        (click)="togglePromoSelection('bundle')">
+        <img *ngIf="!selectedTypePromo.includes('bundle')" class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('bundle')" class="icona-promo bundle" src="assets/Img/scatola.png" />
+        <div class="label">Pacchetti</div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('percent') }"
+        (click)="togglePromoSelection('percent')">
+        <img *ngIf="!selectedTypePromo.includes('percent')" class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('percent')" class="icona-promo percent" src="assets/Img/percentuale.png" />
+        <div class="label">Sconti</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('child') }"
+        (click)="togglePromoSelection('child')">
+        <img *ngIf="!selectedTypePromo.includes('child')" class="icona-promo child" src="assets/Img/bambini_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('child')" class="icona-promo child" src="assets/Img/bambini.png" />
+        <div class="label">Per Bambini</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('family') }"
+        (click)="togglePromoSelection('family')">
+        <img *ngIf="!selectedTypePromo.includes('family')" class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('family')" class="icona-promo family" src="assets/Img/ticket famiglia.png" />
+        <div class="label">Per Famiglie</div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('love') }"
+        (click)="togglePromoSelection('love')">
+        <img *ngIf="!selectedTypePromo.includes('love')" class="icona-promo love" src="assets/Img/love_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('love')" class="icona-promo love" src="assets/Img/love.png" />
+        <div class="label">Per Coppie</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('vegan') }"
+        (click)="togglePromoSelection('vegan')">
+        <img *ngIf="!selectedTypePromo.includes('vegan')" class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('vegan')" class="icona-promo vegan" src="assets/Img/vegano.png" />
+        <div class="label">Per Vegani</div>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <div
+        class="icon-container-type"
+        [ngClass]="{ 'active': selectedTypePromo.includes('vegetarian') }"
+        (click)="togglePromoSelection('vegetarian')">
+        <img *ngIf="!selectedTypePromo.includes('vegetarian')" class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
+        <img *ngIf="selectedTypePromo.includes('vegetarian')" class="icona-promo vegan" src="assets/Img/vegetariano.png" />
+        <div class="label">Per Vegetariani</div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
 
   <div style="text-align: center; margin-top: 10px;">
     <ion-button shape="round" (click)="Ricerca()">
