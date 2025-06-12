@@ -55,7 +55,7 @@ export class DettaglioComponent  implements OnInit {
     } else {
       this.idSoggetto = 0;
     }
-
+    console.log(this.attivitaSelezionata);
     if (this.attivitaSelezionata) {
         this.attivita = this.attivitaSelezionata;
         if(this.attivita)

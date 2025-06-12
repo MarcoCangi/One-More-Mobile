@@ -6,7 +6,7 @@
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
-    min-height: 175px;
+    height: 210px;
   }
 
   .divContainerCard{
@@ -15,7 +15,7 @@
     width: 330px;
     border-radius: 16px;
     overflow: hidden;
-    min-height: 220px;
+    height: 265px;
   }
 
   .divPromoContainer {
@@ -119,27 +119,14 @@
     width: 50px;
     height: 50px;
   }
-  
-  .distancePromo-overlay {
-    position: absolute;
-    top: 52px;
-    right: 10px;
-    color: #333;
-    padding: 3px 8px;
-    font-size: 13px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    z-index: 100;
-    white-space: nowrap;
-  }
 
   .titlePromoHomePage{
+    display: flex;
+    align-items: center;
+    height: 100%; /* importante per l'allineamento verticale */
     font-size: 20px;
     font-weight: bold;
     color: #333;
-    margin-top: 10px;
-    margin-bottom: 5px;
     font-style: italic;
   }
   
@@ -191,12 +178,14 @@
   .card-consigli:hover {
     transform: scale(1.02);
   }
-  
-  .card-consigli .imgAtt{
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+ 
+
+  .chip-overlay {
+    position: absolute;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    gap: 2px;
+    padding: 4px 0px;
   }
   
