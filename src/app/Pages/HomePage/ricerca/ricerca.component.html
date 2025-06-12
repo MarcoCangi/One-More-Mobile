@@ -115,96 +115,87 @@
 <ion-grid style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
   <ion-row>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('dueperuno') }"
-        (click)="togglePromoSelection('dueperuno')">
-        <img *ngIf="!selectedTypePromo.includes('dueperuno')" class="icona-promo dueperuno" src="assets/Img/2x1_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('dueperuno')" class="icona-promo dueperuno" src="assets/Img/2x1.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('dueperuno') }" (click)="togglePromoSelection('dueperuno')">
+          <img *ngIf="!selectedTypePromo.includes('dueperuno')" class="icona-promo dueperuno" src="assets/Img/2x1_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('dueperuno')" class="icona-promo dueperuno" src="assets/Img/2x1.png" />
+        </div>
         <div class="label">2X1</div>
       </div>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('gift') }"
-        (click)="togglePromoSelection('gift')">
-        <img *ngIf="!selectedTypePromo.includes('gift')" class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('gift')" class="icona-promo gift" src="assets/Img/gift 2.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('gift') }" (click)="togglePromoSelection('gift')">
+          <img *ngIf="!selectedTypePromo.includes('gift')" class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('gift')" class="icona-promo gift" src="assets/Img/gift 2.png" />
+        </div>
         <div class="label">Omaggi</div>
       </div>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('bundle') }"
-        (click)="togglePromoSelection('bundle')">
-        <img *ngIf="!selectedTypePromo.includes('bundle')" class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('bundle')" class="icona-promo bundle" src="assets/Img/scatola.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('bundle') }" (click)="togglePromoSelection('bundle')">
+          <img *ngIf="!selectedTypePromo.includes('bundle')" class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('bundle')" class="icona-promo bundle" src="assets/Img/scatola.png" />
+        </div>
         <div class="label">Pacchetti</div>
       </div>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('percent') }"
-        (click)="togglePromoSelection('percent')">
-        <img *ngIf="!selectedTypePromo.includes('percent')" class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('percent')" class="icona-promo percent" src="assets/Img/percentuale.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('percent') }" (click)="togglePromoSelection('percent')">
+          <img *ngIf="!selectedTypePromo.includes('percent')" class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('percent')" class="icona-promo percent" src="assets/Img/percentuale.png" />
+        </div>
         <div class="label">Sconti</div>
       </div>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('child') }"
-        (click)="togglePromoSelection('child')">
-        <img *ngIf="!selectedTypePromo.includes('child')" class="icona-promo child" src="assets/Img/bambini_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('child')" class="icona-promo child" src="assets/Img/bambini.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('child') }" (click)="togglePromoSelection('child')">
+          <img *ngIf="!selectedTypePromo.includes('child')" class="icona-promo child" src="assets/Img/bambini_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('child')" class="icona-promo child" src="assets/Img/bambini.png" />
+        </div>
         <div class="label">Per Bambini</div>
       </div>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('family') }"
-        (click)="togglePromoSelection('family')">
-        <img *ngIf="!selectedTypePromo.includes('family')" class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('family')" class="icona-promo family" src="assets/Img/ticket famiglia.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('family') }" (click)="togglePromoSelection('family')">
+          <img *ngIf="!selectedTypePromo.includes('family')" class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('family')" class="icona-promo family" src="assets/Img/ticket famiglia.png" />
+        </div>
         <div class="label">Per Famiglie</div>
       </div>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('love') }"
-        (click)="togglePromoSelection('love')">
-        <img *ngIf="!selectedTypePromo.includes('love')" class="icona-promo love" src="assets/Img/love_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('love')" class="icona-promo love" src="assets/Img/love.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('love') }" (click)="togglePromoSelection('love')">
+          <img *ngIf="!selectedTypePromo.includes('love')" class="icona-promo love" src="assets/Img/love_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('love')" class="icona-promo love" src="assets/Img/love.png" />
+        </div>
         <div class="label">Per Coppie</div>
       </div>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('vegan') }"
-        (click)="togglePromoSelection('vegan')">
-        <img *ngIf="!selectedTypePromo.includes('vegan')" class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('vegan')" class="icona-promo vegan" src="assets/Img/vegano.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('vegan') }" (click)="togglePromoSelection('vegan')">
+          <img *ngIf="!selectedTypePromo.includes('vegan')" class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('vegan')" class="icona-promo vegan" src="assets/Img/vegano.png" />
+        </div>
         <div class="label">Per Vegani</div>
       </div>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <div
-        class="icon-container-type"
-        [ngClass]="{ 'active': selectedTypePromo.includes('vegetarian') }"
-        (click)="togglePromoSelection('vegetarian')">
-        <img *ngIf="!selectedTypePromo.includes('vegetarian')" class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
-        <img *ngIf="selectedTypePromo.includes('vegetarian')" class="icona-promo vegan" src="assets/Img/vegetariano.png" />
+      <div class="type">
+        <div class="icon-container-type" [ngClass]="{ 'active': selectedTypePromo.includes('vegetarian') }" (click)="togglePromoSelection('vegetarian')">
+          <img *ngIf="!selectedTypePromo.includes('vegetarian')" class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
+          <img *ngIf="selectedTypePromo.includes('vegetarian')" class="icona-promo vegan" src="assets/Img/vegetariano.png" />
+        </div>
         <div class="label">Per Vegetariani</div>
       </div>
     </ion-col>
