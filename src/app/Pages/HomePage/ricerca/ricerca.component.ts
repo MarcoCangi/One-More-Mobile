@@ -203,7 +203,6 @@ export class RicercaComponent implements OnInit {
   selectUnifiedOption(option: SearchItemDto): void {
     this.globalSearchControl.setValue(option.descrizione || option.id || option.type);
     this.unifiedOption = option;
-    this.showUnifiedSuggestions = false;
   }
 
   selectCityOption(option: any): void {
@@ -240,8 +239,15 @@ export class RicercaComponent implements OnInit {
       this.filtro.range = 100;
     }
 
-    if(this.unifiedOption?.id != null)
-      this.filtro.idAttivita = this.unifiedOption.id;
+    switch(this.unifiedOption?.type)
+    {
+      case searchItemType.Shop:
+        this.filtro.idAttivita = Number(this.unifiedOption.id);
+        break;
+      case searchItemType.ShopType:
+        this.filtro.codTipoAttivita = this.unifiedOption.id;
+        break;
+    }
 
     if (this.selectedCityOption) {
       this.filtro.citta = this.selectedCityOption.descComune.toUpperCase();
