@@ -5,6 +5,9 @@ import { Attivita, AttivitaFiltrate, AttivitaRicerca, FiltriAttivita, TipoAttivi
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
+import { SearchApiService } from 'one-more-frontend-common/projects/one-more-fe-service/src/search-api.service';
+import { list } from 'firebase/storage';
+import { SearchItemDto, searchItemType } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/SearchItemDto';
 type TipoPromo = 'dueperuno' | 'gift' | 'bundle' | 'percent' | 'child' | 'family' | 'love' | 'vegan' | 'vegetarian';
 @Component({
   selector: 'app-ricerca',
@@ -15,7 +18,6 @@ type TipoPromo = 'dueperuno' | 'gift' | 'bundle' | 'percent' | 'child' | 'family
 
 export class RicercaComponent implements OnInit {
   @Input() listaTipoAttivita: TipoAttivita[] | undefined;
-  @Input() listaAttivitaPerRicerca: AttivitaRicerca[] | undefined = [];
   @Input() listaCitta: Comuni[] | undefined;
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openPageEvent = new EventEmitter<number>();
@@ -40,33 +42,18 @@ export class RicercaComponent implements OnInit {
   isLoadingRicerca: boolean = false;
   filtro!: FiltriAttivita;
   listaAttivitaRicerca!: AttivitaFiltrate;
+  searchItemList : SearchItemDto[] = [];
+  unifiedOption: SearchItemDto | undefined;
 
   constructor(
     private locationService: LocationService,
-    private attivitaService: GetApiAttivitaService
+    private attivitaService: GetApiAttivitaService,
+    private searchService: SearchApiService,
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
-    await this.loadAttivita();
     this.isLoading = false;
-  }
-
-  async loadAttivita(): Promise<void> {
-    if (!this.listaAttivitaPerRicerca || this.listaAttivitaPerRicerca.length === 0) {
-      this.listaAttivitaPerRicerca = this.attivitaService.GetListaAttivitaPerRicercaSession();
-    }
-    if (!this.listaAttivitaPerRicerca || this.listaAttivitaPerRicerca.length === 0) {
-      try {
-        const lista = await this.attivitaService.apiGetListaAttivitaPreSearch();
-        if (lista) {
-          this.listaAttivitaPerRicerca = lista;
-          this.attivitaService.createListaAttivitaPerRicercaSession(lista);
-        }
-      } catch (err) {
-        console.error('Errore caricamento attività:', err);
-      }
-    }
   }
 
   onCitySearchInput(event: any): void {
@@ -134,83 +121,88 @@ export class RicercaComponent implements OnInit {
       .slice(0, 10);
   }
 
-  onGlobalSearchInput(event: any): void {
+  // onGlobalSearchInput(event: any): void {
+  //   const value = event.target.value?.toLowerCase() || '';
+  //   this.filteredUnifiedOptions = [];
+
+  //   if (!value.trim()) return;
+
+  //   const attivita = (this.listaAttivitaPerRicerca || [])
+  //     .filter(a => a.nome?.toLowerCase().includes(value))
+  //     .map(a => ({ ...a, type: 'attivita' }));
+
+  //   const tipo = (this.listaTipoAttivita || [])
+  //     .filter(t => t.descrizione?.toLowerCase().includes(value))
+  //     .map(t => ({ ...t, type: 'tipo' }));
+
+  //   const deduplicated = new Map<string, any>();
+  //   [...attivita, ...tipo].forEach(item => {
+  //     let key = '';
+  //     if ('nome' in item && item.nome) key = item.nome.toLowerCase();
+  //     else if ('descrizione' in item && item.descrizione) key = item.descrizione.toLowerCase();
+
+  //     if (!deduplicated.has(key)) deduplicated.set(key, item);
+  //   });
+
+  //   this.filteredUnifiedOptions = Array.from(deduplicated.values())
+  //     .sort((a, b) => {
+  //       const getValue = (item: any) => {
+  //         switch (item.type) {
+  //           case 'attivita': return item.nome?.toLowerCase() || '';
+  //           case 'tipo': return item.descrizione?.toLowerCase() || '';
+  //           default: return '';
+  //         }
+  //       };
+
+  //       const aVal = getValue(a);
+  //       const bVal = getValue(b);
+
+  //       const startsWithA = aVal.startsWith(value);
+  //       const startsWithB = bVal.startsWith(value);
+
+  //       if (startsWithA && !startsWithB) return -1;
+  //       if (!startsWithA && startsWithB) return 1;
+
+  //       return aVal.localeCompare(bVal);
+  //     })
+  //     .slice(0, 15)
+  //     .sort((a, b) => {
+  //       const getValue = (item: any) => {
+  //         switch (item.type) {
+  //           case 'attivita': return item.nome?.toLowerCase() || '';
+  //           case 'tipo': return item.descrizione?.toLowerCase() || '';
+  //           default: return '';
+  //         }
+  //       };
+
+  //       const aVal = getValue(a);
+  //       const bVal = getValue(b);
+
+  //       const startsWithA = aVal.startsWith(value);
+  //       const startsWithB = bVal.startsWith(value);
+
+  //       if (startsWithA && !startsWithB) return -1;
+  //       if (!startsWithA && startsWithB) return 1;
+
+  //       return aVal.localeCompare(bVal);
+  //     })
+  //     .slice(0, 10);
+  // }
+
+  async onGlobalSearchInput(event: any): Promise<void> {
     const value = event.target.value?.toLowerCase() || '';
-    this.filteredUnifiedOptions = [];
+    
+    if(value.length<3)
+      return;
 
-    if (!value.trim()) return;
-
-    const attivita = (this.listaAttivitaPerRicerca || [])
-      .filter(a => a.nome?.toLowerCase().includes(value))
-      .map(a => ({ ...a, type: 'attivita' }));
-
-    const tipo = (this.listaTipoAttivita || [])
-      .filter(t => t.descrizione?.toLowerCase().includes(value))
-      .map(t => ({ ...t, type: 'tipo' }));
-
-    const deduplicated = new Map<string, any>();
-    [...attivita, ...tipo].forEach(item => {
-      let key = '';
-      if ('nome' in item && item.nome) key = item.nome.toLowerCase();
-      else if ('descrizione' in item && item.descrizione) key = item.descrizione.toLowerCase();
-
-      if (!deduplicated.has(key)) deduplicated.set(key, item);
+    (await this.searchService.Search(value)).subscribe(data => {
+      this.searchItemList = data
     });
-
-    this.filteredUnifiedOptions = Array.from(deduplicated.values())
-      .sort((a, b) => {
-        const getValue = (item: any) => {
-          switch (item.type) {
-            case 'attivita': return item.nome?.toLowerCase() || '';
-            case 'tipo': return item.descrizione?.toLowerCase() || '';
-            default: return '';
-          }
-        };
-
-        const aVal = getValue(a);
-        const bVal = getValue(b);
-
-        const startsWithA = aVal.startsWith(value);
-        const startsWithB = bVal.startsWith(value);
-
-        if (startsWithA && !startsWithB) return -1;
-        if (!startsWithA && startsWithB) return 1;
-
-        return aVal.localeCompare(bVal);
-      })
-      .slice(0, 15)
-      .sort((a, b) => {
-        const getValue = (item: any) => {
-          switch (item.type) {
-            case 'attivita': return item.nome?.toLowerCase() || '';
-            case 'tipo': return item.descrizione?.toLowerCase() || '';
-            default: return '';
-          }
-        };
-
-        const aVal = getValue(a);
-        const bVal = getValue(b);
-
-        const startsWithA = aVal.startsWith(value);
-        const startsWithB = bVal.startsWith(value);
-
-        if (startsWithA && !startsWithB) return -1;
-        if (!startsWithA && startsWithB) return 1;
-
-        return aVal.localeCompare(bVal);
-      })
-      .slice(0, 10);
   }
 
-  selectUnifiedOption(option: any): void {
-    this.globalSearchControl.setValue(option.nome || option.descComune || option.descrizione);
-
-    if (option.type === 'attivita') {
-      this.selectedOptionAttivita = option;
-    } else if (option.type === 'tipo') {
-      this.selectedOption = option;
-    }
-
+  selectUnifiedOption(option: SearchItemDto): void {
+    this.globalSearchControl.setValue(option.descrizione || option.id || option.type);
+    this.unifiedOption = option;
     this.showUnifiedSuggestions = false;
   }
 
@@ -247,6 +239,9 @@ export class RicercaComponent implements OnInit {
     } else {
       this.filtro.range = 100;
     }
+
+    if(this.unifiedOption?.id != null)
+      this.filtro.idAttivita = this.unifiedOption.id;
 
     if (this.selectedCityOption) {
       this.filtro.citta = this.selectedCityOption.descComune.toUpperCase();
