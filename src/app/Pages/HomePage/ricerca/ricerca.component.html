@@ -27,11 +27,9 @@
   <ion-list *ngIf="showUnifiedSuggestions && searchItemList.length > 0" class="suggestion-list">
     <ion-item *ngFor="let option of searchItemList" (click)="selectUnifiedOption(option)">
       <ion-label>
-         <!-- <div *ngIf="option.type === 1">
-          <strong><ion-icon name="pin-outline"></ion-icon>  {{ option.descrizione }}</strong>
-          <div style="font-size: 12px; color: gray;">{{ option.id }}</div>
-        </div> -->
         <label *ngIf="option.type === 1"><ion-icon name="storefront-outline"></ion-icon> {{ option.descrizione }}</label>
+        <div *ngIf="option.type === 2"> <strong><ion-icon name="pin-outline"></ion-icon>  {{ option.descrizione }}</strong></div> 
+        
       </ion-label>
     </ion-item>
   </ion-list>
