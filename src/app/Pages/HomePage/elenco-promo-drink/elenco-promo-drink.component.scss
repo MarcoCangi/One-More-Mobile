@@ -1,0 +1,133 @@
+  .card-consigli {
+    flex: 0 0 auto;
+    width: 95%;
+    width: 310px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    height: 210px;
+  }
+
+  .divContainerCard{
+    flex: 0 0 auto;
+    width: 95%;
+    width: 330px;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 265px;
+  }
+
+  .divPromoContainer {
+    flex: 0 0 auto;
+    width: 95%;
+    width: 320px;
+    border-radius: 16px;
+    min-height: 180px;
+  }
+  
+  .typePromo-overlayHomePage {
+    position: relative;
+    left: 15px;
+    top:29px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+  }
+  
+  .icona-promo {
+    width: 30px;
+    height: 30px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+  
+  .icona-promo-container {
+    width: 35px;
+    height: 35px;
+    margin-left: 3px;
+    margin-right: 3px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05); /* Ombra solo sopra */
+    transition: transform 0.2s ease;
+  }
+
+  .dueperuno{
+    margin-top: 3px;
+    margin-right: 2px;
+  }
+
+  .gift{
+    margin-top: 2px;
+    margin-right: 3px;
+  }
+  
+  .bundle{
+    margin-top: 5px;
+    margin-right: 1px;
+  }
+  
+  .percent{
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+  
+  .child{
+    margin-top: 2px;
+    margin-right: 1px;
+  }
+  
+  .family{
+    margin-top: 2px;
+    margin-right: 1px;
+  }
+  
+  .love{
+    margin-top: 3px;
+    margin-right: 2px;
+  }
+  
+  .vegan{
+    margin-top: 3px;
+    margin-right: 2px;
+  }
+
+  .titlePromoHomePage{
+    display: flex;
+    align-items: center;
+    height: 100%; /* importante per l'allineamento verticale */
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    font-style: italic;
+  }
+  
+
+  .skeleton {
+    flex: 0 0 auto;
+    width: 260px;
+    height: 210px;
+    object-fit: cover;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .imgSkeleton{
+    width: 100%;
+    margin-top: -10px;
+    height: 130px;
+    object-fit: cover;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chip-overlay {
+    position: absolute;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    gap: 2px;
+    padding: 4px 0px;
+  }
+  

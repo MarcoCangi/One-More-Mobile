@@ -1,9 +1,11 @@
-<ion-item>
-  <ion-card-title style="margin-bottom: 3%; margin-top: 7%;" class="titleHomePage">{{ 'Close to you' | translate }}</ion-card-title>
-  <ion-icon style="margin-bottom: 3%; margin-top: 7%;" (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
+<ion-item class="gradient-bg diagonal-sides">
+  <ion-card-title class="titleView">
+    {{ 'Close to you' | translate }}
+  </ion-card-title>
+  <ion-icon (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
 </ion-item>
 
-  <div class="card-containerHomePage" #widgetsContent>
+  <div class="card-containerHomePage" #widgetsContent >
     <div class="card-wrapperHomePage" *ngIf="!isLoading">
       <ion-card class="card-consigli" *ngFor="let attivita of elencoVicini" (click)="VisualizzaAttivita(attivita)">
   

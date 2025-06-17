@@ -34,21 +34,6 @@
     display: flex;
     align-items: center;
   }
-
-  .rating{
-    margin-left: 18px;
-    margin-top: 9px;
-  }
-
-  .imgIcon {
-    position: absolute;
-    top: 5px;
-    left: 0px;
-    z-index: 100;
-    width: 90px;
-    height: 50px;
-  }
-  
   
   .icona-promo {
     width: 30px;
@@ -57,7 +42,6 @@
     margin-right: 3px;
   }
   
-
   .icona-promo-container {
     width: 35px;
     height: 35px;
@@ -108,17 +92,6 @@
     margin-top: 3px;
     margin-right: 2px;
   }
-  
-  .vegetarian{
-    margin-top: 3px;
-    margin-right: 3px;
-  }
-
-  .avatar{
-    margin-left:-15px;
-    width: 50px;
-    height: 50px;
-  }
 
   .titlePromoHomePage{
     display: flex;
@@ -148,37 +121,6 @@
     position: relative;
     overflow: hidden;
   }
-
-  .item-promo {
-    --height: 70px;
-    margin-left:10px;
-    padding: 6px 0;
-    width: 250px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-  }
-
-  .textPromo{
-    max-width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  .chipPeriodPromo {
-  font-size: 10px !important;
-  height: 20px !important;
-  padding: 0 6px !important;
-  --padding-start: 6px;
-  --padding-end: 6px;
-  --border-radius: 8px;
-  --min-height: 20px;
-}
-
-  .card-consigli:hover {
-    transform: scale(1.02);
-  }
- 
 
   .chip-overlay {
     position: absolute;

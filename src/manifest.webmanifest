@@ -1,0 +1,20 @@
+{
+  "name": "ReaDeal",
+  "short_name": "ReaDeal",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#E9540A",
+  "icons": [
+    {
+      "src": "assets/icons/logo_prova.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/icons/logo_prova.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

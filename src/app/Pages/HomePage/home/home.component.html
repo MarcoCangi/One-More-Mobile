@@ -18,14 +18,18 @@
             </div>
           </div>
 
+        <app-elenco-recent-view *ngIf="this.idSoggetto" [idSoggetto]="this.idSoggetto" [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-recent-view>
+
         <app-elenco-promo-food [latitudine]="latitudine" [longitudine]="longitudine"  (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo-food>
-
-        <app-elenco-promo [latitudine]="latitudine" [longitudine]="longitudine"  (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
-
-        <app-card-tipo-attivita (openPageRicercaTipoAttEvent)="openPageRicercaTipoAttEvent($event)" style="margin-bottom: 100px;"></app-card-tipo-attivita>
 
         <app-elenco-vicini [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-vicini>
 
+        <app-card-tipo-attivita (openPageRicercaTipoAttEvent)="openPageRicercaTipoAttEvent($event)" style="margin-bottom: 100px;"></app-card-tipo-attivita>
+
+        <app-elenco-promo-drink [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo-drink>
+
+        <app-elenco-promo [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
+        
         <app-icon-citta [listaCitta]="listCitta " (openPageRicercaEvent)="openPageRicercaCittaEvent($event)"></app-icon-citta>
         
         <app-elenco-consigli style="margin-top: -5% !important;" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" [latitudine]="latitudine" [longitudine]="longitudine" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
@@ -65,7 +69,7 @@
     </ion-alert>
 
     <div *ngIf="idPage === 2">
-        <app-mappa (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
+        <app-mappa (ricercaAttiviaSelezionataEvent)="onAttivitaSelezionata($event)"
                    (openSearchEvent)="openPageEvent($event)"></app-mappa>
     </div>
 
@@ -95,12 +99,12 @@
     <div id="ricerca" *ngIf="idPage === 8">
         <app-ricerca [listaTipoAttivita]="this.listaTipoAttivita"
                         [listaCitta]="this.listaCitta"                    
-                     (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
+                     (ricercaAttiviaSelezionataEvent)="onAttivitaSelezionata($event)"
                      (openPageEvent)="openPageEvent($event)"></app-ricerca>
     </div>
 
     <div id="favorite" *ngIf="idPage === 9" style="height: 100%">
-        <app-favorites (ricercaAttiviaSelezionataEvent)="ricercaAttiviaSelezionataEvent($event)"
+        <app-favorites (ricercaAttiviaSelezionataEvent)="onAttivitaSelezionata($event)"
                        (redirectEsitoEvent)="redirectEsitoEvent($event)"></app-favorites>
     </div>
 

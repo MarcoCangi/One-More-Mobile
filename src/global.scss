@@ -198,6 +198,18 @@ ion-note.promoNote[color="danger"] {
     height: 52px;
   }
 
+  .gradient-bg {
+    margin-left: 5px;
+    margin-top: 20px;
+  }
+
+  .titleView{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem; /* adatta in base al resto */
+    letter-spacing: 0.2px;
+  }
+
   .card-containerHomePage {
     display: flex;
     overflow: hidden;

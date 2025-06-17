@@ -4,7 +4,6 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-elenco-promo-food',
@@ -34,32 +33,20 @@ export class ElencoPromoFoodComponent  implements OnInit {
   async loadData() {
    if (this.latitudine && this.longitudine) {
     this.isLoading = true;
-    // const cacheKey = `attivita_promofood`;
-    // const cachedData = await this.storageService.getItem(cacheKey);
+    const cacheKey = `attivita_promofood`;
+    const cachedData = await this.storageService.getItem(cacheKey);
 
-    // if (cachedData) {
-    //   this.elencoAttivita = cachedData; // Usa i dati dalla cache
-    //   this.isLoading = false;
-    // } else {
-    //   (await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(this.latitudine, this.longitudine, 1, true))
-    //     .subscribe(async (data: Attivita[]) => {
-    //       this.elencoAttivita = data;
-    //       await this.storageService.setItem(cacheKey, data, 120);
-    //       this.isLoading = false;
-    //     });
-    // }
-
-    const observable = await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(
-  this.latitudine,
-  this.longitudine,
-  1,
-  true
-);
-
-this.elencoAttivita = await firstValueFrom(observable);
-this.isLoading = false;
-
-    console.log('Dati ricevuti da API:', this.elencoAttivita);
+    if (cachedData) {
+      this.elencoAttivita = cachedData; // Usa i dati dalla cache
+      this.isLoading = false;
+    } else {
+      (await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(this.latitudine, this.longitudine, 1, true))
+        .subscribe(async (data: Attivita[]) => {
+          this.elencoAttivita = data;
+          await this.storageService.setItem(cacheKey, data, 60);
+          this.isLoading = false;
+        });
+    }
   }
 }
 

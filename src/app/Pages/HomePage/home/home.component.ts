@@ -116,14 +116,6 @@ export class HomeComponent  implements OnInit {
     this.openPageEvent(this.idPage)
   }
 
-  ricercaAttiviaSelezionataEvent(attivitaRequest: Attivita | undefined): void {
-    if(attivitaRequest)
-        this.attivita = attivitaRequest;
-    this.idPage = 3;
-    this.authService.setLastIdPageInSession(this.idPage);
-    this.openPageEvent(this.idPage)
-  }
-
   attivitaRicercateEvent(attivitaRequest: Attivita[] | undefined): void {
     if(attivitaRequest)
         this.attivitaRicercate = attivitaRequest;

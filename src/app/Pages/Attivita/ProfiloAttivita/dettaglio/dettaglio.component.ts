@@ -55,7 +55,6 @@ export class DettaglioComponent  implements OnInit {
     } else {
       this.idSoggetto = 0;
     }
-    console.log(this.attivitaSelezionata);
     if (this.attivitaSelezionata) {
         this.attivita = this.attivitaSelezionata;
         if(this.attivita)
@@ -80,7 +79,7 @@ export class DettaglioComponent  implements OnInit {
               await this.userService.apiCheckIsFavorite(this.idSoggetto, this.attivita.idAttivita)
             );
         }
-        const data = await this.attivitaService.apiGetAttivitaByIdAttivita(this.attivita.idAttivita);
+        const data = await this.attivitaService.apiGetAttivitaByIdAttivita(this.attivita.idAttivita, this.idSoggetto);
           if (this.attivita && data) {
               this.attivita = data;
           }

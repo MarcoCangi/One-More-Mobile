@@ -112,6 +112,7 @@ import { TermsConditionComponent } from './Pages/terms-condition/terms-condition
 import { AreaPromoComponent } from './Pages/Attivita/ProfiloAttivita/gestione-promo/area-promo/area-promo.component';
 import { ElencoPromoFoodComponent } from './Pages/HomePage/elenco-promo-food/elenco-promo-food.component';
 import { ElencoPromoDrinkComponent } from './Pages/HomePage/elenco-promo-drink/elenco-promo-drink.component';
+import { ElencoRecentViewComponent } from './Pages/HomePage/elenco-recent-view/elenco-recent-view.component';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -198,7 +199,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                  TermsConditionComponent,
                  AreaPromoComponent,
                  ElencoPromoFoodComponent,
-                 ElencoPromoDrinkComponent
+                 ElencoPromoDrinkComponent,
+                 ElencoRecentViewComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,
