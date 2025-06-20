@@ -18,6 +18,13 @@
   font-size: 16px;
 }
 
+.gridContainer{
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  margin-top: 15px; 
+  margin-bottom: 20px; 
+  border-radius: 25px;
+}
+
 .icon-container {
   display: flex;
   flex-direction: column;
@@ -26,8 +33,29 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   height: 75px;
   border-radius: 10px;
+  z-index: 500; /* assicura che stia sopra agli altri elementi */
+    /* ✅ Sfondo grigio chiaro effetto vetro */
+  background: rgba(255, 255, 255, 0.907); /* grigio chiaro semi-trasparente */
+  backdrop-filter: blur(6px); /* effetto vetro */
+  -webkit-backdrop-filter: blur(6px); /* Safari */
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* ombra più soft e moderna */
+  transition: 0.3s;
+}
+
+.filterContainer{
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
   background-color: #fff;
   transition: 0.3s;
+}
+
+.fixed-search-button {
+  position: fixed;
+  bottom: 60px; /* distanza dal bordo inferiore */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* assicura che stia sopra agli altri elementi */
 }
 
 .icon-container.active {
@@ -36,8 +64,10 @@
 }
 
 .icon-container.active ion-icon {
-  color: #fff;
+  --color: #fff !important; /* usa la variabile interna Ionic */
+  color: #fff; /* fallback */
 }
+
 
 .icon-container.active .label {
   color: #fff;
@@ -46,6 +76,7 @@
 .icon-container ion-icon {
   font-size: 24px;
   margin-bottom: 6px;
+  color: #e9540a; /* colore icona non selezionata */
 }
 
 .label {

@@ -6,7 +6,7 @@
       "files": ["*.ts"],
       "parserOptions": {
         "project": ["tsconfig.json"],
-        "tsconfigRootDir": "c:/users/marco/desktop/1more/One-More-Mobile",
+        "tsconfigRootDir": "c:/users/marco/desktop/ReaDeal/ReaDeal-Mobile",
         "createDefaultProgram": true
       },
       "extends": [

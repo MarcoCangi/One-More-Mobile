@@ -206,7 +206,16 @@ ion-note.promoNote[color="danger"] {
   .titleView{
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
+    color: #333;
     font-size: 1.3rem; /* adatta in base al resto */
+    letter-spacing: 0.2px;
+  }
+
+  .labelView{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #1a1616;
+    font-size: 1.1rem; /* adatta in base al resto */
     letter-spacing: 0.2px;
   }
 

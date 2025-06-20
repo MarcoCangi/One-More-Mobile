@@ -15,7 +15,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "1More"
+rootProject.name = "ReaDeal"
 
 // Includi il modulo Android
 include ":android"
