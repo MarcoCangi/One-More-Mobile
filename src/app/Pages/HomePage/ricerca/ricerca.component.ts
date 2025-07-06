@@ -6,8 +6,9 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 import { SearchApiService } from 'one-more-frontend-common/projects/one-more-fe-service/src/search-api.service';
-import { list } from 'firebase/storage';
 import { SearchItemDto, searchItemType } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/SearchItemDto';
+import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
+import { TipoPeriodo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/TipoPeriodo';
 type TipoPromo = 'dueperuno' | 'gift' | 'bundle' | 'percent' | 'child' | 'family' | 'love' | 'vegan' | 'vegetarian';
 @Component({
   selector: 'app-ricerca',
@@ -29,7 +30,7 @@ export class RicercaComponent implements OnInit {
   filteredUnifiedOptions: any[] = [];
   filteredCityOptions: any[] = [];
   selectedTipo: 'cibo' | 'bevande' | 'entrambi' | null = null;
-  selectedPeriod: 'colazione' | 'brunch' | 'pranzo' | 'tè'| 'happyhour'| 'cena'| 'dopocena'| 'sempre'| null = null;
+  tipoPeriodoList: TipoPeriodo[] = [];
   
   selectedOption: TipoAttivita | null = null;
   selectedOptionAttivita: AttivitaRicerca | null = null;
@@ -44,16 +45,23 @@ export class RicercaComponent implements OnInit {
   listaAttivitaRicerca!: AttivitaFiltrate;
   searchItemList : SearchItemDto[] = [];
   unifiedOption: SearchItemDto | undefined;
+  selectedPeriodo: number[] = [];
 
   constructor(
     private locationService: LocationService,
     private attivitaService: GetApiAttivitaService,
     private searchService: SearchApiService,
-  ) {}
+    private getPromoService: GetApiPromoService,
+  ) 
+  {
+     
+    
+  }
 
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
     this.isLoading = false;
+    this.tipoPeriodoList = await this.getPromoService.apiGetListaTipoPeriodo();
   }
 
   onCitySearchInput(event: any): void {
@@ -120,74 +128,6 @@ export class RicercaComponent implements OnInit {
       })
       .slice(0, 10);
   }
-
-  // onGlobalSearchInput(event: any): void {
-  //   const value = event.target.value?.toLowerCase() || '';
-  //   this.filteredUnifiedOptions = [];
-
-  //   if (!value.trim()) return;
-
-  //   const attivita = (this.listaAttivitaPerRicerca || [])
-  //     .filter(a => a.nome?.toLowerCase().includes(value))
-  //     .map(a => ({ ...a, type: 'attivita' }));
-
-  //   const tipo = (this.listaTipoAttivita || [])
-  //     .filter(t => t.descrizione?.toLowerCase().includes(value))
-  //     .map(t => ({ ...t, type: 'tipo' }));
-
-  //   const deduplicated = new Map<string, any>();
-  //   [...attivita, ...tipo].forEach(item => {
-  //     let key = '';
-  //     if ('nome' in item && item.nome) key = item.nome.toLowerCase();
-  //     else if ('descrizione' in item && item.descrizione) key = item.descrizione.toLowerCase();
-
-  //     if (!deduplicated.has(key)) deduplicated.set(key, item);
-  //   });
-
-  //   this.filteredUnifiedOptions = Array.from(deduplicated.values())
-  //     .sort((a, b) => {
-  //       const getValue = (item: any) => {
-  //         switch (item.type) {
-  //           case 'attivita': return item.nome?.toLowerCase() || '';
-  //           case 'tipo': return item.descrizione?.toLowerCase() || '';
-  //           default: return '';
-  //         }
-  //       };
-
-  //       const aVal = getValue(a);
-  //       const bVal = getValue(b);
-
-  //       const startsWithA = aVal.startsWith(value);
-  //       const startsWithB = bVal.startsWith(value);
-
-  //       if (startsWithA && !startsWithB) return -1;
-  //       if (!startsWithA && startsWithB) return 1;
-
-  //       return aVal.localeCompare(bVal);
-  //     })
-  //     .slice(0, 15)
-  //     .sort((a, b) => {
-  //       const getValue = (item: any) => {
-  //         switch (item.type) {
-  //           case 'attivita': return item.nome?.toLowerCase() || '';
-  //           case 'tipo': return item.descrizione?.toLowerCase() || '';
-  //           default: return '';
-  //         }
-  //       };
-
-  //       const aVal = getValue(a);
-  //       const bVal = getValue(b);
-
-  //       const startsWithA = aVal.startsWith(value);
-  //       const startsWithB = bVal.startsWith(value);
-
-  //       if (startsWithA && !startsWithB) return -1;
-  //       if (!startsWithA && startsWithB) return 1;
-
-  //       return aVal.localeCompare(bVal);
-  //     })
-  //     .slice(0, 10);
-  // }
 
   async onGlobalSearchInput(event: any): Promise<void> {
     const value = event.target.value?.toLowerCase() || '';
@@ -265,6 +205,8 @@ export class RicercaComponent implements OnInit {
       this.filtro.codTipoPromo = this.tipoOfferte;
     }
 
+    this.filtro.codTipoPeriodoList = this.selectedPeriodo;
+    console.log(this,this.selectedPeriodo);
     (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
       (data: AttivitaFiltrate) => {
         this.listaAttivitaRicerca = data;
@@ -285,5 +227,13 @@ export class RicercaComponent implements OnInit {
 
   openPage(idPage: number) {
     this.openPageEvent.emit(idPage);
+  }
+
+  SetPeriodo(id:number | undefined){
+    if (id == null) return;
+
+  this.selectedPeriodo = this.selectedPeriodo.includes(id)
+    ? this.selectedPeriodo.filter(item => item !== id)
+    : [...this.selectedPeriodo, id];
   }
 }

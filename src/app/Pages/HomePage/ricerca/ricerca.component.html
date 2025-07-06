@@ -87,33 +87,8 @@
   </ion-row>
   <ion-radio-group value="sempre" class="custom-radio-group">
     <ion-row style="margin-top: 15px; margin-left: 15px;">
-      <ion-col size="4" class="ion-text-left">
-        <ion-radio value="colazione" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'colazione' }" (click)="selectedPeriod = 'colazione'">Colazione</ion-radio>
-      </ion-col>
-      <ion-col size="4" class="ion-text-left">
-        <ion-radio value="brunch" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'brunch' }" (click)="selectedPeriod = 'brunch'">Brunch</ion-radio>
-      </ion-col>
-      <ion-col size="4" class="ion-text-left">
-        <ion-radio value="pranzo" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'pranzo' }" (click)="selectedPeriod = 'pranzo'">Pranzo</ion-radio>
-      </ion-col>
-    </ion-row>
-    <ion-row style="margin-left: 15px;">
-      <ion-col size="4" class="ion-text-left">
-        <ion-radio value="tè" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'tè' }" (click)="selectedPeriod = 'tè'">Tè pomeridiano</ion-radio>
-      </ion-col>
-      <ion-col size="4" class="ion-text-left">
-        <ion-radio value="happyhour" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'happyhour' }" (click)="selectedPeriod = 'happyhour'">Aperitivo</ion-radio>
-      </ion-col>
-      <ion-col size="4" class="ion-text-left">
-        <ion-radio value="cena" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'cena' }" (click)="selectedPeriod = 'cena'">Cena</ion-radio>
-      </ion-col>
-    </ion-row>
-    <ion-row style="margin-left: 15px;">
-      <ion-col size="4" class="ion-text-left">
-        <ion-radio value="dopocena" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'dopocena' }" (click)="selectedPeriod = 'dopocena'">Dopocena</ion-radio>
-      </ion-col>
-      <ion-col size="8" class="ion-text-left">
-        <ion-radio value="sempre" label-placement="end" [ngClass]="{ 'active': selectedPeriod === 'sempre' }" (click)="selectedPeriod = 'sempre'">Ad ogni ora</ion-radio>
+      <ion-col *ngFor="let item of tipoPeriodoList" size="4" class="ion-text-left">
+        <ion-radio value={{item.id}} label-placement="end" (click)="SetPeriodo(item.id)">{{item.descrizione}}</ion-radio>
       </ion-col>
     </ion-row>
   </ion-radio-group>
