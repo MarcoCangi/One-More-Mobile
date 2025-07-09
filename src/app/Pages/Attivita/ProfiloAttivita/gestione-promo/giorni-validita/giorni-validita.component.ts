@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class GiorniValiditaComponent  implements OnInit {
 
   @Input() giorni: number[] | undefined;
+  @Input() isTitleVisible: boolean = true;
   @Output() isAllSettimanaChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() isLunediChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() isMartediChange : EventEmitter<boolean> = new EventEmitter<boolean>();

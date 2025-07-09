@@ -100,7 +100,8 @@
         </ion-row>
         <ion-row>
           <ion-col size ="12" class="column ion-text-center ion-align-items-center">
-            <app-giorni-validita [giorni]="this.requestPromo.days ? this.requestPromo.days : undefined" 
+            <app-giorni-validita [isTitleVisible]="true"
+                                 [giorni]="this.requestPromo.days ? this.requestPromo.days : undefined" 
                                  (isAllSettimanaChange)="handleAllSettimanaChange($event)"
                                  (isLunediChange)="handleLunediChange($event)"
                                  (isMartediChange)="handleMartediChange($event)"

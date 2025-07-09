@@ -19,10 +19,8 @@
 }
 
 .gridContainer{
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   margin-top: 15px; 
-  margin-bottom: 20px; 
-  border-radius: 25px;
+  margin-bottom: 20px;
 }
 
 .icon-container {
@@ -40,13 +38,6 @@
   -webkit-backdrop-filter: blur(6px); /* Safari */
 
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* ombra più soft e moderna */
-  transition: 0.3s;
-}
-
-.filterContainer{
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  border-radius: 25px;
-  background-color: #fff;
   transition: 0.3s;
 }
 
@@ -138,3 +129,9 @@
   max-height: 200px;
   overflow-y: auto;
 }
+
+.search-wrapper {
+  position: relative;
+}
+
+

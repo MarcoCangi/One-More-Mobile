@@ -7,6 +7,7 @@ import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-
 import { lastValueFrom } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pannello-promo',
@@ -36,11 +37,13 @@ export class PannelloPromoComponent implements OnInit {
     private authService: AuthService,
     private couponService: CouponService,
     private messagingService: MessagingService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private alertController: AlertController
   ) {}
   
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit() {
+    console.log(this.listaPromo);
     const user = await this.authService.getCurrentUserFromAuth();
     const usersession = this.authService.getUserSession();
     if((user && user?.emailVerified == true && usersession?.typeLog == 1) || (usersession?.typeLog == 2 || usersession?.typeLog == 3))
@@ -159,5 +162,15 @@ export class PannelloPromoComponent implements OnInit {
 
   hasVegetarianiTipologia(promo: Promo): boolean {
     return promo.listaTipologie?.some(t => t.codTipologia === 1) ?? false;
+  }
+
+  async showAlert(titolo: string, messaggio: string) {
+    const alert = await this.alertController.create({
+      header: titolo,
+      message: messaggio,
+      cssClass: 'custom-alert'
+    });
+
+    await alert.present();
   }
 }

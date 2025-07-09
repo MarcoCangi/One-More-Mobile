@@ -483,4 +483,28 @@ ion-note.promoNote[color="danger"] {
     justify-content: center;
     align-items: center;
   }
-  
+
+ion-alert.custom-alert {
+  --width: 90%;
+  --min-width: 280px;
+  --max-width: 320px;
+  --border-radius: 40px;
+  --background: #ffffff;
+  --box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+ion-alert.custom-alert .alert-head {
+  justify-content: center;
+  text-align: center;
+  --border-radius: 40px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+ion-alert.custom-alert .alert-message {
+  text-align: center;
+  --border-radius: 40px;
+  font-size: 15px;
+  color: #444;
+}

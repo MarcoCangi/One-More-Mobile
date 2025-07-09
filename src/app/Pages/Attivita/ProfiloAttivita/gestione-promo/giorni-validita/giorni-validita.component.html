@@ -1,5 +1,5 @@
 <form class="form">
-  <div class="promo-title-wrapper">
+  <div class="promo-title-wrapper" *ngIf="isTitleVisible">
     <ion-icon name="today-outline" class="promo-title-icon"></ion-icon>
     <span class="titleModalPromo">{{ 'SELECT_DAYS_AVAILABLE' | translate }}</span>
   </div>
