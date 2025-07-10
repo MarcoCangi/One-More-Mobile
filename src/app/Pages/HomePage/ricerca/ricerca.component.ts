@@ -240,22 +240,22 @@ onClearGlobalSearch() {
     console.log(this.filtro);
 
 
-    // (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
-    //   (data: AttivitaFiltrate) => {
-    //     this.listaAttivitaRicerca = data;
-    //   },
-    //   (error: any) => {
-    //     console.error('Errore API:', error);
-    //   },
-    //   () => {
-    //     this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
-    //     this.attivitaService.setIsListaAttModalOpen(true);
-    //     this.attivitaService.setFilter(this.filtro);
-    //     this.isLoading = false;
-    //     this.isLoadingRicerca = false;
-    //     this.openPage(2);
-    //   }
-    // );
+    (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
+      (data: AttivitaFiltrate) => {
+        this.listaAttivitaRicerca = data;
+      },
+      (error: any) => {
+        console.error('Errore API:', error);
+      },
+      () => {
+        this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
+        this.attivitaService.setIsListaAttModalOpen(true);
+        this.attivitaService.setFilter(this.filtro);
+        this.isLoading = false;
+        this.isLoadingRicerca = false;
+        this.openPage(2);
+      }
+    );
   }
 
   @HostListener('document:click', ['$event'])
