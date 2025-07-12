@@ -20,8 +20,10 @@ export class PeriodoValiditaComponent implements OnInit {
 
   isDataDalPickerOpen = false;
   isDataAlPickerOpen = false;
+  maxDate: string = '';
 
   ngOnInit(): void {
+    this.maxDate = moment().add(1, 'year').endOf('year').format('YYYY-MM-DD');
     this.dataDalFormControl = new FormControl();
     this.dataAlFormControl = new FormControl();
 

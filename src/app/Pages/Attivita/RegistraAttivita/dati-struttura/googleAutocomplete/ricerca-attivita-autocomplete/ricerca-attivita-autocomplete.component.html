@@ -9,7 +9,8 @@
   </ion-header>
 
   
-  <div *ngIf="!isLoading && !this.attivita && !this.ListAttivita">
+  <div *ngIf="!isLoading && !this.attivita && !this.ListAttivita && !this.isError && !this.isRicercaFatta"
+     style="max-height: 90vh; overflow-y: auto; margin-top: 2%;">
     <div class="TitleContent">
       <ion-grid>
         <ion-row>
@@ -42,7 +43,7 @@
 
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-  <div *ngIf="!isLoading && this.ListAttivita && this.ListAttivita.length > 0 && !this.attivita"
+  <div *ngIf="!isLoading && !this.isError && this.ListAttivita && this.ListAttivita.length > 0 && !this.attivita"
      style="max-height: 90vh; overflow-y: auto; margin-top: 2%;">
   <ion-list>
     <ion-item *ngFor="let attivita of this.ListAttivita" (click)="SelectAttivita(attivita)">
@@ -68,7 +69,7 @@
   </div>
   
 
-  <div *ngIf="!isLoading && !this.attivita && (!this.ListAttivita || this.ListAttivita.length === 0) && this.isRicercaFatta">
+  <div *ngIf="!isLoading && this.isError && this.isRicercaFatta">
     <div class="TitleContent">
       <ion-grid>
         <ion-row>
@@ -79,7 +80,7 @@
         <ion-row>
           <ion-col size="12" class="column ion-text-center ion-align-items-center">
             <ion-title class="titleModal">
-              {{ 'NO_ACTIVITIES_FOUND' | translate }}
+              {{ errorMessage || '' | translate }}
             </ion-title>
           </ion-col>
         </ion-row>

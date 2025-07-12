@@ -20,6 +20,9 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
   isLoading : boolean | undefined;
   attivita : Attivita | undefined;
   ListAttivita : Attivita [] | undefined;
+  ListAttivitaCheck : Attivita [] | undefined;
+  isError : boolean = false;
+  errorMessage : string | undefined;
   isRicercaFatta : boolean = false;
   @Input() listaAttivitaDDL: TipoAttivita[] | undefined;
   @Input() listaComuni : Comuni[] | undefined;
@@ -66,14 +69,21 @@ export class RicercaAttivitaAutocompleteComponent  implements OnInit {
     this.isRicercaFatta = true;
 
     const data = await this.attivitaService.apiGetListaAttivitaAutocomplete(this.requestAttivita);
-    if (data) this.ListAttivita = data;
+    if (data) this.ListAttivitaCheck = data;
 
+    if(this.ListAttivitaCheck && this.ListAttivitaCheck.length > 0 && this.ListAttivitaCheck[0].error) {
+      this.isError = true;
+      this.errorMessage = this.ListAttivitaCheck[0].error;
+    }
+    else if (this.ListAttivitaCheck && this.ListAttivitaCheck.length > 0) {
+      this.ListAttivita = this.ListAttivitaCheck;
+    }
     this.isLoading = false;  
   }
 
   aggiuntaNewAttivita(){
     this.attivita = new Attivita(
-      0, 0, '', '', '', '', '', '', 0, 0, '', '', '', false, false, false, false, [], new Orari, [], false, false, '', '', 0, false, 0, 0, '',''
+      0, 0, '', '', '', '', '', '', 0, 0, '', '', '', false, false, false, false, [], new Orari, [], false, false, '', '', 0, false, 0, 0, '','',''
     );
   }
 

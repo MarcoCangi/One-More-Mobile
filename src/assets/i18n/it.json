@@ -157,7 +157,6 @@
     "VALID_TIME": "Orario validità",
     "VALID_TIMEDAYS": "Orario e giorni di validità",
     "CITY_NOT_VALID": "La città inserita non è valida",
-    "NO_ACTIVITIES_FOUND": "Nessuna attività trovata",
     "OFFER_TYPES": "Tipologie di offerta",
     "NO_LIMIT": "Nessun limite",
     "MAX_COUPONS_PER_PERSON": "Numero massimo dei coupon utilizzabili da una singola persona",
@@ -409,7 +408,8 @@
       "ACTIVITY_INSERTION_ERROR_INVALID":"Attività non valida",
       "PERIODTYPEREQUIRED":"Seleziona almeno un momento della giornata per la promo.",
       "TYPEPROMOFOODORDRINK":"Seleziona se la promo riguarda cibo, bevande o entrambi.",
-      "MAXPERIODS": "Puoi selezionare al massimo 3 momenti della giornata."
+      "MAXPERIODS": "Puoi selezionare al massimo 3 momenti della giornata.",
+      "NO_ACTIVITIES_FOUND": "Nessuna attività trovata"
     },
     "MESSAGES":{
       "RESERVATION_MADE":"Prenotazione effettuata",

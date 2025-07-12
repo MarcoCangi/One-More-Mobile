@@ -35,7 +35,8 @@
           [value]="dataDalFormControl.value"
           (ionChange)="onDataDalSelected($event)"
           presentation="date"
-          firstDayOfWeek="1">
+          firstDayOfWeek="1"
+          [max]="maxDate">
         </ion-datetime>
         <ion-button (click)="closeDataDalPicker()">{{ 'Close' | translate }}</ion-button>
       </div>
@@ -49,7 +50,8 @@
         <ion-datetime class="date"
           [value]="dataAlFormControl.value"
           (ionChange)="onDataAlSelected($event)"
-          presentation="date">
+          presentation="date"
+          [max]="maxDate">
         </ion-datetime>
         <ion-button (click)="closeDataAlPicker()">{{ 'Close' | translate }}</ion-button>
       </div>

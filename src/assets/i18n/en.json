@@ -152,7 +152,6 @@
     "VALID_TIME": "Valid time",
     "VALID_TIMEDAYS": "Valid time and days",
     "CITY_NOT_VALID": "La città inserita non è valida",
-    "NO_ACTIVITIES_FOUND": "No activities found",
     "OFFER_TYPES": "Offer types",
     "NO_LIMIT": "No limit",
     "COUPONS_NOT_USED": "coupons have been requested but not used yet.",
@@ -384,7 +383,8 @@
       "ACTIVITY_INSERTION_ERROR_INVALID":"Invalid activity",
       "PERIODTYPEREQUIRED":"Please select at least one time of day for the promotion.",
       "TYPEPROMOFOODORDRINK":"Please select whether the promotion applies to food, drinks, or both.",
-      "MAXPERIODS": "You can select up to 3 times of day."
+      "MAXPERIODS": "You can select up to 3 times of day.",
+      "NO_ACTIVITIES_FOUND": "No activities found"
     },
     "MESSAGES":{
       "RESERVATION_MADE":"Reservation made",

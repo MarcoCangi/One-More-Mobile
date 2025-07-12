@@ -113,8 +113,10 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     this.isLoading = true;
     if (promo) {
       this.promoSelezionata = promo;
-      if(command === 2)
-        this.promoSelezionata.dataAl = new Date();
+      if(command === 2){
+        this.promoSelezionata.isAttiva = true
+        this.promoSelezionata.dataDal = new Date();
+      }
       this.isModifica = true;
     }
     this.isLoading = false;
