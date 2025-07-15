@@ -122,9 +122,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
 
-  setLanguage() {
+  async setLanguage() {
     const newLang = this.isIta ? "en" : "it";
-    this.authService.saveLanguageSession(newLang);
+    await this.authService.saveLanguageSession(newLang);
   }
 
 

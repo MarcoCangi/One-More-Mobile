@@ -5,9 +5,15 @@
     <img slot="start" style=" margin-left:20px; width: 35px; height: 35px;" src="/assets/Img/Icon_.png"/>
     <ion-label style="margin-left:6px; font-family: Berlin Sans FB; font-size: larger;">ReaDeal</ion-label>
     <!-- <img slot="start" style=" margin-left:20px; width: 90px; height: 35px; margin-top: -15px; margin-bottom: -15px;" src="assets/Img/logo scritta.png"/> -->
-    <ion-button slot="end" shape="round" class="custom-button" (click)="setLanguage()">
-      {{ lblFlag }}
-    </ion-button>
+    <ion-select slot="end"
+                interface="popover"
+                [(ngModel)]="lblFlag"
+                (ionChange)="onLanguageChange($event.detail.value)"
+                class="language-select"
+                style="margin-right: 20px; font-weight: bold;">
+      <ion-select-option value="it">IT  </ion-select-option>
+      <ion-select-option value="en">EN  </ion-select-option>
+    </ion-select>
     <ion-icon slot="end" padding size="large" (click)="openModal()" *ngIf="!mostraLoginButton" expand="block" name="menu-outline"></ion-icon>
     <ion-icon slot="end" padding size="large" (click)="ShowLogin()" *ngIf="mostraLoginButton" name="person-circle"></ion-icon>
   </ion-toolbar>

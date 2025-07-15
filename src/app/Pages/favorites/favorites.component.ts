@@ -53,7 +53,7 @@ export class FavoritesComponent  implements OnInit {
 
   async GetAttivita() {
     this.isLoading = true;
-    const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
+    const cacheKey = `attivita_favoriti`;
     const cachedData = await this.storageService.getItem(cacheKey);
     if (cachedData) {
       if (typeof cachedData === 'string') {
@@ -181,7 +181,7 @@ export class FavoritesComponent  implements OnInit {
       if (userSession && this.idAttivitaSelezionata && this.idSoggetto) {
         this.isOk = await this.userService.AddRemoveFavorite(this.idSoggetto, this.idAttivitaSelezionata);
         if (this.isOk) {
-          const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
+          const cacheKey = `attivita_favoriti`;
           let cachedData: AttivitaRicerca[] = await this.storageService.getItem(cacheKey) || [];
   
           if (cachedData.length > 0) {

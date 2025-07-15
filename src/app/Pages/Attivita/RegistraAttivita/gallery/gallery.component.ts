@@ -155,26 +155,31 @@ export class GalleryComponent implements OnInit {
   }
 
   deletePhoto() {
-    if(this.selectedImageUrl == this.urlPrincipale)
-    {
-      this.urlPrincipale = "";
-      const newImgArray = this.immaginiArray.filter(i => i.isImmaginePrincipale != true);
-      this.immaginiArray = newImgArray;
-      this.immaginiChange.emit(this.immaginiArray);
-      if(this.attivita && this.attivita.idAttivita && this.attivita.isVerificata && this.attivita.esitoVerifica){
-        this.isImgPrincipaleEliminata= true; 
-      }
-        
+  if (this.selectedImageUrl === this.urlPrincipale) {
+    this.urlPrincipale = '';
+    const newImgArray = this.immaginiArray.filter(i => !i.isImmaginePrincipale);
+    this.immaginiArray = newImgArray;
+    this.immaginiChange.emit(this.immaginiArray);
+
+    if (this.attivita?.idAttivita && this.attivita.isVerificata && this.attivita.esitoVerifica) {
+      this.isImgPrincipaleEliminata = true;
     }
-    else{
-      const index = this.urls.indexOf(this.selectedImageUrl);
-      if (index !== -1) {
-        this.urls.splice(index, 1);
-        this.immaginiArray.splice(index, 1);
-        this.immaginiChange.emit(this.immaginiArray);
-      }
+  } else {
+    // Rimuovi dalla lista di immagini (immaginiArray) l'immagine con lo stesso upload
+    const indexInArray = this.immaginiArray.findIndex(i => i.upload === this.selectedImageUrl && !i.isImmaginePrincipale);
+    if (indexInArray !== -1) {
+      this.immaginiArray.splice(indexInArray, 1);
+      this.immaginiChange.emit(this.immaginiArray);
+    }
+
+    // Rimuovi anche dall'array URLs (solo immagini secondarie)
+    const indexInUrls = this.urls.indexOf(this.selectedImageUrl);
+    if (indexInUrls !== -1) {
+      this.urls.splice(indexInUrls, 1);
     }
   }
+}
+
 
   getImmaginePrincipaleIsTemp(): boolean{
     if(this.immagini && this.immagini.find(i => i.isImmaginePrincipale && i.isVerificata))

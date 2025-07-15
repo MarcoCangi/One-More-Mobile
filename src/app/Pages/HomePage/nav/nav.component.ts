@@ -165,10 +165,15 @@ export class NavComponent implements OnInit {
     return !!(userSession && userSession.idAttivita && userSession.idAttivita > 0);
   }
 
-  setLanguage() {
-    const newLang = this.isIta ? 'en' : 'it';
-    this.authService.saveLanguageSession(newLang);
-    window.location.reload();
+  onLanguageChange(lang: string) {
+   this.lblFlag = lang;
+   this.isIta = lang === 'it';
+   this.authService.saveLanguageSession(lang).then(() => {
+     this.translate.use(lang);
+     setTimeout(() => {
+       window.location.reload(); // reload se vuoi ricaricare tutto
+     }, 400);
+   });
   }
 
   openModal() {

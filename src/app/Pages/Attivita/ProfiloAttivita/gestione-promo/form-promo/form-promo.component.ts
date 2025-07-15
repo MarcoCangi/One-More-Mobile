@@ -781,20 +781,20 @@ export class FormPromoComponent  implements OnInit {
   rimuoviPeriodo(periodo: string): void {
     if (this.requestPromo.periodo && this.requestPromo.periodo !== '') {
       const periodi = this.requestPromo.periodo
-        .split(',')
+        .split('-')
         .map(p => p.trim())
         .filter(p => p !== periodo); // rimuove quello selezionato
 
-      this.requestPromo.periodo = periodi.join(',');
+      this.requestPromo.periodo = periodi.join('-');
     }
   }
 
   aggiungiPeriodo(periodo: string): void {
-    const lista = this.requestPromo.periodo?.split(',').filter(p => p) || [];
+    const lista = this.requestPromo.periodo?.split('-').filter(p => p) || [];
 
     if (!lista.includes(periodo)) {
       lista.push(periodo);
-      this.requestPromo.periodo = lista.join(',');
+      this.requestPromo.periodo = lista.join('-');
     }
   }
 

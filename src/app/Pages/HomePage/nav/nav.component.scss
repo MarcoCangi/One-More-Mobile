@@ -18,6 +18,17 @@
   width: 100%;
 }
 
+.language-select {
+  --color: white;
+  --placeholder-color: white;
+  font-weight: bold;
+}
+
+ion-select.language-select::part(icon) {
+  color: white;
+  margin-left: 5px;
+}
+
 .postcard {
   display: table-cell;
   vertical-align: middle;

@@ -10,7 +10,7 @@
 
   
   <div *ngIf="!isLoading && !this.attivita && !this.ListAttivita && !this.isError && !this.isRicercaFatta"
-     style="max-height: 90vh; overflow-y: auto; margin-top: 2%;">
+     style="height: 800px; overflow-y: auto; margin-top: 2%;">
     <div class="TitleContent">
       <ion-grid>
         <ion-row>
@@ -44,7 +44,7 @@
   <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
   <div *ngIf="!isLoading && !this.isError && this.ListAttivita && this.ListAttivita.length > 0 && !this.attivita"
-     style="max-height: 90vh; overflow-y: auto; margin-top: 2%;">
+     style="height: 800px; overflow-y: auto; margin-top: 2%;">
   <ion-list>
     <ion-item *ngFor="let attivita of this.ListAttivita" (click)="SelectAttivita(attivita)">
       <ion-icon name="business-outline" slot="start" class="iconAtt"></ion-icon>

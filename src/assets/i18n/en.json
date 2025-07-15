@@ -191,6 +191,7 @@
     "ERROR_PHONE": "Phone number is required",
     "PROCEED": "Proceed",
     "EDIT": "Edit",
+    "CITY_REQUIRED": "Select a valid city",
     "WARNING": "Attention",
     "DELETE_ACTIVITY": "Delete Activity",
     "DELETE": "Delete",

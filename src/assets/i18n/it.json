@@ -147,6 +147,7 @@
     "SET_USAGE_LIMI_2": "Vuoi mettere un limite di utilizzi?",
     "SAVE": "Salva",
     "EDIT": "Modifica",
+    "CITY_REQUIRED": "Seleziona una città valida",
     "WARNING": "Attenzione",
     "FORM_ERRORS": "Sono stati riscontrati i seguenti errori nella compilazione",
     "SUMMARY": "Riepilogo",

@@ -130,7 +130,7 @@ export class DettaglioComponent  implements OnInit {
   
     if (!isOk) return;
   
-    const cacheKey = `attivita_favoriti_${this.idSoggetto}`;
+    const cacheKey = `attivita_favoriti`;
     let cachedData: AttivitaRicerca[] = await this.storageService.getItem(cacheKey) || [];
   
     const index = cachedData.findIndex(att => att.idAttivita === idAttivita);
