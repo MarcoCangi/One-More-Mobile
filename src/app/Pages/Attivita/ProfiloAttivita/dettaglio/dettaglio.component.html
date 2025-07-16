@@ -7,9 +7,9 @@
         <img class="uniform-image" mat-card-image [src]="immagine.upload" alt="Immagine dell'attività">
       </ion-card>
     </div>
-    <div *ngIf="isLoading && attivita.immagini && attivita.immagini.length > 0">
-      <ion-card class="card-Skeleton">
-        <ion-skeleton-text animated class="Skeletonimage"></ion-skeleton-text>
+    <div class="card-wrapperSkeleton" *ngIf="isLoading && attivita.immagini && attivita.immagini.length > 0">
+      <ion-card class="card-img" *ngFor="let _ of [1, 2, 3]">
+        <ion-skeleton-text animated="true" class="uniform-image"></ion-skeleton-text>
       </ion-card>
     </div>
     <div class="overlayGallery" *ngIf="!isLoading">
@@ -71,17 +71,17 @@
                 <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" *ngIf="this.idSoggetto && !this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart-outline"></ion-icon></ion-button>
                 <ion-button shape="round" class="custom-button" style="width: 40px; height: 40px;" *ngIf="this.idSoggetto && this.isFavorite" (click)="AddRemoveFavorite(attivita.idAttivita)" shape="round"><ion-icon slot="icon-only" name="heart"></ion-icon></ion-button>
             </ion-col>
-            <ion-skeleton-text *ngIf="isLoading" animated class="SkeletonBtn"></ion-skeleton-text>
+            <ion-skeleton-text *ngIf="isLoading" animated style="border-radius: 15px;" class="SkeletonBtn"></ion-skeleton-text>
           </ion-row>
-          <ion-row *ngIf="isLoading">
+          <ion-row *ngIf="isLoading" style="margin-top: 15px;">
             <ion-col size="4" class="column ion-text-center ion-align-items-center"> 
-              <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+              <ion-skeleton-text animated class="SkeletonBtn" style="margin-left: 25px;"></ion-skeleton-text>
             </ion-col>
             <ion-col size="4" class="column ion-text-center ion-align-items-center">
-              <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+              <ion-skeleton-text animated class="SkeletonBtn" style="margin-left: 25px;"></ion-skeleton-text>
             </ion-col>
             <ion-col size="4" class="column ion-text-center ion-align-items-center">
-              <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+              <ion-skeleton-text animated class="SkeletonBtn" style="margin-left: 25px;"></ion-skeleton-text>
             </ion-col>
           </ion-row>
           <ion-row *ngIf="!isLoading">
@@ -101,6 +101,11 @@
   <ion-item *ngIf="!isLoading">
       <div class="chip-container" *ngIf="!isLoading && (attivita.listaTipoAttivita && attivita.listaTipoAttivita.length > 0)">
           <ion-chip [outline]="true" *ngFor="let tipo of attivita.listaTipoAttivita">{{tipo.descrizione}}</ion-chip>
+      </div>
+  </ion-item>
+    <ion-item *ngIf="isLoading">
+      <div class="chip-container" *ngFor="let _ of [1, 2, 3]">
+          <ion-skeleton-text animated class="SkeletonChip" style="margin-left: 25px;"></ion-skeleton-text>
       </div>
   </ion-item>
   
@@ -178,13 +183,13 @@
               </ion-row>
               <ion-row>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center">
-                  <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+                  <ion-skeleton-text animated class="SkeletonBtn" style="margin-left: 20px;"></ion-skeleton-text>
                 </ion-col>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center">
-                  <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+                  <ion-skeleton-text animated class="SkeletonBtn" style="margin-left: 20px;"></ion-skeleton-text>
                 </ion-col>
                 <ion-col size="4" class="column ion-text-center ion-align-items-center">
-                  <ion-skeleton-text animated class="SkeletonBtn"></ion-skeleton-text>
+                  <ion-skeleton-text animated class="SkeletonBtn" style="margin-left: 20px;"></ion-skeleton-text>
                 </ion-col>
               </ion-row>
               <ion-row>

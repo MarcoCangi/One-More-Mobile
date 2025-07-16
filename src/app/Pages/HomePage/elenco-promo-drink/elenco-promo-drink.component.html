@@ -87,7 +87,7 @@
                   <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('5')" >{{ 'HAPPYHOUR' | translate }}</ion-chip>
                   <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('6')" >{{ 'DINNER' | translate }}</ion-chip>
                   <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('7')" >{{ 'LATENIGHT' | translate }}</ion-chip>
-                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('8')" >{{ 'ANYTIME' | translate }}</ion-chip>
+                  <ion-chip [outline]="true" *ngIf="promo.periodo?.includes('99')" >{{ 'ANYTIME' | translate }}</ion-chip>
             </div>
         
         </ion-card>
@@ -96,18 +96,25 @@
   </div>
 
   <div class="card-wrapperHomePage" *ngIf="isLoading">
-    <ion-card class="skeleton">
+    <ion-card class="skeleton" style="margin-top: 35px;">
       <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
       <ion-card-header>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%; border-radius: 10px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%; border-radius: 10px;"></ion-skeleton-text>
       </ion-card-header>
     </ion-card>
-    <ion-card class="skeleton">
+    <ion-card class="skeleton" style="margin-top: 35px;">
       <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
       <ion-card-header>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%; border-radius: 10px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%; border-radius: 10px;"></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+    <ion-card class="skeleton" style="margin-top: 35px;">
+      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text [animated]="true" style="width: 80%; border-radius: 10px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%; border-radius: 10px;"></ion-skeleton-text>
       </ion-card-header>
     </ion-card>
   </div>

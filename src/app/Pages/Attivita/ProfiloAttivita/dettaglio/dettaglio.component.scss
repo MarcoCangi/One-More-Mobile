@@ -81,6 +81,16 @@
     scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
     -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
   }
+
+  .card-wrapperSkeleton {
+    display: flex;
+    flex-wrap: nowrap;
+    width: -webkit-fill-available; /* Adatta la larghezza del wrapper al contenuto */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
+    -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
+  }
   
   .card-img {
     flex: 0 0 auto;

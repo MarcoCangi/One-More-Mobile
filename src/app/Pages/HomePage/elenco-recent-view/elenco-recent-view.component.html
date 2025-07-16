@@ -33,19 +33,46 @@
     </div>
 
     <div class="card-wrapperHomePage" *ngIf="isLoading">
-      <ion-card class="skeleton">
-        <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
-        <ion-card-header>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        </ion-card-header>
-      </ion-card>
-      <ion-card class="skeleton">
-        <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
-        <ion-card-header>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        </ion-card-header>
-      </ion-card>
+      <ion-item lines="none" class="item-recentViewSkeleton">
+       <!-- Skeleton avatar -->
+       <div slot="start" class="img-recentViewSkeleton">
+         <ion-skeleton-text [animated]="true" style="width: 100%; height: 100%;"></ion-skeleton-text>
+       </div>
+     
+       <!-- Skeleton testo e stelle -->
+       <ion-label class="title-recentView">
+         <!-- Titolo -->
+         <ion-skeleton-text [animated]="true" style="width: 70%; height: 16px; margin-bottom: 8px; border-radius: 10px;"></ion-skeleton-text>
+
+         <!-- Stelle -->
+         <div style="display: flex; align-items: center; gap: 3px;">
+           <ng-container *ngFor="let _ of [1,2,3,4,5]">
+             <ion-skeleton-text [animated]="true" style="width: 14px; height: 14px; border-radius: 50%;"></ion-skeleton-text>
+           </ng-container>
+           <ion-skeleton-text [animated]="true" style="width: 30px; height: 14px; border-radius: 8px;"></ion-skeleton-text>
+         </div>
+       </ion-label>
+     </ion-item>
+   
+     <ion-item lines="none" class="item-recentViewSkeleton">
+       <!-- Skeleton avatar -->
+       <div slot="start" class="img-recentViewSkeleton">
+         <ion-skeleton-text [animated]="true" style="width: 100%; height: 100%;"></ion-skeleton-text>
+       </div>
+     
+       <!-- Skeleton testo e stelle -->
+       <ion-label class="title-recentView">
+         <!-- Titolo -->
+         <ion-skeleton-text [animated]="true" style="width: 70%; height: 16px; margin-bottom: 8px; border-radius: 10px"></ion-skeleton-text>
+
+         <!-- Stelle -->
+         <div style="display: flex; align-items: center; gap: 3px;">
+           <ng-container *ngFor="let _ of [1,2,3,4,5]">
+             <ion-skeleton-text [animated]="true" style="width: 14px; height: 14px; border-radius: 50%;"></ion-skeleton-text>
+           </ng-container>
+           <ion-skeleton-text [animated]="true" style="width: 30px; height: 14px; border-radius: 8px;"></ion-skeleton-text>
+         </div>
+       </ion-label>
+     </ion-item>
     </div>
   </div>
