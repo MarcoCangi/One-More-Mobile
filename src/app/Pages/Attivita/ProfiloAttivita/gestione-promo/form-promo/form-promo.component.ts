@@ -752,9 +752,9 @@ export class FormPromoComponent  implements OnInit {
       });
      }
      if(promo.periodo){
-        const periodiSelezionati = promo.periodo.split(',').filter(p => p.trim() !== '');
+        const periodiSelezionati = promo.periodo.split('-').filter(p => p.trim() !== '');
       if (periodiSelezionati.length > 3) {
-        this.translate.get('MAXPERIODS').subscribe((translatedText: string) => {
+        this.translate.get('ERRORS.MAXPERIODS').subscribe((translatedText: string) => {
           this.errorMessage = translatedText;
           this.isError = true;
           return;

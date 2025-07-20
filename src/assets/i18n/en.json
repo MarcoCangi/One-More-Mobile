@@ -411,5 +411,9 @@
     "HAVE_PRODUCTS":"You have products",
     "gluten_free":"Gluten free",
     "SEARCH_ACTIVITY_TYPE":"Search activity type",
-    "TYPES_OF_ACTIVITIES":"Types of activities"
+    "TYPES_OF_ACTIVITIES":"Types of activities",
+    "PerfectFor":"Perfect for",
+    "AfternoonTea":"Afternoon tea",
+    "Brunch":"Brunch",
+    "HappyHour":"Happy Hour"
   }

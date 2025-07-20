@@ -62,30 +62,30 @@
       <hr class="promo-divider" />
       <div class="sezione-periodo">
         <div class="chip-periodo-wrapper">
-          <ion-label class="lbl">Perfetto per</ion-label>
+          <ion-label class="lbl">{{'PerfectFor' | translate}}</ion-label>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('1')">
-            <ion-label>Colazione</ion-label>
+            <ion-label>{{'BREAKFAST' | translate}}</ion-label>
           </ion-chip>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('2')">
-            <ion-label>Brunch</ion-label>
+            <ion-label>{{'Brunch' | translate}}</ion-label>
           </ion-chip>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('3')">
-            <ion-label>Pranzo</ion-label>
+            <ion-label>{{'LUNCH' | translate}}</ion-label>
           </ion-chip>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('4')">
-            <ion-label>Tè pomeridiano</ion-label>
+            <ion-label>{{'AfternoonTea'|translate}}</ion-label>
           </ion-chip>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('5')">
-            <ion-label>Happy Hour</ion-label>
+            <ion-label>{{'HappyHour' | translate}}</ion-label>
           </ion-chip>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('6')">
-            <ion-label>Cena</ion-label>
+            <ion-label>{{'DINNER'|translate}}</ion-label>
           </ion-chip>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('7')">
-            <ion-label>Late Night</ion-label>
+            <ion-label>{{'LATENIGHT'|translate}}</ion-label>
           </ion-chip>
           <ion-chip class="chip-periodo" *ngIf="promo.periodo?.includes('8')">
-            <ion-label>Sempre</ion-label>
+            <ion-label>{{'ANYTIME'|translate}}</ion-label>
           </ion-chip>
         </div>
       </div>
