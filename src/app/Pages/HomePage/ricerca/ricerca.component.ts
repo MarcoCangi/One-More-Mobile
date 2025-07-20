@@ -199,10 +199,11 @@ export class RicercaComponent implements OnInit {
     } else {
       this.filtro.range = 100;
     }
-
+    
     switch(this.unifiedOption?.type)
     {
       case searchItemType.Shop:
+      case searchItemType.Promo:
         this.filtro.idAttivita = Number(this.unifiedOption.id);
         this.filtro.nome = this.unifiedOption.descrizione;
         break;
