@@ -55,7 +55,7 @@
   }
 
   .titleError{
-    --font-family: Helvetica !important;
+    --font-family: 'Inter', sans-serif !important;
     color: red;
   }
 
@@ -76,7 +76,7 @@
   }
 
   .titleMod{
-    --font-family: Helvetica !important;
+    --font-family: 'Inter', sans-serif !important;
     font-size: 1.1rem;
     text-align: left;
     margin-top: 2%;
@@ -84,7 +84,7 @@
   }
   
   .subtitle {
-    font-family: Helvetica;
+    font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     text-align: left;
     margin: 0;
@@ -137,7 +137,7 @@
   }
 
   .titleTypeCase {
-    --font-family: Helvetica !important;
+    --font-family: 'Inter', sans-serif !important;
     font-size: 1.2rem;
     margin: 0;
   }
@@ -164,7 +164,7 @@
   }
 
   .statusModal {
-    font-family: Helvetica !important;
+    font-family: 'Inter', sans-serif !important;
     font-size: 1.0rem;
     margin-left: 10px;
   }
@@ -249,14 +249,14 @@ ion-segment-button {
 }
 
 .promo-title {
-  font-family: Helvetica !important;
+  font-family: 'Inter', sans-serif !important;
   margin: 0;
   font-weight: 500;
   font-size: 1.3rem;
 }
 
 .promo-subtitle {
-  font-family: Helvetica !important;
+  font-family: 'Inter', sans-serif !important;
   margin-top: 20px;
   font-size: 1.2rem;
   font-weight: 450;

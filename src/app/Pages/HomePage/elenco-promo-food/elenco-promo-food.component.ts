@@ -119,5 +119,4 @@ export class ElencoPromoFoodComponent  implements OnInit {
   hasVegetarianiTipologia(promo: Promo): boolean {
     return promo.listaTipologie?.some(t => t.codTipologia === 1) ?? false;
   }
-
 }

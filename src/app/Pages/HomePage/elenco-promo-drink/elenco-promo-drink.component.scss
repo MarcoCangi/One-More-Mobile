@@ -1,4 +1,18 @@
-  .card-consigli {
+    .divContainerTitolo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 45px;
+      width: 290px;
+      margin-top: 10px;
+      background-color: #e9540a;
+      margin-left: 10px;
+      border-radius: 30px;
+      text-align: center;
+    }
+
+
+    .card-consigli {
     flex: 0 0 auto;
     width: 95%;
     width: 310px;
@@ -93,14 +107,20 @@
     margin-right: 2px;
   }
 
-  .titlePromoHomePage{
-    display: flex;
-    align-items: center;
-    height: 100%; /* importante per l'allineamento verticale */
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    font-style: italic;
+  .titlePromoHomePage {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    text-align: center;
+    line-height: 1.2;
+    word-break: break-word;
+    white-space: normal;  /* permette l'andare a capo */
+    overflow: hidden;     /* impedisce che sbordi */
+    display: -webkit-box;
+    line-clamp: 2; /* compatibilità */
+    -webkit-line-clamp: 2; /* massimo 2 righe */
+    -webkit-box-orient: vertical;
   }
   
 

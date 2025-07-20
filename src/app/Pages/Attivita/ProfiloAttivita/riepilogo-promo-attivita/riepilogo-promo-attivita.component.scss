@@ -23,7 +23,7 @@ ion-card {
 }
 
 ion-card-title.title {
-  font-family: Helvetica;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
   color: #222;
@@ -35,13 +35,13 @@ ion-card-subtitle {
 }
 
 .scadenza-label {
-  --font-family: Helvetica !important;
+  --font-family: 'Inter', sans-serif !important;
   font-size: 0.90rem;
   color: #707070;
 }
 
 .titlePromo {
-  --font-family: Helvetica !important;
+  --font-family: 'Inter', sans-serif !important;
   font-size: 1.1rem;
   font-weight: 500;
   color: #000;
