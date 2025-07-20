@@ -32,7 +32,8 @@
     <ion-item *ngFor="let option of searchItemList" (click)="selectUnifiedOption(option)">
       <ion-label>
         <label *ngIf="option.type === 1"><ion-icon name="storefront-outline"></ion-icon> {{ option.descrizione }}</label>
-        <div *ngIf="option.type === 2"> <strong><ion-icon name="pin-outline"></ion-icon>  {{ option.descrizione }}</strong></div>         
+        <label *ngIf="option.type === 2"><ion-icon name="pin-outline"></ion-icon> {{ option.descrizione }}</label>
+        <label *ngIf="option.type === 3"><ion-icon name="pin-outline"></ion-icon> {{ option.descrizione }}</label>    
       </ion-label>
     </ion-item>
     </ion-list>
