@@ -1,6 +1,6 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<form style="margin-top: 30px; margin-bottom: 80px;">
+<form style="margin-top: 30px; margin-bottom: 80px;" *ngIf="!isLoading">
 
   <div class="search-wrapper">
   <ion-searchbar search-icon="location-outline" class="search"
@@ -228,7 +228,7 @@
 </div>
 </form>
 
-<div class="fixed-search-button">
+<div class="fixed-search-button" *ngIf="!isLoading">
   <ion-button shape="round" style="width: 180px;" (click)="Ricerca()">
     <ion-label>{{ 'Search' | translate }}</ion-label>
   </ion-button>

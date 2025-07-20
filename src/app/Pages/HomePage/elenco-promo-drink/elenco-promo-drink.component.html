@@ -1,5 +1,6 @@
 
 <ion-item class="gradient-bg diagonal-sides">
+  <img class="iconaBeverage" src="assets/Img/beverage.png" />
   <ion-card-title class="titleView">
     {{ 'PromoDrink' | translate }}
   </ion-card-title>
@@ -12,7 +13,7 @@
     <div *ngFor="let attivita of elencoAttivita" (click)="VisualizzaAttivita(attivita)">
       <div class="divContainerCard" *ngFor="let promo of attivita.promo?.slice(0, 1)">
 
-        <div class="typePromo-overlayHomePage">
+        <!-- <div class="typePromo-overlayHomePage">
             <div class="icona-promo-container" *ngIf="has2X1Tipologia(promo)">
                 <img class="icona-promo dueperuno"  src="assets/Img/2x1_Ar.png" />
             </div>
@@ -40,7 +41,7 @@
             <div class="icona-promo-container" *ngIf="hasVegetarianiTipologia(promo)">
                 <img class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
             </div>
-          </div>
+          </div> -->
           
         <ion-card class ="card-consigli">
         <ion-item style="margin-top: 22px;">

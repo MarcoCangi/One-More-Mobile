@@ -4,28 +4,34 @@
       justify-content: center;
       height: 45px;
       width: 290px;
-      margin-top: 10px;
+      margin-top: 15px;
       background-color: #e9540a;
       margin-left: 10px;
       border-radius: 30px;
       text-align: center;
     }
 
+    .iconaBeverage {
+      width: 70px;
+      height: 70px;
+      margin-right: 5px;
+      margin-left: -10px;
+    }
+
 
     .card-consigli {
-    flex: 0 0 auto;
-    width: 95%;
-    width: 310px;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-    height: 210px;
-  }
+      flex: 0 0 auto;
+      width: 310px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+      height: 215px;
+      margin-top:40px;
+    }
 
   .divContainerCard{
     flex: 0 0 auto;
-    width: 95%;
     width: 330px;
     border-radius: 16px;
     overflow: hidden;

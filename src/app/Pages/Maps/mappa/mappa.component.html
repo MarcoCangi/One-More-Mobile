@@ -107,40 +107,66 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <!-- <div class="btnContent">
-          <ion-button shape="round" fill="outline" color="primary" (click)="dismissListModal()">
-            <ion-icon name="map-outline" slot="start"></ion-icon>
-            {{ 'Map' | translate }}
-          </ion-button>
-        </div> -->
-  
-        <ion-card class="attivita-card" *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
-          <div class="label-overlayHomePage" *ngIf="attivita.isPromoPresente">
-            {{ 'Promo' | translate }}
+        <ion-segment [(ngModel)]="segmentValue" style="position:static" class="my-segment">
+          <ion-segment-button value="Att" class="my-button-left">
+            <ion-label>Attività</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Promo" class="my-button-right">
+            <ion-label>Promo</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        
+        <ion-content class="ion-padding">
+          <div *ngIf="segmentValue === 'Att'">
+            <ion-card class="attivita-card" *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
+              <div class="label-overlayHomePage" *ngIf="attivita.isPromoPresente">
+                {{ 'Promo' | translate }}
+              </div>
+              <div class="rating-overlay">
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                  <ion-icon
+                    [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
+                    class="star">
+                  </ion-icon>
+                </ng-container>
+              </div>
+              <div class="distance-overlayMap">
+                <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+                {{ attivita.distanza }}
+              </div>
+              <img class="att-img" [src]="getImmaginePrincipale(attivita)" />
+              <ion-card-content>
+                <h2 class="att-title">{{ attivita.nome }}</h2>
+                <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
+              </ion-card-content>
+            </ion-card>
           </div>
-  
-          <div class="rating-overlay">
-            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-              <ion-icon
-                [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
-                class="star">
-              </ion-icon>
-            </ng-container>
+        
+          <div *ngIf="segmentValue === 'Promo'">
+            <div *ngFor="let attivita of attivitas">
+              <ion-card class="attivita-card" *ngFor="let promo of attivita.promo" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
+                <div class="rating-overlay">
+                  <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                    <ion-icon
+                      [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
+                      class="star">
+                    </ion-icon>
+                  </ng-container>
+                </div>
+                <div class="distance-overlayMap">
+                  <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+                  {{ attivita.distanza }}
+                </div>
+                <img class="att-img" [src]="getImmaginePrincipale(attivita)" />
+                <ion-card-content>
+                  <h2 class="att-title">{{ promo.titoloPromo }}</h2>
+                  <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
+                </ion-card-content>
+              </ion-card>
+            </div>
           </div>
-
-          <!-- Distanza come overlay fissa -->
-          <div class="distance-overlayMap">
-            <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
-            {{ attivita.distanza }}
-          </div>
-  
-          <img class="att-img" [src]="getImmaginePrincipale(attivita)" />
-  
-          <ion-card-content>
-            <h2 class="att-title">{{ attivita.nome }}</h2>
-            <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
-          </ion-card-content>
-        </ion-card>
+        </ion-content>
+        
       </ion-content>
     </ng-template>
   </ion-modal>

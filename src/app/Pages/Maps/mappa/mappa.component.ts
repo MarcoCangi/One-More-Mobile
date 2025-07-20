@@ -7,6 +7,7 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 import { firstValueFrom } from 'rxjs';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
+import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 
 @Component({
   selector: 'app-mappa',
@@ -28,6 +29,7 @@ export class MappaComponent implements OnInit {
   selectedAttivita: Attivita | undefined;
   dettaglioAttivita: Attivita | undefined;
   @ViewChild(IonModal) modal!: IonModal;
+  segmentValue: string = 'Att';
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
   display: any;
@@ -48,6 +50,7 @@ export class MappaComponent implements OnInit {
   mapTypeControl: false,
   streetViewControl: false,
   fullscreenControl: false,
+  
 };
 
   constructor(private service: GetApiAttivitaService,
@@ -77,6 +80,8 @@ export class MappaComponent implements OnInit {
     } else {
       await this.getUserLocation();
     }
+    
+    
     setTimeout(async () => {
       await this.initMap();
     }, 200);
