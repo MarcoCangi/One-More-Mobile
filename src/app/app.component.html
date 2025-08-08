@@ -1,7 +1,19 @@
 <ion-app>
-    <div *ngIf="showSplash" class="splash-screen">
-      <img src="/assets/Img/LogoSchermo.jpeg" alt="Splash Image">
-    </div>
+  <div *ngIf="showSplash" class="splash-screen">
+
+    <div class="splash-overlay" *ngIf="showOverlay"></div>
+
+    <video #splashVideo
+           class="splash-video"
+           autoplay
+           muted
+           playsinline
+           preload="auto"
+           (canplay)="onVideoReady()"
+           (ended)="SetIsSShowSplashEnded()">
+      <source src="/assets/Img/ReaDeal.mp4" type="video/mp4" />
+    </video>
+  </div>
   
     <app-nav class="scroll" [listaTipoAttivita]="this.listaAttivitaDDL" [listaCitta]="this.listaCitta"
              [ngClass]="{'sticky-search': isSearchSticky}"

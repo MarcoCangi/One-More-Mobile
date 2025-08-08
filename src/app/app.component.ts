@@ -1,4 +1,4 @@
-import { AfterViewInit } from '@angular/core'; // aggiungi sopra
+import { AfterViewInit, ElementRef, ViewChild } from '@angular/core'; // aggiungi sopra
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
@@ -32,9 +32,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   idSoggetto: number | undefined;
   idPage!: number;
   showSplash = true;
-  IsShowSplashVisible : boolean = false;
   keyboardOpen: boolean = false;
   private initialHeight: number = window.innerHeight;
+  @ViewChild('splashVideo', { static: false }) splashVideoRef!: ElementRef<HTMLVideoElement>;
+  showOverlay = true; // nuova proprietà per mostrare l'overlay iniziale
 
   constructor(private authService: AuthService, 
               private attivitaService: GetApiAttivitaService,
@@ -53,6 +54,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit(): Promise<void> {
+    
+    // const alreadyShown = this.authService.getIsShowedSplash();
+    // this.showSplash = !alreadyShown;
+
     this.checkAndRefreshToken();
 
     this.authService.language$.subscribe((lang) => {
@@ -64,19 +69,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     await this.locationService.getCurrentLocation();
 
     this.checkIsAddAtt();
-
-    this.IsShowSplashVisible = this.authService.getIsShowedSplash();
-
-    if (!this.IsShowSplashVisible) {
-      this.showSplash = true;
-    
-      setTimeout(() => {
-        this.showSplash = false;
-        this.authService.setIsShowedSplash(); // segna che lo splash è stato già mostrato
-      }, 4000); // durata splash
-    } else {
-      this.showSplash = false; // salta splash se è già stato mostrato
-    }
 
     //GET LISTA DEC TIPO ATTIVITA
     this.attivitaService.getlistaAttivitaDDL().subscribe(async (listaAttivitaDDL) => {
@@ -127,6 +119,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     await this.authService.saveLanguageSession(newLang);
   }
 
+  SetIsSShowSplashEnded(){
+    this.showSplash = false;
+    this.authService.setIsShowedSplash(); // segna che lo splash è stato già mostrato
+  }
+
+  onVideoReady() {
+  this.showOverlay = false; // nascondi overlay arancione appena il video è pronto
+  const video = this.splashVideoRef?.nativeElement;
+  if (video) {
+    video.play().catch(err => {
+      console.warn("Autoplay fallback:", err);
+    });
+  }
+}
 
   async checkAndRefreshToken(): Promise<void> {
     try {

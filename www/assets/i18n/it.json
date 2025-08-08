@@ -26,7 +26,7 @@
     "Pizza": "Pizzerie",
     "New arrivals": "I nuovi arrivi",
     "Promo": "Promozioni",
-    "PromoFood": "Per chi ha fame...",
+    "PromoFood": "Mordi le promo!!!",
     "PromoDrink": "Per chi ha sete...",
     "Close to you": "Vicino a te",
     "Recently Viewed": "Visti di recente",
@@ -437,5 +437,9 @@
     "HAVE_PRODUCTS":"Hai prodotti",
     "gluten_free":"Senza glutine",
     "SEARCH_ACTIVITY_TYPE":"Cerca tipo attività",
-    "TYPES_OF_ACTIVITIES":"Tipi di attività"
+    "TYPES_OF_ACTIVITIES":"Tipi di attività",
+    "PerfectFor":"Perfetto per",
+    "AfternoonTea":"Tè pomeridiano",
+    "Brunch":"Brunch",
+    "HappyHour":"Happy Hour"
   }
