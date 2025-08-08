@@ -54,9 +54,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit(): Promise<void> {
-    
-    // const alreadyShown = this.authService.getIsShowedSplash();
-    // this.showSplash = !alreadyShown;
+
+    setTimeout(() => {
+      if (this.showSplash) {
+        this.SetIsSShowSplashEnded();
+      }
+    }, 7000);
 
     this.checkAndRefreshToken();
 
@@ -125,14 +128,24 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   onVideoReady() {
-  this.showOverlay = false; // nascondi overlay arancione appena il video è pronto
-  const video = this.splashVideoRef?.nativeElement;
-  if (video) {
-    video.play().catch(err => {
-      console.warn("Autoplay fallback:", err);
-    });
+    console.log("✅ Video pronto a partire");
+    this.showOverlay = false;
+
+    const video = this.splashVideoRef?.nativeElement;
+    if (video) {
+      const playPromise = video.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log("🎥 Video avviato correttamente");
+          })
+          .catch((err) => {
+            console.warn("⚠️ Autoplay bloccato, fallback dopo 4s:", err);
+          });
+      }
+    }
   }
-}
 
   async checkAndRefreshToken(): Promise<void> {
     try {
