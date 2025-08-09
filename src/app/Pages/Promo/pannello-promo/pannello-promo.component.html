@@ -162,64 +162,94 @@
 </div>
 <ion-modal [isOpen]="isModalConfirmOpen" class="full-modal">
   <ng-template>
-    <ion-header *ngIf="isLoading">
-      <ion-spinner  name="crescent" color="primary"></ion-spinner>
-    </ion-header>
     <ion-header *ngIf="!isLoading">
-      <ion-toolbar>
+      <ion-toolbar class="modal-toolbar">
         <ion-buttons slot="end">
-          <ion-button (click)="dismissConfirmModal(0)"><ion-icon name="close-outline"></ion-icon></ion-button>
+          <ion-button class="close-btn" fill="clear" (click)="dismissConfirmModal(0)">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+
+    <ion-header *ngIf="isLoading">
+      <ion-spinner  name="crescent" color="primary"></ion-spinner>
+    </ion-header>
+
     <ion-content class="column ion-text-center ion-align-items-center">
-      <div class="center-card">
-        <ion-card *ngIf="!isLoading && !isConfirmed">
-          <ion-card-header class="column ion-text-center ion-align-items-center">
-            <ion-card-title class="titleConfirm">
-              {{'AlmostThere'|translate}}
+      <div class="center-div">
+
+        <ion-card class="confirm-card" *ngIf="!isLoading && !isConfirmed">
+          <ion-card-header class="confirm-header">
+            <ion-card-title class="confirm-title">
+              {{ 'AlmostThere' | translate }}
             </ion-card-title>
-            <br>
-            <ion-card-title class="subtitleConfirm">
-              {{'AboutAcquireCoupon'|translate}}
+            <ion-card-subtitle class="confirm-subtitle">
+              {{ 'AboutAcquireCoupon' | translate }}
+            </ion-card-subtitle>
+          </ion-card-header>
+        
+          <div class="confirm-icon-wrapper" *ngIf="!isError">
+            <img class="confirm-icon" src="assets/Img/spunta_vicino.png" alt="ok">
+          </div>
+          <div class="confirm-icon-wrapper" *ngIf="isError">
+            <img class="confirm-icon error" src="assets/Img/not_okay.png" alt="error">
+          </div>
+        
+          <!-- Stato normale -->
+          <ion-card-content *ngIf="!isError">
+            <div class="actions">
+              <ion-button expand="block" shape="round" (click)="Prenota()">
+                {{ 'CONFIRM' | translate }}
+              </ion-button>
+              <ion-button expand="block" shape="round" fill="outline" color="medium" (click)="dismissConfirmModal(0)">
+                {{ 'CANCEL' | translate }}
+              </ion-button>
+            </div>
+          </ion-card-content>
+        
+          <!-- Stato errore -->
+          <ion-card-content *ngIf="isError">
+            <ion-label class="error-label">{{ 'SAVE_ERROR' | translate }}</ion-label>
+            <div class="actions single">
+              <ion-button expand="block" shape="round" fill="outline" color="medium" (click)="dismissConfirmModal(2)">
+                {{ 'CLOSE' | translate }}
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="success-card" *ngIf="!isLoading && isConfirmed" role="status" aria-live="polite">
+          <ion-card-header class="success-header">
+            <ion-card-title class="success-title">
+              {{ 'PROMOISUP' | translate }}
+              <ion-icon class="info-icon" name="alert-circle-outline"></ion-icon>
             </ion-card-title>
-            <img class="img" src="assets/Img/spunta_vicino.png" *ngIf="!isError">
-            <img class="img" src="assets/Img/not_okay.png" *ngIf="!isLoading && isError">
+          </ion-card-header>
+        
+          <div class="confirm-icon-wrapper">
+            <img class="confirm-icon" src="assets/Img/spunta_okay.png" alt="Promo attiva">
+          </div>
+        
+          <ion-card-content>
+            <p class="success-info">
+              {{ 'PromoIsUpDetail' | translate }}
+            </p>
+          
+            <div class="actions">
+              <ion-button expand="block" shape="round" (click)="dismissConfirmModal(1)">
+                <ion-icon slot="start" name="ticket-outline"></ion-icon>
+                {{ 'Coupon' | translate }}
+              </ion-button>
             
-          </ion-card-header>
-          <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && !isError">
-            <ion-button shape="round" (click)="Prenota()">{{'CONFIRM'|translate}}</ion-button>
-            <ion-button shape="round" color="light" (click)="dismissConfirmModal(0)">{{'CANCEL'|translate}}</ion-button>
-          </ion-card-content>
-          <ion-card-content class="column ion-text-center ion-align-items-center" *ngIf="!isLoading && isError">
-            <ion-label>{{'SAVE_ERROR'|translate}}</ion-label>
-            <br>
-            <ion-button shape="round" color="light" style="margin-left: 10px;" (click)="dismissConfirmModal(2)">{{'CLOSE'|translate}}</ion-button>
+              <ion-button expand="block" shape="round" fill="outline" color="medium" (click)="dismissConfirmModal(2)">
+                <ion-icon slot="start" name="home-outline"></ion-icon>
+                {{ 'Home' | translate }}
+              </ion-button>
+            </div>
           </ion-card-content>
         </ion-card>
-        <ion-card *ngIf="!isLoading && isConfirmed">
-          <ion-card-header class="column ion-text-center ion-align-items-center">
-            <ion-card-title class="title2">
-              {{'PROMOISUP'|translate}} <ion-icon name="alert-circle-outline"></ion-icon>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content class="column ion-text-center ion-align-items-center">
-            <img class="img" src="assets/Img/spunta_okay.png">
-            <br>
-            <ion-label class="lbl-info">{{'PromoIsUpDetail'|translate}}
-          </ion-label>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6">
-                <ion-button shape="round" (click)="dismissConfirmModal(1)"> <ion-icon name="ticket-outline" ></ion-icon> {{'Coupon'|translate}}</ion-button>
-              </ion-col>
-              <ion-col size="6">
-                <ion-button shape="round" (click)="dismissConfirmModal(2)"> <ion-icon name="home-outline" ></ion-icon> {{'Home'|translate}}</ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          </ion-card-content>
-        </ion-card>
+
       </div>
     </ion-content>
   </ng-template>

@@ -22,7 +22,7 @@
              [idPage]="this.idPage"></app-nav>  
   
     <app-footer *ngIf="!keyboardOpen" class="footer"
-            (openPageEvent)="openPageEvent($event)"
+            (openPageNoReloadEvent)="openPageEventNoReload($event)"
             [idPage]="this.idPage"
             [idSoggetto]="this.idSoggetto"></app-footer>
   </ion-app>

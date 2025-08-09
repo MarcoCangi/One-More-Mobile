@@ -9,7 +9,7 @@ import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-servi
 })
 export class FooterComponent  implements OnInit {
 
-  @Output() openPageEvent = new EventEmitter<number>();
+  @Output() openPageNoReloadEvent = new EventEmitter<number>();
   @Input()idSoggetto: number | undefined;
 
   constructor( private authService: AuthService) { }
@@ -23,11 +23,8 @@ export class FooterComponent  implements OnInit {
     }
   }
 
-  openPage(idPage:number){
-    if(idPage)
-    {
+  openPageNoReload(idPage:number){
       this.authService.setLastIdPageInSession(idPage);
-      this.openPageEvent.emit(idPage);
-    }
+      this.openPageNoReloadEvent.emit(idPage);
   }
 }

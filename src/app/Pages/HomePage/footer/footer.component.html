@@ -2,27 +2,27 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button (click)="openPage(1)">
+        <ion-tab-button (click)="openPageNoReload(1)">
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>{{'Home'|translate}}</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button (click)="openPage(2)">
+        <ion-tab-button (click)="openPageNoReload(2)">
           <ion-icon name="map-outline"></ion-icon>
           <ion-label>{{ 'Map' | translate }}</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button (click)="openPage(8)">
+        <ion-tab-button (click)="openPageNoReload(8)">
           <ion-icon name="search-outline"></ion-icon>
           <ion-label>{{ 'Search' | translate }}</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button (click)="openPage(11)">
+        <ion-tab-button (click)="openPageNoReload(11)">
           <ion-icon name="ticket-outline"></ion-icon>
           <ion-label>{{'Coupon'|translate}}</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button *ngIf="idSoggetto" (click)="openPage(9)">
+        <ion-tab-button *ngIf="idSoggetto" (click)="openPageNoReload(9)">
           <ion-icon name="heart-outline"></ion-icon>
           <ion-label>{{ 'Favorites' | translate }}</ion-label>
         </ion-tab-button>

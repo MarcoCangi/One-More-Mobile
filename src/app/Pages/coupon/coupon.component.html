@@ -17,7 +17,7 @@
     <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 130px; --min-width: 400px;" class="shiny-orange-background">
       <ion-card-header>
         <div class="divCardHeaderCnt">
-          <span style="font-size: 14px; color: white;">
+          <span class="lblScadenza">
             {{ 'SCADENZA' | translate }} {{ coupon.dataAl | date:'dd/MM/yyyy' }}
           </span>
           <ion-icon name="close-outline" (click)="openConfirmModal(false, coupon)" class="deleteIcon"></ion-icon>
@@ -27,11 +27,11 @@
         <div class="divCardContentCnt" style="margin-top: -5px;">
           <img [src]="coupon.imgPrincipale.upload" class="imgCoupon"/>
           <div class="btnContainer">
-            <span class="title">{{ coupon.nome }}</span>
-            <span class="subtitle"style="margin-bottom: 30px;">{{ coupon.titoloPromo }}</span>
+            <span class="title">{{ coupon.titoloPromo }}</span>
+            <span class="subtitle" style="margin-bottom: 20px;">{{ coupon.nome }}</span>
           </div>
         </div>
-        <div class="divCardHeaderCnt" style="margin-top: 10px;">
+        <div class="divCardHeaderCnt">
           <ion-button class="btn"  shape="round" fill="outline" (click)="openDetailModal(coupon)">{{ 'DETAIL' | translate }}</ion-button>
           <ion-button class="btn" shape="round" fill="outline" (click)="openConfirmModal(true, coupon)">{{ 'USE' | translate }}</ion-button>
         </div>

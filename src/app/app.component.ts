@@ -128,7 +128,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   onVideoReady() {
-    console.log("✅ Video pronto a partire");
     this.showOverlay = false;
 
     const video = this.splashVideoRef?.nativeElement;
@@ -137,12 +136,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       if (playPromise !== undefined) {
         playPromise
-          .then(() => {
-            console.log("🎥 Video avviato correttamente");
-          })
-          .catch((err) => {
-            console.warn("⚠️ Autoplay bloccato, fallback dopo 4s:", err);
-          });
       }
     }
   }
@@ -178,15 +171,19 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   async openPageEvent(idPage: number) {
-    
     if (idPage === 1) {
-      // Se siamo già sulla Home e viene ricliccato, forziamo il reload
       this.reloadHomePage();
     } else {
       this.idPage = idPage;
       if(this.idPage != 2)
         this.attivitaService.setFilter(undefined);
     }
+  }
+
+  async openPageEventNoReload(idPage: number) {
+      this.idPage = idPage;
+      if(this.idPage != 2)
+        this.attivitaService.setFilter(undefined);
   }
 
   async checkIsAddAtt(){

@@ -44,11 +44,9 @@ export class GestionePromoComponent  implements OnInit {
     @Output() openPageEvent = new EventEmitter<number>();
 
     constructor(
-      private promoService : GetApiPromoService,
       private authService : AuthService,
       private attivitaService: GetApiAttivitaService,
       public datePipe: DatePipe,
-      private translate: TranslateService,
       private localStorage: StorageService
     ) {}
 

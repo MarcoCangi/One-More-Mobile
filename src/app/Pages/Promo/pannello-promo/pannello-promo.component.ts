@@ -104,12 +104,7 @@ export class PannelloPromoComponent implements OnInit {
     }
   }
   
-  prova(){
-    console.log('▶️ prova CHIAMATO');
-  }
-
   openConfirmModal(promo: Promo): void {
-console.log('▶️ openConfirmModal CHIAMATO', promo);
     if(this.isVerificato == false){
       this.isModalVerifiedOpen = true;
       return;
