@@ -410,7 +410,15 @@
       "PERIODTYPEREQUIRED":"Seleziona almeno un momento della giornata per la promo.",
       "TYPEPROMOFOODORDRINK":"Seleziona se la promo riguarda cibo, bevande o entrambi.",
       "MAXPERIODS": "Puoi selezionare al massimo 3 momenti della giornata.",
-      "NO_ACTIVITIES_FOUND": "Nessuna attività trovata"
+      "NO_ACTIVITIES_FOUND": "Nessuna attività trovata",
+      "00": "Coupon prenotato correttamente",                    
+      "01": "Hai già un coupon attivo per questa promo, vai nella sezione I MIEI COUPON per visualizzarla",
+      "02": "Non ci sono più coupon disponibili",
+      "03": "Hai già utilizzato questa promo oggi",
+      "04": "Hai già utilizzato tutti i coupon disponibili per questa promo",
+      "05": "Non puoi richiedere il coupon in quanto risulti proprietario dell'attività",
+      "06": "Hai raggiunto il limite di coupon annullati negli ultimi 7 giorni",
+      "07": "La promo non è attiva o non esiste"
     },
     "MESSAGES":{
       "RESERVATION_MADE":"Prenotazione effettuata",

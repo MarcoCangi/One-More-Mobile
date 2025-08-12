@@ -111,9 +111,8 @@
           <ion-icon slot="end" color="primary" name="information-circle-outline" class="info-icon" (click)="openDetailNonAttModal(coupon)"></ion-icon>
         </ion-item>
       </ion-list>
-      <div class="column ion-text-center ion-align-items-center"></div>
+      <div class="column ion-text-center ion-align-items-center">
         <ion-label class="labelTitle" *ngIf="!isLoading && couponAnnullati && couponAnnullati.length === 0" >{{ 'NO_CANCELED_COUPONS' | translate }}</ion-label>
-    </div>
     </div>
   </div>
 </div>

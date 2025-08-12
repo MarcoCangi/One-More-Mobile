@@ -80,26 +80,26 @@
 }
 
 .shiny-orange-background {
-    background: linear-gradient(
-    135deg,
-    #e9540a 0%,
-    #fa7330 40%,
-    #fd9c5f 60%,
-    #e9540a 100%
-  );
-  // background: linear-gradient(
+  //   background: linear-gradient(
   //   135deg,
   //   #e9540a 0%,
   //   #fa7330 40%,
   //   #fd9c5f 60%,
   //   #e9540a 100%
   // );
+  background: linear-gradient(
+    135deg,
+    #e9540a 0%,
+    #fa7330 40%,
+    #fd9c5f 60%,
+    #e9540a 100%
+  );
 
   background-size: 400% 400%;
   animation: shimmer 6s ease infinite;
 
   color: #ffffff;
-  border-radius: 10px;
+  border-radius: 35px;
 
   /* Per effetto luccicante */
   box-shadow: 0 0 10px rgba(112, 219, 255, 0.5);

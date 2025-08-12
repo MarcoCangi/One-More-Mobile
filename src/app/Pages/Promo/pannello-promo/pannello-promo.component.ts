@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CouponService } from 'one-more-frontend-common/projects/one-more-fe-service/src/coupon-service';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Coupon } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Coupon';
-import { InsertPromoUserAttiva, Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { InsertCouponResponse, InsertPromoUserAttiva, Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 import { lastValueFrom } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
@@ -32,8 +32,9 @@ export class PannelloPromoComponent implements OnInit {
   isVerificato: boolean = false;
   isModalVerifiedOpen: boolean = false;
   esitoResendVerification: string | undefined;
+  errorMessage: string | undefined;
 
-  constructor( 
+  constructor(
     private authService: AuthService,
     private couponService: CouponService,
     private messagingService: MessagingService,
@@ -63,13 +64,25 @@ export class PannelloPromoComponent implements OnInit {
         this.Coupon = new Coupon(this.riepilogoPromo.idPromo, userSession.idSoggetto);  
       try {
         if (this.Coupon) {
-          await this.couponService.AddCoupon(this.Coupon).toPromise();
-          this.isConfirmed = true;
-          const fcmToken = await lastValueFrom(this.messagingService.apiGetFCMToken(this.idAttivita)); // Tratta il token come stringa
-          if(fcmToken){
-            const title = await firstValueFrom(this.translate.get('MESSAGES.RESERVATION_MADE'));
-            const message = await firstValueFrom(this.translate.get('MESSAGES.COUPON_RESERVED'));
-            await this.messagingService.sendNotification(fcmToken, title, message);
+          const res: InsertCouponResponse = await firstValueFrom(
+            this.couponService.AddCoupon(this.Coupon)
+          );
+          if (res?.codice === '00') {
+             this.isConfirmed = true;
+            const fcmToken = await lastValueFrom(this.messagingService.apiGetFCMToken(this.idAttivita)); // Tratta il token come stringa
+            if(fcmToken){
+              const title = await firstValueFrom(this.translate.get('MESSAGES.RESERVATION_MADE'));
+              const message = await firstValueFrom(this.translate.get('MESSAGES.COUPON_RESERVED'));
+              await this.messagingService.sendNotification(fcmToken, title, message);
+            }
+          }
+          else{
+            const key = `ERRORS.${res?.codice ?? 'SAVE_ERROR'}`;
+            this.translate.get(key).subscribe((translatedText: string) => {
+            this.errorMessage = translatedText;
+            this.isError = true;
+            return;
+        });
           }
         }
       } catch (error) {
