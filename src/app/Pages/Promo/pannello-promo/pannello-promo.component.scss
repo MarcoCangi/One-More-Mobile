@@ -260,3 +260,24 @@
 .labelDays { font-size: 0.7rem; }
 
 
+.lblInfo{
+  width: 80%; 
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Helvetica', sans-serif;
+  color: white;
+}
+
+
+.divInfoContainer{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9540a;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: -14px;
+  margin-top: -14px;
+}

@@ -152,13 +152,16 @@
             </ion-row>
       </ion-grid>
       <hr class="promo-divider" />
-      <div style="height: 40px;">
-
+      <div *ngIf="!promo.motivazioneDisabilitata" style="height: 40px; display: flex; align-items: center; justify-content: center;">
+        
       </div>
-      
+      <div *ngIf="promo.motivazioneDisabilitata" class="divInfoContainer">
+        <ion-label *ngIf="promo.motivazioneDisabilitata" class="lblInfo">{{ promo.motivazioneDisabilitata |translate}}</ion-label>
+      </div>
     </ion-card-content>
   </ion-card>
-  <ion-button style="margin-top: -55px;  width: 80%; margin-left: 10%;" expand="block" shape="round" (click)="openConfirmModal(promo)">{{'Reserve'|translate}}</ion-button>
+  <ion-button *ngIf="!promo.motivazioneDisabilitata" style="margin-top: -55px;  width: 80%; margin-left: 10%;" expand="block" shape="round" (click)="openConfirmModal(promo)">{{'Reserve'|translate}}</ion-button>
+  
 </div>
 <ion-modal [isOpen]="isModalConfirmOpen" class="full-modal">
   <ng-template>

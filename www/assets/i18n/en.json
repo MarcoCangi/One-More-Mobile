@@ -385,7 +385,15 @@
       "PERIODTYPEREQUIRED":"Please select at least one time of day for the promotion.",
       "TYPEPROMOFOODORDRINK":"Please select whether the promotion applies to food, drinks, or both.",
       "MAXPERIODS": "You can select up to 3 times of day.",
-      "NO_ACTIVITIES_FOUND": "No activities found"
+      "NO_ACTIVITIES_FOUND": "No activities found",
+      "00": "Coupon successfully booked",
+      "01": "You already have an active coupon for this promotion, go to the MY COUPONS section to view it",
+      "02": "No more coupons available",
+      "03": "You have already used this promotion today",
+      "04": "You have already used all available coupons for this promotion",
+      "05": "You cannot apply for the coupon since you are the owner of the business",
+      "06": "You have reached the limit of canceled coupons in the last 7 days",
+      "07": "The promotion is not active or does not exist"
     },
     "MESSAGES":{
       "RESERVATION_MADE":"Reservation made",

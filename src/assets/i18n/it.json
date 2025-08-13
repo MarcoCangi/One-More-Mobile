@@ -426,10 +426,10 @@
       "REGISTRATION_COMPLETE":"Registrazione completata. Controlla la tua email per verificare l'account.",
       "PASSWORD_CHANGED":"Password modificata con successo!",
       "PROMOTION_EXPIRED":"La promozione è scaduta",
-      "OWNER_BUSINESS":"Non puoi richiedere la promo in quanto risulti proprietario dell'attività",
-      "PROMO_ALREADY_ACTIVE":"La promo risulta già attiva, vai nella sezione I MIEI COUPON per visualizzarla",
+      "OWNER_BUSINESS":"Non puoi richiedere il coupon in quanto risulti proprietario dell'attività",
+      "PROMO_ALREADY_ACTIVE":"Hai già un coupon attivo per questa promo, vai nella sezione I MIEI COUPON per visualizzarla",
       "PROMO_ALREADY_USED":"Hai già utilizzato questa promo oggi",
-      "LIMIT_CANCELED_PROMO":"Hai raggiunto il limite di promo annullate negli ultimi 7 giorni",
+      "LIMIT_CANCELED_PROMO":"Hai raggiunto il limite di coupon annullati negli ultimi 7 giorni",
       "MAX_NUMBER_COUPONS":"Numero massimo di coupon raggiunto",
       "COUPONS_AVAILABLE_USED":"Hai già utilizzato tutti i coupon disponibili per questa promo"
     },
