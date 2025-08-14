@@ -3,41 +3,41 @@
 
   <!-- icone tipo promo -->
   <div class="typePromo-overlay">
-      <div class="icona-promo-container" *ngIf="has2X1Tipologia(promo)" (click)="showAlert('2X1', 'Promozione 2x1 disponibile')">
-  <img class="icona-promo dueperuno" src="assets/Img/2x1_Ar.png" />
-</div>
+    <div class="icona-promo-container" *ngIf="has2X1Tipologia(promo)" (click)="showAlert('2X1', 'Promozione 2x1 disponibile')">
+      <img class="icona-promo dueperuno" src="assets/Img/2x1_Ar.png" />
+    </div>
 
-<div class="icona-promo-container" *ngIf="hasOmaggiTipologia(promo)" (click)="showAlert('Omaggi', 'Promozione che prevede omaggi')">
-  <img class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
-</div>
-
-<div class="icona-promo-container" *ngIf="hasPacchettiTipologia(promo)" (click)="showAlert('Pacchetti', 'Sono disponibili pacchetti promozionali')">
-  <img class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
-</div>
-
-<div class="icona-promo-container" *ngIf="hasScontiTipologia(promo)" (click)="showAlert('Sconti', 'Sono disponibili sconti esclusivi')">
-  <img class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
-</div>
-
-<div class="icona-promo-container" *ngIf="hasPerBambiniTipologia(promo)" (click)="showAlert('Per bambini', 'Offerte pensate per i più piccoli')">
-  <img class="icona-promo child" src="assets/Img/bambini_Ar.png" />
-</div>
-
-<div class="icona-promo-container" *ngIf="hasPerFamiglieTipologia(promo)" (click)="showAlert('Per famiglie', 'Promozioni adatte alle famiglie')">
-  <img class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
-</div>
-
-<div class="icona-promo-container" *ngIf="hasPerCoppieTipologia(promo)" (click)="showAlert('Per coppie', 'Offerte romantiche per due')">
-  <img class="icona-promo love" src="assets/Img/love_Ar.png" />
-</div>
-
-<div class="icona-promo-container" *ngIf="hasVeganiTipologia(promo)" (click)="showAlert('Vegani', 'Offerte adatte a chi segue una dieta vegana')">
-  <img class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
-</div>
-
-<div class="icona-promo-container" *ngIf="hasVegetarianiTipologia(promo)" (click)="showAlert('Vegetariani', 'Offerte adatte a chi segue una dieta vegetariana')">
-  <img class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
-</div>
+    <div class="icona-promo-container" *ngIf="hasOmaggiTipologia(promo)" (click)="showAlert('Omaggi', 'Promozione che prevede omaggi')">
+      <img class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
+    </div>
+    
+    <div class="icona-promo-container" *ngIf="hasPacchettiTipologia(promo)" (click)="showAlert('Pacchetti', 'Sono disponibili pacchetti promozionali')">
+      <img class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
+    </div>
+    
+    <div class="icona-promo-container" *ngIf="hasScontiTipologia(promo)" (click)="showAlert('Sconti', 'Sono disponibili sconti esclusivi')">
+      <img class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
+    </div>
+    
+    <div class="icona-promo-container" *ngIf="hasPerBambiniTipologia(promo)" (click)="showAlert('Per bambini', 'Offerte pensate per i più piccoli')">
+      <img class="icona-promo child" src="assets/Img/bambini_Ar.png" />
+    </div>
+    
+    <div class="icona-promo-container" *ngIf="hasPerFamiglieTipologia(promo)" (click)="showAlert('Per famiglie', 'Promozioni adatte alle famiglie')">
+      <img class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
+    </div>
+    
+    <div class="icona-promo-container" *ngIf="hasPerCoppieTipologia(promo)" (click)="showAlert('Per coppie', 'Offerte romantiche per due')">
+      <img class="icona-promo love" src="assets/Img/love_Ar.png" />
+    </div>
+    
+    <div class="icona-promo-container" *ngIf="hasVeganiTipologia(promo)" (click)="showAlert('Vegani', 'Offerte adatte a chi segue una dieta vegana')">
+      <img class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
+    </div>
+    
+    <div class="icona-promo-container" *ngIf="hasVegetarianiTipologia(promo)" (click)="showAlert('Vegetariani', 'Offerte adatte a chi segue una dieta vegetariana')">
+      <img class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
+    </div>
 
       <div class="ends-container">
           <ion-note style="color: black; font-size: 0.8rem; margin-left: 12px;">{{'EndsOn'|translate}} {{ promo.dataAl | date:'dd-MM-yyyy' }}</ion-note>

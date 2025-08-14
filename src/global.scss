@@ -523,3 +523,26 @@ ion-alert.custom-alert .alert-message {
   font-size: 15px;
   color: #444;
 }
+
+
+/* IonContent usa uno scroll interno esposto come shadow part "scroll" */
+ion-content ::part(scroll) {
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE/Edge legacy */
+}
+ion-content ::part(scroll)::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;              /* Chrome/Safari */
+}
+
+/* Per versioni Ionic più vecchie (fallback) */
+ion-content .inner-scroll {
+  scrollbar-width: none;
+}
+ion-content .inner-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+

@@ -69,7 +69,7 @@
 }
 
 .typePromo-overlay {
-  display: flex;
+  display: -webkit-inline-box;
   justify-content: space-around;
   align-items: center;
   width: 100%;

@@ -1,97 +1,135 @@
-<div style="--margin-bottom: 150px !important; min-height: 1450px; max-height: 1450px; ">
-<ion-grid>
+
+<div style="height: clamp(2000px, 250vh, 3000px);">
+
+  <!-- HERO -->
+  <ion-grid class="wrap hero ion-padding-top" style="margin-top: 5%;">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="8" class="ion-text-center">
+        <ion-label class="lblSubtitle block">
+          {{ 'HAVESHOP' | translate }} <br />
+          {{ 'NOTICENOW' | translate }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-img class="hero-img"
+                 src="assets/Img/1_more_visibility.png"
+                 alt="Aumenta visibilità"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-label class="lblDescription hero-desc block ion-margin-top">
+          {{ 'DESCRIPTIONTOREGISTER' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item-divider></ion-item-divider>
+
+  <!-- FEATURES -->
+    <ion-grid class="wrap hero ion-padding-top">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="4" class="ion-text-center">
+        <ion-img class="hero-img"
+                 src="assets/Img/one more blu.png"
+                 alt="Aumenta visibilità"></ion-img>
+      </ion-col>
+      <ion-col size="8" class="ion-text-center">
+        <ion-label class="lblSubtitle block">
+          {{ 'FASTREGISTRATION' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-label class="lblDescription hero-desc block ion-margin-top">
+          {{ 'VISIBLEONREADEAL' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item-divider></ion-item-divider>
+
+  <ion-grid class="wrap hero ion-padding-top" style="margin-top: 5%;">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="8" class="ion-text-center">
+        <ion-label class="lblSubtitle block">
+          {{ 'CUSTOMPROMOTIONS' | translate }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-img class="hero-img"
+                 src="assets/Img/promozioni_personalizzabili.png"
+                 alt="Promozioni personalizzabili"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-label class="lblDescription hero-desc block ion-margin-top">
+          {{ 'OFFERDISCOUNTS' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item-divider></ion-item-divider>
+
+  <ion-grid class="wrap hero ion-padding-top">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="4" class="ion-text-center">
+        <ion-img class="hero-img"
+                 src="assets/Img/target_mirato.png"
+                 alt="Target mirato"></ion-img>
+      </ion-col>
+      <ion-col size="8" class="ion-text-center">
+        <ion-label class="lblSubtitle block">
+          {{ 'AUDIENCE' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-label class="lblDescription hero-desc block ion-margin-top">
+          {{ 'CREATEPROMOTION' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item-divider></ion-item-divider>
+
+  <ion-grid class="wrap hero ion-padding-top" style="margin-top: 5%;">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="8" class="ion-text-center">
+        <ion-label class="lblSubtitle block">
+          {{ 'NOCOMMISSIONS' | translate }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-img class="hero-img"
+                 src="assets/Img/zerocommissioni_1.png"
+                 alt="Zero commissioni"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-label class="lblDescription hero-desc block ion-margin-top">
+          {{ 'NOCOMMISSIONSDESCRIPTION' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item-divider></ion-item-divider>
+
+  <ion-grid style="--margin-bottom: 150px !important; margin-top: 20px;">
   <ion-row>
-    <ion-col size="8">
-      <ion-title class="title">
-        {{ 'HAVESHOP' | translate }} <br>
-        {{ 'NOTICENOW' | translate }}
-      </ion-title>
-    </ion-col>
-    <ion-col size="4">
-      <img src="assets/Img/1_more_visibility.png"/>
+    <ion-col size="12" class="ion-text-center">
+        <ion-label class="lblSubtitle block">{{'ANSWERS'|translate}}</ion-label>
     </ion-col>
   </ion-row>
-</ion-grid>
-
-
-<div style="width: 90%; display: flex; align-items: center; justify-content: center; margin: auto;">
-  <ion-label class="lblDescription">
-    {{ 'DESCRIPTIONTOREGISTER' | translate }}
-  </ion-label>
-</div>
-
-
-<ion-grid style="margin-top: 1.5rem;">
-  <ion-item>
-    <ion-row  style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-      <ion-col size="4">
-        <img src="assets/Img/one more blu.png"/>
-      </ion-col>
-      <ion-col size="8">
-        <ion-label class="lblSubtitle">{{ 'FASTREGISTRATION' | translate }}</ion-label>
-          <br>
-          <ion-label class="lblDescription">
-            {{ 'VISIBLEONREADEAL' | translate}}
-          </ion-label>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-
-  <ion-item>
-    <ion-row style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-      <ion-col size="8">
-        <ion-label class="lblSubtitle">{{'CUSTOMPROMOTIONS'|translate}}</ion-label>
-        <br>
-        <ion-label class="lblDescription">
-          {{'OFFERDISCOUNTS'|translate}}
-        </ion-label>
-      </ion-col>
-      <ion-col size="4">
-        <img src="assets/Img/promozioni_personalizzabili.png" alt="Icona di promozioni personalizzate"/>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-
-  <ion-item>
-    <ion-row style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-      <ion-col size="4">
-        <img src="assets/Img/target_mirato.png" alt="Icona di promozioni per target specifici"/>
-      </ion-col>
-      <ion-col size="8">
-        <ion-label class="lblSubtitle">{{'AUDIENCE'|translate}}</ion-label>
-        <br>
-        <ion-label class="lblDescription">
-          {{'CREATEPROMOTION'|translate}}
-        </ion-label>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-
-  <ion-item>
-    <ion-row style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-      <ion-col size="8">
-        <ion-label class="lblSubtitle">{{'NOCOMMISSIONS'|translate}}</ion-label>
-        <br>
-        <ion-label class="lblDescription">
-          {{'NOCOMMISSIONSDESCRIPTION'|translate}}
-        </ion-label>
-      </ion-col>
-      <ion-col size="4">
-        <img src="assets/Img/zerocommissioni_1.png" alt="Icona senza commissioni"/>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-
-  <ion-item>
-    <ion-row style="margin-top: 1.5rem;">
-      <ion-col size="12">
-        <ion-label class="lblSubtitle">{{'ANSWERS'|translate}}</ion-label>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-</ion-grid>
-
-<ion-grid style="--margin-bottom: 150px !important;">
   <ion-row>
     <ion-col>
       <div>
@@ -128,5 +166,6 @@
   </ion-row>
 </ion-grid>
 </div>
+
 
 

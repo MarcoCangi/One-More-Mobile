@@ -1,41 +1,101 @@
-.title{
-    margin-top: 2rem;
-    margin-bottom:0.5rem;
-    --font-family: 'Helvetica', sans-serif !important;
-    font-size: 1.7rem;
-    color: #e9540a;
+/* contenitore centrale: evita contenuti attaccati ai bordi */
+.wrap {
+  max-width: 1000px;
+  margin-inline: auto;
+  padding-inline: 16px;
 }
 
-.lblSubtitle{
-    --font-family: 'Helvetica', sans-serif !important;
-    font-weight: 600;
-    font-size: 1.3rem;
-    color: #e9540a;
-    margin-bottom:0.5rem;
+/* tipografia */
+.title {
+  margin: 0 0 .5rem 0;
+  font-family: 'Helvetica', sans-serif;
+  font-size: clamp(1.8rem, 4.2vw, 2.6rem);
+  line-height: 1.15;
+  color: #e9540a;
 }
 
-.lblDescription{
-    --font-family: 'Helvetica', sans-serif !important;
-    font-weight: 400;
-    font-size: 1rem;
+.lblSubtitle {
+  font-family: 'Helvetica', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  color: #e9540a;
 }
 
-.lblFaq{
-    --font-family: 'Helvetica', sans-serif !important;
-    font-weight: 600;
-    font-size: 1.5rem;
+.lblDescription {
+  font-family: 'Helvetica', sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+}
+
+.block { display: block; }
+
+/* HERO */
+.hero-img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero-desc { margin-top: .75rem; }
+
+/* FEATURES */
+.feature { 
+  margin: 1.25rem 0 2rem;
+}
+
+/* titolo + immagine sempre 50/50, anche su telefono */
+.title-col, .img-col { flex: 0 0 50%; max-width: 50%; }
+
+/* ordine standard: titolo a sx, immagine a dx */
+.title-col { order: 1; display: flex; justify-content: flex-start; text-align: left; }
+.img-col   { order: 2; }
+
+/* riga alternata: inverti ordine (funziona su tutti i breakpoint) */
+.feature.rev .title-col { order: 2; justify-content: flex-end; text-align: right; }
+.feature.rev .img-col   { order: 1; }
+
+.feature-img {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+/* su schermi larghi, immagini un po' più grandi */
+@media (min-width: 992px) {
+  .feature-img { max-width: 320px; }
+}
+
+/* accessibilità: se utente preferisce meno movimento */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 
 .lblTitleFaq{
-    --font-family: 'Helvetica', sans-serif !important;
+    font-family: 'Helvetica', sans-serif;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
 }
 
-.contentFaq{
-    background-color: white !important;
-    border-color: rgb(13, 86, 244);
-    border-style: solid;
-    border-radius: 15px;
-    margin-bottom: 0.5rem;
+/* IonContent usa uno scroll interno esposto come shadow part "scroll" */
+div::part(scroll) {
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE/Edge legacy */
+}
+div::part(scroll)::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;              /* Chrome/Safari */
+}
+
+/* Per versioni Ionic più vecchie (fallback) */
+div .inner-scroll {
+  scrollbar-width: none;
+}
+div .inner-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
