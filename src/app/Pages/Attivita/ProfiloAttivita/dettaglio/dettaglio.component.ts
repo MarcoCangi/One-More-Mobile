@@ -143,7 +143,6 @@ export class DettaglioComponent  implements OnInit {
       cachedData.push(nuovaAttivita);
       this.isFavorite = true;
     }
-  
     await this.storageService.setItem(cacheKey, cachedData);
   }
 
@@ -205,7 +204,7 @@ export class DettaglioComponent  implements OnInit {
         indirizzo: attivita.indirizzo,
         citta: attivita.citta,
         provincia: attivita.provincia,
-        civico: attivita.citta,
+        civico: attivita.civico,
         cap: attivita.cap,
         latitudine: attivita.latitudine,
         longitudine: attivita.longitudine,

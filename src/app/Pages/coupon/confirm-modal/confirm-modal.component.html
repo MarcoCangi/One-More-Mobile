@@ -1,11 +1,6 @@
- <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-button *ngIf="!this.isEsito" (click)="CloseModalConfirm()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-    <ion-card>
+
+  <div class="center-div">
+    <ion-card class="confirm-card">
       <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
       <ion-card-content *ngIf="this.isAdd && !this.isEsito && !isLoading" class="column ion-text-center ion-align-items-center" style="margin-top:15px; margin-bottom:15px">
         <ion-card-title class="title" *ngIf="isUtilizzabile"> {{ 'USE_COUPON' | translate }}</ion-card-title>
@@ -119,4 +114,6 @@
         </ion-grid>
       </ion-card-content>
     </ion-card>
+  </div>
+
 
