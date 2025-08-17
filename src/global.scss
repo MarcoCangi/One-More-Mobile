@@ -179,6 +179,16 @@ ion-note.promoNote[color="danger"] {
     transform: translate(-50%, -50%);
   }
 
+.custom-spinner {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; // per assicurarti che stia sopra tutto
+}
+
   ion-icon.closeBlack {
     width: 30px;
     height: 30px;
@@ -195,6 +205,7 @@ ion-note.promoNote[color="danger"] {
     object-fit: cover;
     width: 52px;
     height: 52px;
+    border-radius: 50%;
   }
 
   .gradient-bg {
