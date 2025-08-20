@@ -2,10 +2,10 @@
 
 <ion-grid *ngIf="!isLoading" style="margin-top: 20%;">
   <ion-row justify-content-center>
-    <ion-col size="12" size-md="6" class="ion-text-center">
+    <ion-col size="12" class="column ion-text-center ion-align-items-center">
       <ion-card class="card-login ion-padding">
 
-        <ion-toolbar>
+        <ion-toolbar style="--background-color: white !important;">
           <ion-title class="title">{{ 'Log in' | translate }}</ion-title>
           <ion-buttons slot="end">
             <ion-button fill="clear" (click)="closeLogin()">

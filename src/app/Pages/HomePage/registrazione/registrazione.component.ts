@@ -148,9 +148,6 @@ export class RegistrazioneComponent {
               this.isLoading = false;
               this.isRegistered = true;
             }
-            else{
-              console.log(response.utente.errore)
-          }
           }),
           catchError((error) => {
             this.isLoading = false;
@@ -209,8 +206,6 @@ export class RegistrazioneComponent {
           this.authService.createUserSession(newUser.email ? newUser.email : '', newUser.uid, newUser.token ? newUser.token : '', response.idAttivita, response.userId, newUser.photoURL ? newUser.photoURL : '', 2, newUser.displayName ? newUser.displayName : '', '', '');
           this.isLoading = false;
           this.closeRegisterEvent.emit();
-        } else {
-          console.log(response.utente.errore);
         }
       }
     } catch (error: any) {
@@ -253,8 +248,6 @@ export class RegistrazioneComponent {
           this.authService.createUserSession(newUser.email ? newUser.email : '', newUser.uid, newUser.token ? newUser.token : '', response.idAttivita, response.userId, newUser.photoURL ? newUser.photoURL : '', 3, newUser.displayName ? newUser.displayName : '', '', '');
           this.isLoading = false;
           this.closeRegisterEvent.emit();
-        } else {
-          console.log(response.utente.errore);
         }
       }
     } catch (error: any) {

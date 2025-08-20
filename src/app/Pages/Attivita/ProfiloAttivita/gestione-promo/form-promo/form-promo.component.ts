@@ -167,7 +167,6 @@ export class FormPromoComponent  implements OnInit {
           // Imposta le date in UTC
           this.requestPromo.dataDal = new Date(Date.UTC(dataDal.getFullYear(), dataDal.getMonth(), dataDal.getDate(), 0, 0, 0));
         }
-        console.log(this.requestPromo)
         if (dataAl) {
           this.requestPromo.dataAl = new Date(Date.UTC(dataAl.getFullYear(), dataAl.getMonth(), dataAl.getDate(), 0, 0, 0));
         }

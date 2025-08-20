@@ -24,8 +24,8 @@
         </ion-item>
       </ion-list>
   </div>
-    
-  <ion-modal [isOpen]="isAdd">
+
+  <ion-modal [isOpen]="isAdd" class="full-modal">
     <ng-template>
       <app-ricerca-attivita-autocomplete (closeEvent)="this.isAdd=false"
                                          [listaComuni]="this.listaComuni"
@@ -36,7 +36,8 @@
   
   <div *ngIf="!isLoading && isVerificato && this.attivita && !isAdd">
     <h4 class="ion-title" *ngIf="!this.attivita">{{ 'ENTER_ACTIVITY_DETAILS' | translate }}</h4>
-    <ion-modal [isOpen]="isSelected">
+    <ion-modal [isOpen]="isSelected"
+               class="full-modal">
       <ng-template>
         <app-form-riepilogo (backEvent)="this.isSelected=false"
                             [attivita]="this.attivita"

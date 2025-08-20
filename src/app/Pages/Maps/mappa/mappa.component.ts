@@ -4,10 +4,11 @@ import { GoogleMap } from '@angular/google-maps';
 import { IonModal } from '@ionic/angular';
 import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
-import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 
 @Component({
   selector: 'app-mappa',
@@ -19,6 +20,7 @@ export class MappaComponent implements OnInit {
   @ViewChild('googleMap', { static: false }) googleMap!: GoogleMap;
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openSearchEvent = new EventEmitter<number>();
+  idTypeRicerca: TipoRicercaAttivita | undefined;
   attivitas: Attivita[] | undefined;
   attivitaFiltrate!: AttivitaFiltrate | null | undefined;
   isLoading: boolean | undefined;
@@ -55,7 +57,8 @@ export class MappaComponent implements OnInit {
 
   constructor(private service: GetApiAttivitaService,
               private locationService: LocationService,
-              private authService : AuthService
+              private authService : AuthService,
+              private storageService: StorageService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -199,7 +202,7 @@ export class MappaComponent implements OnInit {
             }
 
         } else {
-            map.setZoom(15); // Setta a 12 solo se lo zoom corrente non è disponibile
+            map.setZoom(15); // Setta a 15 solo se lo zoom corrente non è disponibile
         }
       await this.updateVisibleActivities(map);
     } else {
@@ -216,6 +219,21 @@ export class MappaComponent implements OnInit {
   }
 
   async cerca() {
+    const cacheKey = `filtro_ricerca`;
+    const data = await this.storageService.getItem(cacheKey);
+    if (data) {
+      const cacheKey = `tipoRicerca`;
+      await this.storageService.removeItem(cacheKey);
+      this.filter = data;
+    }
+    else{
+      const cacheKey = `tipoRicerca`;
+      const data = await this.storageService.getItem(cacheKey);
+      if (data) {
+        this.idTypeRicerca = data;
+      }
+    }
+
     this.isMooving = false;
     
     if (this.googleMap && this.googleMap.googleMap) {
@@ -284,13 +302,68 @@ export class MappaComponent implements OnInit {
   
       // Imposta il tipo di filtro
       this.filter.typeFilterHomePage = 2;
-  
-      // Chiamata API per ottenere la lista di attività
-      const observable = await this.service.apiGetListaAttivitaFiltrate(this.filter);
-      const data = await firstValueFrom(observable);
+
+      let observable = new Observable<AttivitaFiltrate>;
+      let listAtt = new AttivitaFiltrate([], this.filter.latitudine ?? 0, this.filter.longitudine ?? 0, '');
+      if(this.idTypeRicerca){
+        switch (this.idTypeRicerca) {
+          case TipoRicercaAttivita.AttivitaConPromo:
+            const observablePromo = await this.service.apiGetListaAttivitaWhitPromo(
+              this.filter.latitudine ?? 0,
+              this.filter.longitudine ?? 0,
+              false
+            );
+            listAtt.listaAttivita = await firstValueFrom(observablePromo);
+            break;
+     
+          case TipoRicercaAttivita.AttivitaVicine:
+            const observableVicine = await this.service.apiGetListaAttivitaNear(
+              this.filter.latitudine ?? 0,
+              this.filter.longitudine ?? 0,
+              false
+            );
+            listAtt.listaAttivita = await firstValueFrom(observableVicine);
+            break;
+          
+          case TipoRicercaAttivita.AttivitaPromoBevande:
+          const observableBev = await this.service.apiGetListaAttivitaFoodDrinkPromo(
+            this.filter.latitudine ?? 0,
+            this.filter.longitudine ?? 0,
+            2,
+            false
+          );
+          listAtt.listaAttivita = await firstValueFrom(observableBev);
+          break;
+
+        case TipoRicercaAttivita.AttivitaPromoCibo:
+            const observableCib = await this.service.apiGetListaAttivitaFoodDrinkPromo(
+              this.filter.latitudine ?? 0,
+              this.filter.longitudine ?? 0,
+              1,
+              false
+            );
+            listAtt.listaAttivita = await firstValueFrom(observableCib);
+            break;
+     
+          case TipoRicercaAttivita.AttivitaNuove:
+          default:
+            const observableNuove = await this.service.apiGetListaAttivitaJustSigned(
+              this.filter.latitudine ?? 0,
+              this.filter.longitudine ?? 0,
+              false
+            );
+            listAtt.listaAttivita = await firstValueFrom(observableNuove);
+            break;
+        }
+      }
+      else{
+        observable = await this.service.apiGetListaAttivitaFiltrate(this.filter);
+        listAtt = await firstValueFrom(observable);
+      }
+      
   
       // Filtriamo le attività visibili sulla mappa
-      const allAttivitas = data.listaAttivita;
+      const allAttivitas = listAtt.listaAttivita;
       const filteredAttivitas = bounds
         ? allAttivitas.filter(e => this.isWithinBounds(e, bounds))
         : allAttivitas;

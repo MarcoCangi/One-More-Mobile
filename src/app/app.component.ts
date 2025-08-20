@@ -175,15 +175,21 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.reloadHomePage();
     } else {
       this.idPage = idPage;
-      if(this.idPage != 2)
+      if(this.idPage != 2){
         this.attivitaService.setFilter(undefined);
+        this.storageService.removeItem(`filtro_ricerca`);
+        this.storageService.removeItem(`tipoRicerca`);
+      }
     }
   }
 
   async openPageEventNoReload(idPage: number) {
       this.idPage = idPage;
-      if(this.idPage != 2)
+      if(this.idPage != 2){
         this.attivitaService.setFilter(undefined);
+        this.storageService.removeItem(`filtro_ricerca`);
+        this.storageService.removeItem(`tipoRicerca`);
+      }
   }
 
   async checkIsAddAtt(){

@@ -55,6 +55,7 @@
     line-height: 1.2;
   }
 
+ion-modal.full-modal::part(content) { height: 100%; width: 100%; }
 
   ion-card-title.att-title {
     font-family: 'Helvetica', sans-serif;
@@ -423,7 +424,6 @@ ion-note.promoNote[color="danger"] {
 
   ion-segment.my-segment {
     --background: #ffffff;
-    --indicator-color: transparent;
     --max-height: 50px !important;
   }
   
@@ -465,10 +465,10 @@ ion-note.promoNote[color="danger"] {
       transition: background 0.3s ease;
   }
 
-  ion-modal.full-modal::part(content) {
-    height: 100%;
-    width: 100%;
-  }
+  ion-segment.my-segment::part(indicator) {
+  background: linear-gradient(90deg, #ff8a00, #e9540a);
+  border-radius: 30px;
+}  
 
   .imgConfirm {
     width: 150px; 

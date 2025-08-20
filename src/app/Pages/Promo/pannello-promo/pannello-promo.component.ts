@@ -44,7 +44,6 @@ export class PannelloPromoComponent implements OnInit {
   
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit() {
-    console.log(this.listaPromo);
     const user = await this.authService.getCurrentUserFromAuth();
     const usersession = this.authService.getUserSession();
     if((user && user?.emailVerified == true && usersession?.typeLog == 1) || (usersession?.typeLog == 2 || usersession?.typeLog == 3))

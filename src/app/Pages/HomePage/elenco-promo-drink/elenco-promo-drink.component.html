@@ -12,36 +12,6 @@
 
     <div *ngFor="let attivita of elencoAttivita" (click)="VisualizzaAttivita(attivita)">
       <div class="divContainerCard" *ngFor="let promo of attivita.promo?.slice(0, 1)">
-
-        <!-- <div class="typePromo-overlayHomePage">
-            <div class="icona-promo-container" *ngIf="has2X1Tipologia(promo)">
-                <img class="icona-promo dueperuno"  src="assets/Img/2x1_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasOmaggiTipologia(promo)">
-                <img class="icona-promo gift" src="assets/Img/gift 2_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasPacchettiTipologia(promo)">
-                <img class="icona-promo bundle" src="assets/Img/scatola_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasScontiTipologia(promo)">
-                <img class="icona-promo percent" src="assets/Img/percentuale_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasPerBambiniTipologia(promo)">
-                <img class="icona-promo child" src="assets/Img/bambini_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasPerFamiglieTipologia(promo)">
-                <img class="icona-promo family" src="assets/Img/ticket famiglia_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasPerCoppieTipologia(promo)">
-                <img class="icona-promo love" src="assets/Img/love_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasVeganiTipologia(promo)">
-                <img class="icona-promo vegan" src="assets/Img/vegano_Ar.png" />
-            </div>
-            <div class="icona-promo-container" *ngIf="hasVegetarianiTipologia(promo)">
-                <img class="icona-promo vegan" src="assets/Img/vegetariano_Ar.png" />
-            </div>
-          </div> -->
           
         <ion-card class ="card-consigli">
         <ion-item style="margin-top: 22px;">

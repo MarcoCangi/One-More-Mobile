@@ -35,7 +35,6 @@ export class ElencoPromoDrinkComponent  implements OnInit {
     this.isLoading = true;
     const cacheKey = `attivita_promodrink`;
     const cachedData = await this.storageService.getItem(cacheKey);
-    console.log(this.latitudine, this.longitudine);
     if (cachedData) {
       this.elencoAttivita = cachedData; // Usa i dati dalla cache
       this.isLoading = false;

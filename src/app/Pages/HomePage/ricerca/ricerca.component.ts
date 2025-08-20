@@ -9,6 +9,7 @@ import { SearchApiService } from 'one-more-frontend-common/projects/one-more-fe-
 import { SearchItemDto, searchItemType } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/SearchItemDto';
 import { GetApiPromoService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-promo.service';
 import { TipoPeriodo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/TipoPeriodo';
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 type TipoPromo = 1 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 
@@ -59,11 +60,9 @@ export class RicercaComponent implements OnInit {
     private attivitaService: GetApiAttivitaService,
     private searchService: SearchApiService,
     private getPromoService: GetApiPromoService,
+    private storageService: StorageService
   ) 
-  {
-     
-    
-  }
+  {}
 
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
@@ -247,7 +246,12 @@ export class RicercaComponent implements OnInit {
       (error: any) => {
         console.error('Errore API:', error);
       },
-      () => {
+      async () => {
+        const cacheKey = `filtro_ricerca`;
+        const cacheKeytipoRicerca = `tipoRicerca`;
+        await this.storageService.removeItem(cacheKey);
+        await this.storageService.removeItem(cacheKeytipoRicerca);
+        await this.storageService.setItem(cacheKey, this.filtro);
         this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
         this.attivitaService.setIsListaAttModalOpen(true);
         this.attivitaService.setFilter(this.filtro);
@@ -279,22 +283,18 @@ export class RicercaComponent implements OnInit {
   }
 
   handleAllSettimanaChange(isAllSettimana: boolean) {
-    console.log('isAllSettimana', isAllSettimana);
     if (isAllSettimana) {
         if (this.filtro.days) {
             this.filtro.days = []; 
         }
-        if (!this.filtro.days.includes(0)) {
-          console.log('Adding 0 to filtro.days');
+        if (!this.filtro.days.includes(0)) 
             this.filtro.days.push(0);
-        }
     } 
     else {
         if (this.filtro.days && this.filtro.days.includes(0)) {
             this.rimuoviNumero(this.filtro.days, 0);
         }
     }
-    console.log(this.filtro.days);
   }
 
   handleLunediChange(isLunedi: boolean) {

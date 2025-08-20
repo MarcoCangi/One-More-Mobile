@@ -15,7 +15,7 @@ import { RiepilogoPromoAttivitaComponent } from '../../Attivita/ProfiloAttivita/
 import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
-
+import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -65,7 +65,8 @@ export class HomeComponent  implements OnInit {
   constructor(
     private attivitaService: GetApiAttivitaService,
     private authService: AuthService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private storageService: StorageService
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
@@ -77,6 +78,12 @@ export class HomeComponent  implements OnInit {
             this.idSoggetto = undefined;
           }
           this.setiIdSogggetto(this.idSoggetto);
+
+          const cacheKeyfiltro_ricerca = `filtro_ricerca`;
+          this.storageService.removeItem(cacheKeyfiltro_ricerca);
+
+          const cacheKeytipoRicerca = `tipoRicerca`;
+          this.storageService.removeItem(cacheKeytipoRicerca);
 
           this.loadData();
   }
@@ -168,7 +175,8 @@ export class HomeComponent  implements OnInit {
     this.isLoading = true;
     try {
       const result = await firstValueFrom(await this.attivitaService.apiGetListaAttivitaFiltrate(filtro));
-      
+      const cacheKey = `filtro_ricerca`;
+      await this.storageService.setItem(cacheKey, filtro);
       this.listaAttivitaRicerca = result;
       this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
       this.attivitaService.setIsListaAttModalOpen(true);
@@ -263,6 +271,14 @@ export class HomeComponent  implements OnInit {
         apiCall$ = await this.attivitaService.apiGetListaAttivitaNear(latitudine, longitudine, false);
         break;
   
+      case TipoRicercaAttivita.AttivitaPromoBevande:
+        apiCall$ = await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(latitudine, longitudine, 2, true);
+        break;
+
+      case TipoRicercaAttivita.AttivitaPromoCibo:
+        apiCall$ = await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(latitudine, longitudine, 1, true);
+        break;
+      
       case TipoRicercaAttivita.AttivitaNuove:
       default:
         apiCall$ = await this.attivitaService.apiGetListaAttivitaJustSigned(latitudine, longitudine, false);
@@ -270,7 +286,10 @@ export class HomeComponent  implements OnInit {
     }
   
     apiCall$.subscribe(
-      (data: Attivita[]) => {
+      async (data: Attivita[]) => {
+        const cacheKey = `tipoRicerca`;
+        await this.storageService.removeItem(cacheKey);
+        await this.storageService.setItem(cacheKey, idTypeRicerca);
         const attivitaFiltrate = new AttivitaFiltrate(data, latitudine, longitudine, '');
         this.listaAttivitaRicerca = attivitaFiltrate;
   

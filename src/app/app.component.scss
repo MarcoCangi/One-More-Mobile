@@ -33,12 +33,14 @@
 
 .splash-screen video {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
   display: block;
   background-color: black;
   pointer-events: none;
 }
+
 
 video::-webkit-media-controls {
   display: none !important;

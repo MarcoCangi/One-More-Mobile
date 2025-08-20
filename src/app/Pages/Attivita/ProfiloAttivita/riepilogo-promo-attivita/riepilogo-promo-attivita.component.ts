@@ -178,7 +178,6 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
     if (this.idAttivita != null && this.idAttivita > 0) {
         try {
           const data = await this.promoService.apiGetListaPromoByIdAttivita(this.idAttivita);
-          console.log(data);
             if (data != undefined) {
                 data.forEach(item => {
                     if (item.validDays) {
@@ -189,7 +188,6 @@ export class RiepilogoPromoAttivitaComponent implements OnInit{
                 });
                 
                 this.listaPromoAttive = data.filter(item => item.isAttiva === true);
-                console.log(this.listaPromoAttive);
                 this.listaPromoNonAttive = data.filter(item => item.isAttiva === false);
                 this.listaAttivita = undefined;
             }
