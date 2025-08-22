@@ -173,20 +173,42 @@ export class FormPromoComponent  implements OnInit {
 
         if(this.isSaved){
           try {
-            await this.promoService.apiInsertPromo(this.requestPromo);
-            this.setEsito(true);
+            const esito = await this.promoService.apiInsertPromo(this.requestPromo);
+            if (esito && esito.message) {
+              this.translate.get(esito.message).subscribe((translatedText: string) => {
+                this.errorMessage = translatedText;
+                this.isError = true;
+                return;
+              });
+            }
+            else if(esito && esito.idPromo){
+              this.setEsito(true);
+            }
+            else if(!esito){
+              this.setEsito(false);
+            }
           } catch (error: any) {
             this.setEsito(false);
-            this.isLoading = false;
           }
         }
         else{
           try {
-            await this.promoService.apiUpdatePromo(this.requestPromo);
-            this.setEsito(true);
+            const esito = await this.promoService.apiUpdatePromo(this.requestPromo);
+            if (esito && esito.message) {
+              this.translate.get(esito.message).subscribe((translatedText: string) => {
+                this.errorMessage = translatedText;
+                this.isError = true;
+                return;
+              });
+            }
+            else if(esito && esito.idPromo){
+              this.setEsito(true);
+            }
+            else if(!esito){
+              this.setEsito(false);
+            }
           } catch (error: any) {
             this.setEsito(false);
-            this.isLoading = false;
           }
         }
       }

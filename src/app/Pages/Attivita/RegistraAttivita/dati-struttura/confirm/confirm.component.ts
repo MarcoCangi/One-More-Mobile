@@ -14,6 +14,7 @@ import { catchError, lastValueFrom, of, tap } from 'rxjs';
 export class ConfirmComponent  implements OnInit {
 
   @Input() typeModal: string | undefined;
+  @Input() idAttivitaDelete: number | undefined;
   @Input() requestAttivita: InsertAttivitaReqDto | undefined;
   isLoadingSalvataggio: boolean = false;
   isEsito: boolean = false;
@@ -31,6 +32,7 @@ export class ConfirmComponent  implements OnInit {
   }
 
   async confirm(){
+    console.log('Tipo di operazione:', this.typeModal);
     this.isLoadingSalvataggio = true;
 
     if(this.typeModal == 'Delete'){
@@ -170,18 +172,16 @@ export class ConfirmComponent  implements OnInit {
   async eliminaAttivita() {
         try {
           const utente = this.authService.getUser(); // Ottieni l'utente attuale
-    
           await this.attivitaService.deleteSession();
-          
-          if(this.requestAttivita && this.requestAttivita.idAttivita && utente?.idSoggetto)
+          if(this.idAttivitaDelete && utente?.idSoggetto)
           {
-            await this.attivitaService.apiDeleteAttivita(this.requestAttivita?.idAttivita, utente?.idSoggetto).toPromise();
+            const nuovoIdAttivita = await this.attivitaService.apiDeleteAttivita(this.idAttivitaDelete, utente.idSoggetto).toPromise();
             
             const sessioneString = this.authService.getUserSession();
     
             if(sessioneString && sessioneString.idAttivita)
             {
-              sessioneString.idAttivita = 0;
+              sessioneString.idAttivita = nuovoIdAttivita ?? 0;
               this.authService.saveUserSession(sessioneString);
             }
             this.isEsito = true;

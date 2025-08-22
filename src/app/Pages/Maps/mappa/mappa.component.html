@@ -177,7 +177,7 @@
         <ion-icon slot="end" (click)="isSearchModalOpen = false" name="close-outline" class="closewhite"></ion-icon>
       </ion-toolbar>
       <ion-content>
-        <app-ricerca>
+        <app-ricerca (closeSearchPage)="isSearchModalOpen = false">
       
         </app-ricerca>
       </ion-content>

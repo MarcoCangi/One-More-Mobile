@@ -26,6 +26,7 @@ export class RicercaComponent implements OnInit {
   @Input() listaCitta: Comuni[] | undefined;
   @Output() ricercaAttiviaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() openPageEvent = new EventEmitter<number>();
+  @Output() closeSearchPage = new EventEmitter<void>();
 
   globalSearchControl: FormControl = new FormControl();
   citySearchControl: FormControl = new FormControl();
@@ -238,10 +239,11 @@ export class RicercaComponent implements OnInit {
 
     this.filtro.codTipoPeriodoList = this.selectedPeriodo;
 
-
+    console.log('Filtro di ricerca:', this.filtro);
     (await this.attivitaService.apiGetListaAttivitaFiltrate(this.filtro)).subscribe(
       (data: AttivitaFiltrate) => {
         this.listaAttivitaRicerca = data;
+        this.closeSearchPage.emit();
       },
       (error: any) => {
         console.error('Errore API:', error);
