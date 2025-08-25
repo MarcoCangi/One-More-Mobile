@@ -12,7 +12,7 @@
   </map-marker>
 </google-map>
 <div class="divToolbar ">
-  <ion-searchbar (click)="isSearchModalOpen = true"></ion-searchbar>
+  <ion-searchbar class="searchbar-in-toolbar" placeholder="{{'Search'|translate}}" (click)="isSearchModalOpen = true"></ion-searchbar>
 </div>
 <ion-button class="btnsearch" color="light" shape="round" *ngIf="this.isMooving" (click)="cerca()">{{'SEARCHHERE'|translate}}</ion-button>
 <ion-button shape="round" class="btnAttList" (click)="openListModal()"><ion-icon name="chevron-up-outline" style="margin-top: -35px; width: 25px; height: 25px;"></ion-icon><ion-label style="margin-top: -35px;">{{'FullList'|translate}}</ion-label></ion-button>
@@ -104,10 +104,8 @@
         <ion-toolbar class="modalToolbar">
           <ion-icon slot="end" (click)="dismissListModal()" name="chevron-down-outline" class="closewhite"></ion-icon>
         </ion-toolbar>
-      </ion-header>
-
-      <ion-content class="ion-padding">
-        <ion-segment [(ngModel)]="segmentValue" style="position:static" class="my-segment">
+        <ion-toolbar class="segmentToolbar">
+          <ion-segment [(ngModel)]="segmentValue" class="my-segment">
           <ion-segment-button value="Att" class="my-button-left">
             <ion-label>Attività</ion-label>
           </ion-segment-button>
@@ -115,10 +113,13 @@
             <ion-label>Promo</ion-label>
           </ion-segment-button>
         </ion-segment>
-        
-        <ion-content class="ion-padding">
-          <div *ngIf="segmentValue === 'Att'">
-            <ion-card class="attivita-card" *ngFor="let attivita of attivitas" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
+        </ion-toolbar>
+      </ion-header>
+                
+        <ion-content [fullscreen]="true" class="ion-padding no-scrollbar">
+          <div *ngIf="segmentValue === 'Att'" class="promo-wrapper">
+            <ng-container *ngFor="let attivita of attivitas">
+              <ion-card class="attivita-card" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
               <div class="label-overlayHomePage" *ngIf="attivita.isPromoPresente">
                 {{ 'Promo' | translate }}
               </div>
@@ -139,35 +140,40 @@
                 <h2 class="att-title">{{ attivita.nome }}</h2>
                 <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
               </ion-card-content>
-            </ion-card>
+              </ion-card>
+            </ng-container>
           </div>
         
-          <div *ngIf="segmentValue === 'Promo'">
-            <div *ngFor="let attivita of attivitas">
-              <ion-card class="attivita-card" *ngFor="let promo of attivita.promo" (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
-                <div class="rating-overlay">
-                  <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-                    <ion-icon
-                      [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
-                      class="star">
-                    </ion-icon>
-                  </ng-container>
+           <div *ngIf="segmentValue === 'Promo'" class="promo-wrapper">
+            <ng-container *ngFor="let attivita of attivitas">
+              <ion-card class="attivita-card"
+                        *ngFor="let promo of attivita.promo"
+                        (click)="VisualizzaAttivita(attivita.idAttivita, 2)">
+            
+                <img class="card-img" [src]="getImmaginePrincipale(attivita)" alt="{{'ACTIVITYPHOTO|translate'}}"/>
+            
+                <div class="rating-overlayPromo">
+                  <ion-icon name="star" class="starPromo"></ion-icon>
+                  <span class="lblStar">{{attivita.rating}}</span>
                 </div>
-                <div class="distance-overlayMap">
-                  <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
-                  {{ attivita.distanza }}
+              
+                <div class="divider-overlayPromo">
+                  <span class="meta-divider"></span>
                 </div>
-                <img class="att-img" [src]="getImmaginePrincipale(attivita)" />
-                <ion-card-content>
-                  <h2 class="att-title">{{ promo.titoloPromo }}</h2>
-                  <p class="att-address">{{ attivita.indirizzo }}, {{ attivita.civico }}</p>
-                </ion-card-content>
+              
+                <div class="distance-overlayPromo">
+                  <ion-icon name="location" class="distancePromo"></ion-icon>
+                  <span class="lblDistance">{{attivita.distanza}}</span>
+                </div>
+              
+                <div class="card-bottom">
+                  <div class="titlePromo" title="{{ promo.titoloPromo }}">{{ promo.titoloPromo }}</div>
+                  <div class="activityName" title="{{ attivita.nome }}">{{ attivita.nome }}</div>
+                </div>
               </ion-card>
-            </div>
+            </ng-container>
           </div>
         </ion-content>
-        
-      </ion-content>
     </ng-template>
   </ion-modal>
 

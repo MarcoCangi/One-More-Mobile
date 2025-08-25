@@ -229,7 +229,7 @@
   </ion-list>
 </div>
 
-<ion-modal [isOpen]="isTermsAndCondition" (didDismiss)="this.isTermsAndCondition = false">
+<ion-modal [isOpen]="isTermsAndCondition" (didDismiss)="this.isTermsAndCondition = false" >
   <ng-template>
     <app-terms-condition (CloseEvent)="this.isTermsAndCondition = false">
     </app-terms-condition>

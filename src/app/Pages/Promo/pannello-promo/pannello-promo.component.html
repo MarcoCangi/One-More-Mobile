@@ -1,5 +1,6 @@
 
-<div *ngFor="let promo of listaPromo" style="width: 400; margin-bottom: 25px;">
+<div class="promo-list">
+  <div *ngFor="let promo of listaPromo" class="promo-item">
 
   <!-- icone tipo promo -->
   <div class="typePromo-overlay">
@@ -160,9 +161,16 @@
       </div>
     </ion-card-content>
   </ion-card>
-  <ion-button *ngIf="!promo.motivazioneDisabilitata" style="margin-top: -55px;  width: 80%; margin-left: 10%;" expand="block" shape="round" (click)="openConfirmModal(promo)">{{'Reserve'|translate}}</ion-button>
-  
+
+  <ion-button *ngIf="!promo.motivazioneDisabilitata" 
+              class="cta-reserve" 
+              expand="block" 
+              shape="round" 
+              (click)="openConfirmModal(promo)">{{'Reserve'|translate}}</ion-button>
+  </div>
 </div>
+
+
 <ion-modal [isOpen]="isModalConfirmOpen" class="full-modal">
   <ng-template>
 

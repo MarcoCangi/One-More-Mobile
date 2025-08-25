@@ -1,7 +1,7 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
 <!-- SELEZIONE ATTIVITÀ -->
-<div class="contentListAtt" *ngIf="!isLoading && listaAttivita && !isModifica">
+<div class="full-width-container" *ngIf="!isLoading && listaAttivita && !isModifica">
   <ion-toolbar class="ModalToolbarAddAtt">
     <ion-title >{{ 'SELECT_ACTIVITY' | translate }}</ion-title>
   </ion-toolbar>
@@ -228,7 +228,8 @@
 </div>
 
 <!-- MODAL AGGIUNTA/MODIFICA -->
-<ion-modal [isOpen]="isModifica" (didDismiss)="recoverModificaPromo()" class="full-modal" [breakpoints]="[0.25, 0.5, 1]" [initialBreakpoint]="1">
+<ion-modal [isOpen]="isModifica" 
+(didDismiss)="recoverModificaPromo()" class="full-modal">
 
   <ng-template>
     <app-form-promo [idAttivita]="idAttivita" 

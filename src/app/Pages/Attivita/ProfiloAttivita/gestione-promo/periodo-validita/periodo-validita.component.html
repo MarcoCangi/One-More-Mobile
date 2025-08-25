@@ -28,7 +28,9 @@
   </ion-item>
 
   <!-- Modal per la selezione della data iniziale -->
-  <ion-modal [isOpen]="isDataDalPickerOpen" (didDismiss)="closeDataDalPicker()" class="full-modal">
+  <ion-modal [isOpen]="isDataDalPickerOpen" 
+             (didDismiss)="closeDataDalPicker()" 
+             class="full-modal">
     <ng-template>
       <div class="modal-content">
         <ion-datetime class="date"
@@ -44,7 +46,9 @@
   </ion-modal>
 
   <!-- Modal per la selezione della data finale -->
-  <ion-modal [isOpen]="isDataAlPickerOpen" (didDismiss)="closeDataAlPicker()" class="full-modal">
+  <ion-modal [isOpen]="isDataAlPickerOpen" 
+             (didDismiss)="closeDataAlPicker()" 
+             class="full-modal">
     <ng-template>
       <div class="modal-content">
         <ion-datetime class="date"

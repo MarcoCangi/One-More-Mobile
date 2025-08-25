@@ -1,19 +1,29 @@
-.full-width-container {
+.full-width-container{
   margin-top: 20px;
   width: 100%;
   padding: 0 1rem;
+  display: inline;
+  flex-direction: column;
+  align-items: stretch;
 }
 
-ion-segment {
-  max-width: 400px;
-  width: 100%;
+:root{ --sheet-width: 520px; } 
+
+ion-segment.my-segment{
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0;                   /* opzionale */
 }
 
-.contentListAtt {
-  margin-top: 1rem;
-  padding: 0 1rem;
-  scrollbar-width: none;
-  overflow-x: hidden;
+
+.contentListAtt{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contentListAtt ion-list{
+  width: min(92vw, var(--sheet-width));
 }
 
 ion-card {
@@ -47,16 +57,23 @@ ion-card-subtitle {
   color: #000;
 }
 
-ion-accordion {
-  width: 100%;
-  max-width: 430px;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+ion-accordion{
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 0 1rem 0;          /* niente margin auto */
 }
 
-ion-accordion-group {
+ion-accordion ion-item[slot="header"]{
   width: 100%;
+}
+
+@media (min-width: 1200px){
+  .full-width-container{ max-width: 1000px; margin-inline: auto; }
+}
+
+ion-accordion-group{
+  width: 100% !important;
+  display: block;              /* evita shrink da flex */
 }
 
 ion-item {

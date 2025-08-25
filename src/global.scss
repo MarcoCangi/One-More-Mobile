@@ -55,7 +55,9 @@
     line-height: 1.2;
   }
 
-ion-modal.full-modal::part(content) { height: 100%; width: 100%; }
+  ion-modal.full-modal::part(content) { height: 100%; width: 100%; }
+
+  ion-modal.full-modal{ z-index: 10001; }
 
   ion-card-title.att-title {
     font-family: 'Helvetica', sans-serif;
@@ -145,6 +147,38 @@ ion-note.promoNote[color="danger"] {
     font-size: 30px;
     color: #007bff;
   }
+
+  .no-scrollbar::part(scroll){
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE/Edge legacy */
+  }
+  .no-scrollbar::part(scroll)::-webkit-scrollbar{
+    width: 0; height: 0;        /* WebKit */
+  }
+
+  /* Tutti gli ion-content dell'app */
+  ion-content::part(scroll) {
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE/Edge legacy */
+  }
+  ion-content::part(scroll)::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;              /* Chrome/Safari/WebView */
+  }
+
+  /* Per ogni altro contenitore con overflow (div, liste, ecc.) */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  @media (pointer: coarse) { /* regole qui */ }
 
   ion-card.activity-card:hover {
     transform: scale(1.01);

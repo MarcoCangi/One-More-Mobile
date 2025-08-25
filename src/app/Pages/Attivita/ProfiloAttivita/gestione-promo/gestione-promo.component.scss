@@ -141,6 +141,8 @@
     font-size: 1.2rem;
     margin: 0;
   }
+
+  ion-modal::part(handle){ display:none; }
   
   .sticky-header {
     position: sticky;

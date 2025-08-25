@@ -2,7 +2,7 @@
 
 <form style="margin-top: 30px; margin-bottom: 80px;" *ngIf="!isLoading">
 
-  <div class="search-wrapper">
+<div class="search-wrapper">
   <ion-searchbar search-icon="location-outline" class="search"
     placeholder="Posizione attuale"
     [formControl]="citySearchControl"
@@ -18,7 +18,7 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  </div>
+</div>
 
   <div class="search-wrapper">
     <ion-searchbar  class="search"
@@ -43,11 +43,12 @@
 <ion-grid class="gridContainer">
   <ion-row style="margin-top: 10px;">
     <ion-col size="12" class="ion-text-center">
-        <ion-card-title class="titleView"><ion-icon name="filter-outline"></ion-icon>
-          {{ 'FilterPromo' | translate }}
-        </ion-card-title>
-        <ion-item-divider style="margin-top: -15px;" ></ion-item-divider>
+      <div class="filter-header">
+        <ion-icon name="filter-outline"></ion-icon>
+        <span>{{ 'FilterPromo' | translate }}</span>
+      </div>
     </ion-col>
+    <ion-item-divider class="filter-divider"></ion-item-divider>
   </ion-row>
   <ion-row>
     <ion-accordion-group expand="inset" toggleIcon="none" multiple="true" style="width: 100%;">

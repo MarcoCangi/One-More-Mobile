@@ -1,15 +1,27 @@
+/* app-footer.component.scss */
+:host { display: block; }
+
 .footer{
-    width: 100%;
-    white-space: nowrap; /* Impedisce il wrap dei contenuti */
-    background-color: #e9540a;
+  position: fixed;
+  inset: auto 0 0 0;       /* bottom:0; left/right:0 */
+  width: 100vw;
+  z-index: 1000;
+  --background: #e9540a;
+  padding-bottom: env(safe-area-inset-bottom); /* iOS */
 }
 
-.footer ion-toolbar {
-    display: flex;
-    justify-content: space-around; /* Distribuisce uniformemente gli elementi */
-    padding: 0; /* Rimuove il padding predefinito */
-    background-color: #e9540a;
-  }
+.footer ion-tab-bar{
+  width: 100%;
+  --background: #e9540a;
+  --color: #fff;
+}
+
+.footer ion-tab-button{
+  --background: transparent;  /* niente riquadri */
+}
+
+/* opzionale: evitare “gutter” orizzontale */
+.footer, .footer * { box-sizing: border-box; }
 
   .footer ion-icon {
     color: white;
@@ -20,9 +32,4 @@
     --background: #e9540a;
     --color: #FFFFFF;
   } 
-
-  ion-tabs ion-tab-button{
-    margin-left: -1px;
-    margin-right: -1px;
-  }
 

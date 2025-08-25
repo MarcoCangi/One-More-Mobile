@@ -21,7 +21,10 @@
 </div>
 
 <!-- FORM CON STEP -->
-<ion-modal [isOpen]="isAddPromo" (didDismiss)="onModalDismiss()">
+<ion-modal [isOpen]="isAddPromo" 
+           [swipeToClose]="false" 
+           (didDismiss)="onModalDismiss()"
+           class="full-modal">
   <ng-template>
     <app-form-promo [idAttivita]="this.idAttivita"
                     (closeModal)="onModalDismiss()"

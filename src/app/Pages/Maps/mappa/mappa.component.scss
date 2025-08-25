@@ -15,12 +15,12 @@ ion-toolbar {
 }
 
 .closewhite {
-    width: 30px;
-    height: 30px;;
-    color:white;
-    margin-bottom: 10px;
-    margin-right: 10px;
-  }
+  width: 30px;
+  height: 30px;
+  color: white;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
 
 .horizontal-list-overlay {
   position: absolute;
@@ -62,30 +62,6 @@ ion-toolbar {
   white-space: nowrap;
 }
 
-.loading-overlay {
-  position: absolute;
-  z-index: 999;
-  background: rgba(255,255,255,0.6);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.badge-rating {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0,0,0,0.75);
-  color: #ffd700;
-  font-weight: 600;
-  padding: 3px 8px;
-  font-size: 0.85rem;
-  border-radius: 6px;
-  z-index: 10;
-}
-
 .att-title {
   --font-family: 'Helvetica', sans-serif !important;
   font-size: 1.1rem;
@@ -111,29 +87,22 @@ ion-toolbar {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   gap: 12px;
-  padding: 8px 12px 12px 12px; /* padding orizzontale */
-}
-
-.scroll-container {
-  scroll-snap-type: x mandatory;
+  padding: 8px 12px 12px 12px;
   scroll-behavior: smooth;
-}
-
-.card-attivita {
-  scroll-snap-align: center;
 }
 
 .card-attivita {
   flex: 0 0 85%;
   max-width: 300px;
   display: flex;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  transition: transform .2s ease;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
   overflow: hidden;
-  scroll-snap-align: start;
   position: relative;
   margin-bottom: 75px;
+  scroll-snap-align: center;
 }
 
 .card-attivita img {
@@ -152,52 +121,32 @@ ion-toolbar {
   width: 100%;
 }
 
-.btnContent{
-  display: flex; 
-  justify-content: center; 
-  margin-top: 10px;
-}
-
 .attivita-card {
-  position: relative;
-  margin-bottom: 16px;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0.5 6px 15px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.01);
-    cursor: pointer;
-  }
+  width: 100%;
+  max-width: 300px;
+  height: 300px;
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  transition: transform .2s ease;
+  background: #fff;
 }
 
 .rating-overlay {
   position: absolute;
-    top: 185px;
-    left: 10px;
-    z-index: 99;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 4px 8px;
-    border-radius: 12px;
-}
-
-.label-overlay {
-  position: absolute;
-  top: 8px; /* Modifica questa posizione in base alle tue preferenze */
-  left: 10px; /* Modifica questa posizione in base alle tue preferenze */
-  z-index: 100;
-  background-color: rgb(30, 192, 39); /* Aggiungi uno sfondo semi-trasparente se lo desideri */
-  color: white; /* Colore del testo */
-  padding: 5px 10px;
-  border-radius: 4px;
+  top: 185px;
+  left: 10px;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 12px;
 }
 
 .btnAttList{
-  width: 100%;
+  width: 101%;
   bottom: -20px;
   height: 80px;
   position: fixed;
@@ -205,12 +154,11 @@ ion-toolbar {
   transform: translate(-50%, -50%);
   z-index: 10010;
   --background: #e9540a;
-  --color: white; /* colore del testo/icona */
+  --color: white;
+  margin-left: 0px;
 }
 
-ion-searchbar {
-    --border-radius: 40px;
-  }
+ion-searchbar { --border-radius: 40px; }
 
 .card-content h2 {
   margin: 0;
@@ -236,38 +184,37 @@ ion-searchbar {
   text-overflow: ellipsis;
   font-size: 11px;
   color: #666;
-  width: 170px; 
+  width: 170px;
   display: block;
 }
 
-
 .distance {
-    position: absolute;
-    bottom: 5px;
-    left: 103px;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
-    padding: 3px 8px;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    z-index: 100;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
-  }
+  position: absolute;
+  bottom: 5px;
+  left: 103px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
 
 .rating {
-    position: absolute;
-    bottom: 5px;
-    right: 2px;
-    display: flex;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 4px 8px;
-    border-radius: 12px;
-  }
+  position: absolute;
+  bottom: 5px;
+  right: 2px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
 
 .badge-promo {
   position: absolute;
@@ -281,10 +228,7 @@ ion-searchbar {
   border-radius: 12px;
 }
 
-ion-popover::part(content) {
-  border-radius: 20px;
-  overflow: hidden;
-}
+ion-popover::part(content) { border-radius: 20px; overflow: hidden;}
 
 .btnsearch {
   width: 160px;
@@ -296,26 +240,15 @@ ion-popover::part(content) {
   z-index: 10000;
 }
 
-.full-modal{
-  z-index: 10001;
-}
-
-.white-outline-btn {
-  --color: white;               /* Colore del testo e delle icone */
-  --border-color: white;        /* Colore del bordo */
-  --ion-color-base: transparent; /* Rende il background trasparente */
-  margin-left: 5px;
-}
-
 .divToolbar  {
   position: fixed;
   top: 55px;
   width: 100%;
   height: 55px;
   z-index: 10000;
-  background-color: #e9540a !important;
 }
 
+/* Popover dettagli */
 .activity-popover {
   --width: 80vw;
   --max-width: 400px;
@@ -339,10 +272,7 @@ ion-popover::part(content) {
     border-top-right-radius: 20px;
   }
 
-  .popover-body {
-    padding: 20px;
-    text-align: center;
-  }
+  .popover-body { padding: 20px;  text-align: center;}
 
   .popover-title {
     font-size: 1.2rem;
@@ -377,7 +307,144 @@ ion-popover::part(content) {
     font-weight: 500;
     border-radius: 20px;
   }
-
 }
 
+/* stile della searchbar */
+.searchbar-in-toolbar{
+  --background: #fff;         /* Android / desktop */
+  --color: #111;
+  --placeholder-color: #6b7280;
+  --icon-color: #e9540a;
+  --border-radius: 14px;
+  --box-shadow: 0 1px 2px rgba(0,0,0,.08);
+}
 
+/* fix iOS: il container del searchbar è in shadow DOM → usa ::part */
+.searchbar-in-toolbar::part(container){
+  background: #fff !important;
+  border-radius: 14px;
+}
+
+/* Griglia responsive per lista att/ promo nella modale */
+.promo-wrapper{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  justify-items: center;
+  align-content: start;
+}
+@media (min-width: 600px){
+  .promo-wrapper{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px){
+  .promo-wrapper{ grid-template-columns: repeat(3, 1fr); }
+}
+
+.card-img{
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+  display: block;
+}
+
+.rating-overlayPromo{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.divider-overlayPromo{
+  position: absolute;
+  bottom: 10px;
+  left: 130px;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.meta-divider{ width:2px; height:25px; background:#e5e7eb; display:inline-block; border-radius:1px; }
+
+.rating-countHomePage{ font-size: 13px; color:#333; font-weight:500; }
+.starPromo{ font-size:25px; color:#f5a623; }
+.distancePromo{ font-size:30px; color:#e9540a; }
+.lblDistance{ font-size:18px; margin-top: 1px; color:#e9540a; }
+.lblStar{ font-size:25px; margin-top: 5px; color:#f5a623; }
+
+.distance-overlayPromo{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color:#333;
+  padding: 3px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  z-index: 110;
+  white-space: nowrap;
+}
+
+.card-bottom{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 60%;
+  background: #fff;
+  border-top-left-radius: 60% 30%;
+  border-top-right-radius: 60% 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 16px;
+  z-index: 50;
+}
+
+.titlePromo {
+  max-width: 86%;
+  color: #000;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 30px auto 5px;
+  display: block;
+}
+
+.activityName {
+  max-width: 86%;
+  color: #7c8088;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+.no-scrollbar::part(scroll){
+  scrollbar-width: none;  -ms-overflow-style: none;
+}
+
+.no-scrollbar::part(scroll)::-webkit-scrollbar{
+  width: 0;  height: 0;
+}
+
+.segmentToolbar {
+  --background: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.06);
+  height: 55px;
+}

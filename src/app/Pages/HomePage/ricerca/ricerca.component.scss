@@ -18,6 +18,13 @@
   font-size: 16px;
 }
 
+.filter-header{
+  display:flex; justify-content:center; align-items:center; gap:8px;
+  padding: 8px 0; font-weight:600;
+}
+
+.filter-divider{ margin: 6px 0 12px; }
+
 .gridContainer{
   margin-top: 15px; 
   margin-bottom: 20px;

@@ -19,141 +19,148 @@
     }
 
 
-    .card-consigli {
-      flex: 0 0 auto;
-      width: 310px;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease;
-      height: 215px;
-      margin-top:40px;
-    }
+    .card-consigli{
+  position: relative;
+  flex: 0 0 auto;
+  width: 280px;
+  height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  transition: transform .2s ease;
+  background: #fff;
+}
 
-  .divContainerCard{
-    flex: 0 0 auto;
-    width: 330px;
-    border-radius: 16px;
-    overflow: hidden;
-    height: 265px;
-  }
+.card-consigli:hover{ transform: translateY(-2px); }
 
-  .divPromoContainer {
-    flex: 0 0 auto;
-    width: 95%;
-    width: 320px;
-    border-radius: 16px;
-    min-height: 180px;
-  }
-  
-  .typePromo-overlayHomePage {
-    position: relative;
-    left: 15px;
-    top:29px;
-    z-index: 99;
-    display: flex;
-    align-items: center;
-  }
-  
-  .icona-promo {
-    width: 30px;
-    height: 30px;
-    margin-left: 3px;
-    margin-right: 3px;
-  }
-  
-  .icona-promo-container {
-    width: 35px;
-    height: 35px;
-    margin-left: 3px;
-    margin-right: 3px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05); /* Ombra solo sopra */
-    transition: transform 0.2s ease;
-  }
+/* Immagine cover */
+.card-img{
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+  display: block;
+}
 
-  .dueperuno{
-    margin-top: 3px;
-    margin-right: 2px;
-  }
+/* Badge promo in alto */
+.promo-badge{
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  background: #2ecc71;          /* verde tipo CTA */
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  height: 50px;
+  width: 50px;
+}
 
-  .gift{
-    margin-top: 2px;
-    margin-right: 3px;
-  }
-  
-  .bundle{
-    margin-top: 5px;
-    margin-right: 1px;
-  }
-  
-  .percent{
-    margin-top: 2px;
-    margin-right: 2px;
-  }
-  
-  .child{
-    margin-top: 2px;
-    margin-right: 1px;
-  }
-  
-  .family{
-    margin-top: 2px;
-    margin-right: 1px;
-  }
-  
-  .love{
-    margin-top: 3px;
-    margin-right: 2px;
-  }
-  
-  .vegan{
-    margin-top: 3px;
-    margin-right: 2px;
-  }
+/* Chip rating */
+.rating-overlayPromo{
+  position: absolute;
+  bottom: 10px; /* verrà coperto dallo spicchio bianco */
+  left: 10px;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
 
-  .titlePromoHomePage {
-    font-size: 16px;
-    font-weight: 600;
-    font-family: 'Helvetica', sans-serif;
-    color: white;
-    text-align: center;
-    line-height: 1.2;
-    word-break: break-word;
-    white-space: normal;  /* permette l'andare a capo */
-    overflow: hidden;     /* impedisce che sbordi */
-    display: -webkit-box;
-    line-clamp: 2; /* compatibilità */
-    -webkit-line-clamp: 2; /* massimo 2 righe */
-    -webkit-box-orient: vertical;
-  }
-  
+.divider-overlayPromo{
+  position: absolute;
+  bottom: 10px; /* verrà coperto dallo spicchio bianco */
+  left: 130px;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+.meta-divider{
+  width:2px; height:25px; background:#e5e7eb; display:inline-block;
+  border-radius:1px;
+}
 
-  .skeleton {
-    flex: 0 0 auto;
-    width: 260px;
-    height: 210px;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }
+.rating-countHomePage{ font-size: 13px; color:#333; font-weight:500; }
+.star{ font-size:25px; color:#f5a623; }
+.distance{ font-size:30px; color:#e9540a; }
+.lblDistance{ font-size:18px; margin-top: 1px; color:#e9540a; }
+.lblStar{ font-size:25px; margin-top: 5px; color:#f5a623; }
 
-  .imgSkeleton{
-    width: 100%;
-    margin-top: -10px;
-    height: 130px;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }
+/* Chip distanza */
+.distance-overlayPromo{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color:#333;
+  padding: 3px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  z-index: 110;
+  white-space: nowrap;
+}
 
-  .chip-overlay {
-    position: absolute;
-    bottom: 0;
-    z-index: 99;
-    display: flex;
-    gap: 2px;
-    padding: 4px 0px;
-  }
+/* Spicchio bianco arrotondato (curva stile esempio) */
+.card-bottom{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 60%;
+  background: #fff;
+  border-top-left-radius: 60% 30%;
+  border-top-right-radius: 60% 30%;
+
+  display: flex;
+  flex-direction: column;   /* ⬅️ impila in verticale */
+  align-items: center;      /* centra orizzontalmente */
+  justify-content: flex-start;
+  padding-top: 16px;        /* spazio sopra al titolo */
+  z-index: 50;              /* sopra l’immagine */
+}
+
+/* Nome attività in grigio */
+.titlePromo {
+  max-width: 86%;
+  color: #000000;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 30px auto 5px; /* spazio sopra e sotto */
+  display: block;        /* forza a stare su una riga tutta sua */
+}
+
+.activityName {
+  max-width: 86%;
+  color: #7c8088;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 auto 12px;   /* meno spazio sopra, più sotto */
+  display: block;
+}
+
+/* (facoltativo) stile originale del titolo se ti serve altrove */
+.NameAttHomePage{
+  --font-family: 'Helvetica', sans-serif !important;
+  margin-top: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  font-size: 1rem;
+  font-weight: 450;
+  max-width: 100%;
+}
   
