@@ -65,9 +65,8 @@
   </ion-modal>
     
 </ion-header>
- <br>
- <br>
-  <app-home *ngIf="isHomeOpen"
+<div class="nav-body">
+<app-home *ngIf="isHomeOpen"
             [idPage]="this.idPage"
             [listaTipoAttivita]="this.listaTipoAttivita"
             [listaCitta]="this.listaCitta"
@@ -75,6 +74,8 @@
             (updateIdFooter)="updateIdFooter($event)"
             (isModalLoginOpenEvent)="isOpenPageLoginEvent($event)"
             (openPageEventNavUpdPromo)="goToPage(7)"></app-home>
+</div>
+  
 
   <app-login *ngIf="isModalLoginOpen" class="scroll" (closeLoginEvent)="closeLogin()" (openRegisterEvent)="ShowRegister()"></app-login>
   <app-registrazione *ngIf="isModalRegisterOpen" class="scroll" (closeRegisterEvent)="closeRegister()"></app-registrazione>

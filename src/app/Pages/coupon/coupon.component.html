@@ -1,18 +1,34 @@
-<div class="segment">
-  <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)" class="my-segment">
-    <ion-segment-button value="default" class="my-button-left">
-      <ion-label>{{ 'ACTIVE_COUPONS' | translate }}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="segment" class="my-button-right">
-      <ion-label>{{ 'INACTIVE_COUPONS' | translate }}</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-</div>
+<ion-header>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segmentValue" scrollable mode="md" (ionChange)="onSegmentChange($event)" class="my-segment">
+      <ion-segment-button value="default" class="my-button-left">
+        <ion-label>{{ 'ACTIVE_COUPONS' | translate }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="segment" class="my-button-right">
+        <ion-label>{{ 'INACTIVE_COUPONS' | translate }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="segmentValue === 'segment'">
+    <ion-segment class="segment" [(ngModel)]="subSegmentValue" scrollable mode="md" (ionChange)="onSubSegmentChange($event)" class="my-segment">
+        <ion-segment-button value="utilizzati" class="my-button-left">
+          <ion-label>{{ 'USED' | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="scaduti" class="my-button">
+          <ion-label>{{ 'EXPIRED' | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="annullati" class="my-button-right">
+          <ion-label>{{ 'CANCELED' | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+  </ion-toolbar>
+</ion-header>
 
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<!--ATTIVE -->
-<div *ngIf="!isLoading">
+<ion-content fullscreen="true">
+
+  <!--ATTIVE -->
   <div *ngIf="segmentValue === 'default' && !isLoading && couponAttivi">
     <ion-card *ngFor="let coupon of couponAttivi" style="--min-height: 130px; --min-width: 400px;" class="shiny-orange-background">
       <ion-card-header>
@@ -43,22 +59,7 @@
   </div>
 
 <!-- NON ATTIVE -->
-<div *ngIf="!isLoading">
   <div *ngIf="segmentValue === 'segment'">
-    <div>
-      <ion-segment class="segment" [(ngModel)]="subSegmentValue" (ionChange)="onSubSegmentChange($event)" class="my-segment">
-        <ion-segment-button value="utilizzati" class="my-button-left">
-          <ion-label>{{ 'USED' | translate }}</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="scaduti" class="my-button">
-          <ion-label>{{ 'EXPIRED' | translate }}</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="annullati" class="my-button-right">
-          <ion-label>{{ 'CANCELED' | translate }}</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </div>
-
     <!-- UTILIZZATI -->
     <div *ngIf="subSegmentValue === 'utilizzati'">
       <ion-list>
@@ -115,9 +116,9 @@
         <ion-label class="labelTitle" *ngIf="!isLoading && couponAnnullati && couponAnnullati.length === 0" >{{ 'NO_CANCELED_COUPONS' | translate }}</ion-label>
     </div>
   </div>
-</div>
+  </div>
 
-<ion-modal [isOpen]="isModalDetailOpen" class="full-modal">
+  <ion-modal [isOpen]="isModalDetailOpen" class="full-modal">
   <ng-template>
     <app-dettaglio-coupon style="height: 100%; overflow-y: auto;" (CloseModalDetailEvent)="dismissDetailModal()"  
     [coupon]="this.couponSelezionato"
@@ -146,5 +147,10 @@
   </app-confirm-modal>
   </ng-template>
 </ion-modal>
+
+</ion-content>
+
+
+
 
 

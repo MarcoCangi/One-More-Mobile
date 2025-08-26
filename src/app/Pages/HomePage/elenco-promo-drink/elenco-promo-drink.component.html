@@ -7,8 +7,8 @@
   <ion-icon (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
 </ion-item>
 
-<div class="card-containerHomePage" #widgetsContent>
-  <div class="card-wrapperHomePage" *ngIf="!isLoading">
+<div class="card-containerHomePage" #widgetsContent *ngIf="!isLoading">
+  <div class="card-wrapperHomePage">
 
     <div *ngFor="let attivita of elencoAttivita" (click)="VisualizzaAttivita(attivita)">
       <div *ngFor="let promo of attivita.promo?.slice(0, 1)">
@@ -51,4 +51,23 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="card-containerHomePage" #widgetsContent *ngIf="isLoading">
+  <div class="card-wrapperHomePage">
+         <ion-card class="skeleton">
+      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+    <ion-card class="skeleton">
+      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+    </div>
 </div>

@@ -22,7 +22,7 @@
 
 <!-- LISTA PROMO -->
 <div *ngIf="!isLoading && !isModifica && !listaAttivita" class="full-width-container">
-  <ion-segment [(ngModel)]="segmentValue" (ionChange)="onSegmentChange($event)" class="my-segment">
+  <ion-segment [(ngModel)]="segmentValue" scrollable (ionChange)="onSegmentChange($event)" class="my-segment"  mode="md">
     <ion-segment-button value="default" class="my-button-left">
       <ion-label>{{ 'ACTIVE_PROMOS' | translate }}</ion-label>
     </ion-segment-button>

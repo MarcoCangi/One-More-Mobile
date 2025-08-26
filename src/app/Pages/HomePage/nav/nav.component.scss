@@ -6,9 +6,9 @@
     right: 0;
   }
 
-  .scroll {
-    height: 100%;
-}
+  .scroll { overflow: visible !important; }
+
+  .nav-body { display:block; }
 
 .postcard-container {
   display: table;

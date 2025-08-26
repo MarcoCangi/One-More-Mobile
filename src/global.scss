@@ -457,52 +457,53 @@ ion-note.promoNote[color="danger"] {
   }
 
   ion-segment.my-segment {
-    --background: #ffffff;
-    --max-height: 50px !important;
-  }
-  
-  ion-segment-button.my-button {
-      --color: #827a7a;
-      --color-checked: #fff;
-      --background: #ffffff;
-      --background-checked: linear-gradient(90deg, #ff8a00, #e9540a);
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 14px;
-      text-transform: uppercase;
-      transition: background 0.3s ease;
-  }
-  
-  ion-segment-button.my-button-left {
-      --color: #827a7a;
-      --color-checked: #fff;
-      --background: #ffffff;
-      --background-checked: linear-gradient(90deg, #ff8a00, #e9540a);
-      border-bottom-right-radius: 30px;
-      border-top-right-radius: 30px;
-      font-weight: bold;
-      font-size: 13px;
-      text-transform: uppercase;
-      transition: background 0.3s ease;
-  }
-  
-  ion-segment-button.my-button-right {
-      --color: #827a7a;
-      --color-checked: #fff;
-      --background: #ffffff;
-      --background-checked: linear-gradient(90deg, #ff8a00, #e9540a);
-      border-bottom-left-radius: 30px;
-      border-top-left-radius: 30px;
-      font-weight: bold;
-      font-size: 13px;
-      text-transform: uppercase;
-      transition: background 0.3s ease;
+    --background: #fff;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0;
   }
 
-  ion-segment.my-segment::part(indicator) {
-  background: linear-gradient(90deg, #ff8a00, #e9540a);
-  border-radius: 30px;
-}  
+  /* ===== ANDROID (md) ===== */
+  .md ion-segment-button.my-button,
+  .md ion-segment-button.my-button-left,
+  .md ion-segment-button.my-button-right {
+    --color: #827a7a;
+    --color-checked: #fff;
+    --background: #ffffff;
+    --background-checked: linear-gradient(90deg, #ff8a00, #e9540a);
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  /* ===== iOS ===== */
+  .ios ion-segment-button.my-button,
+  .ios ion-segment-button.my-button-left,
+  .ios ion-segment-button.my-button-right {
+    --color: #827a7a;
+    --color-checked: #fff;
+    --background: transparent;          /* niente bg sul bottone */
+    --background-checked: linear-gradient(90deg, #ff8a00, #e9540a);  /* niente bg quando è checked */
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  /* iOS: rendi visibile l’indicator e fallo arancione */
+  .ios ion-segment.my-segment {
+    --indicator-height: 28px; /* <— importante: senza questo l’indicator può essere troppo sottile */
+  }
+
+  .ios ion-segment.my-segment::part(indicator) {
+    background: linear-gradient(90deg, #ff8a00, #e9540a);
+    border-radius: 9999px;
+    box-shadow: none;
+  }
+
+  /* opzionale: togli eventuale bordo/track grigio iOS */
+  .ios ion-segment.my-segment::part(container) {
+    box-shadow: none;
+  }
 
   .imgConfirm {
     width: 150px; 
@@ -589,5 +590,15 @@ ion-content .inner-scroll::-webkit-scrollbar {
   width: 0;
   height: 0;
   display: none;
+}
+
+.main-wrap { 
+  --padding-top: var(--hdr-h); 
+  --padding-bottom: calc(var(--ftr-h) + env(safe-area-inset-bottom));
+}
+
+:root {
+  --hdr-h: var(--ion-toolbar-height, 56px);
+  --ftr-h: 64px; /* regola all'altezza reale del tuo app-footer */
 }
 

@@ -56,7 +56,7 @@
 <ion-modal [isOpen]="isModificaPassword" class="full-modal">
   <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar class="ModalToolbar">
           <ion-card-title class="titleModal">{{ 'edit_psw' | translate }}</ion-card-title>
           <ion-buttons slot="end">
             <ion-button (click)="DimsissModalModificaPassword()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
@@ -106,8 +106,8 @@
 <ion-modal [isOpen]="isEliminaAccount" class="full-modal">
   <ng-template>
     <ion-header>
-      <ion-toolbar>
-        <ion-card-title class="title">{{'delete_account'|translate}}</ion-card-title>
+      <ion-toolbar class="ModalToolbar">
+        <ion-card-title class="titleModal">{{'delete_account'|translate}}</ion-card-title>
         <ion-buttons slot="end">
           <ion-button *ngIf="this.isDeleted" (click)="openPage(1)"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>
           <ion-button *ngIf="!this.isDeleted" (click)="DimsissModalEliminaAccount()"><ion-icon name="close-outline" class="closeBlack"></ion-icon></ion-button>

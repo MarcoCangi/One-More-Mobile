@@ -9,13 +9,6 @@
 
 :root{ --sheet-width: 520px; } 
 
-ion-segment.my-segment{
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0;                   /* opzionale */
-}
-
-
 .contentListAtt{
   display: flex;
   flex-direction: column;

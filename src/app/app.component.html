@@ -1,28 +1,26 @@
 <ion-app>
   <div *ngIf="showSplash" class="splash-screen">
-
     <div class="splash-overlay" *ngIf="showOverlay"></div>
-
-    <video #splashVideo
-           class="splash-video"
-           autoplay
-           muted
-           playsinline
-           preload="auto"
-           (canplay)="onVideoReady()"
-           (ended)="SetIsSShowSplashEnded()">
+    <video #splashVideo class="splash-video" autoplay muted playsinline preload="auto"
+           (canplay)="onVideoReady()" (ended)="SetIsSShowSplashEnded()">
       <source src="/assets/Img/ReaDeal_Intro.mp4" type="video/mp4" />
     </video>
   </div>
   
-    <app-nav class="scroll" [listaTipoAttivita]="this.listaAttivitaDDL" [listaCitta]="this.listaCitta"
-             [ngClass]="{'sticky-search': isSearchSticky}"
-             (openPageEvent)="openPageEvent($event)"
-             (updateIdFooterEvent)="updateIdFooterEvent($event)"
-             [idPage]="this.idPage"></app-nav>  
+    <ion-content [fullscreen]="true" class="main-wrap">
+      <app-nav class="scroll"
+               [listaTipoAttivita]="this.listaAttivitaDDL" [listaCitta]="this.listaCitta"
+               [ngClass]="{'sticky-search': isSearchSticky}"
+               (openPageEvent)="openPageEvent($event)"
+               (updateIdFooterEvent)="updateIdFooterEvent($event)"
+               [idPage]="this.idPage">
+      </app-nav>
+    </ion-content>
   
-    <app-footer *ngIf="!keyboardOpen" class="footer"
+    <ion-footer>
+      <app-footer *ngIf="!keyboardOpen" class="footer"
             (openPageNoReloadEvent)="openPageEventNoReload($event)"
             [idPage]="this.idPage"
             [idSoggetto]="this.idSoggetto"></app-footer>
+    </ion-footer>
   </ion-app>

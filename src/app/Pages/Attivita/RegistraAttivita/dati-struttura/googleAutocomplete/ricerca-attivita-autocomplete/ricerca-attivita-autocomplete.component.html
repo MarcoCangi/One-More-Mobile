@@ -1,5 +1,5 @@
  <ion-header>
-    <ion-toolbar *ngIf="!this.attivita">
+    <ion-toolbar *ngIf="!this.attivita" class="ModalToolbar">
       <ion-title *ngIf="this.isRicercaFatta" Class="titleModal">{{ 'SelectActivity' | translate }}</ion-title>
       <ion-title *ngIf="!this.isRicercaFatta" Class="titleModal">{{ 'ActivityData' | translate }}</ion-title>
       <ion-buttons slot="end">
