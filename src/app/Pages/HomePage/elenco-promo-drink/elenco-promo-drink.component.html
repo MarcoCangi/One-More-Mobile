@@ -24,8 +24,8 @@
     
       <!-- Overlay rating -->
       <div class="rating-overlayPromo">
-        <ion-icon name="star" class="star"></ion-icon>
-        <span class="lblStar">{{attivita.rating}}</span>
+        <ion-icon name="star" class="starPromo"></ion-icon>
+        <span class="lblStarPromo">{{attivita.rating}}</span>
       </div>
 
       <div class="divider-overlayPromo">
@@ -34,8 +34,8 @@
     
       <!-- Overlay distanza -->
       <div class="distance-overlayPromo">
-        <ion-icon name="location" class="distance"></ion-icon>
-        <span class="lblDistance">{{attivita.distanza}}</span>
+        <ion-icon name="location" class="distancePromo"></ion-icon>
+        <span class="lblDistancePromo">{{attivita.distanza}}</span>
       </div>
     
       <!-- Spicchio bianco in basso -->
@@ -53,21 +53,4 @@
   </div>
 </div>
 
-<div class="card-containerHomePage" #widgetsContent *ngIf="isLoading">
-  <div class="card-wrapperHomePage">
-         <ion-card class="skeleton">
-      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
-      <ion-card-header>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-      </ion-card-header>
-    </ion-card>
-    <ion-card class="skeleton">
-      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
-      <ion-card-header>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-      </ion-card-header>
-    </ion-card>
-    </div>
-</div>
+<app-skeleton-home-page *ngIf="isLoading"></app-skeleton-home-page>>

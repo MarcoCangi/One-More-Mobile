@@ -86,12 +86,6 @@
   border-radius:1px;
 }
 
-.rating-countHomePage{ font-size: 13px; color:#333; font-weight:500; }
-.star{ font-size:25px; color:#f5a623; }
-.distance{ font-size:30px; color:#e9540a; }
-.lblDistance{ font-size:18px; margin-top: 1px; color:#e9540a; }
-.lblStar{ font-size:25px; margin-top: 5px; color:#f5a623; }
-
 /* Chip distanza */
 .distance-overlayPromo{
   position: absolute;
@@ -163,22 +157,3 @@
   font-weight: 450;
   max-width: 100%;
 }
-  
-
-.skeleton {
-    flex: 0 0 auto;
-    width: 260px;
-    height: 210px;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .imgSkeleton{
-    width: 100%;
-    margin-top: -10px;
-    height: 130px;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }

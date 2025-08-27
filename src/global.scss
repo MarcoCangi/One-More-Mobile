@@ -326,10 +326,14 @@ ion-note.promoNote[color="danger"] {
     max-width: 100%;
   }
 
-  .star {
-    color: #f8c034;
-    font-size: 14px;
-  }
+  .starAtt { color: #f5a623; font-size: 20px; }
+  .starPromo{ color:#f5a623; font-size: 25px;  }
+  .lblStarAtt{ font-size:20px; color:#f5a623; }
+  .lblStarPromo{ font-size:25px; margin-top: 5px; color:#f5a623; }
+  .distanceAtt{ font-size:30px; color:#e9540a; }
+  .distancePromo{ font-size:18px; color:#e9540a; }
+  .lblDistanceAtt{ font-size:18px; margin-top: 1px; color:#e9540a; }
+  .lblDistancePromo{ font-size:18px; margin-top: 1px; color:#e9540a; }
 
   .label-overlayHomePage {
     position: absolute;
@@ -380,7 +384,7 @@ ion-note.promoNote[color="danger"] {
   .rating-overlayHomePage {
     position: absolute;
     top: 170px;
-    left: 10px;
+    left: 5px;
     z-index: 99;
     display: flex;
     align-items: center;
