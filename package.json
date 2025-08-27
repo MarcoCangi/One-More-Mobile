@@ -36,6 +36,7 @@
     "@capacitor/core": "5.7.4",
     "@capacitor/geolocation": "^6.0.1",
     "@capacitor/haptics": "5.0.7",
+    "@capacitor/ios": "^7.4.3",
     "@capacitor/keyboard": "5.0.8",
     "@capacitor/push-notifications": "^6.0.2",
     "@capacitor/status-bar": "5.0.7",

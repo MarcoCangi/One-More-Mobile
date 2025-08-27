@@ -230,20 +230,18 @@ export function HttpLoaderFactory(http: HttpClient) {
               registrationStrategy: 'registerWhenStable:30000'
             }),
             provideFirebaseApp(() => initializeApp(firebaseConfig)),
-            provideFirestore(() => getFirestore()),
-            provideStorage(() => getStorage()),
-            provideFirestore(() => getFirestore()),
-            provideStorage(() => getStorage()),
+
             provideAppCheck(() =>
                 initializeAppCheck(undefined, {
                   provider: Capacitor.isNativePlatform()
                     ? new CustomProvider({
                         getToken: async () => {
                           const { FirebaseAppCheck } = await import('@capacitor-firebase/app-check');
+                          await FirebaseAppCheck.setTokenAutoRefreshEnabled({ enabled: true });
                           const result = await FirebaseAppCheck.getToken();
                           return {
                             token: result.token,
-                            expireTimeMillis: Date.now() + 60 * 60 * 1000,
+                            expireTimeMillis: result.expireTimeMillis ?? (Date.now() + 60 * 60 * 1000),
                           };
                         }
                       })
@@ -259,7 +257,9 @@ export function HttpLoaderFactory(http: HttpClient) {
                 } else {
                   return getAuth();
                 }
-              })
+              }),
+            provideFirestore(() => getFirestore()),
+            provideStorage(() => getStorage()),
           ],
           providers: [
             { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
