@@ -1,12 +1,12 @@
 
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA, importProvidersFrom } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes, RouterModule, provideRouter, RouteReuseStrategy } from '@angular/router'
+import { Routes, RouterModule, RouteReuseStrategy } from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getApp, initializeApp } from 'firebase/app';
 import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { environment, firebaseConfig } from '../environments/environment';
-import { Auth, GoogleAuthProvider, provideAuth } from '@angular/fire/auth';
+import { GoogleAuthProvider, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore'
 import { getStorage, provideStorage } from '@angular/fire/storage'
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -229,35 +229,12 @@ export function HttpLoaderFactory(http: HttpClient) {
               enabled: environment.production && !Capacitor.isNativePlatform(),
               registrationStrategy: 'registerWhenStable:30000'
             }),
-          ],
-          providers: [
-            { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-            { provide: HTTP_INTERCEPTORS, useClass: AppCheckInterceptor, multi: true },
-
-            GetApiAttivitaService,
-            InAppBrowser,
-            GetApiPromoService,
-            GetApiComuniService,
-            FileUploadService,
-            AuthService,
-            UserService,
-            GoogleAuthProvider,
-            Constants,
-            provideAnimations(),
-            importProvidersFrom([
-              provideFirebaseApp(() => initializeApp(firebaseConfig)),
-              provideAuth(() => {
-                if (Capacitor.isNativePlatform()) {
-                  return initializeAuth(getApp(), {
-                    persistence: indexedDBLocalPersistence
-                  });
-                } else {
-                  return getAuth();
-                }
-              }),
-              provideFirestore(() => getFirestore()),
-              provideStorage(() => getStorage()),
-              provideAppCheck(() =>
+            provideFirebaseApp(() => initializeApp(firebaseConfig)),
+            provideFirestore(() => getFirestore()),
+            provideStorage(() => getStorage()),
+            provideFirestore(() => getFirestore()),
+            provideStorage(() => getStorage()),
+            provideAppCheck(() =>
                 initializeAppCheck(undefined, {
                   provider: Capacitor.isNativePlatform()
                     ? new CustomProvider({
@@ -273,8 +250,31 @@ export function HttpLoaderFactory(http: HttpClient) {
                     : new ReCaptchaV3Provider('auto'),
                   isTokenAutoRefreshEnabled: true
                 })
-              )
-            ]),
+              ),
+            provideAuth(() => {
+                if (Capacitor.isNativePlatform()) {
+                  return initializeAuth(getApp(), {
+                    persistence: indexedDBLocalPersistence
+                  });
+                } else {
+                  return getAuth();
+                }
+              })
+          ],
+          providers: [
+            { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+            { provide: HTTP_INTERCEPTORS, useClass: AppCheckInterceptor, multi: true },
+
+            GetApiAttivitaService,
+            InAppBrowser,
+            GetApiPromoService,
+            GetApiComuniService,
+            FileUploadService,
+            AuthService,
+            UserService,
+            GoogleAuthProvider,
+            Constants,
+            provideAnimations(),
             {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
             {
               provide: DateAdapter,
