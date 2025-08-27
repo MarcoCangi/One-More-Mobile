@@ -119,11 +119,12 @@ export class FormPromoComponent  implements OnInit {
 
   async salva() {
       this.isLoading = true;
+      console.log("promo", this.requestPromo);
       await this.ControlPromo(this.requestPromo);
 
       if(this.isError)
         return;
-  
+      console.log("log promo nessun errore");
       const sessioneString = this.authService.getUserSession();
 
       this.setEsito(true)

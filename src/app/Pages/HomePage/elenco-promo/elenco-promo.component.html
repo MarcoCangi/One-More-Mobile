@@ -5,55 +5,6 @@
   <ion-icon (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
 </ion-item>
 
-<div class="card-containerHomePage" #widgetsContent>
-  <div class="card-wrapperHomePage" *ngIf="!isLoading">
-    <ion-card class="card-consigli" *ngFor="let attivita of elencoPromo" (click)="VisualizzaAttivita(attivita)">
-      <div class="label-overlayHomePage">
-        <label>{{'Promo'|translate}}</label>
-      </div>
-      <div class="rating-overlayHomePage">
-        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-          <ion-icon
-            [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
-            class="star">
-          </ion-icon>
-        </ng-container>
-        <span class="rating-countHomePage">({{ attivita.numberOfRating }})</span>
-      </div>
+<app-card-home-page [elencoAtt]="this.elencoPromo" (attivitaSelezionataEvent)="VisualizzaAttivita($event)" *ngIf="!isLoading"></app-card-home-page>
 
-      <!-- Distanza come overlay fissa -->
-      <div class="distance-overlay">
-        <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
-        {{ attivita.distanza }}
-      </div>
-      
-      <img mat-card-image [src]="getImmaginePrincipale(attivita)" alt="{{'ACTIVITYPHOTO|translate'}}"/>
-      <!-- Nome + indirizzo -->
-        <ion-card-header>
-          <ion-card-title class="NameAttHomePage">{{ attivita.nome }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-card-subtitle style="font-weight: normal;">
-            {{ attivita.indirizzo }}, {{ attivita.civico }}
-          </ion-card-subtitle>
-        </ion-card-content>
-    </ion-card>
-  </div>
-
-  <div class="card-wrapperHomePage" *ngIf="isLoading">
-    <ion-card class="skeleton">
-      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
-      <ion-card-header>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-      </ion-card-header>
-    </ion-card>
-    <ion-card class="skeleton">
-      <ion-skeleton-text [animated]="true" class="imgSkeleton"></ion-skeleton-text>
-      <ion-card-header>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-      </ion-card-header>
-    </ion-card>
-  </div>
-</div>
+<app-skeleton-home-page *ngIf="isLoading"></app-skeleton-home-page>

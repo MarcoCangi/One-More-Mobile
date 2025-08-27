@@ -1,0 +1,41 @@
+<div class="card-containerHomePage" #widgetsContent >
+    <div class="card-wrapperHomePage">
+      <ion-card class="card-consigli" *ngFor="let attivita of elencoAtt" (click)="VisualizzaAttivita(attivita)">
+  
+        <!-- Badge Promo -->
+        <div class="label-overlayHomePage" *ngIf="attivita.isPromoPresente">
+          <label>{{ 'Promo' | translate }}</label>
+        </div>
+      
+        <!-- Stelle -->
+        <div class="rating-overlayHomePage">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <ion-icon
+              [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
+              class="star">
+            </ion-icon>
+          </ng-container>
+          <span class="rating-countHomePage">({{ attivita.numberOfRating }})</span>
+        </div>
+      
+        <!-- Distanza come overlay fissa -->
+        <div class="distance-overlay">
+          <ion-icon name="location-outline" style="margin-right: 2px;"></ion-icon>
+          {{ attivita.distanza }}
+        </div>
+      
+        <!-- Immagine -->
+        <img mat-card-image [src]="getImmaginePrincipale(attivita)" alt="{{ 'ACTIVITYPHOTO' | translate }}" />
+      
+        <!-- Nome + indirizzo -->
+        <ion-card-header>
+          <ion-card-title class="NameAttHomePage">{{ attivita.nome }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-subtitle style="font-weight: normal;">
+            {{ attivita.indirizzo }}, {{ attivita.civico }}
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+    </div>
+</div>

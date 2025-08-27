@@ -113,6 +113,8 @@ import { AreaPromoComponent } from './Pages/Attivita/ProfiloAttivita/gestione-pr
 import { ElencoPromoFoodComponent } from './Pages/HomePage/elenco-promo-food/elenco-promo-food.component';
 import { ElencoPromoDrinkComponent } from './Pages/HomePage/elenco-promo-drink/elenco-promo-drink.component';
 import { ElencoRecentViewComponent } from './Pages/HomePage/elenco-recent-view/elenco-recent-view.component';
+import { SkeletonHomePageComponent } from './Utilities/skeleton-home-page/skeleton-home-page.component';
+import { CardHomePageComponent } from './Utilities/card-home-page/card-home-page.component';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -200,7 +202,9 @@ export function HttpLoaderFactory(http: HttpClient) {
                  AreaPromoComponent,
                  ElencoPromoFoodComponent,
                  ElencoPromoDrinkComponent,
-                 ElencoRecentViewComponent
+                 ElencoRecentViewComponent,
+                 SkeletonHomePageComponent,
+                 CardHomePageComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,
