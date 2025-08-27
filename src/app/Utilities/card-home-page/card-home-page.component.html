@@ -9,12 +9,8 @@
       
         <!-- Stelle -->
         <div class="rating-overlayHomePage">
-          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-            <ion-icon
-              [name]="attivita.rating >= star ? 'star' : attivita.rating >= star - 0.5 ? 'star-half' : 'star-outline'"
-              class="star">
-            </ion-icon>
-          </ng-container>
+          <ion-icon name="star" class="starAtt"></ion-icon>
+          <span class="lblStarAtt">{{attivita.rating}}</span>
           <span class="rating-countHomePage">({{ attivita.numberOfRating }})</span>
         </div>
       
