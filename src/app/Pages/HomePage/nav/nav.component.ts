@@ -140,9 +140,7 @@ export class NavComponent implements OnInit {
     this.listaElencoPromo = this.attivitaService.getListAttivitaPromoHomeSession();
     this.listaElencoVicine = this.attivitaService.getListAttivitaVicineHomeSession();
 
-    if (!this.listaElencoNuove || !this.listaElencoPromo || !this.listaElencoVicine) {
-      window.location.reload();
-    }
+   
 
     this.isModalLoginOpen = false;
     this.isHomeOpen = true;

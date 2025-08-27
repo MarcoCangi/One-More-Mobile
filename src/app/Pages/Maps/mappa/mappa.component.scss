@@ -1,7 +1,6 @@
 .map {
   position: relative;
   height: 100vh;
-  margin-top: 15px;
 }
 
 :host {
@@ -23,7 +22,7 @@ ion-toolbar {
 }
 
 .horizontal-list-overlay {
-  position: absolute;
+  position: fixed;
   bottom: 35px;
   width: 100%;
   z-index: 10000;

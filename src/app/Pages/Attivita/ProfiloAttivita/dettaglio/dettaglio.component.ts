@@ -48,6 +48,7 @@ export class DettaglioComponent  implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   async ngOnInit(): Promise<void> {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.isLoading = true;
     const userSession = this.authService.getUserSession();
     if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {

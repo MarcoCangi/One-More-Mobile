@@ -31,6 +31,19 @@ export class LoginComponent {
     });
   }
 
+  private async getFcmTokenSafe(timeoutMs = 3000): Promise<string> {
+  try {
+    const token = await Promise.race<string>([
+      // 👇 forzo il tipo a string convertendo null/undefined in ''
+      this.messagingService.getFCMToken().then((t: string | null | undefined) => t ?? ''),
+      new Promise<string>(resolve => setTimeout(() => resolve(''), timeoutMs)),
+    ]);
+    return token; // sempre string
+  } catch {
+    return '';
+  }
+}
+
   async Login(){
     this.isLoading = true;
     if (this.homeForm.valid)
@@ -42,9 +55,7 @@ export class LoginComponent {
         if(userCredential){
 
           const docData = await this.authService.getCurrentUser(userCredential.user.uid)
-
           const { user: { uid } } = userCredential;
-          const currentDate = new Date();
 
           this.utente = {
             id: 0,
@@ -60,6 +71,8 @@ export class LoginComponent {
             errore: '',
             fcmToken :''
           };
+
+          this.utente.fcmToken = await this.getFcmTokenSafe();
 
           if(this.utente){
             const token = await this.messagingService.getFCMToken();
@@ -111,12 +124,7 @@ export class LoginComponent {
           fcmToken: ''
         };
 
-        if(this.utente){
-          const token = await this.messagingService.getFCMToken();
-          if (token){
-            this.utente.fcmToken = token;
-          }
-        }
+        this.utente.fcmToken = await this.getFcmTokenSafe();
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {
@@ -153,12 +161,7 @@ export class LoginComponent {
           fcmToken:'',
         };
 
-        if(this.utente){
-            const token = await this.messagingService.getFCMToken();
-            if (token){
-              this.utente.fcmToken = token;
-            }
-        }
+        this.utente.fcmToken = await this.getFcmTokenSafe();
   
         const response = await firstValueFrom(this.authService.apiCheckUtenteByProvider(this.utente));
         if (!response.utente.errore) {

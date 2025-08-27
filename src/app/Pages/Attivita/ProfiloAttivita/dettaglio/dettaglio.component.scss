@@ -1,219 +1,249 @@
 .uniform-image {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-  }
-  
-  .d-flex {
-    display: flex;
-  }
-  
-  
-  .justify-content-center {
-    justify-content: center;
-  }
-  
-  .iconGallery {
-    display: flex; 
-    align-items: center;
-    height: 28px;
-  }
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* taglia senza deformare */
+  border-radius: 16px;
+}
 
-  .title{
-    --font-family: 'Helvetica', sans-serif !important;
-    font-size: 1.2rem;
-    margin-top: 3%;
-    margin-left: 2%;
+/* ---- Variabili responsive ---- */
+:root {
+  --gallery-h: 180px;        /* altezza default mobile */
+  --gallery-ratio: 16/9;     /* formato uniforme: 16:9 */
+}
+
+/* Card container */
+.card-container {
+  margin-top: 1%;
+  display: flex;
+  position: relative;      /* per il bottone Gallery */
+  overflow: hidden;
+  scroll-behavior: smooth;
+  flex: 1;
+}
+
+.card-wrapper,
+.card-wrapperSkeleton {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  gap: 10px;               /* spazio tra le card */
+  padding: 0 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.card-wrapper::-webkit-scrollbar { display: none; }
+.card-wrapperSkeleton::-webkit-scrollbar { display: none; }
+
+/* Card immagini */
+.card-img {
+  flex: 0 0 auto;
+  width: 100%;             /* base, verrà sovrascritta sotto con i breakpoint */
+  aspect-ratio: 16 / 9;    /* TUTTE rettangolari uguali */
+  border-radius: 16px;
+  overflow: hidden;        /* ritaglio pulito */
+  padding: 0;
+}
+
+/* Skeleton dimensioni uguali */
+.card-wrapperSkeleton .card-img { height: var(--gallery-h); }
+.card-wrapperSkeleton .uniform-image,
+ion-skeleton-text.uniform-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  :root { --gallery-h: 220px; }
+  .card-img { width: 40%; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  :root { --gallery-h: 260px; }
+  .card-img { width: 32%; }
+}
+
+/* ---- Altri stili tuoi ---- */
+.d-flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.iconGallery {
+  display: flex; 
+  align-items: center;
+  height: 28px;
+}
+
+.title{
+  --font-family: 'Helvetica', sans-serif !important;
+  font-size: 1.2rem;
+  margin-top: 3%;
+  margin-left: 2%;
+  font-weight: 500;
+}
+
+.nome{
+  --font-family: 'Helvetica', sans-serif !important;
+  font-size: 1.4rem;
+  margin-top: 5px;
+  margin-left: 18px;
+  font-weight: 500;
+}
+
+.subtitle{
+  --font-family: 'Helvetica', sans-serif !important;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.lbl-info{
+  font-size: 0.9rem;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.lbl-title{
+    font-family: Roboto, sans-serif;
     font-weight: 500;
-  }
+    font-size: 16px;
+}
 
-  .nome{
-    --font-family: 'Helvetica', sans-serif !important;
-    font-size: 1.4rem;
-    margin-top: 5px;
-    margin-left: 18px;
-    font-weight: 500;
-  }
-  
-  .subtitle{
-    --font-family: 'Helvetica', sans-serif !important;
-    font-size: 1.2rem;
-    font-weight: 500;
-  }
-  
-  .lbl-info{
-    font-size: 0.9rem;
-  }
-  
-  .capitalize {
-    text-transform: capitalize;
-  }
-  
-  .lbl-title{
-      font-family: Roboto, sans-serif; /* Specifica il tipo di carattere del testo */
-      font-weight: 500; /* Specifica il peso del carattere del testo */
-      font-size: 16px; /* Specifica la dimensione del carattere del testo */
-  }
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  position: relative;
+}
 
-  .card-container {
-    display: flex;
-    overflow: hidden;
-    scroll-behavior: smooth;
-    flex: 1;
-    position: relative; /* Rendi la card il contesto di posizionamento per l'overlay */
-  }
-  
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-    position: relative;
-  }
-  
-  .card-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    width: fit-content; /* Adatta la larghezza del wrapper al contenuto */
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
-    -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
-  }
+.full-screen-dialog {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.6);
+}
 
-  .card-wrapperSkeleton {
-    display: flex;
-    flex-wrap: nowrap;
-    width: -webkit-fill-available; /* Adatta la larghezza del wrapper al contenuto */
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
-    -ms-overflow-style: none; /* Nasconde la scrollbar su IE e Edge */
-  }
-  
-  .card-img {
-    flex: 0 0 auto;
-    width: 60%;
-    max-height: 150px;
-    flex-wrap: nowrap; /* Impedisce il wrapping del contenuto nella card */
-  }
-  .full-screen-dialog {
-    width: 100vw;
-    height: 100vh;
-    max-width: 100vw;
-    max-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.6); /* Aggiungi uno sfondo scuro */
-  }
+ion-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
 
-  ion-card-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  ion-chip {
-    display: inline-block;
-    max-width: fit-content;
-    white-space: nowrap; /* Impedisce il wrapping del testo */
-    margin: 2px; /* Spazio tra le chip */
-  }
+ion-chip {
+  display: inline-block;
+  max-width: fit-content;
+  white-space: nowrap;
+  margin: 2px;
+}
 
-  .chip-container {
-    margin-top: 5%;
-    margin-bottom: 5%;
-  }
+.chip-container {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
 
-  .descOfferta {
-    margin-top: 5%;
-  }
+.descOfferta {
+  margin-top: 5%;
+}
 
-  :host {
-    display: block;
-    height: 100%;
-  }
+:host {
+  display: block;
+  height: 100%;
+}
 
-  .preferiti{
-    width: 30px;
-    height: 30px;
-    margin-left: 15px;
-    --border-color: #e9540a;
-    --color: #e9540a;;
-  }
+.preferiti{
+  width: 30px;
+  height: 30px;
+  margin-left: 15px;
+  --border-color: #e9540a;
+  --color: #e9540a;
+}
 
-  .noPreferiti{
-    width: 30px;
-    height: 30px;
-    margin-left: 15px;
-    --border-color: #c1bcba;
-    --color: #c1bcba;;
-  }
+.noPreferiti{
+  width: 30px;
+  height: 30px;
+  margin-left: 15px;
+  --border-color: #c1bcba;
+  --color: #c1bcba;
+}
 
-  .imgOffer{
-    margin-top: 10%;
-    width: 25px;
-    height: 25px;
-  }
+.imgOffer{
+  margin-top: 10%;
+  width: 25px;
+  height: 25px;
+}
 
-  .lblOffer{
-    font-size: 0.7rem;
-    margin-bottom: 10%;
-  }
+.lblOffer{
+  font-size: 0.7rem;
+  margin-bottom: 10%;
+}
 
-  .map-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-    position: relative;
-  }
+.map-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  position: relative;
+}
 
-  .overlayFavourite {
-    position: absolute;
-    top: 0.5rem; /* Posizionamento dall'alto */
-    right: 0.5rem; /* Posizionamento dal lato destro */
-    z-index: 100; /* Assicurati che l'overlay sia visibile sopra gli altri elementi */
-    display: flex; /* Se vuoi allineare i bottoni in fila */
-  }
+.overlayFavourite {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 100;
+  display: flex;
+}
 
-  .overlayGallery {
-    position: absolute;
-    bottom: 0.5rem; /* Posizionamento dall'alto */
-    left: 0.5rem; /* Posizionamento dal lato destro */
-    z-index: 100; /* Assicurati che l'overlay sia visibile sopra gli altri elementi */
-    display: flex; /* Se vuoi allineare i bottoni in fila */
-  }
+.overlayGallery {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  display: flex;
+}
 
-  .btnGallery{
-    --background: rgba(59, 59, 59, 0.8) !important; /* Imposta un colore di sfondo personalizzato */
-    --background-activated: rgba(59, 59, 59, 0.4); /* Sfondo quando il pulsante è premuto */
-    --background-hover: rgba(59, 59, 59, 0.4); /* Sfondo al passaggio del mouse (su desktop) */
-    --background-color: rgba(59, 59, 59, 0.4) !important; /* Sfondo grigio opaco */
-    border-radius: 4px;
-  }
+.btnGallery{
+  --background: rgba(59, 59, 59, 0.8) !important;
+  --background-activated: rgba(59, 59, 59, 0.4);
+  --background-hover: rgba(59, 59, 59, 0.4);
+  --background-color: rgba(59, 59, 59, 0.4) !important;
+  border-radius: 4px;
+}
 
-  .btnFavourite{
-    --background: rgba(59, 59, 59, 0.8) !important; /* Imposta un colore di sfondo personalizzato */
-    --background-activated: rgba(59, 59, 59, 0.4); /* Sfondo quando il pulsante è premuto */
-    --background-hover: rgba(59, 59, 59, 0.4); /* Sfondo al passaggio del mouse (su desktop) */
-    --background-color: rgba(59, 59, 59, 0.4) !important; /* Sfondo grigio opaco */
-    border-radius: 4px;
-  }
+.btnFavourite{
+  --background: rgba(59, 59, 59, 0.8) !important;
+  --background-activated: rgba(59, 59, 59, 0.4);
+  --background-hover: rgba(59, 59, 59, 0.4);
+  --background-color: rgba(59, 59, 59, 0.4) !important;
+  border-radius: 4px;
+}
 
-  .custom-button {
-    margin-top: 20%;
-    --box-shadow: 0px 4px 10px rgba(233, 84, 10, 0.5); /* Ombreggiatura arancione */
-    --background: white; /* Sfondo bianco per contrasto */
-    --color: #e9540a; /* Colore dell'icona */
+.custom-button {
+  margin-top: 20%;
+  --box-shadow: 0px 4px 10px rgba(233, 84, 10, 0.5);
+  --background: white;
+  --color: #e9540a;
 }
 
 .custom-button:hover {
-    --box-shadow: 0px 6px 15px rgba(233, 84, 10, 0.7); /* Ombreggiatura più intensa al passaggio del mouse */
+  --box-shadow: 0px 6px 15px rgba(233, 84, 10, 0.7);
 }
 
 .star-rating-container {
@@ -222,8 +252,8 @@
 }
 
 .star {
-  font-size: 1.2rem; // Dimensione stella
-  color: gold; // Colore giallo per le stelle riempite
+  font-size: 1.2rem;
+  color: gold;
 }
 
 .rating-label {
@@ -231,13 +261,9 @@
   color: #333;
 }
 
-ion-card-header {
-  width: 100%;
-}
-
 ion-grid {
   width: 100%;
-  padding: 0; // ✅ Rimuove il padding predefinito
+  padding: 0; 
 }
 
 ion-row {
@@ -245,7 +271,6 @@ ion-row {
 }
 
 ion-col {
-  flex: 1; // ✅ Fa sì che ogni colonna si adatti allo spazio disponibile
+  flex: 1; 
   text-align: center;
 }
-

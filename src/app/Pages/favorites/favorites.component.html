@@ -1,30 +1,42 @@
 <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
 
-<div *ngIf="!isLoading && listaAttivitaFavoriti" class="card-container">
-  <ion-list *ngIf="listaAttivitaFavoriti.length > 0">
-    <ion-item *ngFor="let attivita of listaAttivitaFavoriti">
-      <ion-thumbnail slot="start" (click)="VisualizzaAttivita(attivita.idAttivita)">
-        <button class="closeIcon" type="button" aria-label="Rimuovi" (click)="presentActionSheetFor(attivita.idAttivita, $event)">
-          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-        </button>
-        <img [src]="getImmaginePrincipale(attivita)"/>
-      </ion-thumbnail>
-      <ion-label (click)="VisualizzaAttivita(attivita.idAttivita)">
-        <h2>{{ attivita.nome }}</h2>
-        <p>{{ attivita.citta }}, {{ attivita.indirizzo }}, {{ attivita.civico }}, {{ attivita.cap }}</p>
-      </ion-label>
-      <img *ngIf="attivita.isPromoPresente" slot="end" src="assets/Img/IconGreen.png" class="imgIcon" (click)="openPromoModal(attivita.idAttivita)">
-      <ion-icon *ngIf="!attivita.isPromoPresente" name="chevron-forward-outline" color="primary" slot="end" (click)="VisualizzaAttivita(attivita.idAttivita)"></ion-icon>
-    </ion-item>
-  </ion-list>
+<ion-content fullscreen="true">
+  <div *ngIf="!isLoading && listaAttivitaFavoriti" class="card-container">
 
-  <div style="margin-top: 100%;" class="column ion-text-center ion-align-items-center">
-    <ion-label class="labelTitle"
-               *ngIf="!isLoading && listaAttivitaFavoriti.length === 0">
-      {{ 'NOACTIVITIES' | translate }}
-    </ion-label>
+    <!-- LISTA -->
+    <ion-list *ngIf="listaAttivitaFavoriti.length > 0; else emptyState">
+      <ion-item *ngFor="let attivita of listaAttivitaFavoriti">
+        <ion-thumbnail slot="start" (click)="VisualizzaAttivita(attivita.idAttivita)">
+          <button class="closeIcon" type="button" aria-label="Rimuovi"
+                  (click)="presentActionSheetFor(attivita.idAttivita, $event)">
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+          <img [src]="getImmaginePrincipale(attivita)"/>
+        </ion-thumbnail>
+
+        <ion-label (click)="VisualizzaAttivita(attivita.idAttivita)">
+          <h2>{{ attivita.nome }}</h2>
+          <p>{{ attivita.citta }}, {{ attivita.indirizzo }}, {{ attivita.civico }}, {{ attivita.cap }}</p>
+        </ion-label>
+
+        <img *ngIf="attivita.isPromoPresente" slot="end" src="assets/Img/IconGreen.png"
+             class="imgIcon" (click)="openPromoModal(attivita.idAttivita)">
+        <ion-icon *ngIf="!attivita.isPromoPresente" name="chevron-forward-outline"
+                  color="primary" slot="end"
+                  (click)="VisualizzaAttivita(attivita.idAttivita)"></ion-icon>
+      </ion-item>
+    </ion-list>
+
+    <!-- EMPTY -->
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <ion-label class="labelTitle">
+          {{ 'NOACTIVITIES' | translate }}
+        </ion-label>
+      </div>
+    </ng-template>
+
   </div>
-</div>
 
 <ion-modal [isOpen]="isModalPromoOpen" class="full-modal">
   <ng-template>
@@ -43,3 +55,5 @@
     </ion-content>
   </ng-template>
 </ion-modal>
+</ion-content>
+

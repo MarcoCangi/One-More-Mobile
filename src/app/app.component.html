@@ -7,7 +7,7 @@
     </video>
   </div>
   
-    <ion-content [fullscreen]="true" class="main-wrap">
+    <ion-content [fullscreen]="true" class="main-wrap" [scrollY]="false">
       <app-nav class="scroll"
                [listaTipoAttivita]="this.listaAttivitaDDL" [listaCitta]="this.listaCitta"
                [ngClass]="{'sticky-search': isSearchSticky}"

@@ -3,9 +3,9 @@
   <!-- immagini -->
   <div class="card-container" #widgetsContent>
     <div class="card-wrapper" *ngIf="!isLoading && attivita.immagini && attivita.immagini.length > 0">
-      <ion-card class="card-img" *ngFor="let immagine of attivita.immagini.slice(0, 3)" (click)="openDialogImg(attivita.idAttivita)">
+      <div class="card-img" *ngFor="let immagine of attivita.immagini.slice(0, 3)" (click)="openDialogImg(attivita.idAttivita)">
         <img class="uniform-image" mat-card-image [src]="immagine.upload" alt="Immagine dell'attività">
-      </ion-card>
+      </div>
     </div>
     <div class="card-wrapperSkeleton" *ngIf="isLoading && attivita.immagini && attivita.immagini.length > 0">
       <ion-card class="card-img" *ngFor="let _ of [1, 2, 3]">
@@ -13,7 +13,7 @@
       </ion-card>
     </div>
     <div class="overlayGallery" *ngIf="!isLoading">
-      <ion-button class="btnGallery" (click)="openDialogImg(attivita.idAttivita)" [outline]="true"><ion-icon name="images-outline" style="margin-right: 5px; margin-top: 2px;"></ion-icon><ion-label>Gallery</ion-label></ion-button>
+      <ion-button class="btnGallery" (click)="openDialogImg(attivita.idAttivita)" [outline]="true"><ion-icon name="images-outline" style="margin-right: 5px;"></ion-icon><ion-label>Gallery</ion-label></ion-button>
     </div>
   </div>
 

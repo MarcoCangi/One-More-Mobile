@@ -1,17 +1,15 @@
 .scroll {
-  overflow: visible !important;
-  -webkit-overflow-scrolling: auto !important;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   z-index: 1000;
 }
 
 .footer {
-  position: fixed;           /* era absolute */
-  left: 0; right: 0; bottom: 0;
-  height: var(--ftr-h);
+  position: absolute;
+  bottom: 0;
   width: 100%;
   z-index: 1000;
   --background: #e9540a;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .keyboard-open ion-content app-footer{
@@ -19,13 +17,7 @@
 }
 
 .keyboard-open .footer {
-  transform: translateY(100%);
-  transition: transform .2s ease;
-}
-
-.main-wrap {
-  --padding-top: var(--hdr-h);
-  --padding-bottom: calc(var(--ftr-h) + env(safe-area-inset-bottom));
+  --display: none !important;
 }
 
 .splash-screen {

@@ -134,6 +134,11 @@ ion-note.promoNote[color="danger"] {
     scrollbar-width: none;
     overflow-x: hidden;
   }
+
+  :root{
+    --ftr-h: 64px;          /* altezza reale del tuo app-footer */
+    --listbar-h: 56px;      /* altezza del bottone arancione "Lista completa" */
+  }
   
   .contentListAtt::-webkit-scrollbar {
     display: none; /* Nasconde la scrollbar nei browser basati su WebKit */
