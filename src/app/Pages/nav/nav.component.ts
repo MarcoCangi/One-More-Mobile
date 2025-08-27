@@ -7,7 +7,7 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { HomeComponent } from '../home/home.component';
+import { HomeComponent } from '../HomePage/home/home.component';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service'; 
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';

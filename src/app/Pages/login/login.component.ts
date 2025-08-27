@@ -1,7 +1,7 @@
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
-import { getFireBaseErrorMessage } from '../../../Utilities/auth-error'
+import { getFireBaseErrorMessage } from '../../Utilities/auth-error'
 import { firstValueFrom, of } from 'rxjs';
 import { UserSession, Utente } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';

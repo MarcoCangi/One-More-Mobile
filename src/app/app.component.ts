@@ -12,6 +12,7 @@ import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-s
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 import { GetApiComuniService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-comuni.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',

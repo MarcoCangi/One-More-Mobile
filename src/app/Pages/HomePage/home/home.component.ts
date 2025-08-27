@@ -4,10 +4,10 @@ import { Attivita, AttivitaFiltrate, AttivitaHomePageResponse, FiltriAttivita, I
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { DettaglioComponent } from '../../Attivita/ProfiloAttivita/dettaglio/dettaglio.component';
-import { LogoutComponent } from '../logout/logout.component';
+import { LogoutComponent } from '../../logout/logout.component';
 import { DatiStrutturaComponent } from '../../Attivita/RegistraAttivita/dati-struttura/dati-struttura.component';
 import { GestionePromoComponent } from '../../Attivita/ProfiloAttivita/gestione-promo/gestione-promo.component';
-import { RicercaComponent } from '../ricerca/ricerca.component';
+import { RicercaComponent } from '../../ricerca/ricerca.component';
 import { FavoritesComponent } from '../../favorites/favorites.component';
 import { CouponComponent } from '../../coupon/coupon.component';
 import { UserComponent } from '../../user/user.component';
