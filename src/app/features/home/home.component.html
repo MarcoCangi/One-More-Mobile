@@ -5,7 +5,7 @@
         
     <div *ngIf="!isLoading && isCaricamentoOk && (idPage === 1 || idPage === undefined)">
         
-        <app-icon-promo (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-icon-promo>
+        <!-- <app-icon-promo (openPageRicercaEvent)="openPageRicercaPromoEvent($event)"></app-icon-promo> -->
 
         <div style="display: flex; justify-content: center; align-items: center;">
             <div class="image-container">
@@ -18,22 +18,25 @@
             </div>
           </div>
 
-        <app-elenco-recent-view *ngIf="this.idSoggetto" [idSoggetto]="this.idSoggetto" [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-recent-view>
+        <app-carousel-promo [latitudine]="latitudine" [longitudine]="longitudine" [type]="CarouselPromoType.recentviewed" [idSoggetto]="idSoggetto"  
+          (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-carousel-promo>
 
-        <app-elenco-promo-food [latitudine]="latitudine" [longitudine]="longitudine"  (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo-food>
+        <app-carousel-promo [latitudine]="latitudine" [longitudine]="longitudine" [type]="CarouselPromoType.food"
+          (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-carousel-promo>
 
-        <app-elenco-promo-drink [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo-drink>
-
-        <app-elenco-vicini [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-vicini>
+        <app-carousel-promo [latitudine]="latitudine" [longitudine]="longitudine" [type]="CarouselPromoType.drink"
+          (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-carousel-promo>
+ 
+        <app-secondary-carousel-promo [latitudine]="latitudine" [longitudine]="longitudine" [type]="CarouselPromoType.vicini"></app-secondary-carousel-promo>
 
         <app-card-tipo-attivita (openPageRicercaTipoAttEvent)="openPageRicercaTipoAttEvent($event)" style="margin-bottom: 100px;"></app-card-tipo-attivita>
 
-        <app-elenco-promo [latitudine]="latitudine" [longitudine]="longitudine" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-promo>
+         <app-secondary-carousel-promo [latitudine]="latitudine" [longitudine]="longitudine" [type]="CarouselPromoType.promo"></app-secondary-carousel-promo>
         
-        <app-icon-citta [listaCitta]="listCitta " (openPageRicercaEvent)="openPageRicercaCittaEvent($event)"></app-icon-citta>
+        <app-icon-citta [listaCitta]="listCitta" (openPageRicercaEvent)="openPageRicercaCittaEvent($event)"></app-icon-citta>
         
-        <app-elenco-consigli style="margin-top: -5% !important;" (ricercaAttivitaEvent)="getListAttivitaFromArrow($event)" [latitudine]="latitudine" [longitudine]="longitudine" (attivitaSelezionataEvent)="onAttivitaSelezionata($event)"></app-elenco-consigli>
-
+         <app-secondary-carousel-promo [latitudine]="latitudine" [longitudine]="longitudine" [type]="CarouselPromoType.consigli"></app-secondary-carousel-promo>
+        
         <ion-card>
           <ion-card-content>
             <ion-grid>

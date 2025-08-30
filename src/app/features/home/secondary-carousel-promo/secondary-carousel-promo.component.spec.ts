@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ElencoPromoComponent } from './elenco-promo.component';
+import { SecondaryCarouselPromoComponent } from './secondary-carousel-promo.component';
 
-describe('ElencoPromoComponent', () => {
-  let component: ElencoPromoComponent;
-  let fixture: ComponentFixture<ElencoPromoComponent>;
+describe('SecondaryCarouselPromoComponent', () => {
+  let component: SecondaryCarouselPromoComponent;
+  let fixture: ComponentFixture<SecondaryCarouselPromoComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ElencoPromoComponent ],
+      declarations: [ SecondaryCarouselPromoComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ElencoPromoComponent);
+    fixture = TestBed.createComponent(SecondaryCarouselPromoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -6,7 +6,6 @@ import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-servi
 import { Attivita, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { UserSession } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Utente';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { Geolocation } from '@capacitor/geolocation';
 import { MessagingService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/MessagingService';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';

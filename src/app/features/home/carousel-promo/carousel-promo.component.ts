@@ -1,54 +1,59 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Attivita, AttivitaWithPromos } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
-import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
-import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
-import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
+import { Attivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { Promo } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Promo';
+import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/Enum/TipoRicercaAttivita';
+import { CarouselPromoType } from './carousel-promo-type';
+import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 
 @Component({
-  selector: 'app-elenco-promo-food',
-  templateUrl: './elenco-promo-food.component.html',
-  styleUrls: ['./elenco-promo-food.component.scss'],
+  selector: 'app-carousel-promo',
+  templateUrl: './carousel-promo.component.html',
+  styleUrls: ['./carousel-promo.component.scss'],
 })
-export class ElencoPromoFoodComponent  implements OnInit {
+export class CarouselPromoComponent implements OnInit {
 
+  CarouselPromoType = CarouselPromoType;
   @ViewChild('widgetsContent') widgetsContent: ElementRef | undefined;
   @ViewChild('titleContent') titleContent: ElementRef | undefined;
 
-  @Input() latitudine:number | undefined;
-  @Input() longitudine:number | undefined;
+  @Input() latitudine: number | undefined;
+  @Input() longitudine: number | undefined;
+  @Input() idSoggetto: number | undefined;
+  @Input() type: CarouselPromoType | undefined;
+
+
+  elencoAttivita: Attivita[] | undefined;
+  attivitaSelezionata: Attivita | undefined;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
   @Output() ricercaAttivitaEvent = new EventEmitter<number>();
-  attivitaSelezionata: Attivita | undefined;
-  elencoAttivita: Attivita[] | undefined;
   isLoading: boolean = false;
 
-  constructor(private attivitaService: GetApiAttivitaService,
-              private storageService: StorageService) { }
+  constructor(private attivitaService: GetApiAttivitaService) { }
 
   async ngOnInit() {
-    this.loadData();
-  }
 
-  async loadData() {
-   if (this.latitudine && this.longitudine) {
-    this.isLoading = true;
-    const cacheKey = `attivita_promofood`;
-    const cachedData = await this.storageService.getItem(cacheKey);
-
-    if (cachedData) {
-      this.elencoAttivita = cachedData; // Usa i dati dalla cache
-      this.isLoading = false;
-    } else {
-      (await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(this.latitudine, this.longitudine, 1, true))
-        .subscribe(async (data: Attivita[]) => {
-          this.elencoAttivita = data;
-          await this.storageService.setItem(cacheKey, data, 60);
-          this.isLoading = false;
-        });
+    if (this.latitudine && this.longitudine) {
+      switch (this.type) {
+        case CarouselPromoType.food:
+          (await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(this.latitudine, this.longitudine, 1, true))
+            .subscribe(async (data: Attivita[]) => { this.elencoAttivita = data; });
+          break;
+        case CarouselPromoType.drink:
+          (await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(this.latitudine, this.longitudine, 2, true))
+            .subscribe(async (data: Attivita[]) => { this.elencoAttivita = data; });
+          break;
+        case CarouselPromoType.recentviewed:
+          if (this.idSoggetto) {
+            (await this.attivitaService.apiGetListaAttivitaRecentView(this.idSoggetto))
+              .subscribe(async (data: Attivita[]) => {this.elencoAttivita = data; });
+          }
+          break;
+        default:
+          console.warn("CarouselPromoComponent richiamato per type non atteso: " + this.type);
+          break;
+      }
     }
   }
-}
 
   scrollLeft(): void {
     if (this.widgetsContent && this.widgetsContent.nativeElement) {
@@ -72,11 +77,11 @@ export class ElencoPromoFoodComponent  implements OnInit {
     // Emetti l'evento con l'attività selezionata
     this.attivitaSelezionata = attivita;
     this.attivitaSelezionata.isPromoPresente = true;
-    if(this.attivitaSelezionata)
+    if (this.attivitaSelezionata)
       this.attivitaSelezionataEvent.emit(this.attivitaSelezionata);
   }
 
-  RicercaAttivitaEvent(){
+  RicercaAttivitaEvent() {
     this.ricercaAttivitaEvent.emit(TipoRicercaAttivita.AttivitaConPromo);
   }
 
@@ -119,4 +124,6 @@ export class ElencoPromoFoodComponent  implements OnInit {
   hasVegetarianiTipologia(promo: Promo): boolean {
     return promo.listaTipologie?.some(t => t.codTipologia === 1) ?? false;
   }
+
+
 }

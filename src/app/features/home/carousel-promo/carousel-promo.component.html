@@ -1,0 +1,63 @@
+<ion-item class="gradient-bg diagonal-sides" *ngIf="elencoAttivita && elencoAttivita.length > 0">
+  <img class="iconaBeverage" src="assets/Img/beverage.png" />
+
+
+  <ion-card-title class="titleView" [ngSwitch]="type">
+    <ng-container *ngSwitchCase="CarouselPromoType.food">
+      {{ 'PromoFood' | translate }}
+    </ng-container>
+
+    <ng-container *ngSwitchCase="CarouselPromoType.drink">
+      {{ 'PromoDrink' | translate }}
+    </ng-container>
+  </ion-card-title>
+  <ion-icon (click)="RicercaAttivitaEvent()" slot="end" name="chevron-forward-outline"></ion-icon>
+</ion-item>
+
+<div class="card-containerHomePage" #widgetsContent *ngIf="!isLoading">
+  <div class="card-wrapperHomePage">
+
+    <div *ngFor="let attivita of elencoAttivita" (click)="VisualizzaAttivita(attivita)">
+      <div *ngFor="let promo of attivita.promo?.slice(0, 1)">
+
+        <ion-card class="card-consigli" (click)="VisualizzaAttivita(attivita)">
+          <!-- Immagine -->
+          <img class="card-img" [src]="attivita.uploadImgPrincipale" alt="{{'ACTIVITYPHOTO|translate'}}" />
+
+          <!-- Badge PROMO in alto -->
+          <div class="promo-badge">
+            <img src="assets/Img/Icon_.png" style="width: 50px; height: 50px;">
+          </div>
+
+          <!-- Overlay rating -->
+          <div class="rating-overlayPromo">
+            <ion-icon name="star" class="starPromo"></ion-icon>
+            <span class="lblStarPromo">{{attivita.rating}}</span>
+          </div>
+
+          <div class="divider-overlayPromo">
+            <span class="meta-divider"></span>
+          </div>
+
+          <!-- Overlay distanza -->
+          <div class="distance-overlayPromo">
+            <ion-icon name="location" class="distancePromo"></ion-icon>
+            <span class="lblDistancePromo">{{attivita.distanza}}</span>
+          </div>
+
+          <!-- Spicchio bianco in basso -->
+          <div class="card-bottom">
+            <div class="titlePromo" title="{{ promo.titoloPromo }}">
+              {{ promo.titoloPromo }}
+            </div>
+            <div class="activityName" title="{{ attivita.nome }}">
+              {{ attivita.nome }}
+            </div>
+          </div>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-skeleton-home-page *ngIf="isLoading"></app-skeleton-home-page>>

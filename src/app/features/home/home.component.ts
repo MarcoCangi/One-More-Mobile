@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthService } from 'one-more-frontend-common/projects/one-more-fe-service/src/Auth/auth.service';
-import { Attivita, AttivitaFiltrate, AttivitaHomePageResponse, FiltriAttivita, Immagini, Orari, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
+import { Attivita, AttivitaFiltrate, FiltriAttivita, TipoAttivita } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Attivita';
 import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-more-fe-service/src/get-api-attivita.service';
 import { LocationService } from 'one-more-frontend-common/projects/one-more-fe-service/src/location.service';
 import { DettaglioComponent } from '../../features/attivita/ProfiloAttivita/dettaglio/dettaglio.component';
@@ -16,19 +16,25 @@ import { TipoRicercaAttivita } from 'one-more-frontend-common/projects/one-more-
 import { firstValueFrom, Observable } from 'rxjs';
 import { Comuni } from 'one-more-frontend-common/projects/one-more-fe-service/src/EntityInterface/Comuni_CAP';
 import { StorageService } from 'one-more-frontend-common/projects/one-more-fe-service/src/storage.service';
+import { CarouselPromoType } from './carousel-promo/carousel-promo-type';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent  implements OnInit {
+export class HomeComponent implements OnInit {
   
+  CarouselPromoType = CarouselPromoType;
+
   handleRefresh() {
     setTimeout(() => {
       this.ngOnInit();
     }, 1000);
   }
 
+
+  @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();
+  @Output() ricercaAttivitaEvent = new EventEmitter<number>();
   @ViewChild(DettaglioComponent) dettaglioComponent!: DettaglioComponent;
   @ViewChild(LogoutComponent) logoutComponent!: LogoutComponent;
   @ViewChild(DatiStrutturaComponent) datiStrutturaComponent!: DatiStrutturaComponent;
@@ -38,22 +44,29 @@ export class HomeComponent  implements OnInit {
   @ViewChild(FavoritesComponent) favoriteComponent!: FavoritesComponent;
   @ViewChild(CouponComponent) couponComponent!: CouponComponent;
   @ViewChild(UserComponent) userComponent!: UserComponent;
-  listaElencoNuove : Attivita[] | undefined;
-  listaElencoPromo : Attivita[] | undefined;
-  listaElencoVicini : Attivita[] | undefined;
-  listCitta : string[] | undefined;
+
+  elencoAttivitaDrink: Attivita[] | undefined;
+  elencoAttivitaFood: Attivita[] | undefined;
+
+
+  listaElencoNuove: Attivita[] | undefined;
+  listaElencoPromo: Attivita[] | undefined;
+  listaElencoVicini: Attivita[] | undefined;
+  listaRecentViewed: Attivita[] | undefined;
+
+  listCitta: string[] | undefined;
   filtro: FiltriAttivita | undefined;
   listaAttivitaRicerca: AttivitaFiltrate | undefined;
   position: GeolocationPosition | undefined;
-  isLoading : boolean | undefined;
-  isCaricamentoOk : boolean | undefined;
+  isLoading: boolean | undefined;
+  isCaricamentoOk: boolean | undefined;
   errorMessage: string | undefined;
-  idSoggetto : number | undefined;
+  idSoggetto: number | undefined;
   @Input() idPage!: number;
-  @Input() listaTipoAttivita: TipoAttivita[] =[];
+  @Input() listaTipoAttivita: TipoAttivita[] = [];
   @Input() listaCitta: Comuni[] = [];
   attivita: Attivita | undefined;
-  attivitaRicercate: Attivita [] | undefined;
+  attivitaRicercate: Attivita[] | undefined;
   alertButtons = ['Ricarica'];
   latitudine: number = 0;
   longitudine: number = 0;
@@ -67,53 +80,52 @@ export class HomeComponent  implements OnInit {
     private authService: AuthService,
     private locationService: LocationService,
     private storageService: StorageService
-  ) {}
+  ) { }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {
+  async ngOnInit() {
     const userSession = this.authService.getUserSession();
-          if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
-            this.idSoggetto = userSession.idSoggetto;
-          } else {
-            this.idSoggetto = undefined;
-          }
-          this.setiIdSogggetto(this.idSoggetto);
+    if (userSession && userSession.idSoggetto && userSession.idSoggetto > 0) {
+      this.idSoggetto = userSession.idSoggetto;
+    } else {
+      this.idSoggetto = undefined;
+    }
+    this.setiIdSogggetto(this.idSoggetto);
 
-          const cacheKeyfiltro_ricerca = `filtro_ricerca`;
-          this.storageService.removeItem(cacheKeyfiltro_ricerca);
+    const cacheKeyfiltro_ricerca = `filtro_ricerca`;
+    this.storageService.removeItem(cacheKeyfiltro_ricerca);
 
-          const cacheKeytipoRicerca = `tipoRicerca`;
-          this.storageService.removeItem(cacheKeytipoRicerca);
+    const cacheKeytipoRicerca = `tipoRicerca`;
+    this.storageService.removeItem(cacheKeytipoRicerca);
 
-          this.loadData();
+    this.loadData();
   }
 
   reloadComponent(): void {
-      const id = this.authService.getLastIdPageFromSession();
-        if(id && id != undefined && id != 0)
-        {
-          switch(id){
-            case 5:
-              this.datiStrutturaComponent.ngOnInit();
-              break;
-            case 6:
-              this.gestionePromoComponent.ngOnInit();
-              break;
-            case 7:
-              this.riepilogoPromoComponent.ngOnInit();
-              break;
-            case 9:
-              this.favoriteComponent.ngOnInit();
-              break;
-            case 11:
-              this.couponComponent.ngOnInit();
-              break;
-            case 12:
-              this.userComponent.ngOnInit();
-              break;
-          }
-          
-        }
+    const id = this.authService.getLastIdPageFromSession();
+    if (id && id != undefined && id != 0) {
+      switch (id) {
+        case 5:
+          this.datiStrutturaComponent.ngOnInit();
+          break;
+        case 6:
+          this.gestionePromoComponent.ngOnInit();
+          break;
+        case 7:
+          this.riepilogoPromoComponent.ngOnInit();
+          break;
+        case 9:
+          this.favoriteComponent.ngOnInit();
+          break;
+        case 11:
+          this.couponComponent.ngOnInit();
+          break;
+        case 12:
+          this.userComponent.ngOnInit();
+          break;
+      }
+
+    }
   }
 
   onAttivitaSelezionata(attivita: Attivita): void {
@@ -124,14 +136,14 @@ export class HomeComponent  implements OnInit {
   }
 
   attivitaRicercateEvent(attivitaRequest: Attivita[] | undefined): void {
-    if(attivitaRequest)
-        this.attivitaRicercate = attivitaRequest;
+    if (attivitaRequest)
+      this.attivitaRicercate = attivitaRequest;
     this.idPage = 2;
     this.authService.setLastIdPageInSession(this.idPage);
     this.openPageEvent(this.idPage)
   }
-  
-  openPageEvent(idPage:number) {
+
+  openPageEvent(idPage: number) {
     this.idPage = idPage;
     this.openPageEventNav.emit(this.idPage);
   }
@@ -145,7 +157,7 @@ export class HomeComponent  implements OnInit {
     this.isOpenPageLoginEvent(true);
   }
 
-  setiIdSogggetto(id:number | undefined){
+  setiIdSogggetto(id: number | undefined) {
     this.updateIdFooter.emit(id);
   }
 
@@ -190,46 +202,48 @@ export class HomeComponent  implements OnInit {
 
   async loadData() {
     if (this.idPage == 1 || this.idPage == undefined) {
-      if(this.idPage == 1)
+      if (this.idPage == 1)
         this.authService.setLastIdPageInSession(this.idPage);
-      
+
       this.isCaricamentoOk = false;
       this.isLoading = true;
-      
+
       const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
       this.latitudine = latitudine;
       this.longitudine = longitudine;
-      }
-    
+    }
+
+
+   
+
     this.isCaricamentoOk = true;
     this.isLoading = false;
   }
 
-  isOpenPageLoginEvent(isOpen:boolean){
+  isOpenPageLoginEvent(isOpen: boolean) {
     this.isModalLoginOpenEvent.emit(isOpen);
   }
 
-  async redirectEsitoEvent(typeRedirect:boolean){
-    this.openPageEventNav.emit(typeRedirect? 11 : 1);
+  async redirectEsitoEvent(typeRedirect: boolean) {
+    this.openPageEventNav.emit(typeRedirect ? 11 : 1);
   }
 
   getErrorMessage(): string | undefined {
     return this.errorMessage;
   }
 
-  retry(){
+  retry() {
     location.reload();
   }
 
-  async getListAttivita(idTypeRicerca:TipoRicercaAttivita){
+  async getListAttivita(idTypeRicerca: TipoRicercaAttivita) {
     this.filtro = new FiltriAttivita();
 
     const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
     this.filtro.latitudine = latitudine;
     this.filtro.longitudine = longitudine;
     this.filtro.tipoRicercaAttivita = idTypeRicerca;
-    if(idTypeRicerca)
-    {
+    if (idTypeRicerca) {
       this.isLoading = true;
       this.filtro.isHomePage = true;
       this.filtro.typeFilterHomePage = idTypeRicerca;
@@ -242,7 +256,7 @@ export class HomeComponent  implements OnInit {
         },
         () => {
 
-          if(this.listaAttivitaRicerca){
+          if (this.listaAttivitaRicerca) {
             this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
             this.attivitaService.setIsListaAttModalOpen(true);
           }
@@ -255,22 +269,22 @@ export class HomeComponent  implements OnInit {
 
   async getListAttivitaFromArrow(idTypeRicerca: TipoRicercaAttivita) {
     const { latitudine, longitudine } = await this.locationService.getCurrentLocation();
-  
+
     if (!idTypeRicerca) return;
-  
+
     this.isLoading = true;
-  
+
     let apiCall$: Observable<Attivita[]>;
-  
+
     switch (idTypeRicerca) {
       case TipoRicercaAttivita.AttivitaConPromo:
         apiCall$ = await this.attivitaService.apiGetListaAttivitaWhitPromo(latitudine, longitudine, false);
         break;
-  
+
       case TipoRicercaAttivita.AttivitaVicine:
         apiCall$ = await this.attivitaService.apiGetListaAttivitaNear(latitudine, longitudine, false);
         break;
-  
+
       case TipoRicercaAttivita.AttivitaPromoBevande:
         apiCall$ = await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(latitudine, longitudine, 2, true);
         break;
@@ -278,13 +292,13 @@ export class HomeComponent  implements OnInit {
       case TipoRicercaAttivita.AttivitaPromoCibo:
         apiCall$ = await this.attivitaService.apiGetListaAttivitaFoodDrinkPromo(latitudine, longitudine, 1, true);
         break;
-      
+
       case TipoRicercaAttivita.AttivitaNuove:
       default:
         apiCall$ = await this.attivitaService.apiGetListaAttivitaJustSigned(latitudine, longitudine, false);
         break;
     }
-  
+
     apiCall$.subscribe(
       async (data: Attivita[]) => {
         const cacheKey = `tipoRicerca`;
@@ -292,10 +306,10 @@ export class HomeComponent  implements OnInit {
         await this.storageService.setItem(cacheKey, idTypeRicerca);
         const attivitaFiltrate = new AttivitaFiltrate(data, latitudine, longitudine, '');
         this.listaAttivitaRicerca = attivitaFiltrate;
-  
+
         this.attivitaService.setListaAttivitaFiltrate(this.listaAttivitaRicerca);
         this.attivitaService.setIsListaAttModalOpen(true);
-  
+
         this.isLoading = false;
         this.openPageEvent(2);
       },
@@ -304,5 +318,13 @@ export class HomeComponent  implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  VisualizzaAttivita(attivita: Attivita): void {
+    this.attivitaSelezionataEvent.emit(attivita);
+  }
+
+  RicercaAttivitaEvent(){
+    this.ricercaAttivitaEvent.emit(TipoRicercaAttivita.AttivitaConPromo);
   }
 }

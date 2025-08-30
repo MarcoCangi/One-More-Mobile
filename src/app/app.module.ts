@@ -29,8 +29,6 @@ import { NavComponent } from './shared/nav/nav.component';
 import { RegistrazioneComponent } from './features/registrazione/registrazione.component';
 import { LoginComponent } from './features/login/login.component';
 import { HomeComponent } from './features/home/home.component';
-import { ElencoPromoComponent } from './features/home/elenco-promo/elenco-promo.component';
-import { ElencoConsigliComponent } from './features/home/elenco-consigli/elenco-consigli.component';
 import { CardTipoAttivitaComponent } from './features/home/card-tipo-attivita/card-tipo-attivita.component';
 import { IconPromoComponent } from './features//home//icon-promo/icon-promo.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -86,7 +84,6 @@ import { DettaglioCouponNonAttComponent } from './features/coupon/dettaglio-coup
 import { UserComponent } from './features/user/user.component';
 import { InfoRegistrazioneAttivitaComponent } from './features/attivita/info-registrazione-attivita/info-registrazione-attivita.component';
 import { ConfermaDisattivazionePromoComponent } from './features/attivita/ProfiloAttivita/riepilogo-promo-attivita/conferma-disattivazione-promo/conferma-disattivazione-promo.component';
-import { ElencoViciniComponent } from './features//home//elenco-vicini/elenco-vicini.component';
 import { IconCittaComponent } from './features/home/icon-citta/icon-citta.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -108,11 +105,10 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { ConfirmComponent } from './features/attivita/RegistraAttivita/dati-struttura/confirm/confirm.component';
 import { TermsConditionComponent } from './features/terms-condition/terms-condition.component';
 import { AreaPromoComponent } from './features/attivita/ProfiloAttivita/gestione-promo/area-promo/area-promo.component';
-import { ElencoPromoFoodComponent } from './features/home/elenco-promo-food/elenco-promo-food.component';
-import { ElencoPromoDrinkComponent } from './features/home/elenco-promo-drink/elenco-promo-drink.component';
-import { ElencoRecentViewComponent } from './features/home/elenco-recent-view/elenco-recent-view.component';
 import { SkeletonHomePageComponent } from './utilities/skeleton-home-page/skeleton-home-page.component';
 import { CardHomePageComponent } from './utilities/card-home-page/card-home-page.component';
+import { CarouselPromoComponent } from './features/home/carousel-promo/carousel-promo.component';
+import { SecondaryCarouselPromoComponent } from './features/home/secondary-carousel-promo/secondary-carousel-promo.component';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -128,8 +124,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                  NavComponent,
                  LoginComponent,
                  HomeComponent,
-                 ElencoPromoComponent,
-                 ElencoConsigliComponent,
+                 CarouselPromoComponent,
+                 SecondaryCarouselPromoComponent,
                  CardTipoAttivitaComponent,
                  IconPromoComponent,
                  RegistrazioneComponent,
@@ -186,7 +182,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                  UserComponent,
                  InfoRegistrazioneAttivitaComponent,
                  ConfermaDisattivazionePromoComponent,
-                 ElencoViciniComponent,
                  IconCittaComponent,
                  RicercaAttivitaAutocompleteComponent,
                  FormRiepilogoComponent,
@@ -196,9 +191,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                  FormPromoComponent,
                  TermsConditionComponent,
                  AreaPromoComponent,
-                 ElencoPromoFoodComponent,
-                 ElencoPromoDrinkComponent,
-                 ElencoRecentViewComponent,
                  SkeletonHomePageComponent,
                  CardHomePageComponent
   ],
