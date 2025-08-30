@@ -5,10 +5,10 @@ import { GetApiAttivitaService } from 'one-more-frontend-common/projects/one-mor
 
 @Component({
   selector: 'app-secondary-carousel-promo',
-  templateUrl: './secondary-carousel-promo.component.html',
-  styleUrls: ['./secondary-carousel-promo.component.scss'],
+  templateUrl: './carousel-promo-secondary.component.html',
+  styleUrls: ['./carousel-promo-secondary.component.scss'],
 })
-export class SecondaryCarouselPromoComponent implements OnInit {
+export class CarouselPromoComponentSecondary implements OnInit {
 
   CarouselPromoType = CarouselPromoType;
   @Output() attivitaSelezionataEvent = new EventEmitter<Attivita>();

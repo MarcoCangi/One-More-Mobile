@@ -25,13 +25,13 @@ import { AppCheckInterceptor } from 'one-more-frontend-common/projects/one-more-
 import { FormPromoComponent } from './features/attivita/ProfiloAttivita/gestione-promo/form-promo/form-promo.component';
 import { AppComponent } from './app.component';
 import { provideFirebaseApp } from '@angular/fire/app';
-import { NavComponent } from './shared/nav/nav.component';
+import { NavComponent } from './shared/components/nav/nav.component';
 import { RegistrazioneComponent } from './features/registrazione/registrazione.component';
 import { LoginComponent } from './features/login/login.component';
 import { HomeComponent } from './features/home/home.component';
 import { CardTipoAttivitaComponent } from './features/home/card-tipo-attivita/card-tipo-attivita.component';
 import { IconPromoComponent } from './features//home//icon-promo/icon-promo.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 import { MappaComponent } from './features/maps/mappa/mappa.component';
 import { DettaglioComponent } from './features/attivita/ProfiloAttivita/dettaglio/dettaglio.component';
 import { GalleriaDettaglioComponent } from './features/attivita/ProfiloAttivita/galleria dettaglio/galleria-dettaglio/galleria-dettaglio.component';
@@ -51,13 +51,6 @@ import { TipoAttivitaComponent } from './features/attivita/RegistraAttivita/dati
 import { DialogEsitoRegistrazioneComponent } from './features/attivita/RegistraAttivita/dialog-esito-registrazione/dialog-esito-registrazione.component';
 import { DialogGalleryComponent } from './features/attivita/RegistraAttivita/gallery/dialog-gallery/dialog-gallery.component';
 import { GalleryComponent } from './features/attivita/RegistraAttivita/gallery/gallery.component';
-import { AreaUtenteComponent } from './features/area-utente/area-utente.component';
-import { CognomeUtenteComponent } from './features/area-utente/cognome-utente/cognome-utente.component';
-import { EmailUtenteComponent } from './features/area-utente/email-utente/email-utente.component';
-import { NomeUtenteComponent } from './features/area-utente/nome-utente/nome-utente.component';
-import { PromoAttiveUtenteComponent } from './features/area-utente/promo-attive-utente/promo-attive-utente.component';
-import { PromoUtilizzateUtenteComponent } from './features/area-utente/promo-utilizzate-utente/promo-utilizzate-utente.component';
-import { InfoComponent } from './features/info/info.component';
 import { LogoutComponent } from './features/logout/logout.component';
 import { MenuComponent } from './features/attivita/RegistraAttivita/dati-struttura/menu/menu.component';
 import { GestionePromoComponent } from './features/attivita/ProfiloAttivita/gestione-promo/gestione-promo.component';
@@ -106,9 +99,8 @@ import { ConfirmComponent } from './features/attivita/RegistraAttivita/dati-stru
 import { TermsConditionComponent } from './features/terms-condition/terms-condition.component';
 import { AreaPromoComponent } from './features/attivita/ProfiloAttivita/gestione-promo/area-promo/area-promo.component';
 import { SkeletonHomePageComponent } from './utilities/skeleton-home-page/skeleton-home-page.component';
-import { CardHomePageComponent } from './utilities/card-home-page/card-home-page.component';
 import { CarouselPromoComponent } from './features/home/carousel-promo/carousel-promo.component';
-import { SecondaryCarouselPromoComponent } from './features/home/secondary-carousel-promo/secondary-carousel-promo.component';
+import { CarouselPromoComponentSecondary } from './features/home/carousel-promo-secondary/carousel-promo-secondary.component';
 
 const appRoute: Routes = [
   { path: "", component:HomeComponent },
@@ -125,7 +117,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                  LoginComponent,
                  HomeComponent,
                  CarouselPromoComponent,
-                 SecondaryCarouselPromoComponent,
+                 CarouselPromoComponentSecondary,
                  CardTipoAttivitaComponent,
                  IconPromoComponent,
                  RegistrazioneComponent,
@@ -149,13 +141,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                  DialogEsitoRegistrazioneComponent,
                  DialogGalleryComponent,
                  GalleryComponent,
-                 AreaUtenteComponent,
-                 CognomeUtenteComponent,
-                 EmailUtenteComponent,
-                 NomeUtenteComponent,
-                 PromoAttiveUtenteComponent,
-                 PromoUtilizzateUtenteComponent,
-                 InfoComponent,
                  LogoutComponent,
                  MenuComponent,
                  GestionePromoComponent,
@@ -191,8 +176,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                  FormPromoComponent,
                  TermsConditionComponent,
                  AreaPromoComponent,
-                 SkeletonHomePageComponent,
-                 CardHomePageComponent
+                 SkeletonHomePageComponent
   ],
   imports: [BrowserModule,
             HttpClientModule,

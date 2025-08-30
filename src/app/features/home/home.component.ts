@@ -25,7 +25,7 @@ import { CarouselPromoType } from './carousel-promo/carousel-promo-type';
 export class HomeComponent implements OnInit {
   
   CarouselPromoType = CarouselPromoType;
-
+  
   handleRefresh() {
     setTimeout(() => {
       this.ngOnInit();
